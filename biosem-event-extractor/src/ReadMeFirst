@@ -1,0 +1,58 @@
+This supplementary source code is ready to use, it is bundled with a list of external packages (Lingpipe, OpenNLP...) that forms a Netbeans project. The code is split into sub-sections to easy follow and understand the proposed method in our paper.
+It is highly recommended to use this code with the NetBeans IDE (or compatible IDE such as Eclipse) to avoid setup the required libs and support data.
+
+This document is a very short user guide, for more details, see the implementation.
+
+1. System requirements
+2. Prepare data
+3. Learning triggers
+4. Learning patterns
+5. Run event extraction
+
+A. System requirements:
+The source code is written in Java 6, it should work on both Windows and Unix/Linux systems that have a JDK compatible with version 1.6 or above
+To run this package, a system with at leat 2GB of memory is required, please set the following options for VM: -Xms64m  -Xmx1024m  -Xss32m
+If you have the Netbeans IDE installed in your system then just unzip the package and open it from Netbeans.
+
+NOTE: 
+The source codes uses a list of external libraries, please setup the path properly if you run it from command line. 
+If you know Ant, then you can use the ant' script available in this project
+
+B. Prepare data
+- Download training, development and test set from: https://sites.google.com/site/bionlpst/
+- Unzip data into separated folders
+- Run 'DataLoader.java' with appropriate parameters to load text into local database. You can load all datasets at the same time. See main method for more details
+- Paramaters: paths to input text (unzip folders), and paths (where) to store data
+
+C. Learning triggers (creating dictionary).
+- Run 'TriggerLearner.java' with appropriate parameters to create a dictionary. To create a large dictionay, merge two datasets i.e. training and development into a new folder and load them into a 'mixed' dataset using 'DataLoader'in the previous step. See main method for more details
+- Parameters: source DB (containing annotated events), destination DB (to store dictionary)
+
+D. Learning patterns
+- Run 'RuleLearner.java' with appropriate parameters to generate patterns. See main method for more details
+- Parameters: source DB containing annotated events, where to store patterns
+
+E. Extracting events
+- Run 'EventExtraction.java' with appropriate parameters to extract events. See main method for more details
+- Parameters: source DB containing dictionary and patterns, destination DB containing text to extract events
+- Parameter: path to store *.a2 file in 'writeResult' method, the default directory is D:/Output/test
+
+Note: to repeat the experiments in our paper, you should prepare the following databases:
+A. Download the training, developing, and test sets from the official site mentioned above.
+- Prepare the following folders:
+ - Devlopment: to store unzip text from the development dataset
+ - Training: to store unzip text from the training dataset
+ - Mix: copy the contents from development and training folder to this folder
+ - Test: to store unzip text from the test dataset
+B. Loading text into local databases: run 'DataLoader.java' to load text from these folders into corresponding databases.
+(Remember: the test set has different parameter compared to the other datasets)
+
+C. Creating dictionary: By default the dictionay is stored in the same database which contains annotated events, however, it can also learn from different database, in this case, the source and destination database is different. For example, if you want to create dictionary from mix dataset and store into development dataset, then the source is mix database, and the destination is the development database. Depending on the experiment, you should run the 'TriggerLearner.java' one or more time for each database. 
+
+D. Generating patterns: By default the patterns is stored in the same database which contains annotated events, however, it can also learn from different database, in this case, the source and destination database is different. For example, if you want to generate patterns from mix dataset and store into development dataset, then the source is mix database, and the destination is the development database. Depending on the experiment, you should run the 'RuleLearner.java' one or more time for each database.  
+
+E. Extracting events: you can use training, development, or mix dataset (with dictionary and patterns generated) to extract events from other datasets.
+To evaluate the results locally (for development and training only) you should download the evaluation script provided by the BioNLP Shared task. To evaluate the results online (for the test set only), you should register in order to submit the results (see the official website for more details).
+
+
+ 
