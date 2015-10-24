@@ -108,11 +108,6 @@
 			</plugins>
 		</pluginManagement>
 	</build>
-	<parent>
-		<groupId>de.julielab</groupId>
-		<artifactId>julie</artifactId>
-		<version>1.2.0</version>
-	</parent>
 	<dependencies>
 		<dependency>
 			<groupId>org.hsqldb</groupId>

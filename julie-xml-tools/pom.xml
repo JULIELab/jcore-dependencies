@@ -65,9 +65,5 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	<parent>
-		<groupId>de.julielab</groupId>
-		<artifactId>julie</artifactId>
-		<version>1.2.0</version>
-	</parent>
+	<groupId>de.julielab</groupId>
 </project>
