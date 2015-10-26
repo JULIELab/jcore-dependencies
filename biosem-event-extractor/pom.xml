@@ -120,11 +120,6 @@
   		<version>1.3.3</version>
   	</dependency>
   	<dependency>
-  		<groupId>com.alias-i</groupId>
-  		<artifactId>lingpipe</artifactId>
-  		<version>4.1.0</version>
-  	</dependency>
-  	<dependency>
   		<groupId>org.apache.opennlp</groupId>
   		<artifactId>opennlp-maxent</artifactId>
   		<version>3.0.2-incubating</version>
@@ -149,6 +144,11 @@
   		<artifactId>logback-classic</artifactId>
   		<version>1.0.3</version>
   		<scope>provided</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>de.julielab</groupId>
+  		<artifactId>aliasi-lingpipe</artifactId>
+  		<version>4.1.0</version>
   	</dependency>
 	</dependencies>
 </project>
