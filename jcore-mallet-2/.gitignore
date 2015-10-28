@@ -4,3 +4,6 @@
 /.classpath
 /.project
 /target/
+/grmm-model.dot
+/TestObject.obj
+/TestObject2.obj
