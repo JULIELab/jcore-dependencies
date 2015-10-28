@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>jcore-dependencies</artifactId>
+	<packaging>pom</packaging>
+	<description>The POM for the JCoRe Dependencies projects.</description>
+	<organization>
+		<name>JULIE Lab, Germany</name>
+		<url>http://www.julielab.de</url>
+	</organization>
+	<parent>
+		<groupId>de.julielab</groupId>
+		<artifactId>jcore-dependencies-parent</artifactId>
+		<version>2.0.0</version>
+	</parent>
+	<modules>
+		<module>aliasi-lingpipe</module>
+		<module>biosem-event-extractor</module>
+		<module>jcore-mallet-2</module>
+		<module>julie-segment-eval</module>
+		<module>julie-xml-tools</module>
+		<module>uea-stemmer</module>
+	</modules>
+</project>
