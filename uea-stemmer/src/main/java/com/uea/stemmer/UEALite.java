@@ -1,5 +1,7 @@
 package com.uea.stemmer;
 
+import java.io.Serializable;
+
 /**
  * <p>Title: UEA Lite Stemmer</p>
  *
@@ -25,9 +27,13 @@ package com.uea.stemmer;
  * @author Marie-Claire Jenkins, Dr. Dan J Smith, this port to Java by Richard Churchill
  * @version 1.03
  */
-public class UEALite {
+public class UEALite implements Serializable {
 
-    private int maxWordLength = "deoxyribonucleicacid".length(); // or some other suitable value, e.g antidisestablishmentarianism
+    /**
+	 * added by JULIE lab for the work with JNET
+	 */
+	private static final long serialVersionUID = 2960712918243165711L;
+	private int maxWordLength = "deoxyribonucleicacid".length(); // or some other suitable value, e.g antidisestablishmentarianism
     private int maxAcronymLength = "CAVASSOO".length(); // or some other suitable value
 
     /************************************************************************
