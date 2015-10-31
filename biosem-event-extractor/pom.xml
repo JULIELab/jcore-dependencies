@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nl.uva</groupId>
 	<artifactId>biosem-event-extractor</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.1.1</version>
 	<name>BioSem Event Extractor</name>
 	<description>The event extraction engine used by the Amsterdam team in the BioNLP Shared Task 2011 challenge. The code was adapted to also work with all data of the ST2013 challenge (there are 4 more trigger/event types in these data in comparison with the ST2011), evaluation results stayed the same.</description>
 	<repositories>
