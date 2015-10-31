@@ -122,7 +122,7 @@ public class SenAnalyzer {
             return false;
         }
         for (int i = 1; i < shortsen.length; i++) {
-            senpos[i] = longtxt.indexOf(longsen[i], senpos[i - 1]); // calculate offset between short and long sentence
+            senpos[i] = originalSentences[i].begin;//longtxt.indexOf(longsen[i], senpos[i - 1]); // calculate offset between short and long sentence
         }
 
         //init protein map
