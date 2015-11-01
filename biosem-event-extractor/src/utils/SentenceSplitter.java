@@ -15,6 +15,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import relations.TData;
+
 /**
  * 
  * @author Chinh
@@ -73,8 +75,11 @@ public class SentenceSplitter {
 			this.begin = begin;
 			this.end = end;
 		}
+		public BioSemSentence() {}
 		public String text;
 		public int begin;
 		public int end;
+		List<TData> prots;
+		
 	}
 }
