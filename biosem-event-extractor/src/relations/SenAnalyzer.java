@@ -231,7 +231,7 @@ public class SenAnalyzer {
 			}
 			// Asign ID for PRO
 			if (detectedPro[i].size() != longPro[i].size()) {
-				System.err.println("Miss protein, given: " + longPro[i].size() + " detectted " + detectedPro[i].size());
+				System.err.println("Sentence " + i + ": Miss protein, given: " + longPro[i].size() + " detectted " + detectedPro[i].size());
 				System.err.println("Long: " + longsen[i]);
 				System.err.println("");
 				System.err.println("Short: " + shortsen[i]);
