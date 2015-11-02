@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -208,6 +209,21 @@ public class SenAnalyzer {
 			}
 			processSentence(current, token, i); // detect trigger and protein
 												// for current sentence
+			if (detectedTrg[i].size() != longTrg[i].size()) {
+				// try to make triggers consistent between simplified and long
+				// sentence (i.e. restrict simplified triggers to those actually
+				// found in the long sentence)
+				Set<String> longTrgs = new HashSet<>();
+				for (Word w : longTrg[i]) {
+					longTrgs.add(w.word);
+				}
+				Iterator<Word> detectedIt = detectedTrg[i].iterator();
+				while (detectedIt.hasNext()) {
+					Word word = (Word) detectedIt.next();
+					if (!longTrgs.contains(word.word))
+						detectedIt.remove();
+				}
+			}
 			// Map trigger from short sentence into long sentence
 			if (detectedTrg[i].size() == longTrg[i].size()) {
 				for (int f = 0; f < detectedTrg[i].size(); f++) {
@@ -217,6 +233,7 @@ public class SenAnalyzer {
 				}
 			} else {
 				System.out.println("Number of triggers doesn't match, sentence " + i + ": " + id);
+				System.out.println("Detected: " + detectedTrg[i].size() + ", given: " + longTrg[i].size());
 				System.out.println("Long: " + longsen[i]);
 				for (Word tg : longTrg[i]) {
 					System.out.print(tg.word + " " + tg.pos + " | ");
