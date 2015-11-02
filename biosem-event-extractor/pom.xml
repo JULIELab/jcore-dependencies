@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>biosem-event-extractor</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.1.2-SNAPSHOT</version>
 	<name>BioSem Event Extractor</name>
 	<description>The event extraction engine used by the Amsterdam team in the BioNLP Shared Task 2011 challenge. The code was adapted to also work with all data of the ST2013 challenge (there are 4 more trigger/event types in these data in comparison with the ST2011), evaluation results stayed the same.</description>
 	<repositories>
@@ -120,13 +120,8 @@
   	</dependency>
   	<dependency>
   		<groupId>org.apache.opennlp</groupId>
-  		<artifactId>opennlp-maxent</artifactId>
-  		<version>3.0.2-incubating</version>
-  	</dependency>
-  	<dependency>
-  		<groupId>org.apache.opennlp</groupId>
   		<artifactId>opennlp-tools</artifactId>
-  		<version>1.5.2-incubating</version>
+  		<version>1.6.0</version>
   	</dependency>
   	<dependency>
   <groupId>net.sf</groupId>
