@@ -19,9 +19,10 @@
 	<modules>
 		<module>aliasi-lingpipe</module>
 		<module>biosem-event-extractor</module>
-		<module>jcore-mallet-2</module>
-		<module>julie-segment-eval</module>
 		<module>julie-xml-tools</module>
 		<module>uea-stemmer</module>
+		<module>jcore-mallet-2.0-rc1</module>
+		<module>jcore-mallet-2.0.9</module>
+		<module>julie-segment-eval</module>
 	</modules>
 </project>
