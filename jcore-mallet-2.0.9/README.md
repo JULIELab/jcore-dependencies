@@ -14,3 +14,7 @@ Many of the algorithms in MALLET depend on numerical optimization. MALLET includ
 In addition to sophisticated Machine Learning applications, MALLET includes routines for transforming text documents into numerical representations that can then be processed efficiently. This process is implemented through a flexible system of "pipes", which handle distinct tasks such as tokenizing strings, removing stopwords, and converting sequences into count vectors.
 
 An add-on package to MALLET, called GRMM, contains support for inference in general graphical models, and training of CRFs with arbitrary graphical structure.
+
+---
+This version is slightly modified and we introduced a method ``trainOptimized`` in ``CRFTrainerByLabelLikelihood``:
+>"optimized" training has a termination criterion that is later than in "normal" train functions. Optimizer must converge n successive rounds. This avoid early stopping due to flip on gradient.
