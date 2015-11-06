@@ -25,4 +25,9 @@
 		<module>jcore-mallet-2.0.9</module>
 		<module>julie-segment-eval</module>
 	</modules>
+	<scm>
+        <connection>scm:git:git@github.com:JULIELab/jcore-dependencies.git</connection>
+        <developerConnection>scm:git:git@github.com:JULIELab/jcore-dependencies.git</developerConnection>
+        <url>https://github.com/JULIELab/jcore-dependencies</url>
+    </scm>
 </project>
