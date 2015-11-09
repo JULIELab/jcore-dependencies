@@ -5,59 +5,57 @@
    version 1.0, as published by http://www.opensource.org.  For further
    information, see the file `LICENSE' included with this distribution. */
 
-
-
-
-/** 
+/**
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
  */
 
 package cc.mallet.pipe.tests;
 
-import junit.framework.*;
-import java.net.URI;
-import java.net.URL;
 import java.io.File;
 import java.util.Iterator;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
+import org.junit.Ignore;
 
-public class TestRainbowStyle extends TestCase
-{
-	public TestRainbowStyle (String name) {
-		super (name);
-	}
-	
-	public void testThree ()
-	{
-		InstanceList il = new InstanceList (
-			new SerialPipes (new Pipe[] {
-				new Target2Label (),
-				new CharSequence2TokenSequence (),
-				new TokenSequenceLowercase (),
-				new TokenSequenceRemoveStopwords (),
-				new TokenSequence2FeatureSequence (),
-				new FeatureSequence2FeatureVector ()
-			}));
-		Iterator<Instance> pi = new FileIterator (new File("foo/bar"), null, Pattern.compile("^([^/]*)/"));
-		il.addThruPipe (pi);
-	}
+import cc.mallet.pipe.CharSequence2TokenSequence;
+import cc.mallet.pipe.FeatureSequence2FeatureVector;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.Target2Label;
+import cc.mallet.pipe.TokenSequence2FeatureSequence;
+import cc.mallet.pipe.TokenSequenceLowercase;
+import cc.mallet.pipe.TokenSequenceRemoveStopwords;
+import cc.mallet.pipe.iterator.FileIterator;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-	public static Test suite ()
-	{
-		return new TestSuite (TestRainbowStyle.class);
-	}
+public class TestRainbowStyle extends TestCase {
+    public TestRainbowStyle(String name) {
+        super(name);
+    }
 
-	protected void setUp ()
-	{
-	}
+    @Ignore
+    public void testThree() {
+        InstanceList il = new InstanceList(new SerialPipes(new Pipe[] { new Target2Label(),
+                new CharSequence2TokenSequence(), new TokenSequenceLowercase(), new TokenSequenceRemoveStopwords(),
+                new TokenSequence2FeatureSequence(), new FeatureSequence2FeatureVector() }));
+        Iterator<Instance> pi = new FileIterator(new File("foo/bar"), null, Pattern.compile("^([^/]*)/"));
+        il.addThruPipe(pi);
+    }
 
-	public static void main (String[] args)
-	{
-		junit.textui.TestRunner.run (suite());
-	}
-	
+    public static Test suite() {
+        return new TestSuite(TestRainbowStyle.class);
+    }
+
+    @Override
+    protected void setUp() {
+    }
+
+    public static void main(String[] args) {
+        junit.textui.TestRunner.run(suite());
+    }
+
 }
