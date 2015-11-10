@@ -108,7 +108,6 @@ public class JulieXMLTools {
 					is = new FileInputStream(fileName);
 				}
 				VTDNav vn = getVTDNav(is, bufferSize);
-				System.out.println(vn.getNestingLevel());
 				return constructRowIterator(vn, forEachXpath, fields, fileName);
 			}
 		} catch (FileNotFoundException e) {
