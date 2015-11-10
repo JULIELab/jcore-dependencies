@@ -10,7 +10,6 @@
     document classification, clustering, topic modeling, information extraction,
     and other machine learning applications to text.
   </description>
-  <url>http://mallet.cs.umass.edu/</url>
   <licenses>
     <license>
       <name>Common Public License Version 1.0</name>
@@ -18,20 +17,16 @@
       <distribution>repo</distribution>
     </license>
   </licenses>
-  <developers>
-    <developer>
-      <id>david.mimno</id>
-      <name>David Mimno</name>
-      <email>mimno@cs.umass.edu</email>
-    </developer>
-    <developer>
-      <id>gregory.druck</id>
-      <name>Gregory Druck</name>
-      <email>gdruck@cs.umass.edu</email>
-    </developer>
-  </developers>
   <build>
     <sourceDirectory>src</sourceDirectory>
+      <resources>
+        <resource>
+          <directory>src</directory>
+          <excludes>
+            <exclude>**/*.java</exclude>
+          </excludes>
+        </resource>
+      </resources>
     <testSourceDirectory>src</testSourceDirectory>
   </build>
   <dependencies>
