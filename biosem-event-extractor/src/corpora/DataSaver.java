@@ -34,7 +34,8 @@ public class DataSaver {
             stmt.executeUpdate("DROP TABLE ABSTRACT IF EXISTS");
             
             // CREATING TABLES
-            stmt.executeUpdate("create cached table PROTEIN(PMID VARCHAR(80), TID VARCHAR(15), POS1 INT, POS2 INT, TXT VARCHAR(120))");
+//            stmt.executeUpdate("create cached table PROTEIN(PMID VARCHAR(80), TID VARCHAR(15), POS1 INT, POS2 INT, TXT VARCHAR(120))");
+            stmt.executeUpdate("create cached table PROTEIN(PMID VARCHAR(80), TID VARCHAR(15), POS1 INT, POS2 INT, TXT CLOB)");
             stmt.executeUpdate("create cached table TRIGGERS(PMID VARCHAR(80), TID VARCHAR(15), T_TYPE VARCHAR(30), POS1 INT, POS2 INT, TXT VARCHAR(80))");
             stmt.executeUpdate("create cached table EVENT(PMID VARCHAR(80), EID VARCHAR(15), T_TYPE VARCHAR(30), TRIG_ID VARCHAR(5), THEME1 VARCHAR(5),THEME2 VARCHAR(5) ,CAUSE VARCHAR(5))");
             stmt.executeUpdate("create cached table MODIFY(PMID VARCHAR(80), MID VARCHAR(15), T_TYPE VARCHAR(30), THEME VARCHAR(5))");
