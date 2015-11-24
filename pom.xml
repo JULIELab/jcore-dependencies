@@ -1,63 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+	                         http://maven.apache.org/maven-v4_0_0.xsd">
 
 	<modelVersion>4.0.0</modelVersion>
+	
+	<!-- Basics & Project Information -->
+    <parent>
+        <groupId>de.julielab</groupId>
+        <artifactId>jcore-parent</artifactId>
+        <version>2.1.0-SNAPSHOT</version>
+    </parent>
 	<artifactId>jcore-dependencies</artifactId>
 	<packaging>pom</packaging>
+	
+	<name>JCoRe Dependencies</name>
 	<description>The POM for the JCoRe Dependencies projects.</description>
 	<organization>
-		<name>JULIE Lab, Germany</name>
+        <name>JULIE Lab, Germany</name>
 		<url>http://www.julielab.de</url>
 	</organization>
-	<parent>
-		<groupId>de.julielab</groupId>
-		<artifactId>jcore-parent</artifactId>
-		<version>2.0.0</version>
-	</parent>
-	<name>JCoRe Dependencies</name>
-	<build>
-      <plugins>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-source-plugin</artifactId>
-          <version>2.2.1</version>
-
-          <executions>
-            <execution>
-              <id>attach-sources</id>
-              <phase>package</phase>
-              <goals>
-                <goal>jar-no-fork</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-javadoc-plugin</artifactId>
-          <version>2.9.1</version>
-          <executions>
-            <execution>
-              <id>attach-javadocs</id>
-              <phase>package</phase>
-              <goals>
-                <goal>jar</goal>
-              </goals>
-            </execution>
-          </executions>
-        </plugin>
-      </plugins>
-    </build>
+    <licenses>
+        <license>
+            <name>GNU Lesser General Public License, Version 3.0</name>
+            <url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+        </license>
+    </licenses>
+    <url>https://github.com/JULIELab/jcore-dependencies</url>
+	
 	<modules>
 		<module>aliasi-lingpipe</module>
 		<module>biosem-event-extractor</module>
-		<module>julie-xml-tools</module>
-		<module>uea-stemmer</module>
-		
 		<module>jcore-mallet-2.0.9</module>
 		<module>julie-segment-eval</module>
+		<module>julie-xml-tools</module>
+        <module>uea-stemmer</module>
 	</modules>
+	
+	<!-- Environment Settings -->
 	<scm>
         <connection>scm:git:git@github.com:JULIELab/jcore-dependencies.git</connection>
         <developerConnection>scm:git:git@github.com:JULIELab/jcore-dependencies.git</developerConnection>
