@@ -3,8 +3,8 @@
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>julie-xml-tools</artifactId>
 	<version>0.3.1</version>
-	<name>xml tools</name>
-	<description>Reads XML using the VTD parser</description>
+	<name>JULIE XML Tools</name>
+	<description>Reads XML using the VTD parser.</description>
 	<build>
 		<plugins>
 			<plugin>
@@ -67,4 +67,9 @@
 		<artifactId>jcore-dependencies</artifactId>
 		<version>2.0.0</version>
 	</parent>
+	<url>https://github.com/JULIELab/jcore-dependencies/tree/master/julie-xml-tools</url>
+	<organization>
+		<name>JULIE Lab Jena, Germany</name>
+		<url>http://www.julielab.de</url>
+	</organization>
 </project>

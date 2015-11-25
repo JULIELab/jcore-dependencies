@@ -8,7 +8,7 @@
   <packaging>jar</packaging>
   <version>0.1</version>
   <name>UEA Stemmer</name>
-  <description>UEA Stemmer</description>
+  <description>Original UEA-lite Stemmer</description>
 
 	
    <build>
@@ -30,5 +30,6 @@
    	<groupId>de.julielab</groupId>
    	<version>2.0.0</version>
    </parent>
+   <url>http://www2.cmp.uea.ac.uk/~djs/projects/UEAlite/stemmer.html</url>
 </project>
 

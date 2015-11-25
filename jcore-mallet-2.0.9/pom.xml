@@ -5,11 +5,7 @@
   <version>2.0.9</version>
   <packaging>jar</packaging>
   <name>JCoRe Mallet 2.0.9</name>
-  <description>
-    MALLET is a Java-based package for statistical natural language processing,
-    document classification, clustering, topic modeling, information extraction,
-    and other machine learning applications to text.
-  </description>
+  <description>MALLET is a Java-based package for statistical natural language processing, document classification, clustering, topic modeling, information extraction, and other machine learning applications to text.</description>
   <licenses>
     <license>
       <name>Common Public License Version 1.0</name>
@@ -66,4 +62,5 @@
   	<artifactId>jcore-dependencies</artifactId>
   	<version>2.0.0</version>
   </parent>
+  <url>http://mallet.cs.umass.edu/</url>
 </project>

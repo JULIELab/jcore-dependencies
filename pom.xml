@@ -40,8 +40,8 @@
 	
 	<!-- Environment Settings -->
 	<scm>
-        <connection>scm:git:git@github.com:JULIELab/jcore-dependencies.git</connection>
-        <developerConnection>scm:git:git@github.com:JULIELab/jcore-dependencies.git</developerConnection>
-        <url>https://github.com/JULIELab/jcore-dependencies</url>
+        <connection>scm:git:git://github.com/JULIELab/jcore-dependencies.git</connection>
+        <developerConnection>scm:git:git://github.com/JULIELab/jcore-dependencies.git</developerConnection>
+        <url>scm:git:https://github.com/JULIELab/jcore-dependencies</url>
     </scm>
 </project>
