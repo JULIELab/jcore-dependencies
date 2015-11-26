@@ -16,5 +16,7 @@ In addition to sophisticated Machine Learning applications, MALLET includes rout
 An add-on package to MALLET, called GRMM, contains support for inference in general graphical models, and training of CRFs with arbitrary graphical structure.
 
 ---
-This version is slightly modified and we introduced a method ``trainOptimized`` in ``CRFTrainerByLabelLikelihood``:
+* This version is slightly modified and we introduced a method ``trainOptimized`` in ``CRFTrainerByLabelLikelihood``:
 >"optimized" training has a termination criterion that is later than in "normal" train functions. Optimizer must converge n successive rounds. This avoid early stopping due to flip on gradient.
+
+* junit tests are disabled via the `pom`; see test-ignored for tests that threw errors
