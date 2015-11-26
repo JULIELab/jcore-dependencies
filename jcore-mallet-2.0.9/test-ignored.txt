@@ -1,0 +1,34 @@
+extract.test
+	.TestLatticeViewer
+	.TestDocumentViewer
+
+pipe.tests
+	.TestInstancePipe
+		testTwo()
+	.TestRainbowStyle
+
+classify.tests
+	.TestNaiveBayes
+		testIncrementallyTrainedGrowingAlphabets()
+		testIncrementallyTrained()
+		testEmptyStringBug()
+
+types.tests
+	.TestHashedSparseVector
+		testPlusEqualsFromSaved()
+
+grmm.test
+	.TestFactorGraph
+		testContinousSample()
+		testContinousSample2()
+		testAllFactorsOf()
+	.TestPottsFactor
+		testSumGradLog()
+	.TestUndirectedModel
+		testMultipleEdgePotentials()
+	.TestInference
+		testJtConstant()
+	.TestGenericAcrfData2TokenSequence
+
+fst.tests
+	.TestMEMM (memory issues)
