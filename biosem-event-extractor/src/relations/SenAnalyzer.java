@@ -185,9 +185,11 @@ public class SenAnalyzer {
 			for (Word w : longTrg[i]) { // triggers that embedded inside protein
 										// should be removed
 				for (TData dt : longPro[i]) {
-					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
+//					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
+//						removeList.add(w);
+//					}
+					if ((w.locs[0] >= dt.list[0] && w.locs[0] <= dt.list[1]) || (w.locs[1] >= dt.list[0] && w.locs[1] <= dt.list[1]))
 						removeList.add(w);
-					}
 				}
 			}
 			if (removeList.size() > 0) {
@@ -563,6 +565,13 @@ public class SenAnalyzer {
 	}
 
 	public void processSentence(String txt, String token[], int idx) {
+		
+		
+		boolean hier = false;
+		if (txt.startsWith("Stimulation with anti"))
+			hier = true;
+		
+		
 		String[] words = token;
 		List<String> list;
 		List<Word> trgList = new ArrayList<Word>();
