@@ -815,7 +815,12 @@ public class SenSimplifier {
 			// iterate through those proteins which occur within the sentence
 			while (pIndex >= 0 && plist.get(pIndex).list[0] >= sentence.begin) {
 				TData dt = plist.get(pIndex);
-				String name = "PRO" + pIndex;
+//				String name = "PRO" + pIndex;
+				String name = dt.new_name;
+//				if (!name.equals(dt.new_name)) {
+//				System.out.println(name);
+//				System.out.println(dt.new_name);
+//				}
 				sb = sb.replace(dt.list[0] - sentence.begin, dt.list[1]
 						- sentence.begin, name);
 				--pIndex;
