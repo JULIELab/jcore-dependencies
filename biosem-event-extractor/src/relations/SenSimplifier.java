@@ -805,8 +805,8 @@ public class SenSimplifier {
 	int trmiss_count = 0;
 
 	public String[] doSimplifySentenceWise(BioSemSentence[] originalSentences,
-			String docId) {
-		List<TData> plist = loadProtein(docId);
+			List<TData> proList) {
+		List<TData> plist = proList;//loadProtein(proList);
 		int pIndex = plist.size() - 1;
 		String[] simplifiedSentences = new String[originalSentences.length];
 		for (int i = originalSentences.length - 1; i >= 0; --i) {

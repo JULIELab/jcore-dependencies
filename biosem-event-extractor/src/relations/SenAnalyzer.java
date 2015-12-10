@@ -118,29 +118,15 @@ public class SenAnalyzer {
 			return false;
 		}
 
-		proList = simp.loadProtein(pid); // load Protein list
 		BioSemSentence[] originalSentences = simp.doSentenceSplitting(longtxt, "\n");
-
 		longsen = new String[originalSentences.length];
+		senpos = new int[longsen.length];// offset of long sentences
+		for (int i = 1; i < originalSentences.length; i++)
+			senpos[i] = originalSentences[i].begin;
 		for (int i = 0; i < originalSentences.length; i++)
 			longsen[i] = originalSentences[i].text;
-		// shorttxt = simp.loadSimplified(pid); // simplified sentence
-		// shortsen = simp.abs2Sen(shorttxt, "\n");// array of simplified
-		// sentences
-		// longsen = simp.abs2Sen(longtxt, "\n");// array of full sentences
-		senpos = new int[longsen.length];// offset of long sentences
-		if (shortsen.length != longsen.length) {
-			System.out
-					.println("Skip due to number of long sentences != short sentences---> " + pid);
-			return false;
-		}
-		for (int i = 1; i < shortsen.length; i++) {
-			senpos[i] = originalSentences[i].begin;// longtxt.indexOf(longsen[i],
-													// senpos[i - 1]); //
-													// calculate offset between
-													// short and long sentence
-		}
 
+		proList = simp.loadProtein(pid); // load Protein list
 		allTriggers = detectTrg(longtxt); // all triggers from full sentences
 		longPro = splitData(proList, senpos); // split given proteins into
 		// corresponding sentence
@@ -149,26 +135,42 @@ public class SenAnalyzer {
 		longTrg = splitTrg(allTriggers, senpos);
 		
 		// Remove trigger that embedded inside protein name
-//		List<Word> removeList = new ArrayList<Word>();
-//		for (int i = 0; i < senpos.length; i++) {
-//			removeList.clear();
-//			for (Word w : longTrg[i]) { // triggers that embedded inside protein
-//										// should be removed
-//				for (TData dt : longPro[i]) {
-//					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
-//						removeList.add(w);
-//					}
-//					// if ((w.locs[0] >= dt.list[0] && w.locs[0] <= dt.list[1])
-//					// || (w.locs[1] >= dt.list[0] && w.locs[1] <= dt.list[1]))
-//					// removeList.add(w);
-//				}
-//			}
-//			if (removeList.size() > 0) {
-//				for (Word w : removeList) {
-//					longTrg[i].remove(w);
-//				}
-//			}
-//		}
+		List<Word> trgRemoveList = new ArrayList<Word>();
+		List<TData> proRemoveList = new ArrayList<TData>();
+		for (int i = 0; i < senpos.length; i++) {
+			trgRemoveList.clear();
+			for (Word w : longTrg[i]) { // triggers that embedded inside protein
+										// should be removed
+				for (TData dt : longPro[i]) {
+					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
+//						trgRemoveList.add(w);
+						proRemoveList.add(dt);
+					}
+					// if ((w.locs[0] >= dt.list[0] && w.locs[0] <= dt.list[1])
+					// || (w.locs[1] >= dt.list[0] && w.locs[1] <= dt.list[1]))
+					// removeList.add(w);
+				}
+			}
+			if (trgRemoveList.size() > 0) {
+				for (Word w : trgRemoveList) {
+					longTrg[i].remove(w);
+				}
+				for (TData td : proRemoveList) {
+					longPro[i].remove(td);
+				}
+			}
+		}
+		
+		
+		
+		shortsen = simp.doSimplifySentenceWise(originalSentences, proList);
+		if (shortsen.length != longsen.length) {
+			System.out
+					.println("Skip due to number of long sentences != short sentences---> " + pid);
+			return false;
+		}
+
+		
 
 		// init protein map
 		for (TData dt : proList) {
@@ -176,7 +178,6 @@ public class SenAnalyzer {
 			proIDMap.put(dt.new_name, dt.tid);
 		}
 
-		shortsen = simp.doSimplifySentenceWise(originalSentences, pid);
 
 		return true;
 	}
@@ -218,26 +219,26 @@ public class SenAnalyzer {
 		// // sentence)
 
 //		// Remove trigger that embedded inside protein name
-		List<Word> removeList = new ArrayList<Word>();
-		for (int i = 0; i < senpos.length; i++) {
-			removeList.clear();
-			for (Word w : longTrg[i]) { // triggers that embedded inside protein
-										// should be removed
-				for (TData dt : longPro[i]) {
-					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
-						removeList.add(w);
-					}
-					// if ((w.locs[0] >= dt.list[0] && w.locs[0] <= dt.list[1])
-					// || (w.locs[1] >= dt.list[0] && w.locs[1] <= dt.list[1]))
-					// removeList.add(w);
-				}
-			}
-			if (removeList.size() > 0) {
-				for (Word w : removeList) {
-					longTrg[i].remove(w);
-				}
-			}
-		}
+//		List<Word> removeList = new ArrayList<Word>();
+//		for (int i = 0; i < senpos.length; i++) {
+//			removeList.clear();
+//			for (Word w : longTrg[i]) { // triggers that embedded inside protein
+//										// should be removed
+//				for (TData dt : longPro[i]) {
+//					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
+//						removeList.add(w);
+//					}
+//					// if ((w.locs[0] >= dt.list[0] && w.locs[0] <= dt.list[1])
+//					// || (w.locs[1] >= dt.list[0] && w.locs[1] <= dt.list[1]))
+//					// removeList.add(w);
+//				}
+//			}
+//			if (removeList.size() > 0) {
+//				for (Word w : removeList) {
+//					longTrg[i].remove(w);
+//				}
+//			}
+//		}
 
 		tokenList.clear();
 		for (int i = 0; i < senpos.length; i++) {
