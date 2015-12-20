@@ -25,6 +25,7 @@ public class DBUtils {
 	public Statement stmt;
 	boolean open = false;
 	private String defaultName;
+	private String currentName;
 	private String protocol;
 
 	private String properties;
@@ -38,44 +39,41 @@ public class DBUtils {
 	}
 
 	public DBUtils(String defaultName, String protocol, String properties) {
-		this.defaultName = defaultName;
+		this.defaultName = this.currentName = defaultName;
 		this.protocol = protocol;
 		this.properties = properties;
 	}
 
 	public void openDB() {
-		log.debug(
-				"Opening database with protocol {}, name {} and properties {}.",
+		log.debug("Opening database with protocol {}, name {} and properties {}.",
 				new Object[] { protocol, defaultName, properties });
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
 			String propertyString = properties != null ? ";" + properties : "";
-			con = DriverManager.getConnection("jdbc:hsqldb:" + protocol + ":"
-					+ defaultName + propertyString, "sa", "");
+			con = DriverManager.getConnection("jdbc:hsqldb:" + protocol + ":" + defaultName + propertyString, "sa", "");
 			stmt = con.createStatement();
 			open = true;
 		} catch (NullPointerException e) {
-//			log.error("Couldn't establish DB connection with protocol: "
-//					+ protocol + ", name: " + defaultName + " and properties: "
-//					+ properties + ". Exception was: ", e);
+			// log.error("Couldn't establish DB connection with protocol: "
+			// + protocol + ", name: " + defaultName + " and properties: "
+			// + properties + ". Exception was: ", e);
 			throw e;
 		} catch (Exception e) {
-//			log.error("Couldn't establish DB connection with protocol: "
-//					+ protocol + ", name: " + defaultName + " and properties: "
-//					+ properties + ". Exception was: ", e);
+			// log.error("Couldn't establish DB connection with protocol: "
+			// + protocol + ", name: " + defaultName + " and properties: "
+			// + properties + ". Exception was: ", e);
 			throw new RuntimeException(e);
 		}
 	}
 
 	public void openDB(String dbName) {
-		log.debug(
-				"Opening database with protocol {}, name {} and properties {}.",
-				new Object[] { protocol, defaultName, properties });
+		this.currentName = dbName;
+		log.debug("Opening database with protocol {}, name {} and properties {}.",
+				new Object[] { protocol, currentName, properties });
 		try {
 			Class.forName("org.hsqldb.jdbcDriver");
 			String propertyString = properties != null ? ";" + properties : "";
-			con = DriverManager.getConnection("jdbc:hsqldb:" + protocol + ":"
-					+ dbName + propertyString, "sa", "");
+			con = DriverManager.getConnection("jdbc:hsqldb:" + protocol + ":" + currentName + propertyString, "sa", "");
 			stmt = con.createStatement();
 			open = true;
 		} catch (Exception e) {
@@ -90,50 +88,50 @@ public class DBUtils {
 	 * @param name
 	 * @return
 	 */
-	@Deprecated
-	public Connection createConnection(String name) {
-		try {
-			Class.forName("org.hsqldb.jdbcDriver");
-			open = true;
-			return DriverManager.getConnection(name, "sa", "");
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
+	// @Deprecated
+	// public Connection createConnection(String name) {
+	// try {
+	// Class.forName("org.hsqldb.jdbcDriver");
+	// open = true;
+	// return DriverManager.getConnection(name, "sa", "");
+	// } catch (Exception e) {
+	// System.out.println(e);
+	// }
+	// return null;
+	// }
 
 	/**
 	 * Unused
 	 * 
 	 * @param sql
 	 */
-	@Deprecated
-	public void createDB(String sql) {
-		try {
-			checkStmt();
-			stmt.execute(sql);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	}
+	// @Deprecated
+	// public void createDB(String sql) {
+	// try {
+	// checkStmt();
+	// stmt.execute(sql);
+	// } catch (Exception e) {
+	// System.out.println(e);
+	// }
+	// }
 
 	/**
 	 * Unused
 	 */
-	@Deprecated
-	private void checkStmt() {
-		if (stmt == null) {
-			if (!open) {
-				openDB();
-			} else {
-				try {
-					con.createStatement();
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
+	// @Deprecated
+	// private void checkStmt() {
+	// if (stmt == null) {
+	// if (!open) {
+	// openDB();
+	// } else {
+	// try {
+	// con.createStatement();
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
+	// }
+	// }
 
 	/**
 	 * Unused
@@ -141,21 +139,23 @@ public class DBUtils {
 	 * @param sql
 	 * @return
 	 */
-	@Deprecated
-	public ResultSet execQuery(String sql) {
-		try {
-			checkStmt();
-			return stmt.executeQuery(sql);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		return null;
-	}
+	// @Deprecated
+	// public ResultSet execQuery(String sql) {
+	// try {
+	// checkStmt();
+	// return stmt.executeQuery(sql);
+	// } catch (Exception e) {
+	// System.out.println(e);
+	// }
+	// return null;
+	// }
 
 	public Connection getConnection() {
 		if (con != null) {
 			return con;
 		} else {
+			log.debug(
+					"Opening connection due to request of a connection; this possibly creates an instable state of the database.");
 			openDB();
 			return con;
 		}
@@ -193,8 +193,7 @@ public class DBUtils {
 			rs = meta.getTables(null, null, null, new String[] { "TABLE" });
 			while (rs.next()) {
 				String Name = rs.getString("TABLE_NAME");
-				if (Name.contentEquals(tableName)
-						|| Name.contentEquals(tableName.toUpperCase())) {
+				if (Name.contentEquals(tableName) || Name.contentEquals(tableName.toUpperCase())) {
 					rs.close();
 					return true;
 				}
@@ -209,6 +208,8 @@ public class DBUtils {
 	public void closeDB() {
 		try {
 			if (con != null && !con.isClosed()) {
+				log.debug("Issuing shutdown of database {} (name: {}, protocol: {}, properties: {})",
+						new Object[] { this, currentName, protocol, properties });
 				stmt.execute("SHUTDOWN");
 				con.close();
 				// con = null;
@@ -221,6 +222,8 @@ public class DBUtils {
 	public void shutdownDB() {
 		try {
 			if (con != null && !con.isClosed()) {
+				log.debug("Issuing shutdown of database {} (name: {}, protocol: {}, properties: {})",
+						new Object[] { this, currentName, protocol, properties });
 				stmt.execute("SHUTDOWN COMPACT");
 				con.close();
 			}
