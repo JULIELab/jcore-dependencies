@@ -54,7 +54,7 @@ public class BasicChunk {
             }
         }else {
             System.out.println("---> BUG: "+tg.word+"  Pos: " +tg.pos);
-            printChunk();
+//            printChunk();
         }
     }
     
@@ -372,7 +372,7 @@ public class BasicChunk {
         int pos2 = getChunkPos(w2.pos);
         if(pos1<0 || pos2<0){
             System.out.println("---> not belong to BasicChunk ----> start: "+start+ " end: "+end);
-            printChunk();
+//            printChunk();
             System.out.println("V1: "+w1.word+" pos: "+w1.pos+" V2: "+w2.word+" pos: "+w2.pos);
             return -1 ;
         }
