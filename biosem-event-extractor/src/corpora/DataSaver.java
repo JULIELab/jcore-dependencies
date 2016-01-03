@@ -22,12 +22,12 @@ public class DataSaver {
 	ResultSet rs;
 	PreparedStatement ps_pro, ps_event, ps_trigger, ps_modify, ps_equiv, ps_abstract;
 	Connection con;
-	SenSimplifier simp;
+	// SenSimplifier simp;
 
 	public DataSaver(DBUtils db) {
 		// init database
 		try {
-			simp = new SenSimplifier(db);
+			// simp = new SenSimplifier(db);
 			con = db.getConnection();
 			stmt = con.createStatement();
 			// preparing tables - DROPPING TABLES
@@ -79,7 +79,7 @@ public class DataSaver {
 			ps_modify = con.prepareStatement("Insert into MODIFY(PMID, MID, T_TYPE, THEME) VALUES(?,?,?,?)");
 			ps_equiv = con.prepareStatement("Insert into EQUIV(PMID, TID1, TID2) VALUES(?,?,?)");
 			ps_abstract = con.prepareStatement("Insert into ABSTRACT(PMID, TEXT) VALUES(?,?)");
-
+			stmt.close();
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
