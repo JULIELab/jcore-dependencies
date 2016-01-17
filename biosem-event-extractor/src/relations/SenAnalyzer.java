@@ -128,6 +128,8 @@ public class SenAnalyzer {
 			longsen[i] = originalSentences[i].text;
 
 		proList = simp.loadProtein(pid); // load Protein list
+		
+		
 		allTriggers = detectTrg(longtxt); // all triggers from full sentences
 		longPro = splitData(proList, senpos); // split given proteins into
 		// corresponding sentence

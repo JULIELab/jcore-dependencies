@@ -25,7 +25,7 @@ import relations.TData;
 public class SentenceSplitter {
 	static final TokenizerFactory TOKENIZER_FACTORY = IndoEuropeanTokenizerFactory.INSTANCE;
 	static TokenizerFactory TOKENIZER = new RegExTokenizerFactory(
-			"(\\/|\\+|-|'|\\d|\\p{L})+|\\S");
+			"(\\/|\\+|-|'|\\d|\\p{L})++|\\S");
 	static final SentenceModel SENTENCE_MODEL = new MedlineSentenceModel();
 	static final SentenceChunker SENTENCE_CHUNKER = new SentenceChunker(
 			TOKENIZER_FACTORY, SENTENCE_MODEL);

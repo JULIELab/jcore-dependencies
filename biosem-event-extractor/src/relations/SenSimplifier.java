@@ -536,7 +536,8 @@ public class SenSimplifier {
 		List<String> list = new ArrayList<String>();
 		mc = pt.matcher(s);
 		while (mc.find()) {
-			list.add(mc.group()); // creating a list of proteins from text ;
+			String group = mc.group();
+			list.add(group); // creating a list of proteins from text ;
 		}
 		return list;
 	}
