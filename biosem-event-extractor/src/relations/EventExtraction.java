@@ -2316,7 +2316,7 @@ public class EventExtraction {
 		} catch (Exception ex) {
 //			ex.printStackTrace();
 //			System.out.println(ex.getLocalizedMessage());
-			log.error("Caught exception, recognition of events is skipped for current document(s). Error occurred in document " + curr_pmid + ":", ex);
+			log.warn("Caught exception, recognition of events is skipped for current document(s). Error occurred in document " + curr_pmid + ":", ex);
 			log.debug("Exception while event extraction: ", ex);
 		}
 		// RuleLearner learner = new RuleLearner();

@@ -112,31 +112,66 @@ public class SenAnalyzer {
 	 */
 	public boolean initAbstract(String pid) {
 		proMap.clear();
+		proIDMap.clear();
 		longtxt = simp.loadSentence(pid); // load long sentence / abstract
 		if (longtxt == null) {
 			System.out.println("PMID: " + pid + " -> no text");
 			return false;
 		}
-		proList = simp.loadProtein(pid); // load Protein list
+
 		BioSemSentence[] originalSentences = simp.doSentenceSplitting(longtxt, "\n");
-		shortsen = simp.doSimplifySentenceWise(originalSentences, pid);
 		longsen = new String[originalSentences.length];
+		senpos = new int[longsen.length];// offset of long sentences
+		for (int i = 1; i < originalSentences.length; i++)
+			senpos[i] = originalSentences[i].begin;
 		for (int i = 0; i < originalSentences.length; i++)
 			longsen[i] = originalSentences[i].text;
-		// shorttxt = simp.loadSimplified(pid); // simplified sentence
-		// shortsen = simp.abs2Sen(shorttxt, "\n");// array of simplified
-		// sentences
-		// longsen = simp.abs2Sen(longtxt, "\n");// array of full sentences
-		senpos = new int[longsen.length];// offset of long sentences
+
+		proList = simp.loadProtein(pid); // load Protein list
+		
+		
+		allTriggers = detectTrg(longtxt); // all triggers from full sentences
+		longPro = splitData(proList, senpos); // split given proteins into
+		// corresponding sentence
+		// (proteins belong to this
+		// sentence)
+		longTrg = splitTrg(allTriggers, senpos);
+
+		// Remove trigger that embedded inside protein name
+		List<Word> trgRemoveList = new ArrayList<Word>();
+		List<TData> proRemoveList = new ArrayList<TData>();
+		for (int i = 0; i < senpos.length; i++) {
+			trgRemoveList.clear();
+			proRemoveList.clear();
+			for (Word w : longTrg[i]) { // triggers that embedded inside protein
+										// should be removed
+				for (TData dt : longPro[i]) {
+					// if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
+					// trgRemoveList.add(w);
+					// proRemoveList.add(dt);
+					// }
+					if ((w.locs[0] >= dt.list[0] && w.locs[0] < dt.list[1])
+							|| (w.locs[1] > dt.list[0] && w.locs[1] <= dt.list[1])) {
+						trgRemoveList.add(w);
+						// protein removal currently doesn't work (errors in
+						// other RuleLearner during learning)
+						// proRemoveList.add(dt);
+					}
+				}
+			}
+			for (Word w : trgRemoveList) {
+				longTrg[i].remove(w);
+			}
+			for (TData td : proRemoveList) {
+				longPro[i].remove(td);
+				proList.remove(td);
+			}
+		}
+
+		shortsen = simp.doSimplifySentenceWise(originalSentences, proList);
 		if (shortsen.length != longsen.length) {
 			System.out.println("Skip due to number of long sentences != short sentences---> " + pid);
 			return false;
-		}
-		for (int i = 1; i < shortsen.length; i++) {
-			senpos[i] = originalSentences[i].begin;// longtxt.indexOf(longsen[i],
-													// senpos[i - 1]); //
-													// calculate offset between
-													// short and long sentence
 		}
 
 		// init protein map
@@ -144,6 +179,7 @@ public class SenAnalyzer {
 			proMap.put(dt.tid, dt); // map <id, protein>
 			proIDMap.put(dt.new_name, dt.tid);
 		}
+
 		return true;
 	}
 
@@ -168,34 +204,42 @@ public class SenAnalyzer {
 		detectedPro = new ArrayList[senpos.length];// list of Pros per sentence
 		detectedTrg = new ArrayList[senpos.length];// list of Triggers per
 													// sentence
-		allTriggers = detectTrg(longtxt); // all triggers from full sentences
-		longTrg = splitTrg(allTriggers, senpos);// map triggers from long
-												// sentence into short
-												// sentences-> to use original
-												// locations
-		longPro = splitData(proList, senpos); // split given proteins into
-												// corresponding sentence
-												// (proteins belong to this
-												// sentence)
+													// allTriggers =
+													// detectTrg(longtxt); //
+													// all triggers from full
+													// sentences
+		// longTrg = splitTrg(allTriggers, senpos);// map triggers from long
+		// sentence into short
+		// sentences-> to use original
+		// locations
+		// longPro = splitData(proList,
+		// senpos); // split given
+		// proteins into
+		// // corresponding sentence
+		// // (proteins belong to this
+		// // sentence)
 
-		// Remove trigger that embedded inside protein name
-		List<Word> removeList = new ArrayList<Word>();
-		for (int i = 0; i < senpos.length; i++) {
-			removeList.clear();
-			for (Word w : longTrg[i]) { // triggers that embedded inside protein
-										// should be removed
-				for (TData dt : longPro[i]) {
-					if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
-						removeList.add(w);
-					}
-				}
-			}
-			if (removeList.size() > 0) {
-				for (Word w : removeList) {
-					longTrg[i].remove(w);
-				}
-			}
-		}
+		// // Remove trigger that embedded inside protein name
+		// List<Word> removeList = new ArrayList<Word>();
+		// for (int i = 0; i < senpos.length; i++) {
+		// removeList.clear();
+		// for (Word w : longTrg[i]) { // triggers that embedded inside protein
+		// // should be removed
+		// for (TData dt : longPro[i]) {
+		// if (w.locs[0] >= dt.list[0] && w.locs[1] <= dt.list[1]) {
+		// removeList.add(w);
+		// }
+		// // if ((w.locs[0] >= dt.list[0] && w.locs[0] <= dt.list[1])
+		// // || (w.locs[1] >= dt.list[0] && w.locs[1] <= dt.list[1]))
+		// // removeList.add(w);
+		// }
+		// }
+		// if (removeList.size() > 0) {
+		// for (Word w : removeList) {
+		// longTrg[i].remove(w);
+		// }
+		// }
+		// }
 
 		tokenList.clear();
 		for (int i = 0; i < senpos.length; i++) {
@@ -248,7 +292,8 @@ public class SenAnalyzer {
 			}
 			// Asign ID for PRO
 			if (detectedPro[i].size() != longPro[i].size()) {
-				System.err.println("Sentence " + i + ": Miss protein, given: " + longPro[i].size() + " detectted " + detectedPro[i].size());
+				System.err.println("Sentence " + i + ": Miss protein, given: " + longPro[i].size() + " detectted "
+						+ detectedPro[i].size());
 				System.err.println("Long: " + longsen[i]);
 				System.err.println("");
 				System.err.println("Short: " + shortsen[i]);
@@ -335,7 +380,8 @@ public class SenAnalyzer {
 				tokens = tokenList.get(i);
 				tags = parser.POSTag(tokens);
 				tagList.add(tags);
-				// System.out.println("Parsing: "+id+" send ID: "+i+" "+shortsen[i]);
+				// System.out.println("Parsing: "+id+" send ID: "+i+"
+				// "+shortsen[i]);
 				parser.old_txt = shortsen[i];
 				List<Chunk> chunks = parser.parse(tokens, tags); // parse
 																	// sentence
@@ -417,7 +463,8 @@ public class SenAnalyzer {
 						remove = false;
 						if (prot.pos >= c.begin && prot.pos <= c.end) {
 							if (prot.fullword != null) {
-								if (prot.fullword.contains(prot.word + "+") || prot.fullword.endsWith("+") || prot.fullword.startsWith("anti")) {
+								if (prot.fullword.contains(prot.word + "+") || prot.fullword.endsWith("+")
+										|| prot.fullword.startsWith("anti")) {
 									remove = true;
 								}
 							}
@@ -628,7 +675,7 @@ public class SenAnalyzer {
 					} else { // remove the last digit due to unwanted pattern
 								// e.g. PROXY
 						// System.out.println(" ----> " + "PRO: " + word.word +
-						// "  not found");
+						// " not found");
 						String s1 = s.substring(0, s.length() - 1);
 						// System.out.println("Pro: new name "+s1);
 						word.word = s1;
@@ -937,7 +984,8 @@ public class SenAnalyzer {
 	}
 
 	static final Map<String, Set<String>> notTrg = new HashMap<String, Set<String>>();
-	static final String notrigger[] = { "binding->site|sites|domain|element|elements|complexes|protein|proteins|subunit|subunits|complex",
+	static final String notrigger[] = {
+			"binding->site|sites|domain|element|elements|complexes|protein|proteins|subunit|subunits|complex",
 			"transcription->factor|factors|initiation|sites|site|start" };
 
 	static {

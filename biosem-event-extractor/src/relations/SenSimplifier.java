@@ -536,7 +536,8 @@ public class SenSimplifier {
 		List<String> list = new ArrayList<String>();
 		mc = pt.matcher(s);
 		while (mc.find()) {
-			list.add(mc.group()); // creating a list of proteins from text ;
+			String group = mc.group();
+			list.add(group); // creating a list of proteins from text ;
 		}
 		return list;
 	}
@@ -805,8 +806,8 @@ public class SenSimplifier {
 	int trmiss_count = 0;
 
 	public String[] doSimplifySentenceWise(BioSemSentence[] originalSentences,
-			String docId) {
-		List<TData> plist = loadProtein(docId);
+			List<TData> proList) {
+		List<TData> plist = proList;//loadProtein(proList);
 		int pIndex = plist.size() - 1;
 		String[] simplifiedSentences = new String[originalSentences.length];
 		for (int i = originalSentences.length - 1; i >= 0; --i) {
@@ -815,7 +816,12 @@ public class SenSimplifier {
 			// iterate through those proteins which occur within the sentence
 			while (pIndex >= 0 && plist.get(pIndex).list[0] >= sentence.begin) {
 				TData dt = plist.get(pIndex);
-				String name = "PRO" + pIndex;
+//				String name = "PRO" + pIndex;
+				String name = dt.new_name;
+//				if (!name.equals(dt.new_name)) {
+//				System.out.println(name);
+//				System.out.println(dt.new_name);
+//				}
 				sb = sb.replace(dt.list[0] - sentence.begin, dt.list[1]
 						- sentence.begin, name);
 				--pIndex;

@@ -278,8 +278,8 @@ public class DataLoader {
 		for (String proteinLine : proteins)
 			readProteinLine(proteinLine);
 		// System.out.println("Loading data .... done!");
-		SenSimplifier simp = new SenSimplifier(db);
-		simp.doSimplify();
+//		SenSimplifier simp = new SenSimplifier(db);
+//		simp.doSimplify();
 		// System.out.println("Simplifying data ... done!");
 		// System.out.println("Generating dictionary ... done!");
 		return db;

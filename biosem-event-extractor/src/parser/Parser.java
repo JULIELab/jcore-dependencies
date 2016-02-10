@@ -57,7 +57,7 @@ public final class Parser {
 	public String genia_tag[]; // POS tags of current sentence
 	public String old_txt = null;
 	static TokenizerFactory TOKENIZER_FACTORY = new RegExTokenizerFactory(
-			"(\\/|\\+|-|'|\\d|\\p{L})+|\\S|\\.");
+			"(\\/|\\+|-|'|\\d|\\p{L})++|\\S|\\.");
 
 	@SuppressWarnings("CallToThreadDumpStack")
 	public void initParser() {
