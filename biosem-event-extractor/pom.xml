@@ -2,7 +2,6 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<artifactId>biosem-event-extractor</artifactId>
-	<version>1.1.5</version>
 	<name>BioSem Event Extractor</name>
 	<description>The event extraction engine used by the Amsterdam team in the BioNLP Shared Task 2011 challenge. The code was adapted to also work with all data of the ST2013 challenge (there are 4 more trigger/event types in these data in comparison with the ST2011), evaluation results stayed the same.</description>
 <!-- 	<repositories> -->
@@ -22,14 +21,6 @@
 			</resource>
 		</resources>
 		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.1</version>
-				<configuration>
-					<source>1.7</source>
-					<target>1.7</target>
-				</configuration>
-			</plugin>
 			<plugin>
 				<artifactId>maven-antrun-plugin</artifactId>
 				<executions>
@@ -146,7 +137,7 @@
 	<parent>
 		<groupId>de.julielab</groupId>
 		<artifactId>jcore-dependencies</artifactId>
-		<version>2.1.0</version>
+		<version>2.2.0-SNAPSHOT</version>
 	</parent>
 	<licenses>
         <license>
