@@ -489,9 +489,12 @@ public class JulieXMLTools {
 			int i = -1;
 			while ((i = ap.evalXPath()) != -1) {
 				nsDeclaration = vn.toString(i);
-				String nsPrefix = nsDeclaration.split(":")[1];
-				String nsUrl = vn.toString(i + 1);
-				namespaceMap.put(nsPrefix, nsUrl);
+			        if (nsDeclaration.contains(":")) {
+		                    String nsPrefix = nsDeclaration.split(":")[1];
+		                    String nsUrl = vn.toString(i + 1);
+		                    namespaceMap.put(nsPrefix, nsUrl);
+			        }
+                }
 			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			LOG.error(
