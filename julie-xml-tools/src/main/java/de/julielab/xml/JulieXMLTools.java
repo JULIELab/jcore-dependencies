@@ -495,7 +495,6 @@ public class JulieXMLTools {
 		                    namespaceMap.put(nsPrefix, nsUrl);
 			        }
                 }
-			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			LOG.error(
 					"This algorithm expects XML namespace declarations to be of the form \"xmlns:<ns-name>\". The declaration actually was: \""
