@@ -33,6 +33,7 @@
 		<module>julie-segment-eval</module>
 		<module>julie-xml-tools</module>
         <module>uea-stemmer</module>
+        <module>jules-trove</module>
 	</modules>
 	
 	
