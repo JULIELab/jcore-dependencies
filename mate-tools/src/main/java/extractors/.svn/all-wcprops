@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors
+END
+ExtractorClusterStackedR2.java
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors/ExtractorClusterStackedR2.java
+END
+ExtractorFactory.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors/ExtractorFactory.java
+END
+ExtractorReranker.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors/ExtractorReranker.java
+END
+ParallelExtract.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors/ParallelExtract.java
+END
+Extractor.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors/Extractor.java
+END
+ExtractorClusterStacked.java
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/!svn/ver/135/trunk/mate-tools/src/extractors/ExtractorClusterStacked.java
+END

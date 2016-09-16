@@ -1,0 +1,107 @@
+K 25
+svn:wc:ra_dav:version-url
+V 49
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/parser
+END
+MFO.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/MFO.java
+END
+ParallelDecoder.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/ParallelDecoder.java
+END
+ParallelRearrange.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/ParallelRearrange.java
+END
+Edges.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/Edges.java
+END
+ParallelExtract.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/ParallelExtract.java
+END
+ParametersFloat.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/ParametersFloat.java
+END
+Options.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/Options.java
+END
+Parser.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/parser/Parser.java
+END
+Pipe.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/Pipe.java
+END
+Open.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/137/trunk/mate-tools/src/is2/parser/Open.java
+END
+Evaluator.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/3/trunk/mate-tools/src/is2/parser/Evaluator.java
+END
+Parameters.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/3/trunk/mate-tools/src/is2/parser/Parameters.java
+END
+Decoder.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/149/trunk/mate-tools/src/is2/parser/Decoder.java
+END
+D5.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/149/trunk/mate-tools/src/is2/parser/D5.java
+END
+Closed.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/Closed.java
+END
+Extractor.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/235/trunk/mate-tools/src/is2/parser/Extractor.java
+END
+package.html
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/141/trunk/mate-tools/src/is2/parser/package.html
+END

@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/243/trunk/mate-tools/src/examples
+END
+Pipeline.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/240/trunk/mate-tools/src/examples/Pipeline.java
+END
+FullPipelineTest.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/243/trunk/mate-tools/src/examples/FullPipelineTest.java
+END
+DependencyParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/240/trunk/mate-tools/src/examples/DependencyParser.java
+END
+ParseOnly.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/153/trunk/mate-tools/src/examples/ParseOnly.java
+END
+FullPipelineSpanish.java
+K 25
+svn:wc:ra_dav:version-url
+V 72
+/svn/!svn/ver/131/trunk/mate-tools/src/examples/FullPipelineSpanish.java
+END
+MorphTagger.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/240/trunk/mate-tools/src/examples/MorphTagger.java
+END

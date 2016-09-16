@@ -1,0 +1,257 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/242/trunk/mate-tools/src/is2/data
+END
+DataT.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/DataT.java
+END
+PSTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/PSTree.java
+END
+MFC.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/MFC.java
+END
+ParseNBest.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/ParseNBest.java
+END
+D4.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/D4.java
+END
+SentenceData09.java
+K 25
+svn:wc:ra_dav:version-url
+V 67
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/data/SentenceData09.java
+END
+RandomIndex.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/RandomIndex.java
+END
+D6.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/143/trunk/mate-tools/src/is2/data/D6.java
+END
+Closed.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/Closed.java
+END
+Parse.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/Parse.java
+END
+Long2IntInterface.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/Long2IntInterface.java
+END
+Long2IntExact.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/151/trunk/mate-tools/src/is2/data/Long2IntExact.java
+END
+MFO.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/MFO.java
+END
+Cluster.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/Cluster.java
+END
+InstancesTagger.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/InstancesTagger.java
+END
+Thesaurus.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/Thesaurus.java
+END
+IEncoder.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/IEncoder.java
+END
+F2S.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/F2S.java
+END
+Long2Int.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/Long2Int.java
+END
+IEncoderPlus.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/IEncoderPlus.java
+END
+FVR.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/FVR.java
+END
+F2SD.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/3/trunk/mate-tools/src/is2/data/F2SD.java
+END
+F2SF.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/F2SF.java
+END
+Open.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/Open.java
+END
+MFB.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/MFB.java
+END
+PrimeFinder.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/3/trunk/mate-tools/src/is2/data/PrimeFinder.java
+END
+DPSTree.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/DPSTree.java
+END
+DataFES.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/DataFES.java
+END
+IntIntHash.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/3/trunk/mate-tools/src/is2/data/IntIntHash.java
+END
+D7.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/242/trunk/mate-tools/src/is2/data/D7.java
+END
+F2SP.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/F2SP.java
+END
+FV.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/FV.java
+END
+DX.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/DX.java
+END
+F2ST.java
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/F2ST.java
+END
+DataF.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/DataF.java
+END
+Parameter.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/Parameter.java
+END
+IFV.java
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/IFV.java
+END
+Edges.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/Edges.java
+END
+Instances.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/235/trunk/mate-tools/src/is2/data/Instances.java
+END
+PipeGen.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/PipeGen.java
+END
+Long2IntQuick.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/134/trunk/mate-tools/src/is2/data/Long2IntQuick.java
+END
+ParametersFloat.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/144/trunk/mate-tools/src/is2/data/ParametersFloat.java
+END

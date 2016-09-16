@@ -1,0 +1,113 @@
+K 25
+svn:wc:ra_dav:version-url
+V 47
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/util
+END
+IntStack.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/235/trunk/mate-tools/src/is2/util/IntStack.java
+END
+Convert.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Convert.java
+END
+ExtractParagraphs.java
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/ExtractParagraphs.java
+END
+ConvertTiger2CoNLL.java
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/ConvertTiger2CoNLL.java
+END
+DB.java
+K 25
+svn:wc:ra_dav:version-url
+V 55
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/util/DB.java
+END
+Edges.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Edges.java
+END
+Split.java
+K 25
+svn:wc:ra_dav:version-url
+V 58
+/svn/!svn/ver/142/trunk/mate-tools/src/is2/util/Split.java
+END
+Options.java
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Options.java
+END
+Long2Int.java
+K 25
+svn:wc:ra_dav:version-url
+V 61
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Long2Int.java
+END
+EvaluatorTagger.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/EvaluatorTagger.java
+END
+Convert0409.java
+K 25
+svn:wc:ra_dav:version-url
+V 64
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Convert0409.java
+END
+ConvertADJ.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/ConvertADJ.java
+END
+Evaluator.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/235/trunk/mate-tools/src/is2/util/Evaluator.java
+END
+ConvertLowerCase0909.java
+K 25
+svn:wc:ra_dav:version-url
+V 73
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/ConvertLowerCase0909.java
+END
+OptionsSuper.java
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/235/trunk/mate-tools/src/is2/util/OptionsSuper.java
+END
+Split2.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Split2.java
+END
+Split3.java
+K 25
+svn:wc:ra_dav:version-url
+V 59
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/Split3.java
+END
+ParserEvaluator.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/148/trunk/mate-tools/src/is2/util/ParserEvaluator.java
+END

@@ -1,0 +1,55 @@
+10
+
+dir
+337
+http://mate-tools.googlecode.com/svn/trunk/mate-tools/src/is2
+http://mate-tools.googlecode.com/svn
+
+
+
+2013-11-07T20:43:28.126250Z
+242
+bohnet@informatik.uni-stuttgart.de
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+f8a23f8b-be01-cc2b-2acf-4a0f075d609a
+
+mtag
+dir
+
+data
+dir
+
+lemmatizer
+dir
+
+tag
+dir
+
+parser
+dir
+
+util
+dir
+
+tools
+dir
+
+parserR2
+dir
+
+io
+dir
+

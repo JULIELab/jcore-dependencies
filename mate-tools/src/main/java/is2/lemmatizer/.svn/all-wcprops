@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/lemmatizer
+END
+Lemmatizer.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/240/trunk/mate-tools/src/is2/lemmatizer/Lemmatizer.java
+END
+Options.java
+K 25
+svn:wc:ra_dav:version-url
+V 66
+/svn/!svn/ver/139/trunk/mate-tools/src/is2/lemmatizer/Options.java
+END
+StringEdit.java
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/136/trunk/mate-tools/src/is2/lemmatizer/StringEdit.java
+END
+Pipe.java
+K 25
+svn:wc:ra_dav:version-url
+V 63
+/svn/!svn/ver/136/trunk/mate-tools/src/is2/lemmatizer/Pipe.java
+END
+MFO.java
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/136/trunk/mate-tools/src/is2/lemmatizer/MFO.java
+END
+Evaluator.java
+K 25
+svn:wc:ra_dav:version-url
+V 68
+/svn/!svn/ver/136/trunk/mate-tools/src/is2/lemmatizer/Evaluator.java
+END
