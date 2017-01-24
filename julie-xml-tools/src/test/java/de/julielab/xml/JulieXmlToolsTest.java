@@ -15,14 +15,24 @@
 
 package de.julielab.xml;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.junit.Test;
 
 import com.ximpleware.AutoPilot;
+import com.ximpleware.EOFException;
+import com.ximpleware.EncodingException;
+import com.ximpleware.EntityException;
+import com.ximpleware.NavException;
+import com.ximpleware.ParseException;
 import com.ximpleware.VTDException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
@@ -106,5 +116,43 @@ public class JulieXmlToolsTest {
 		
 		String elementText = JulieXMLTools.getElementText(vn);
 		assertEquals("this is mixed text content", elementText);
+	}
+	
+	@Test
+	public void parseUnicodeBeyondBMP() throws NavException, FileNotFoundException, IOException, EncodingException, EOFException, EntityException, ParseException {
+		VTDGen vg = new VTDGen();
+		byte[] bytes = JulieXMLTools.readStream(new FileInputStream("src/test/resources/23700993.xml"), 1024);
+		String utf8String = new String(bytes, "UTF-8");
+		Matcher m = Pattern.compile("Affiliation>(.*)</Affiliation>").matcher(utf8String);
+		m.find();
+		String affiliation = m.group(1);
+		String name = affiliation.split(" ")[7];
+//		name = name.replaceAll("[^\u0000-\uFFFF]", "");
+		for (int i = 0; i < name.length(); i++) {
+			System.out.println(name.charAt(i) + " " + name.codePointAt(i) + " " + ((int)name.charAt(i)));
+		}
+		
+		
+//		vg.parseFile("src/test/resources/23700993.xml", true);
+		vg.setDoc(bytes);
+		vg.parse(true);
+		VTDNav vn = vg.getNav();
+		AutoPilot ap = new AutoPilot(vn);
+		ap.selectElement("Affiliation");
+		while (ap.iterate()) {
+			int t = vn.getText();
+			if (t != -1) {
+				String value = vn.toString(t);
+				System.out.println(value);
+				String word = value.split(" ")[7];
+				for (int i = 0; i < word.length(); i++) {
+					System.out.println(word.charAt(i) + " " + word.codePointAt(i) + " " + ((int)word.charAt(i)));
+				}
+				
+				
+//				String sanitizedString = word.replaceAll("[^\u0000-\uFFFF]", "");
+			}
+		}
+		
 	}
 }
