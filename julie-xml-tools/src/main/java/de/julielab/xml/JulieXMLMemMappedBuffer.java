@@ -130,4 +130,9 @@ public class JulieXMLMemMappedBuffer implements IByteBuffer {
 		fc.transferTo(os, len, sinkChannel);
 
 	}
+
+	@Override
+	public void close() {
+		
+	}
 }

@@ -654,7 +654,7 @@ public class JulieXMLTools {
 	 *            An XPath expression pointing to the XML element whose text should be set.
 	 * @param text
 	 *            The text which is to be set to the XML element pointed to by <code>xpath</code>.
-	 * @return The VTD index of the changes element, -1 otherwise.
+	 * @return The VTD index of the changed element, -1 otherwise.
 	 * @throws VTDException
 	 *             If something with navigation or modification of the XML document goes wrong.
 	 * @throws UnsupportedEncodingException
@@ -671,8 +671,9 @@ public class JulieXMLTools {
 			// Since VTD XML 2.11, a non-existent text node does not lead to a
 			// -1 index (node does not exist) but to a text node with zero
 			// length (node exists but has no text content).
-			int tokenLength = vn.getTokenLength(textIndex);
-			if (tokenLength > 0)
+//			int tokenLength = vn.getTokenLength(textIndex);
+//			if (tokenLength > 0)
+			if (textIndex != -1)
 				xm.updateToken(textIndex, text);
 			// If the element is empty, insert the new text.
 			else {

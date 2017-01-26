@@ -19,11 +19,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Arrays;
 
 import org.junit.Test;
 
@@ -36,7 +34,7 @@ import com.ximpleware.ParseException;
 import com.ximpleware.VTDException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
-import com.ximpleware.XMLModifier;
+import com.ximpleware.*;
 
 /**
  * Tests for the Utils class.
@@ -86,7 +84,7 @@ public class JulieXmlToolsTest {
 		bos = new ByteArrayOutputStream();
 		xm.output(bos);
 		assertEquals("<test>Totally newest.</test>", new String(bos.toByteArray()));
-		assertEquals(2, index);
+		assertEquals(-1, index);
 
 		// If the element doesn't exist at all, the returned index should equal
 		// -1.
@@ -120,39 +118,23 @@ public class JulieXmlToolsTest {
 	
 	@Test
 	public void parseUnicodeBeyondBMP() throws NavException, FileNotFoundException, IOException, EncodingException, EOFException, EntityException, ParseException {
+		// character codpoint 0x10400
+		String unicode = "<supplementary>\uD801\uDC00</supplementary>";
+		byte[] unicodeBytes = unicode.getBytes();
+		assertEquals(unicode, new String(unicodeBytes, "UTF-8"));
+		
 		VTDGen vg = new VTDGen();
-		byte[] bytes = JulieXMLTools.readStream(new FileInputStream("src/test/resources/23700993.xml"), 1024);
-		String utf8String = new String(bytes, "UTF-8");
-		Matcher m = Pattern.compile("Affiliation>(.*)</Affiliation>").matcher(utf8String);
-		m.find();
-		String affiliation = m.group(1);
-		String name = affiliation.split(" ")[7];
-//		name = name.replaceAll("[^\u0000-\uFFFF]", "");
-		for (int i = 0; i < name.length(); i++) {
-			System.out.println(name.charAt(i) + " " + name.codePointAt(i) + " " + ((int)name.charAt(i)));
-		}
-		
-		
-//		vg.parseFile("src/test/resources/23700993.xml", true);
-		vg.setDoc(bytes);
-		vg.parse(true);
+		vg.setDoc(unicodeBytes);
+		vg.parse(false);
 		VTDNav vn = vg.getNav();
-		AutoPilot ap = new AutoPilot(vn);
-		ap.selectElement("Affiliation");
-		while (ap.iterate()) {
-			int t = vn.getText();
-			if (t != -1) {
-				String value = vn.toString(t);
-				System.out.println(value);
-				String word = value.split(" ")[7];
-				for (int i = 0; i < word.length(); i++) {
-					System.out.println(word.charAt(i) + " " + word.codePointAt(i) + " " + ((int)word.charAt(i)));
-				}
-				
-				
-//				String sanitizedString = word.replaceAll("[^\u0000-\uFFFF]", "");
-			}
-		}
-		
+		long fragment = vn.getContentFragment();
+		int offset = (int) fragment;
+		int length = (int) (fragment >> 32);
+		String originalBytePortion = new String(Arrays.copyOfRange(unicodeBytes, offset, offset+length));
+		String vtdString = vn.toRawString(offset, length);
+		// this actually succeeds
+		assertEquals("\uD801\uDC00", originalBytePortion);
+		// this fails ;-( the returned character is Ѐ, codepoint 0x400, thus the high surrogate is missing
+		assertEquals("\uD801\uDC00", vtdString);
 	}
 }

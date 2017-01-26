@@ -199,4 +199,9 @@ public class JulieXMLBuffer implements IByteBuffer {
 		return bos.toByteArray();
 	}
 
+	@Override
+	public void close() {
+		
+	}
+
 }
