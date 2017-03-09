@@ -176,8 +176,6 @@ final public class MFO  implements IEncoderPlus {
    
 	/** 
 	 * Maps a long to a integer value. This is very useful to save memory for sparse data long values 
-	 * @param l
-	 * @return the integer
 	 */
 	static public  int misses = 0;
 	static public  int good = 0;
