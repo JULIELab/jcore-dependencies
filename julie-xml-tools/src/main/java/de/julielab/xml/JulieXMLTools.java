@@ -76,21 +76,27 @@ public class JulieXMLTools {
 	public static final int CONTENT_FRAGMENT = 1;
 
 	/**
-	 * Convenience method for quick construction of a row iterator over an XML document.
+	 * Convenience method for quick construction of a row iterator over an XML
+	 * document.
 	 * 
 	 * <p>
-	 * The <code>fileName</code> determines the location of the XML file to return data records from. For more detailed
-	 * information see {@link #constructRowIterator(VTDNav, String, List, String)}.
+	 * The <code>fileName</code> determines the location of the XML file to
+	 * return data records from. For more detailed information see
+	 * {@link #constructRowIterator(VTDNav, String, List, String)}.
 	 * 
 	 * @param fileName
 	 *            XML file to return data rows from.
 	 * @param bufferSize
-	 *            Size of buffers while reading the file at <code>fileName</code>.
+	 *            Size of buffers while reading the file at
+	 *            <code>fileName</code>.
 	 * @param forEachXpath
-	 *            An XPath expression determining the XML elements to retrieve data records from.
+	 *            An XPath expression determining the XML elements to retrieve
+	 *            data records from.
 	 * @param fields
-	 *            List of attribute-value pairs determining the record fields returned by the iterator.
-	 * @return An iterator over all rows extracted from the XMl document pointed to by <code>fileName</code>.
+	 *            List of attribute-value pairs determining the record fields
+	 *            returned by the iterator.
+	 * @return An iterator over all rows extracted from the XMl document pointed
+	 *         to by <code>fileName</code>.
 	 */
 	public static Iterator<Map<String, Object>> constructRowIterator(String fileName, int bufferSize,
 			String forEachXpath, final List<Map<String, String>> fields, boolean largeFileSize) {
@@ -164,23 +170,30 @@ public class JulieXMLTools {
 	}
 
 	/**
-	 * Convenience method for quick construction of a row iterator over an XML document.
+	 * Convenience method for quick construction of a row iterator over an XML
+	 * document.
 	 * 
 	 * <p>
-	 * <code>data</code> contains the XML data to return data records from. For more detailed information see
+	 * <code>data</code> contains the XML data to return data records from. For
+	 * more detailed information see
 	 * {@link #constructRowIterator(VTDNav, String, List, String)}.
 	 * 
 	 * @param data
 	 *            Byte array containing an XML document.
 	 * @param bufferSize
-	 *            Size of buffers while reading the file at <code>fileName</code>.
+	 *            Size of buffers while reading the file at
+	 *            <code>fileName</code>.
 	 * @param forEachXpath
-	 *            An XPath expression determining the XML elements to retrieve data records from.
+	 *            An XPath expression determining the XML elements to retrieve
+	 *            data records from.
 	 * @param fields
-	 *            List of attribute-value pairs determining the record fields returned by the iterator.
+	 *            List of attribute-value pairs determining the record fields
+	 *            returned by the iterator.
 	 * @param identifier
-	 *            A string identifying the XML document in <code>data</code>, needed for error messages.
-	 * @return An iterator over all rows extracted from the XMl document pointed to by <code>fileName</code>.
+	 *            A string identifying the XML document in <code>data</code>,
+	 *            needed for error messages.
+	 * @return An iterator over all rows extracted from the XMl document pointed
+	 *         to by <code>fileName</code>.
 	 */
 	public static Iterator<Map<String, Object>> constructRowIterator(byte[] data, int bufferSize, String forEachXpath,
 			List<Map<String, String>> fields, String identifier) {
@@ -199,25 +212,30 @@ public class JulieXMLTools {
 	}
 
 	/**
-	 * This method corresponds to {@link #constructRowIterator(VTDNav, String, List, String)} but employs the
-	 * VTD-XML-Huge API to extract data from very large XML documents. Due to API differences, there are a few
-	 * shortcomings however:<br>
+	 * This method corresponds to
+	 * {@link #constructRowIterator(VTDNav, String, List, String)} but employs
+	 * the VTD-XML-Huge API to extract data from very large XML documents. Due
+	 * to API differences, there are a few shortcomings however:<br>
 	 * <ul>
-	 * <li>The iterator returned by this method is not able to automatically extract namespace URIs. If namespace-aware
-	 * processing is necessary, namespace prefixes and their corresponding URIs must be made manually configurable.
+	 * <li>The iterator returned by this method is not able to automatically
+	 * extract namespace URIs. If namespace-aware processing is necessary,
+	 * namespace prefixes and their corresponding URIs must be made manually
+	 * configurable.
 	 * </ul>
 	 * 
 	 * @param vn
-	 *            <code>VTDNavHuge</code> object to the XML object. The object should not have been used before, so the
-	 *            current VTD index points to the document root.
+	 *            <code>VTDNavHuge</code> object to the XML object. The object
+	 *            should not have been used before, so the current VTD index
+	 *            points to the document root.
 	 * @param forEachXpath
-	 *            An absolute XPath expression determining the slice(s) of the XML document from which data rows are
-	 *            extracted.
+	 *            An absolute XPath expression determining the slice(s) of the
+	 *            XML document from which data rows are extracted.
 	 * @param fields
 	 *            The fields to be returned with each data row.
 	 * @param identifier
 	 *            Used in error messages
-	 * @return An iterator over all rows extracted from the XMl document navigated by <code>vn</code>.
+	 * @return An iterator over all rows extracted from the XMl document
+	 *         navigated by <code>vn</code>.
 	 */
 	private static Iterator<Map<String, Object>> constructRowIterator(VTDNavHuge vn, String forEachXpath,
 			List<Map<String, String>> fields, String identifier) {
@@ -270,8 +288,7 @@ public class JulieXMLTools {
 					String[] path = identifier.split("/");
 					navigators.put(fieldName, new FileNameValueSource(path[path.length - 1], field));
 				} else {
-					LOG.warn("Field with name \""
-							+ fieldName
+					LOG.warn("Field with name \"" + fieldName
 							+ "\" does not define a source to get a value from (e.g. XML XPath or file name) and will not have imported any values.");
 				}
 			}
@@ -329,15 +346,19 @@ public class JulieXMLTools {
 
 	/**
 	 * <p>
-	 * The <code>VTDNav</code> vn is a VTD navigator over the XML file to return data records from. For each evaluation
-	 * of the <code>forEach</code> XPath expression, one data row is created
+	 * The <code>VTDNav</code> vn is a VTD navigator over the XML file to return
+	 * data records from. For each evaluation of the <code>forEach</code> XPath
+	 * expression, one data row is created
 	 * </p>
 	 * <p>
-	 * Such a row consist of the fields given by the list <code>fields</code> The list contains <code>Maps</code> of
-	 * attribute-value pairs. All fields are required to have a {@link Constants#XPATH} attribute which specifies the
-	 * XPath pointing to information in the XML documents to retrieve. Likewise, a {@link Constants#NAME} attribute is
-	 * required. This attribute determines the name of the field in the resulting row containing the information
-	 * retrieved by the field's <code>Constants.XPATH</code> attribute.
+	 * Such a row consist of the fields given by the list <code>fields</code>
+	 * The list contains <code>Maps</code> of attribute-value pairs. All fields
+	 * are required to have a {@link Constants#XPATH} attribute which specifies
+	 * the XPath pointing to information in the XML documents to retrieve.
+	 * Likewise, a {@link Constants#NAME} attribute is required. This attribute
+	 * determines the name of the field in the resulting row containing the
+	 * information retrieved by the field's <code>Constants.XPATH</code>
+	 * attribute.
 	 * </p>
 	 * <p>
 	 * <samp> <b>Example:</b>
@@ -345,18 +366,24 @@ public class JulieXMLTools {
 	 * A field with the following attribute-value-pairs
 	 * </p>
 	 * <p>
-	 * <em>&lt;field name="pmid" xpath="/MedlineCitationSet/MedlineCitation/PMID" &gt;</em>
+	 * <em>&lt;field name="pmid"
+	 * xpath="/MedlineCitationSet/MedlineCitation/PMID" &gt;</em>
 	 * </p>
-	 * will create one field in each returned data row named "pmid" and its value will by the character data at the
-	 * XPath "/MedlineCitationSet/MedlineCitation/PMID". </samp> </p>
+	 * will create one field in each returned data row named "pmid" and its
+	 * value will by the character data at the XPath
+	 * "/MedlineCitationSet/MedlineCitation/PMID". </samp>
+	 * </p>
 	 * 
 	 * @param vn
-	 *            The {@link VTDNav} object which navigates over the XML document to retrieve records from.
+	 *            The {@link VTDNav} object which navigates over the XML
+	 *            document to retrieve records from.
 	 * @param forEachXpath
-	 *            An XPath expression determining the XML elements for each of which one row should be created.
+	 *            An XPath expression determining the XML elements for each of
+	 *            which one row should be created.
 	 * @param fields
 	 *            The fields to be returned with each data row.
-	 * @return An iterator over all rows extracted from the XMl document navigated by <code>vn</code>.
+	 * @return An iterator over all rows extracted from the XMl document
+	 *         navigated by <code>vn</code>.
 	 */
 	public static Iterator<Map<String, Object>> constructRowIterator(final VTDNav vn, String forEachXpath,
 			final List<Map<String, String>> fields, String identifier) {
@@ -417,8 +444,7 @@ public class JulieXMLTools {
 				} else if (Boolean.parseBoolean(field.get(JulieXMLConstants.TIMESTAMP))) {
 					navigators.put(fieldName, new TimestampValueSource());
 				} else {
-					LOG.warn("Field with name \""
-							+ fieldName
+					LOG.warn("Field with name \"" + fieldName
 							+ "\" does not define a source to get a value from (e.g. XML XPath or file name) and will not have imported any values.");
 				}
 			}
@@ -489,16 +515,17 @@ public class JulieXMLTools {
 			int i = -1;
 			while ((i = ap.evalXPath()) != -1) {
 				nsDeclaration = vn.toString(i);
-			        if (nsDeclaration.contains(":")) {
-		                    String nsPrefix = nsDeclaration.split(":")[1];
-		                    String nsUrl = vn.toString(i + 1);
-		                    namespaceMap.put(nsPrefix, nsUrl);
-			        }
-                }
+				if (nsDeclaration.contains(":")) {
+					String nsPrefix = nsDeclaration.split(":")[1];
+					String nsUrl = vn.toString(i + 1);
+					namespaceMap.put(nsPrefix, nsUrl);
+				}
+			}
 		} catch (ArrayIndexOutOfBoundsException e) {
 			LOG.error(
 					"This algorithm expects XML namespace declarations to be of the form \"xmlns:<ns-name>\". The declaration actually was: \""
-							+ nsDeclaration + "\"", e);
+							+ nsDeclaration + "\"",
+					e);
 		}
 
 		return namespaceMap;
@@ -531,14 +558,16 @@ public class JulieXMLTools {
 	}
 
 	/**
-	 * Reads an <code>InputStream</code> buffer wise, concatenates all buffers and returns one <code>byte[]</code> of
-	 * exact length of the read data.
+	 * Reads an <code>InputStream</code> buffer wise, concatenates all buffers
+	 * and returns one <code>byte[]</code> of exact length of the read data.
 	 * 
 	 * @param is
 	 *            <code>InputStream</code> to read.
 	 * @param bufferSize
-	 *            Size of maximum bytes to read by one <code>is.read()</code> call.
-	 * @return A <code>byte[]</code> containing all the data of the <code>InputStream</code>.
+	 *            Size of maximum bytes to read by one <code>is.read()</code>
+	 *            call.
+	 * @return A <code>byte[]</code> containing all the data of the
+	 *         <code>InputStream</code>.
 	 * @throws IOException
 	 */
 	public static byte[] readStream(InputStream is, int bufferSize) throws IOException {
@@ -623,7 +652,7 @@ public class JulieXMLTools {
 		while (vn.getTokenDepth(i) >= depth
 				&& !(vn.getTokenType(i) == VTDNav.TOKEN_STARTING_TAG && vn.getTokenDepth(i) == depth)
 				&& i < vn.getTokenCount()) {
-			if (vn.getTokenType(i) == 5)
+			if (vn.getTokenType(i) == VTDNav.TOKEN_CHARACTER_DATA || vn.getTokenType(i) == VTDNav.TOKEN_CDATA_VAL)
 				sb.append(vn.toString(i));
 
 			i++;
@@ -631,6 +660,25 @@ public class JulieXMLTools {
 		return sb.toString();
 	}
 
+	/**
+	 * Returns the fragment of XML, where <tt>vn</tt> currently points to, as a
+	 * string.
+	 * 
+	 * @param vn
+	 *            The XML navigator.
+	 * @param fragmentType
+	 *            Either {@link #ELEMENT_FRAGMENT} or {@link #CONTENT_FRAGMENT}.
+	 *            Determines which respective method on <tt>vn</tt> is called.
+	 *            The first returns the whole element, including starting and
+	 *            end tag, the latter omits the tags of the element and only
+	 *            returns its enclosed contents.
+	 * @param returnRawString
+	 *            Whether to return a raw string, i.e. the pure XML fragment
+	 *            without resolving XML entities, or a "readable" string which
+	 *            then possibly cannot be used for further XML parsing.
+	 * @return The XML fragment of the current element <tt>vn</tt> points to.
+	 * @throws NavException
+	 */
 	public static String getFragment(VTDNav vn, int fragmentType, boolean returnRawString) throws NavException {
 		long fragment = fragmentType == ELEMENT_FRAGMENT ? vn.getElementFragment() : vn.getContentFragment();
 		int offset = (int) fragment;
@@ -639,24 +687,30 @@ public class JulieXMLTools {
 	}
 
 	/**
-	 * Sets the text content of an XML element pointed to by <code>xpath</code> to <code>text</code>.
+	 * Sets the text content of an XML element pointed to by <code>xpath</code>
+	 * to <code>text</code>.
 	 * <p>
-	 * The cursor of <code>vn</code> is moved to the element determined by <code>xpath</code>.
+	 * The cursor of <code>vn</code> is moved to the element determined by
+	 * <code>xpath</code>.
 	 * </p>
 	 * 
 	 * @param vn
-	 *            <code>VTDNav</code> object navigating the XML document to modify.
+	 *            <code>VTDNav</code> object navigating the XML document to
+	 *            modify.
 	 * @param ap
 	 *            <code>AutoPilot</code> object bound to <code>vn</code>.
 	 * @param xm
 	 *            <code>XMLModifier</code> object bound to <code>vn</code>.
 	 * @param xpath
-	 *            An XPath expression pointing to the XML element whose text should be set.
+	 *            An XPath expression pointing to the XML element whose text
+	 *            should be set.
 	 * @param text
-	 *            The text which is to be set to the XML element pointed to by <code>xpath</code>.
+	 *            The text which is to be set to the XML element pointed to by
+	 *            <code>xpath</code>.
 	 * @return The VTD index of the changed element, -1 otherwise.
 	 * @throws VTDException
-	 *             If something with navigation or modification of the XML document goes wrong.
+	 *             If something with navigation or modification of the XML
+	 *             document goes wrong.
 	 * @throws UnsupportedEncodingException
 	 */
 	public static int setElementText(VTDNav vn, AutoPilot ap, XMLModifier xm, String xpath, String text)
@@ -671,8 +725,8 @@ public class JulieXMLTools {
 			// Since VTD XML 2.11, a non-existent text node does not lead to a
 			// -1 index (node does not exist) but to a text node with zero
 			// length (node exists but has no text content).
-//			int tokenLength = vn.getTokenLength(textIndex);
-//			if (tokenLength > 0)
+			// int tokenLength = vn.getTokenLength(textIndex);
+			// if (tokenLength > 0)
 			if (textIndex != -1)
 				xm.updateToken(textIndex, text);
 			// If the element is empty, insert the new text.
@@ -780,12 +834,15 @@ class Options {
 }
 
 /**
- * This helper class bundles all classes needed to navigate a particular XPath expression in an XML document.
- * Additionally, it maintains a pointer 'index' to the next occurence's position of the XPath expression in the
- * document. This is needed in case of elements referenced by an XPath which don't occur in all subtrees defined by the
- * 'forEach' attribute of this EntityProcessor. Thus, before returning the field value by 'getFieldValue', it must be
- * checked if the 'forEach' loop already reached the correct position in the document. This is indicated by the
- * 'forEachIndex' parameter which in fact is always one 'forEach' element ahead.
+ * This helper class bundles all classes needed to navigate a particular XPath
+ * expression in an XML document. Additionally, it maintains a pointer 'index'
+ * to the next occurence's position of the XPath expression in the document.
+ * This is needed in case of elements referenced by an XPath which don't occur
+ * in all subtrees defined by the 'forEach' attribute of this EntityProcessor.
+ * Thus, before returning the field value by 'getFieldValue', it must be checked
+ * if the 'forEach' loop already reached the correct position in the document.
+ * This is indicated by the 'forEachIndex' parameter which in fact is always one
+ * 'forEach' element ahead.
  * 
  * @author faessler
  * 
@@ -804,8 +861,8 @@ class XPathNavigator extends AbstractFieldValueSource {
 		this.options = options;
 	}
 
-	public Object getFieldValue() throws XPathEvalException, NavException, NavException, IOException,
-			XPathEvalException {
+	public Object getFieldValue()
+			throws XPathEvalException, NavException, NavException, IOException, XPathEvalException {
 		List<String> retList = new ArrayList<String>();
 
 		while (apFE.evalXPath() != -1) {
@@ -837,8 +894,8 @@ class XPathNavigator extends AbstractFieldValueSource {
 }
 
 /**
- * Essentially the same as the XPathNavigator except this version uses the "Huge" classes from VTD XML intended to
- * process very large XML files.
+ * Essentially the same as the XPathNavigator except this version uses the
+ * "Huge" classes from VTD XML intended to process very large XML files.
  * 
  * @author faessler
  * 
@@ -862,8 +919,8 @@ class XPathNavigatorHuge extends AbstractFieldValueSource {
 		this.options = options;
 	}
 
-	public Object getFieldValue() throws XPathEvalException, NavException, NavExceptionHuge, IOException,
-			XPathEvalExceptionHuge {
+	public Object getFieldValue()
+			throws XPathEvalException, NavException, NavExceptionHuge, IOException, XPathEvalExceptionHuge {
 		List<String> retList = new ArrayList<String>();
 
 		while (apFE.evalXPath() != -1) {
@@ -886,10 +943,10 @@ class XPathNavigatorHuge extends AbstractFieldValueSource {
 					byte[] fragmentBytes = mb.getFragment(offset, length);
 					retList.add(new String(fragmentBytes));
 				} catch (ClassCastException e) {
-					JulieXMLTools.LOG.error("Casting from com.ximpleware.extended.IByteBuffer to "
-							+ JulieXMLBuffer.class.getName() + " failed. You must pass an Instance of"
-							+ JulieXMLBuffer.class.getName()
-							+ " to the VTDGenHuge object which contains the XML data to be parsed.");
+					JulieXMLTools.LOG.error(
+							"Casting from com.ximpleware.extended.IByteBuffer to " + JulieXMLBuffer.class.getName()
+									+ " failed. You must pass an Instance of" + JulieXMLBuffer.class.getName()
+									+ " to the VTDGenHuge object which contains the XML data to be parsed.");
 					e.printStackTrace();
 				}
 			} else {
@@ -904,12 +961,13 @@ class XPathNavigatorHuge extends AbstractFieldValueSource {
 				retobj = retList.toArray(new String[retList.size()]);
 			else if (retList.size() > 1)
 				retobj = StringUtils.join(retList, options.concatString);
-			else retobj = retList.get(0);
+			else
+				retobj = retList.get(0);
 			if (options.performGzip)
 				return gzipContent(retobj);
 			return retobj;
 		}
-		
+
 		return null;
 	}
 }
