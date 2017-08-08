@@ -121,7 +121,7 @@ public class JulieXMLTools {
 			e.printStackTrace();
 		} catch (FileTooBigException e) {
 			try {
-				LOG.info("Trying to fall back on VTD XML 'Huge' parser for large XML files...");
+				LOG.info("Falling back on VTD XML 'Huge' parser for large XML files...");
 				return constructRowIteratorHuge(fileName, forEachXpath, fields);
 			} catch (ParseExceptionHuge e1) {
 				LOG.error("Error while parsing file " + fileName + ": ", e1.getMessage());
@@ -157,9 +157,6 @@ public class JulieXMLTools {
 	 */
 	private static Iterator<Map<String, Object>> constructRowIteratorHuge(String fileName, String forEachXpath,
 			final List<Map<String, String>> fields) throws IOException, ParseExceptionHuge {
-		if (fileName.endsWith(".gz") || fileName.endsWith(".gzip") || fileName.endsWith(".zip")) {
-			LOG.warn("File " + fileName + " seems to be (g)zipped - huge files must be uncompressed!");
-		}
 		JulieXMLBuffer buffer = new JulieXMLBuffer();
 		buffer.readFile(fileName);
 		VTDGenHuge vg = new VTDGenHuge();
@@ -582,9 +579,9 @@ public class JulieXMLTools {
 			buffer = new byte[bufferSize];
 			// Overflow-check
 			if (allBytesRead + bytesRead < allBytesRead) {
-				LOG.warn("Array size overflow while reading file. The file you are attempting to read "
-						+ "is propably greater than 2GB in size. Such files cannot be read. "
-						+ "Consider splitting the file into subfiles of size less than 2GB.");
+				LOG.info("Array size overflow while reading file. The file you are attempting to read "
+						+ "is propably greater than 2GB in size. Such files cannot be read using the default VTD XML parser. "
+						+ "Consider splitting the file into subfiles of size less than 2GB for using the default parser.");
 				throw new FileTooBigException("Input file could not be read because it is too big (>2GB)");
 			}
 			allBytesRead += bytesRead;
