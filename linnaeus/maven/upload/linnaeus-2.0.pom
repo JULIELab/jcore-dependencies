@@ -1,0 +1,32 @@
+  <project>
+  <modelVersion>4.0.0</modelVersion>
+<groupId>de.julielab</groupId>
+  <artifactId>linnaeus</artifactId>
+  <version>2.0</version>
+  <packaging>jar</packaging>
+ 
+ <parent>
+    <groupId>de.julielab</groupId>
+    <artifactId>julielab-parent</artifactId>
+    <version>2.0.0</version>
+  </parent>
+
+  <name>LINNAEUS</name>
+  <description>This is the LINNAEUS species tagger by Martin Gerner, uploaded by the JULIE Lab for Maven Central availability.</description>
+  <url>http://www.julielab.de</url>
+ 
+<developers>
+        <developer>
+            <name>Martin Gerner</name>
+            <email>martin.gerner@gmail.com</email>
+            <organization>University of Manchester</organization>
+            <organizationUrl>http://www.manchester.ac.uk</organizationUrl>
+        </developer>
+    </developers>
+
+  <scm>
+    <connection>scm:git:git@github.com:JULIELab/linnaeus.git</connection>
+    <developerConnection>scm:git:git@github.com:JULIELab/linnaeus.git</developerConnection>
+    <url>git@github.com:JULIELab/linnaeus.git</url>
+  </scm>
+</project>

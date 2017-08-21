@@ -1,0 +1,51 @@
+PMC INDEX FILE FORMAT:
+   The PMC index file should be a comma-separated value file on the following format:
+   
+   pmcid,pmid,path,has xml,has xml body,has ocr (.txt),has pdf2text (.pdf.txt),is oa,type
+   
+   pmcid: the main document id
+   pmid: the equivalent medline id, or 0 if there is none
+   path: the path to the article, under the base directory and not including any file extensions. Example: pmcids_100/pmcA1268100
+   has xml: denotes whether there is an xml file at location e.g. basedir/pmcids_100/pmcA1268100.xml (value 1 or 0)
+   has xml body: shows whether the xml file has any main text body (many do not)
+   has ocr (.txt): many articles were OCR'd from non-digital articles. This shows if there is a text file at e.g. 
+   basedir/pmcids_100/pmcA1268100.txt which should be processed
+   has pdf2text (.pdf.txt): other articles have been produced from pdf documents. This shows if there is a text file at e.g.
+   basedir/pmcids_100/pmcA1268100.pdf.txt which should be processed.
+   is oa: shows whether the article is part of the open access subset or not
+   type: show the type of the article
+      
+   Lines starting with the hash sign ('#') are ignored.
+   
+MEDLINE INDEX FILE FORMAT:
+   MEDLINE XML files are very large (containing many documents), so an index file is used to show where each article starts
+   and ends in each file. The MEDLINE index file should be a comma-separated value file on the following format:
+   
+   pmid,path,start,end
+   
+   pmid: the main document id
+   path: the path to the xml file, under the base directory and not including any file extensions. Example: 2009/medline09n0001.xml
+   start: how many characters into the xml file the article starts (linebreaks are not counted)
+   end: how many characters into the xml file the article ends (linebreaks are not counted)
+   
+   Lines starting with the hash sign ('#') are ignored.
+   
+REGULAR EXPRESSION DICTIONARY FILE FORMAT:
+Dictionaries should contain two (or optionally three) fields, separated by a tab character:
+	entity id
+	regular expression
+	(comment - this can be utilized if the user wants to construct custom matchers)
+
+Example:
+species:ncbi:9606	([Hh]umans?)|(Homo sapiens)|(H. sapiens)
+[additional entities goes here]
+
+ENTITY NAME VARIANT DICTIONARY FILE FORMAT:
+Dictionaries should contain two (or optionally three) fields, separated by a tab character:
+	entity id
+	name variant(s), separated by a pipe character ("|")
+	(comment - this can be utilized if the user wants to construct custom matchers)
+
+Example:
+species:ncbi:9606	Human|human|Humans|humans|Homo sapiens|H. sapiens
+[additional entities goes here]
