@@ -471,7 +471,7 @@ public class ArgParser {
 
 		if (v.startsWith("internal:")) {
 			InputStream stream = this.getClass().getResourceAsStream(v.substring(9));
-			if (hasGzipEnding(v))
+			if (hasGzipEnding(v) && stream != null)
 				try {
 					stream = new GZIPInputStream(stream);
 				} catch (IOException e) {
@@ -487,7 +487,7 @@ public class ArgParser {
 
 		try {
 			InputStream stream = new FileInputStream(new File(v));
-			if (hasGzipEnding(v))
+			if (hasGzipEnding(v) && stream != null)
 					stream = new GZIPInputStream(stream);
 			return stream;
 		} catch (FileNotFoundException e) {
@@ -519,7 +519,7 @@ public class ArgParser {
 		for (int i = 0; i < res.length; i++) {
 			if (v[i].startsWith("internal:")) {
 				InputStream stream = this.getClass().getResourceAsStream(v[i].substring(9));
-				if (hasGzipEnding(v[i]))
+				if (hasGzipEnding(v[i]) && stream != null)
 					try {
 						stream = new GZIPInputStream(stream);
 					} catch (IOException e) {
@@ -535,7 +535,7 @@ public class ArgParser {
 			} else {
 				try {
 					res[i] = new FileInputStream(new File(v[i]));
-					if (hasGzipEnding(v[i]))
+					if (hasGzipEnding(v[i]) && res[i] != null)
 						res [i] = new GZIPInputStream(res[i]);
 				} catch (FileNotFoundException e) {
 					System.out.println("Could not find the file " + v[i]);
