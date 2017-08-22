@@ -1,0 +1,15 @@
+This file tracks the major modifications done to the original LINNAEUS 2.0 download to the JULIE Lab version.
+
+Structural changes:
+
+1. Moved the src/ folder to src/main/java to comply with Maven standards.
+2. Moved lib/resources-linnaeus to src/test/resources
+3. Removed the lib/ directory and declared the requried libraries as Maven dependencies instead.
+
+Code changes:
+
+1. ArgParser
+
+In order to compress dictionaries for the storage in version control, all the getInputStream()
+methods have been changed to open a GZIPInputStream if the requested resource files ends on
+.gz or .gzip.

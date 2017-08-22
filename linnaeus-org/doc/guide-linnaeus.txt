@@ -1,0 +1,138 @@
+Guide to running LINNAEUS in order to perform species name recognition and normalization
+
+This file was last modified July 21th 2011, for LINNAEUS v. 2.0.
+
+the .jar file is invoked through the following command:
+$java -Xmx<memory amount> -jar linnaeus-2.0.jar <options>
+  <memory amount> should be high enough to accommodate the loading of the entity dictionaries.
+  
+  Note that in order to allocate more than roughly 2.5 GB memory, a 64-bit version of Java is required.
+  
+  
+OVERVIEW:
+	LINNAEUS need information of three types: 1) input document sources, 2) matching method information (what to do with the documents), and 3) information of where to store the output. Each type of information is described below.
+	
+	The matching method information can be ommited, in which case a default species-matching method will be loaded. In this mode, no external files are utilized (all resources are loaded internally from the .jar archive) so it is very mobile. This dictionary recognizes species names from the top 10,000 species mentioned in MEDLINE (reprensting >99% of all mentions)
+  
+OPTIONS:
+   --properties <configuration file(s)> 
+      Note that the number of options can often become high and would take a long time to type, so they can be specified in a
+      special properties file in a key=value format. "Value" can be a list of values, separated by ';'. An example is given 
+      further down. Note that any paths have to be full.
+      
+      The sample document set and entity packs that can be downloaded with LINNAEUS come with individual configuration files
+      that can be "imported" directly. They need to be edited slightly to make sure that any file systems paths are correct, though. 
+
+   DOCUMENT INPUT:
+      --text <text file(s)>
+         Will read a set of text files
+      
+      --textDir <path> [--recursive]
+         Will read a set of files ending with .txt from the specified directory. If --recursive is given, subdirectories will 
+         also be searched.
+
+      --pmcIndex <pmc index file> --pmcBaseDir <path> --dtd <dtds>
+         Will read a set of PMC documents specified by the given master file, located in the given base directory (the master 
+         file provides lower paths). The paths to .dtd files required for parsing also need to be specified. See formats.txt for format spec.
+         
+      --pmcDir <pmc directory> --dtd <dtds> [--recursive]
+         Will read all PMC documents in the given directory (and if recursive is specified, subdirectories).
+      
+      --medlineIndex <medline index file> --medlineBaseDir <path>
+         Will read a set of MEDLINE documents specified by the given master file, located in the given base directory (the 
+         master file provides lower paths). See formats.txt for format spec.
+      
+      One of the input methods above need to be chosen.
+
+    MATCHING:
+       --automatons <automaton file>
+         Will load the automaton in the specified file, and perform matching using it.          
+
+       --regexpMatcher <regular expression file>
+         Will load a list of regular expressions from a file on the format (entity id (tab) regular expression).
+         Matching is much slower than with an automaton.
+         See formats.txt for format spec.
+         
+       --variantMatcher <name variants file>
+         Will load a dictionary file containing an exhaustive list of all possible variants of entity names and their entity ids.
+         See formats.txt for format spec.
+         
+       --default
+         Loads a default species matcher and postprocessor from the .jar file, no configuration files necessary. This matcher is set to recognize species names only, from the 10,000 most frequently occuring species in MEDLINE (representing >99% of all mentions). 
+         
+       --default-proxy
+         Loads a default species matcher and postprocessor from the .jar file, no configuration files necessary. This matcher is set to recognize species _and proxy terms_ names only, from the 10,000 most frequently occuring species in MEDLINE (representing >99% of all mentions). The proxy terms are terms that are not strictly species names, but can be useful to determine what species a document refers to. These include cell lines and manually entered synonyms. Examples are 'HeLa cells' (proxy for human), 'woman' (proxy for human), and 'murine' (proxy for mouse).
+
+      If none of the mathing methods above are specified, --default will be used.
+    
+    MATCHING (POSTPROCESSING):
+    	--postProcessing --ppStopTerms <stop term file> --ppAcrProbs <acronym probability file> --ppSpeciesFreqs <species 
+    	frequency file>
+    	
+    	This will enable post-processing. To use stop-term filters (filtering out species/term combinations) or assign probabilities to acronym terms and ambiguous species mentions, the relevant files need to be specified as above. See the example below for how to set these in a configuration file. Enabling this and using all three files is recommended.
+    
+    OUTPUT:
+       --out <file>
+          All tags will be saved to the specified file, in a tab-separated format giving species ID(s), document ID, start 
+          and end coordinate and the matched term. A sixth column is also available for any comments about an entry the algorithm may make.
+
+       --outDir <directory path>
+          Tags will be saved to a set of files in the specified directory, one file per document (named according to the 
+          document ID). The format of the files is identical to the one describe above.
+          
+       --outHTML <file>
+          Document text will be written to the given file in HTML format, with recognized terms hyper linked to the NCBI 
+          taxonomy. Note that for large numbers of documents this file could become very large since the full text is saved. 
+          Because of this, it is mostly useful for a smaller number of documents for testing purposes.
+    
+       --outXML <file>
+          Document text will be written to the given file in XML format.
+
+	   --outDB <table name> --dbHost-out <host> [--dbPort-out <port>] --dbSchema-out <schema> --dbUsername-out <username> --dbPassword-out <password>
+	      Will create a new table (deleting any old table with the specified name, if it exists) and store the found mentions in it.
+    
+       One of these output options need to be chosen.
+       
+    MISCELLANEOUS
+       --threads <number>
+          Specify the number of threads the application should use (useful for multi-core machines, default is 1)
+       
+       --report <interval>
+          Cause the software to show progress after each <interval> document (e.g. --report 1000 would cause the software to
+          report the number of tagged documents after every 1000 documents)
+       
+       --help
+          Show a short syntax help message
+       
+       --version
+          Print software version
+          
+EXAMPLE 1:
+   java -Xmx4G -jar linnaeus-2.0.jar --properties pmc/properties.conf species/properties.conf --out mentions.tsv --report 100 --threads 4
+   
+   where the configuaration files have the following contents (note that indented lines are only on new lines due to space constraints in
+   this document - values should not span several lines, and that in a windows setting, double backslashes (\\) would be used
+   instead of slashes):
+
+   pmc/properties.conf:
+      pmcBaseDir=/home/user/linnaeus/articles/
+      dtd=/home/user/linnaeus/pmc-sample/dtds/archive-interchange-
+        dtd-2.3/archivearticle.dtd;/home/user/linnaeus/pmc-sample/dtds/issue-admin.dtd
+   
+   species/properties.conf:
+      automatons=/home/user/linnaeus/data/species.bin
+      postProcessing
+      ppStopTerms=/home/user/linnaeus/data/pp/stoplist.csv
+      ppAcrProbs=/home/user/linnaeus/data/pp/synonyms-acronyms.csv
+      ppSpeciesFreqs=/home/user/linnaeus/data/pp/species-frequency.csv
+      
+   This will run the species recognition software, reading a set of PMC documents and storing the output in mentions.tsv.
+   Most of the settings and file/directory paths will be read from the configuration files, that can be re-used multiple times.
+   
+   For more visual output that easily can be verified for correctness, use e.g. --outHTML <html output file>, which will produce
+   an HTML file of the documents, with any species mentions hyperlinked.
+      
+Example 2:
+   java -jar linnaeus-2.0.jar --properties pmc/properties.conf --out mentions.tsv --report 100 --threads 4
+   
+   This will perform similarly as the example above, but using the default internal species matcher. The input document source is specified in the pmc/properties.conf file; the species matching property file is not necessary. Since the internal dictionary is very light, no additional memory need to be allocated.
