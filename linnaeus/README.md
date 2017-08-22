@@ -2,7 +2,6 @@
 
 This project is just a copy of LINNAEUS 2.0 from http://linnaeus.sourceforge.net by Martin Gerner. However, the original LINNAEUS species tagger doesn't seem to be available via Maven Central which is required for our JCoRe components. This copy of LINNAEUS has been changed to to Maven directory layout and dependency management. Refer to the file MODIFICATIONS to see details about further modifications.
 
-
 ## Modifications
 
 The original LINNEAUS version for this project is the 2.0 archive as downloaded from http://linnaeus.sourceforge.net.
