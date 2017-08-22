@@ -8,7 +8,7 @@
   <artifactId>linnaeus</artifactId>
   <version>2.0.0-JULIELAB-1.0-SNAPSHOT</version>
   <name>LINNAEUS Species Tagger</name>
-  <description>This is a mavenized version of the LINNAEUS Species Tagger by Martin Gerner with minor modifications. Refer to the MODIFICATIONS file for an overview of the changes.</description>
+  <description>This is a mavenized version of the LINNAEUS Species Tagger by Martin Gerner with minor modifications. Refer to the README.md file for an overview of the changes.</description>
   <dependencies>
   	<dependency>
   		<groupId>dk.brics.automaton</groupId>

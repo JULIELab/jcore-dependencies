@@ -1,7 +1,21 @@
-== LINNAEUS ==
+## LINNAEUS
 
-This project is just a copy of LINNAEUS 2.0 from http://linnaeus.sourceforge.net by Martin Gerner. However, the original LINNAEUS species tagger doesn't seem to be available via Maven Central which is required for our JCoRe components. Thus, this repository is a copy of LINNAEUS with the sole intention to be published to Maven Central.
+This project is just a copy of LINNAEUS 2.0 from http://linnaeus.sourceforge.net by Martin Gerner. However, the original LINNAEUS species tagger doesn't seem to be available via Maven Central which is required for our JCoRe components. This copy of LINNAEUS has been changed to to Maven directory layout and dependency management. Refer to the file MODIFICATIONS to see details about further modifications.
 
-== Uploading to Maven Central ==
 
-In order to make this project easily available, it is being uploaded to the Maven Central repository via the respective Nexus web application. LINNAEUS is originally not a Maven project and not easily uploaded automatically. To facilitate the process, this project offers the maven/makeMavenCentralFiles.sh script and a maven/pom.xml file. The POM file cannot be used to actually manage the project, it is only there for the upload to the repository. The script will create a new subdirectory upload/ and put all required files there. Note that Maven Central expects all uploaded files to be signed by separate .asc files. To create those, the gpg programm must be installed and a private key must exist and the public key must have been uploaded to at least one appropriate server. In the Nexus system, navigate to ''Staging upload'' and select the POM file in ''Select Staging Upload Mode''. Add all other files in the upload/ directory as artifacts, including and especially the .asc files. After that, check if everything went fine by looking into the ''Staging Repositories'' view (scroll to the very bottom to find your just created staging repository). When everything went fine (you will have to wait a moment for validation process to complete), select your repository and click ''release''.
+## Modifications
+
+The original LINNEAUS version for this project is the 2.0 archive as downloaded from http://linnaeus.sourceforge.net.
+
+Structural changes:
+
+1. Moved the src/ folder to src/main/java to comply with Maven standards.
+2. Moved lib/resources-linnaeus to src/test/resources
+3. Removed the lib/ directory and declared the requried libraries as Maven dependencies instead.
+
+Code changes:
+
+1. ArgParser
+In order to compress dictionaries for the storage in version control, all the getInputStream()
+methods have been changed to open a GZIPInputStream if the requested resource files ends on
+.gz or .gzip.
