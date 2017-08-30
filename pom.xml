@@ -29,6 +29,7 @@
 	<modules>
 		<module>aliasi-lingpipe</module>
 		<module>biosem-event-extractor</module>
+		<module>dragontool</module>
 		<module>jcore-mallet-2.0.9</module>
 		<module>julie-segment-eval</module>
 		<module>julie-xml-tools</module>

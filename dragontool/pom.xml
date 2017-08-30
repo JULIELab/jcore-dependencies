@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<modelVersion>4.0.0</modelVersion>
+	<artifactId>dragontool</artifactId>
+	<packaging>jar</packaging>
+	<name>Dragontool</name>
+	<parent>
+		<groupId>de.julielab</groupId>
+		<artifactId>jcore-dependencies</artifactId>
+		<version>2.3.0-SNAPSHOT</version>
+	</parent>
+	<version>1.3.3-SNAPSHOT</version>
+	<dependencies>
+		<dependency>
+			<groupId>uk.ac.gate</groupId>
+			<artifactId>gate-core</artifactId>
+			<version>5.2.1</version>
+			<exclusions>
+				<!-- This is a runtime dependency of GATE - excluding due to potential 
+					conflicts with the DKPro Core PDF I/O module -->
+				<exclusion>
+					<groupId>org.apache.tika</groupId>
+					<artifactId>tika-parsers</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>net.sf.jwordnet</groupId>
+			<artifactId>jwnl</artifactId>
+			<version>1.3.3</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.0</version>
+		</dependency>
+	</dependencies>
+	<description>Copy of the dragontools from http://dragon.ischool.drexel.edu with very limited functionality due to the lack of publicly available Maven dependencies. Used in JULIELab JCoRe as dependency for the BANNER gene tagger.</description>
+</project>
