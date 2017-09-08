@@ -36,7 +36,9 @@
         <module>uea-stemmer</module>
         <module>jules-trove</module>
         <module>mate-tools</module>
-        
+
+        <module>julielab-entity-evalutator</module>
+        <module>linnaeus</module>
 	</modules>
 	
 	
