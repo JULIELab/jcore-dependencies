@@ -228,7 +228,7 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	public void setBegin(int begin) {
-		offsetRange = Range.between(begin, offsetRange.getMaximum());
+		offsetRange = Range.between(begin, offsetRange.getMaximum() >= begin ? offsetRange.getMaximum() : begin);
 	}
 
 	public void setComparisonType(ComparisonType comparisonType) {
@@ -245,7 +245,7 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	public void setEnd(int end) {
-		offsetRange = Range.between(offsetRange.getMinimum(), end);
+		offsetRange = Range.between(offsetRange.getMinimum() <= end ? offsetRange.getMinimum() : end, end);
 	}
 
 	public void setEntityId(String entityId) {

@@ -35,6 +35,14 @@ public class EntityEvaluationResult {
 		}
 	}
 
+	public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentMentionWise() {
+		return entrySetsByDocumentMentionWise;
+	}
+
+	public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentDocWise() {
+		return entrySetsByDocumentDocWise;
+	}
+
 	public Map<String, EvaluationStatistics> getStatisticsByDocumentMentionWise() {
 		return statisticsByDocumentMentionWise;
 	}
