@@ -6,6 +6,8 @@ import java.io.File;
 
 import org.junit.Test;
 
+import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
+
 public class EvaluationDataTest {
 	@Test
 	public void testReadCompleteData() {
@@ -32,7 +34,7 @@ public class EvaluationDataTest {
 	
 	@Test
 	public void testReadNoOffsetData() {
-		EvaluationData data = EvaluationData.readDataFile(new File("src/test/resources/test-data-no-offsets.genelist"));
+		EvaluationData data = EvaluationData.readDataFile(new File("src/test/resources/test-data-no-offsets.genelist"), new GeneNormalizationNoOffsetsFormat());
 		assertEquals(2, data.size());
 		EvaluationDataEntry e1 = data.get(0);
 		assertFalse(e1.isMention());

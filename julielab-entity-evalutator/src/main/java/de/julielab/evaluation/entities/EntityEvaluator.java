@@ -5,10 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -20,8 +22,16 @@ import com.google.common.collect.Sets.SetView;
 
 import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
 import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
+import de.julielab.evaluation.entities.format.EvaluationDataFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
 
 public class EntityEvaluator {
+
+	/**
+	 * {@link GeneNormalizationFormat}
+	 */
+	public static final EvaluationDataFormat DEFAULT_FORMAT = new GeneNormalizationFormat();
 
 	public static final String PROP_ERROR_ANALYZER = "error-analyzer";
 	public static final String PROP_ERROR_STATS = "error-statistics-class";
@@ -54,10 +64,10 @@ public class EntityEvaluator {
 		properties = new Properties();
 		properties.load(new FileInputStream(propertiesFile));
 
-		comparisonType = EvaluationDataEntry.ComparisonType.valueOf(properties.getProperty(PROP_COMPARISON_TYPE,
-				EvaluationDataEntry.ComparisonType.EXACT.toString()).toUpperCase());
-		overlapType = EvaluationDataEntry.OverlapType.valueOf(properties.getProperty(PROP_OVERLAP_TYPE,
-				EvaluationDataEntry.OverlapType.PERCENT.toString()).toUpperCase());
+		comparisonType = EvaluationDataEntry.ComparisonType.valueOf(properties
+				.getProperty(PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.EXACT.toString()).toUpperCase());
+		overlapType = EvaluationDataEntry.OverlapType.valueOf(properties
+				.getProperty(PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.PERCENT.toString()).toUpperCase());
 		overlapSize = Integer.parseInt(properties.getProperty(PROP_OVERLAP_SIZE, "100"));
 		withIds = Boolean.parseBoolean(properties.getProperty(PROP_WITH_IDS, "true"));
 
@@ -116,19 +126,24 @@ public class EntityEvaluator {
 	}
 
 	public EntityEvaluationResult evaluate(List<String[]> gold, List<String[]> predicted) {
-		EvaluationData goldData = new EvaluationData(gold);
-		EvaluationData predData = new EvaluationData(predicted);
+		return evaluate(gold, predicted, DEFAULT_FORMAT);
+	}
+
+	public EntityEvaluationResult evaluate(List<String[]> gold, List<String[]> predicted, EvaluationDataFormat format) {
+		EvaluationData goldData = new EvaluationData(gold, format);
+		EvaluationData predData = new EvaluationData(predicted, format);
 		return evaluate(goldData, predData);
 	}
 
 	private void computeEvalStatisticsMentionWise(Collection<EvaluationDataEntry> goldEntries,
 			Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
 			boolean doErrorAnalysis) {
-		// We must use TreeSets for overlap-comparisons because then the hash values won't work for HashMap.
+		// We must use TreeSets for overlap-comparisons because then the hash
+		// values won't work for HashMap.
 		TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>(goldEntries);
 		TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
 
-		SetView<EvaluationDataEntry> tpSet = Sets.intersection(goldSet, predSet);
+		SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
 		SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
 		SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
 
@@ -138,7 +153,8 @@ public class EntityEvaluator {
 	private void computeEvalStatisticsDocWise(Collection<EvaluationDataEntry> goldEntries,
 			Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
 			boolean doErrorAnalysis) {
-		// We must use TreeSets for overlap-comparisons because then the hash values won't work for HashMap.
+		// We must use TreeSets for overlap-comparisons because then the hash
+		// values won't work for HashMap.
 		TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>();
 		for (EvaluationDataEntry entry : goldEntries)
 			goldSet.add(entry.toDocWiseEntry());
@@ -156,8 +172,8 @@ public class EntityEvaluator {
 
 	public static void main(String[] args) throws IOException {
 		if (args.length < 2 || args.length > 3) {
-			System.err.println("Usage: " + EntityEvaluator.class.getSimpleName()
-					+ " <gold data> <pred data> [properties file]");
+			System.err.println(
+					"Usage: " + EntityEvaluator.class.getSimpleName() + " <gold data> <pred data> [properties file]");
 			System.exit(1);
 		}
 
@@ -167,11 +183,36 @@ public class EntityEvaluator {
 		if (args.length > 2)
 			propertiesFile = new File(args[2]);
 
-		EvaluationData goldData = EvaluationData.readDataFile(goldFile);
-		EvaluationData predData = EvaluationData.readDataFile(predFile);
-
 		EntityEvaluator evaluator = propertiesFile == null ? new EntityEvaluator()
 				: new EntityEvaluator(propertiesFile);
+
+		if (propertiesFile == null)
+			System.out.println("No properties file given, trying to guess data format.");
+
+		EvaluationData goldData = null;
+		EvaluationData predData = null;
+		List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
+				new GeneNormalizationNoOffsetsFormat());
+		boolean formatFound = false;
+		int i = 0;
+		while (!formatFound && i < formats.size()) {
+			EvaluationDataFormat format = formats.get(i);
+			try {
+				goldData = EvaluationData.readDataFile(goldFile, format);
+				predData = EvaluationData.readDataFile(predFile, format);
+				formatFound = true;
+			} catch (NumberFormatException e) {
+				System.out.println(format.getClass().getSimpleName() + " did cause exception, trying the next.");
+			}
+			++i;
+		}
+		if (!formatFound) {
+			System.out.println("All input data format specifications failed: "
+					+ formats.stream().map(f -> f.getClass().getSimpleName()).collect(Collectors.joining(", ")));
+			System.out.println("Please use a configuration file and specify the correct format class.");
+			System.exit(1);
+		}
+
 		EntityEvaluationResult result = evaluator.evaluate(goldData, predData);
 
 		System.out.println(result.getEvaluationReportShort());

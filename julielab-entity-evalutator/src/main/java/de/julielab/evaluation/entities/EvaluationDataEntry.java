@@ -76,6 +76,10 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 		this.recognitionSystem = recognitionSystem;
 	}
 
+	public EvaluationDataEntry() {
+		this(null, null, -1, -1);
+	}
+
 	@Override
 	public int compareTo(EvaluationDataEntry o) {
 		boolean equal = this.equals(o);
@@ -236,7 +240,10 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	public void setBegin(int begin) {
-		offsetRange = Range.between(begin, offsetRange.getMaximum() >= begin ? offsetRange.getMaximum() : begin);
+		Integer end = offsetRange != null ? offsetRange.getMaximum() : begin;
+		if (end < begin)
+			end = begin;
+		offsetRange = Range.between(begin, end);
 	}
 
 	public void setComparisonType(ComparisonType comparisonType) {
@@ -253,7 +260,10 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	public void setEnd(int end) {
-		offsetRange = Range.between(offsetRange.getMinimum() <= end ? offsetRange.getMinimum() : end, end);
+		Integer begin = offsetRange != null ? offsetRange.getMinimum() : end;
+		if (begin > end)
+			begin = end;
+		offsetRange = Range.between(begin, end);
 	}
 
 	public void setEntityId(String entityId) {
