@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Properties;
 import java.util.TreeSet;
+import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 import org.apache.commons.io.IOUtils;
@@ -28,11 +29,6 @@ import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
 
 public class EntityEvaluator {
 
-	/**
-	 * {@link GeneNormalizationFormat}
-	 */
-	public static final EvaluationDataFormat DEFAULT_FORMAT = new GeneNormalizationFormat();
-
 	public static final String PROP_ERROR_ANALYZER = "error-analyzer";
 	public static final String PROP_ERROR_STATS = "error-statistics-class";
 	public static final String PROP_COMPARISON_TYPE = "comparison-type";
@@ -46,6 +42,8 @@ public class EntityEvaluator {
 	private boolean withIds;
 	private Properties properties;
 
+	private EvaluationDataFormat dataFormat;
+
 	public static final Logger log = LoggerFactory.getLogger(EntityEvaluator.class);
 
 	public EntityEvaluator() {
@@ -53,6 +51,7 @@ public class EntityEvaluator {
 		overlapType = EvaluationDataEntry.OverlapType.PERCENT;
 		overlapSize = 100;
 		withIds = true;
+		dataFormat = new GeneNormalizationFormat();
 
 		log.debug("ComparisonType: {}", comparisonType);
 		log.debug("OverlapType: {}", overlapType);
@@ -61,8 +60,24 @@ public class EntityEvaluator {
 	}
 
 	public EntityEvaluator(File propertiesFile) throws FileNotFoundException, IOException {
-		properties = new Properties();
-		properties.load(new FileInputStream(propertiesFile));
+		// this is just a very complicated way to say "load the properties and set them to the constructor"
+		this(new Supplier<Properties>() {
+			@Override
+			public Properties get() {
+				Properties p = new Properties();
+				try {
+					p.load(new FileInputStream(propertiesFile));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return p;
+			}
+		}.get());
+
+	}
+
+	public EntityEvaluator(Properties properties) throws FileNotFoundException, IOException {
+		this.properties = properties;
 
 		comparisonType = EvaluationDataEntry.ComparisonType.valueOf(properties
 				.getProperty(PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.EXACT.toString()).toUpperCase());
@@ -80,6 +95,10 @@ public class EntityEvaluator {
 		log.debug("Error analysis: {}", errorAnalyzerClass);
 		log.debug("Print error statistics class: {}", errorStatisticsClass);
 		log.debug("With IDs: {}", withIds);
+	}
+
+	public Properties getProperties() {
+		return properties;
 	}
 
 	public EntityEvaluationResult evaluate(EvaluationData gold, EvaluationData predicted) {
@@ -126,7 +145,7 @@ public class EntityEvaluator {
 	}
 
 	public EntityEvaluationResult evaluate(List<String[]> gold, List<String[]> predicted) {
-		return evaluate(gold, predicted, DEFAULT_FORMAT);
+		return evaluate(gold, predicted, EvaluationData.getDataFormatFromConfiguration(properties));
 	}
 
 	public EntityEvaluationResult evaluate(List<String[]> gold, List<String[]> predicted, EvaluationDataFormat format) {
@@ -183,34 +202,39 @@ public class EntityEvaluator {
 		if (args.length > 2)
 			propertiesFile = new File(args[2]);
 
-		EntityEvaluator evaluator = propertiesFile == null ? new EntityEvaluator()
-				: new EntityEvaluator(propertiesFile);
-
-		if (propertiesFile == null)
-			System.out.println("No properties file given, trying to guess data format.");
+		EntityEvaluator evaluator = propertiesFile == null ? new EntityEvaluator() : new EntityEvaluator(propertiesFile);
 
 		EvaluationData goldData = null;
 		EvaluationData predData = null;
-		List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
-				new GeneNormalizationNoOffsetsFormat());
-		boolean formatFound = false;
-		int i = 0;
-		while (!formatFound && i < formats.size()) {
-			EvaluationDataFormat format = formats.get(i);
-			try {
-				goldData = EvaluationData.readDataFile(goldFile, format);
-				predData = EvaluationData.readDataFile(predFile, format);
-				formatFound = true;
-			} catch (NumberFormatException e) {
-				System.out.println(format.getClass().getSimpleName() + " did cause exception, trying the next.");
+		if (propertiesFile == null
+				|| evaluator.getProperties().getProperty(EvaluationData.PROP_INPUT_FORMAT_CLASS) == null) {
+			System.out.println("No properties file given, trying to guess data format.");
+
+			List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
+					new GeneNormalizationNoOffsetsFormat());
+			EvaluationDataFormat foundFormat = null;
+			int i = 0;
+			while (foundFormat == null && i < formats.size()) {
+				EvaluationDataFormat format = formats.get(i);
+				try {
+					goldData = EvaluationData.readDataFile(goldFile, format);
+					predData = EvaluationData.readDataFile(predFile, format);
+					foundFormat = format;
+				} catch (NumberFormatException e) {
+					System.out.println(format.getClass().getSimpleName() + " did cause exception, trying the next.");
+				}
+				++i;
 			}
-			++i;
-		}
-		if (!formatFound) {
-			System.out.println("All input data format specifications failed: "
-					+ formats.stream().map(f -> f.getClass().getSimpleName()).collect(Collectors.joining(", ")));
-			System.out.println("Please use a configuration file and specify the correct format class.");
-			System.exit(1);
+			if (foundFormat == null) {
+				System.out.println("All input data format specifications failed: "
+						+ formats.stream().map(f -> f.getClass().getSimpleName()).collect(Collectors.joining(", ")));
+				System.out.println("Please use a configuration file and specify the correct format class.");
+				System.exit(1);
+			}
+			evaluator.setDataFormat(foundFormat);
+		} else {
+			goldData = EvaluationData.readDataFile(goldFile, evaluator.dataFormat);
+			predData = EvaluationData.readDataFile(predFile, evaluator.dataFormat);
 		}
 
 		EntityEvaluationResult result = evaluator.evaluate(goldData, predData);
@@ -218,6 +242,14 @@ public class EntityEvaluator {
 		System.out.println(result.getEvaluationReportShort());
 		IOUtils.write(result.getEvaluationReportLong(), new FileOutputStream("EvaluationReport.txt"));
 
+	}
+
+	public EvaluationDataFormat getDataFormat() {
+		return dataFormat;
+	}
+
+	public void setDataFormat(EvaluationDataFormat dataFormat) {
+		this.dataFormat = dataFormat;
 	}
 
 }

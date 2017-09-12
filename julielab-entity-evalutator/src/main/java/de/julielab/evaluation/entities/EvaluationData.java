@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +19,16 @@ import com.google.common.collect.Multimap;
 
 import de.julielab.evaluation.entities.format.EvaluationDataColumn;
 import de.julielab.evaluation.entities.format.EvaluationDataFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
 
 public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 
 	private static final Logger log = LoggerFactory.getLogger(EvaluationData.class);
-
+	public static final String PROP_INPUT_FORMAT_CLASS = "input-format-class";
+	/**
+	 * {@link GeneNormalizationFormat}
+	 */
+	public static final EvaluationDataFormat DEFAULT_FORMAT = new GeneNormalizationFormat();
 	/**
 	 * 
 	 */
@@ -53,7 +59,11 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	private EvaluationDataFormat dataFormat;
 
 	public EvaluationData() {
-		this(EntityEvaluator.DEFAULT_FORMAT);
+		this(DEFAULT_FORMAT);
+	}
+	
+	public EvaluationData(Properties properties) {
+		this(getDataFormatFromConfiguration(properties));
 	}
 	
 	public EvaluationData(EvaluationDataFormat dataFormat) {
@@ -61,7 +71,7 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	}
 
 	public EvaluationData(List<String[]> records) {
-		this(records, EntityEvaluator.DEFAULT_FORMAT);
+		this(records, DEFAULT_FORMAT);
 	}
 
 	public EvaluationData(List<String[]> records, EvaluationDataFormat format) {
@@ -90,7 +100,7 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	}
 
 	public EvaluationData(String[]... data) {
-		this(EntityEvaluator.DEFAULT_FORMAT, data);
+		this(DEFAULT_FORMAT, data);
 	}
 
 	public EvaluationData(EvaluationDataFormat format, String[]... data) {
@@ -257,7 +267,32 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	 * @return
 	 */
 	public static EvaluationData readDataFile(File dataFile) {
-		return readDataFile(dataFile, EntityEvaluator.DEFAULT_FORMAT);
+		return readDataFile(dataFile, DEFAULT_FORMAT);
+	}
+	
+	/**
+	 * Reads the given data file with the
+	 * {@link EntityEvaluator#DEFAULT_FORMAT}.
+	 * 
+	 * @param dataFile
+	 * @return
+	 */
+	public static EvaluationData readDataFile(File dataFile, Properties properties) {
+		EvaluationDataFormat dataFormat = getDataFormatFromConfiguration(properties);
+		return readDataFile(dataFile, dataFormat);
+	}
+
+	public static EvaluationDataFormat getDataFormatFromConfiguration(Properties properties) {
+		String dataFormatClassName = properties != null ? properties.getProperty(PROP_INPUT_FORMAT_CLASS,
+				GeneNormalizationFormat.class.getCanonicalName()) : GeneNormalizationFormat.class.getCanonicalName();
+		EvaluationDataFormat dataFormat;
+		try {
+			dataFormat = (EvaluationDataFormat) Class.forName(dataFormatClassName).newInstance();
+		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+			throw new IllegalArgumentException(
+					"Evaluation data format class " + dataFormatClassName + " could not be loaded.", e);
+		}
+		return dataFormat;
 	}
 
 	/**
