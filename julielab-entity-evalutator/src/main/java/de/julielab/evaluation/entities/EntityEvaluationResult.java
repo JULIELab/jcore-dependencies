@@ -3,6 +3,7 @@ package de.julielab.evaluation.entities;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import com.google.common.collect.Sets.SetView;
 
@@ -41,6 +42,30 @@ public class EntityEvaluationResult {
 
 	public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentDocWise() {
 		return entrySetsByDocumentDocWise;
+	}
+	
+	public Stream<EvaluationDataEntry> getTpEvaluationDataEntriesMentionWise(){
+		return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.tpSet.stream());
+	}
+	
+	public Stream<EvaluationDataEntry> getFpEvaluationDataEntriesMentionWise(){
+		return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.fpSet.stream());
+	}
+	
+	public Stream<EvaluationDataEntry> getFnEvaluationDataEntriesMentionWise(){
+		return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.fnSet.stream());
+	}
+	
+	public Stream<EvaluationDataEntry> getTpEvaluationDataEntriesDocWise(){
+		return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.tpSet.stream());
+	}
+	
+	public Stream<EvaluationDataEntry> getFpEvaluationDataEntriesDocWise(){
+		return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.fpSet.stream());
+	}
+	
+	public Stream<EvaluationDataEntry> getFnEvaluationDataEntriesDocWise(){
+		return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.fnSet.stream());
 	}
 
 	public Map<String, EvaluationStatistics> getStatisticsByDocumentMentionWise() {
