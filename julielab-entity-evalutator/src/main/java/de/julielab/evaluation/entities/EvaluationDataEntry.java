@@ -44,10 +44,13 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 
 	private String confidence;
 
+	private Object referenceObject;
+
 	/**
-	 * Constructs a document-wise evaluation data entry. It is just known that the entity with ID <tt>entityId</tt>
-	 * occurs in the document with ID <tt>docId</tt>. The exact location of the entity within the document text is
-	 * unknown.
+	 * Constructs a document-wise evaluation data entry. It is just known that
+	 * the entity with ID <tt>entityId</tt> occurs in the document with ID
+	 * <tt>docId</tt>. The exact location of the entity within the document text
+	 * is unknown.
 	 * 
 	 * @param docId
 	 * @param entityId
@@ -150,8 +153,9 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	/**
-	 * Returns true, if this and the <tt>otherEntry</tt> are both mentions and have comparable offsets. What
-	 * 'comparable' exactly is, is subject to definition and may range from exact matching to loose overlapping.
+	 * Returns true, if this and the <tt>otherEntry</tt> are both mentions and
+	 * have comparable offsets. What 'comparable' exactly is, is subject to
+	 * definition and may range from exact matching to loose overlapping.
 	 * 
 	 * @param otherEntry
 	 * @return
@@ -163,9 +167,11 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 			if (comparisonType == ComparisonType.EXACT) {
 				if (!offsetRange.equals(other.offsetRange))
 					return false;
-				// if (offsetRange.getMinimum() != other.offsetRange.getMinimum())
+				// if (offsetRange.getMinimum() !=
+				// other.offsetRange.getMinimum())
 				// return false;
-				// if (offsetRange.getMaximum() != other.offsetRange.getMaximum())
+				// if (offsetRange.getMaximum() !=
+				// other.offsetRange.getMaximum())
 				// return false;
 			} else if (comparisonType == ComparisonType.OVERLAP) {
 				Range<Integer> intersection = offsetRange.intersectionWith(other.offsetRange);
@@ -204,11 +210,13 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	/**
-	 * Tests, whether this entry describes a specific entity mention in text. If <tt>false</tt>, that means that this
-	 * entry is document-wide index term with no - or unknown - location within the document.
+	 * Tests, whether this entry describes a specific entity mention in text. If
+	 * <tt>false</tt>, that means that this entry is document-wide index term
+	 * with no - or unknown - location within the document.
 	 * 
-	 * @return <tt>true</tt>, iff <tt>begin</tt> and <tt>end</tt> are greater or equal to zero and this offset describes
-	 *         a non-empty span, i.e. <tt>begin</tt> &lt; <tt>end</tt>.
+	 * @return <tt>true</tt>, iff <tt>begin</tt> and <tt>end</tt> are greater or
+	 *         equal to zero and this offset describes a non-empty span, i.e.
+	 *         <tt>begin</tt> &lt; <tt>end</tt>.
 	 */
 	public boolean isMention() {
 		return offsetRange.getMinimum() >= 0 && offsetRange.getMaximum() >= 0
@@ -269,12 +277,13 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	}
 
 	/**
-	 * Returns an <tt>EvaluationDataEntry</tt> without offset information (all offsets set to 0). This way, the returned
-	 * data entry can be used for evaluations on the document level where the concrete placing within a document is
-	 * ignored.
+	 * Returns an <tt>EvaluationDataEntry</tt> without offset information (all
+	 * offsets set to 0). This way, the returned data entry can be used for
+	 * evaluations on the document level where the concrete placing within a
+	 * document is ignored.
 	 * <p>
-	 * The returned data entry is a new object if this entry is a mention, i.e. has non-0 offsets. Otherwise, this
-	 * instance is returned.
+	 * The returned data entry is a new object if this entry is a mention, i.e.
+	 * has non-0 offsets. Otherwise, this instance is returned.
 	 * </p>
 	 * 
 	 * @return
@@ -294,7 +303,6 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 		return ret;
 
 	}
-	
 
 	@Override
 	public String toString() {
@@ -303,5 +311,28 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 				+ recognitionSystem + "]";
 	}
 
+	/**
+	 * The reference object to this evaluation data entry. May be null.
+	 * 
+	 * @return The original classified object to which this evaluation data
+	 *         entry corresponds.
+	 */
+	public Object getReferenceObject() {
+		return referenceObject;
+	}
+
+	/**
+	 * The referenceObject field allows evaluation data entries to be associated
+	 * with their original classified object. It is completely ignored during
+	 * the evaluation and just provides a means to easily retrieve the
+	 * classified object for the evaluation data after it has been determined
+	 * for each entry whether it is correct or not.
+	 * 
+	 * @param referenceObject
+	 *            The original classification object.
+	 */
+	public void setReferenceObject(Object referenceObject) {
+		this.referenceObject = referenceObject;
+	}
 
 }
