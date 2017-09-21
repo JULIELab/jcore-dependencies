@@ -181,7 +181,7 @@ public class EntityEvaluator {
 		for (EvaluationDataEntry entry : predEntries)
 			predSet.add(entry.toDocWiseEntry());
 
-		SetView<EvaluationDataEntry> tpSet = Sets.intersection(goldSet, predSet);
+		SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
 		SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
 		SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
 
