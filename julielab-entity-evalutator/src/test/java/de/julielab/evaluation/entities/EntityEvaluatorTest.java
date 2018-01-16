@@ -58,8 +58,8 @@ public class EntityEvaluatorTest {
 		ArrayList<String[]> pList = Lists.newArrayList(p1, p2, p3, p4, p5, p6);
 
 		EntityEvaluator evaluator = new EntityEvaluator();
-		EntityEvaluationResult r1 = evaluator.evaluate(gold, pred);
-		EntityEvaluationResult r2 = evaluator.evaluate(gList, pList);
+		EntityEvaluationResult r1 = evaluator.evaluate(gold, pred).getSingle();
+		EntityEvaluationResult r2 = evaluator.evaluate(gList, pList).getSingle();
 
 		assertEquals(r1, r2);
 
@@ -91,7 +91,7 @@ public class EntityEvaluatorTest {
 
 		// First try with a default evaluator, i.e. exact matching.
 		EntityEvaluator evaluator = new EntityEvaluator();
-		EntityEvaluationResult report = evaluator.evaluate(gold, pred);
+		EntityEvaluationResult report = evaluator.evaluate(gold, pred).getSingle();
 
 		assertEquals(2, report.getSumTpDocWise());
 		assertEquals(1, report.getSumFpDocWise());
@@ -104,7 +104,7 @@ public class EntityEvaluatorTest {
 		// Now evaluate with overlapping.
 		// First: Absolute count of character-overlap
 		evaluator = new EntityEvaluator(new File("src/test/resources/overlap-2-chars.properties"));
-		report = evaluator.evaluate(gold, pred);
+		report = evaluator.evaluate(gold, pred).getSingle();
 
 		assertEquals(2, report.getSumTpDocWise());
 		assertEquals(1, report.getSumFpDocWise());
@@ -116,7 +116,7 @@ public class EntityEvaluatorTest {
 
 		// Second: 50-percent-overlap
 		evaluator = new EntityEvaluator(new File("src/test/resources/overlap-50-percent.properties"));
-		report = evaluator.evaluate(gold, pred);
+		report = evaluator.evaluate(gold, pred).getSingle();
 
 		assertEquals(2, report.getSumTpDocWise());
 		assertEquals(1, report.getSumFpDocWise());

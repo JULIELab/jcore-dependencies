@@ -12,6 +12,7 @@ public class EntityEvaluationResult {
 	private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentDocWise;
 	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentMentionWise;
 	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise;
+	private String entityType;
 
 	public void addStatisticsByDocument(String docId, SetView<EvaluationDataEntry> tpSet,
 			SetView<EvaluationDataEntry> fpSet, SetView<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
@@ -84,7 +85,7 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentMentionWise.size();
 	}
 
-	public double getAvgPMeasureMentionWise() {
+	public double getAvgPrecisionMentionWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
 			sum += entry.getValue().getPrecision();
@@ -92,7 +93,7 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentMentionWise.size();
 	}
 
-	public double getAvgRMeasureMentionWise() {
+	public double getAvgRecallMentionWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
 			sum += entry.getValue().getRecall();
@@ -236,7 +237,8 @@ public class EntityEvaluationResult {
 
 	public String getEvaluationReportLong() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Results doc-wise by document:\n");
+		sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
+		sb.append("Document Level:\n");
 		for (Entry<String, EvaluationStatistics> entry : this.getStatisticsByDocumentDocWise().entrySet()) {
 			String docId = entry.getKey();
 			EvaluationStatistics stats = entry.getValue();
@@ -244,16 +246,17 @@ public class EntityEvaluationResult {
 					+ stats.getPrecision() + " (tp: " + stats.tp + ", fp: " + stats.fp + ", fn: " + stats.fn + ")");
 			sb.append("\n");
 		}
-		sb.append("Mean: F: " + this.getAvgFMeasureDocWise() + ", R: " + this.getAvgRecallDocWise() + ", P: "
-				+ this.getAvgPrecisionDocWise() + " (tp: " + this.getSumTpDocWise() + ", fp: " + this.getSumFpDocWise()
-				+ ", fn: " + this.getSumFnDocWise() + ")");
-		sb.append("\n");
-		sb.append("Overall: F: " + this.getOverallFMeasureDocWise() + ", R: " + this.getOverallRecallDocWise()
-				+ ", P: " + this.getOverallPrecisionDocWise() + " (tp: " + this.getSumTpDocWise() + ", fp: "
-				+ this.getSumFpDocWise() + ", fn: " + this.getSumFnDocWise() + ")");
-		sb.append("\n\n");
+		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
+		sb.append("  TF: ").append(getSumFpDocWise()).append("\n");
+		sb.append("  FP: ").append(getSumFnDocWise()).append("\n");
+		sb.append("  Recall:    ").append(getOverallRecallDocWise()).append("\n");
+		sb.append("  Precision: ").append(getOverallPrecisionDocWise()).append("\n");
+		sb.append("  F-Score:   ").append(getOverallFMeasureDocWise()).append("\n");
+		sb.append("  Average Recall:    ").append(getAvgRecallDocWise()).append("\n");
+		sb.append("  Average Precision: ").append(getAvgPrecisionDocWise()).append("\n");
+		sb.append("  Average F-Score:   ").append(getAvgFMeasureDocWise()).append("\n");
 
-		sb.append("Results mention-wise by document:\n");
+		sb.append("Mention Level:\n");
 		if (null != statisticsByDocumentMentionWise) {
 			for (Entry<String, EvaluationStatistics> entry : this.getStatisticsByDocumentMentionWise().entrySet()) {
 				String docId = entry.getKey();
@@ -262,42 +265,41 @@ public class EntityEvaluationResult {
 						+ stats.getPrecision() + " (tp: " + stats.tp + ", fp: " + stats.fp + ", fn: " + stats.fn + ")");
 				sb.append("\n");
 			}
-			sb.append("Mean: F: " + this.getAvgFMeasureMentionWise() + ", R: " + this.getAvgRMeasureMentionWise()
-					+ ", P: " + this.getAvgPMeasureMentionWise() + " (tp: " + this.getSumTpMentionWise() + ", fp: "
-					+ this.getSumFpMentionWise() + ", fn: " + this.getSumFnMentionWise() + ")");
-			sb.append("\n");
-			sb.append("Overall: F: " + this.getOverallFMeasureMentionWise() + ", R: "
-					+ this.getOverallRecallMentionWise() + ", P: " + this.getOverallPrecisionMentionWise() + " (tp: "
-					+ this.getSumTpMentionWise() + ", fp: " + this.getSumFpMentionWise() + ", fn: "
-					+ this.getSumFnMentionWise() + ")");
+			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
+			sb.append("  TF: ").append(getSumFpMentionWise()).append("\n");
+			sb.append("  FP: ").append(getSumFnMentionWise()).append("\n");
+			sb.append("  Recall:    ").append(getOverallRecallMentionWise()).append("\n");
+			sb.append("  Precision: ").append(getOverallPrecisionMentionWise()).append("\n");
+			sb.append("  F-Score:   ").append(getOverallFMeasureMentionWise()).append("\n");
+			sb.append("  Average Recall:    ").append(getAvgRecallMentionWise()).append("\n");
+			sb.append("  Average Precision: ").append(getAvgPrecisionMentionWise()).append("\n");
+			sb.append("  Average F-Score:   ").append(getAvgPrecisionMentionWise()).append("\n");
 		} else {
 			sb.append("No mention information available.");
 		}
+		sb.append("\n");
 		return sb.toString();
 	}
 
 	public String getEvaluationReportShort() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("Results doc-wise by document:\n");
-		sb.append("Mean: F: " + this.getAvgFMeasureDocWise() + ", R: " + this.getAvgRecallDocWise() + ", P: "
-				+ this.getAvgPrecisionDocWise() + " (tp: " + this.getSumTpDocWise() + ", fp: " + this.getSumFpDocWise()
-				+ ", fn: " + this.getSumFnDocWise() + ")");
-		sb.append("\n");
-		sb.append("Overall: F: " + this.getOverallFMeasureDocWise() + ", R: " + this.getOverallRecallDocWise()
-				+ ", P: " + this.getOverallPrecisionDocWise() + " (tp: " + this.getSumTpDocWise() + ", fp: "
-				+ this.getSumFpDocWise() + ", fn: " + this.getSumFnDocWise() + ")");
-		sb.append("\n\n");
+		sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
+		sb.append("Document Level:\n");
+		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
+		sb.append("  TF: ").append(getSumFpDocWise()).append("\n");
+		sb.append("  FP: ").append(getSumFnDocWise()).append("\n");
+		sb.append("  Recall:    ").append(getOverallRecallDocWise()).append("\n");
+		sb.append("  Precision: ").append(getOverallPrecisionDocWise()).append("\n");
+		sb.append("  F-Score:   ").append(getOverallFMeasureDocWise()).append("\n");
 
-		sb.append("Results mention-wise by document:\n");
+		sb.append("Mention Level:\n");
 		if (null != statisticsByDocumentMentionWise) {
-			sb.append("Mean: F: " + this.getAvgFMeasureMentionWise() + ", R: " + this.getAvgRMeasureMentionWise()
-					+ ", P: " + this.getAvgPMeasureMentionWise() + " (tp: " + this.getSumTpMentionWise() + ", fp: "
-					+ this.getSumFpMentionWise() + ", fn: " + this.getSumFnMentionWise() + ")");
-			sb.append("\n");
-			sb.append("Overall: F: " + this.getOverallFMeasureMentionWise() + ", R: "
-					+ this.getOverallRecallMentionWise() + ", P: " + this.getOverallPrecisionMentionWise() + " (tp: "
-					+ this.getSumTpMentionWise() + ", fp: " + this.getSumFpMentionWise() + ", fn: "
-					+ this.getSumFnMentionWise() + ")");
+			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
+			sb.append("  TF: ").append(getSumFpMentionWise()).append("\n");
+			sb.append("  FP: ").append(getSumFnMentionWise()).append("\n");
+			sb.append("  Recall:    ").append(getOverallRecallMentionWise()).append("\n");
+			sb.append("  Precision: ").append(getOverallPrecisionMentionWise()).append("\n");
+			sb.append("  F-Score:   ").append(getOverallFMeasureMentionWise()).append("\n");
 		} else {
 			sb.append("No mention information available.");
 		}
@@ -341,6 +343,14 @@ public class EntityEvaluationResult {
 			break;
 		}
 		return sb.toString();
+	}
+
+	public void setEntityType(String entityType) {
+		this.entityType = entityType;
+	}
+
+	public String getEntityType() {
+		return entityType;
 	}
 
 }

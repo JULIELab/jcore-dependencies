@@ -6,10 +6,13 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,11 +64,11 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	public EvaluationData() {
 		this(DEFAULT_FORMAT);
 	}
-	
+
 	public EvaluationData(Properties properties) {
 		this(getDataFormatFromConfiguration(properties));
 	}
-	
+
 	public EvaluationData(EvaluationDataFormat dataFormat) {
 		this.dataFormat = dataFormat;
 	}
@@ -77,16 +80,15 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	public EvaluationData(List<String[]> records, EvaluationDataFormat format) {
 		dataFormat = format;
 		boolean hasOffsets = false;
-		if (records.size() > 0) {
+		if (!records.isEmpty()) {
 			add(records.get(0), format);
 			EvaluationDataEntry lastEntry = get(size() - 1);
 			hasOffsets = lastEntry.isMention();
 			if (hasOffsets)
-				log.debug("Got first line \"{}\", treating file as delivered with offsets.",
-						new Object[] { records.get(0) });
+				log.debug("Got first line \"{}\", treating file as delivered with offsets.", (Object) records.get(0));
 			else
 				log.debug("Got first line \"{}\", treating file as delivered without offsets.",
-						new Object[] { records.get(0) });
+						(Object) records.get(0));
 		}
 		for (int i = 1; i < records.size(); i++) {
 			String[] record = records.get(i);
@@ -107,6 +109,11 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 		dataFormat = format;
 		for (int i = 0; i < data.length; i++)
 			add(data[i], format);
+	}
+
+	public EvaluationData(boolean mentionData) {
+		this();
+		this.isMentionData = mentionData;
 	}
 
 	@Override
@@ -161,81 +168,14 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	 * docId &lt; tab &gt; entityId &lt; tab &gt; begin &lt; tab &gt; end &lt; tab &gt; text &lt; tab &gt; systemId
 	 * </pre>
 	 * 
-	 * Any subset of columns between the two may be given as long as the order
-	 * is always correct.
+	 * Any subset of columns between the two may be given as long as the order is
+	 * always correct.
 	 * 
 	 * @param dataRecord
 	 * @return
 	 */
 	public boolean add(String[] dataRecord) {
 		return add(dataRecord, dataFormat);
-		// if (dataRecord.length < 2)
-		// throw new IllegalArgumentException("Given data record \"" +
-		// Arrays.toString(dataRecord)
-		// + "\" has less than two columns. The expected format is at least two
-		// columns where the first column is a document ID and the second is an
-		// entity ID to allow for the document-level evaluation of entity
-		// mention findings.");
-		// if (dataRecord.length < 3) {
-		// EvaluationDataEntry evalDataEntry = new
-		// EvaluationDataEntry(dataRecord[0], dataRecord[1]);
-		// return add(evalDataEntry);
-		// } else if (dataRecord.length > 2) {
-		// String docId = dataRecord[0];
-		// String entityId = dataRecord[1];
-		// int begin;
-		// int end;
-		// String entityString = null;
-		// String recognitionSystem = null;
-		// String confidence = null;
-		// try {
-		// begin = Integer.parseInt(dataRecord[2]);
-		// } catch (NumberFormatException e) {
-		// EvaluationDataEntry evalDataEntry = new
-		// EvaluationDataEntry(dataRecord[0], dataRecord[1]);
-		// entityString = dataRecord[2];
-		// if (dataRecord.length > 3)
-		// recognitionSystem = dataRecord[3];
-		// evalDataEntry.setEntityString(entityString);
-		// evalDataEntry.setRecognitionSystem(recognitionSystem);
-		// return add(evalDataEntry);
-		// }
-		// try {
-		// end = Integer.parseInt(dataRecord[3]);
-		// } catch (NumberFormatException e) {
-		// EvaluationDataEntry evalDataEntry = new
-		// EvaluationDataEntry(dataRecord[0], dataRecord[1]);
-		// entityString = dataRecord[2];
-		// if (dataRecord.length > 3)
-		// recognitionSystem = dataRecord[3];
-		// evalDataEntry.setEntityString(entityString);
-		// evalDataEntry.setRecognitionSystem(recognitionSystem);
-		// return add(evalDataEntry);
-		// }
-		// EvaluationDataEntry evalDataEntry = new EvaluationDataEntry(docId,
-		// entityId, begin, end);
-		// if (dataRecord.length > 4)
-		// entityString = dataRecord[4];
-		// if (dataRecord.length > 5)
-		// recognitionSystem = dataRecord[5];
-		// if (dataRecord.length > 6)
-		// confidence = dataRecord[6];
-		// evalDataEntry.setEntityString(entityString);
-		// evalDataEntry.setRecognitionSystem(recognitionSystem);
-		// evalDataEntry.setConfidence(confidence);
-		// return add(evalDataEntry);
-		// }
-		// return false;
-	}
-
-	@Override
-	public boolean addAll(Collection<? extends EvaluationDataEntry> c) {
-		return super.addAll(c);
-	}
-
-	@Override
-	public boolean addAll(int index, Collection<? extends EvaluationDataEntry> c) {
-		return super.addAll(index, c);
 	}
 
 	@Override
@@ -260,8 +200,7 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	}
 
 	/**
-	 * Reads the given data file with the
-	 * {@link EntityEvaluator#DEFAULT_FORMAT}.
+	 * Reads the given data file with the {@link EntityEvaluator#DEFAULT_FORMAT}.
 	 * 
 	 * @param dataFile
 	 * @return
@@ -269,10 +208,9 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	public static EvaluationData readDataFile(File dataFile) {
 		return readDataFile(dataFile, DEFAULT_FORMAT);
 	}
-	
+
 	/**
-	 * Reads the given data file with the
-	 * {@link EntityEvaluator#DEFAULT_FORMAT}.
+	 * Reads the given data file with the {@link EntityEvaluator#DEFAULT_FORMAT}.
 	 * 
 	 * @param dataFile
 	 * @return
@@ -283,8 +221,9 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	}
 
 	public static EvaluationDataFormat getDataFormatFromConfiguration(Properties properties) {
-		String dataFormatClassName = properties != null ? properties.getProperty(PROP_INPUT_FORMAT_CLASS,
-				GeneNormalizationFormat.class.getCanonicalName()) : GeneNormalizationFormat.class.getCanonicalName();
+		String dataFormatClassName = properties != null
+				? properties.getProperty(PROP_INPUT_FORMAT_CLASS, GeneNormalizationFormat.class.getCanonicalName())
+				: GeneNormalizationFormat.class.getCanonicalName();
 		EvaluationDataFormat dataFormat;
 		try {
 			dataFormat = (EvaluationDataFormat) Class.forName(dataFormatClassName).newInstance();
@@ -296,8 +235,7 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	}
 
 	/**
-	 * Reads a tab separated file and returns its contents
-	 * <tt>EvaluationData</tt>.
+	 * Reads a tab separated file and returns its contents <tt>EvaluationData</tt>.
 	 * 
 	 * @param dataFile
 	 * @param format
@@ -314,11 +252,21 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 				data.add(splitLine, format);
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			log.error("IOException while reading evaluation data", e);
 		} catch (NoOffsetsException e) {
-			log.error("Error while reading file \"{}\" on line {}: ",
-					new Object[] { dataFile.getAbsolutePath(), i, e });
+			log.error("Error while reading file \"{}\" on line {}: ", dataFile.getAbsolutePath(), i, e);
 		}
 		return data;
+	}
+
+	public EvaluationData slice(String entityType) {
+		return stream().filter(e -> e.getEntityType().equals(entityType))
+				.collect(Collectors.toCollection(EvaluationData::new));
+	}
+
+	public Map<String, EvaluationData> sliceIntoEntityTypes() {
+		return stream().collect(
+				Collectors.groupingBy(EvaluationDataEntry::getEntityType, HashMap::new,
+						Collectors.mapping(Function.identity(), Collectors.toCollection(() -> new EvaluationData(isMentionData)))));
 	}
 }

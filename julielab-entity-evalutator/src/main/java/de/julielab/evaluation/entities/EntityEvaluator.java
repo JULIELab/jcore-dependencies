@@ -7,7 +7,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
 import java.util.function.Supplier;
@@ -60,7 +62,8 @@ public class EntityEvaluator {
 	}
 
 	public EntityEvaluator(File propertiesFile) throws FileNotFoundException, IOException {
-		// this is just a very complicated way to say "load the properties and set them to the constructor"
+		// this is just a very complicated way to say "load the properties and set them
+		// to the constructor"
 		this(new Supplier<Properties>() {
 			@Override
 			public Properties get() {
@@ -101,11 +104,11 @@ public class EntityEvaluator {
 		return properties;
 	}
 
-	public EntityEvaluationResult evaluate(EvaluationData gold, EvaluationData predicted) {
+	public EntityEvaluationResults evaluate(EvaluationData gold, EvaluationData predicted) {
 		if (comparisonType != EvaluationDataEntry.ComparisonType.EXACT) {
 			log.debug(
 					"Converting gold and predicted entity entries to the following comparison method: ComparisonType - {}; OverlapType - {}; OverlapSize - {}",
-					new Object[] { comparisonType, overlapType, overlapSize });
+					comparisonType, overlapType, overlapSize);
 			for (EvaluationDataEntry entry : gold) {
 				entry.setComparisonType(comparisonType);
 				entry.setOverlapType(overlapType);
@@ -127,28 +130,45 @@ public class EntityEvaluator {
 			}
 		}
 
-		Multimap<String, EvaluationDataEntry> goldByDoc = gold.organizeByDocument();
-		Multimap<String, EvaluationDataEntry> predByDoc = predicted.organizeByDocument();
+		Map<String, EvaluationData> goldByEntityTypes = gold.sliceIntoEntityTypes();
+		if (goldByEntityTypes.size() > 1)
+			goldByEntityTypes.put(EntityEvaluationResults.OVERALL, gold);
+		Map<String, EvaluationData> predictedByEntityTypes = predicted.sliceIntoEntityTypes();
+		if (predictedByEntityTypes.size() > 1)
+			predictedByEntityTypes.put(EntityEvaluationResults.OVERALL, predicted);
 
-		EntityEvaluationResult evalResult = new EntityEvaluationResult();
+		EntityEvaluationResults results = new EntityEvaluationResults();
 
-		for (String docId : Sets.union(goldByDoc.keySet(), predByDoc.keySet())) {
-			Collection<EvaluationDataEntry> goldEntries = goldByDoc.get(docId);
-			Collection<EvaluationDataEntry> predEntries = predByDoc.get(docId);
-			if (gold.isMentionData() && predicted.isMentionData()) {
-				computeEvalStatisticsMentionWise(goldEntries, predEntries, docId, evalResult, gold.isMentionData());
+		for (String entityType : Sets.union(goldByEntityTypes.keySet(), predictedByEntityTypes.keySet())) {
+
+			Multimap<String, EvaluationDataEntry> goldByDoc = goldByEntityTypes
+					.getOrDefault(entityType, new EvaluationData(gold.isMentionData())).organizeByDocument();
+			Multimap<String, EvaluationDataEntry> predByDoc = predictedByEntityTypes
+					.getOrDefault(entityType, new EvaluationData(predicted.isMentionData())).organizeByDocument();
+
+			EntityEvaluationResult evalResult = new EntityEvaluationResult();
+			evalResult.setEntityType(entityType);
+
+			for (String docId : Sets.union(goldByDoc.keySet(), predByDoc.keySet())) {
+				Collection<EvaluationDataEntry> goldEntries = goldByDoc.get(docId);
+				Collection<EvaluationDataEntry> predEntries = predByDoc.get(docId);
+				if (gold.isMentionData() && predicted.isMentionData()) {
+					computeEvalStatisticsMentionWise(goldEntries, predEntries, docId, evalResult, gold.isMentionData());
+				}
+				computeEvalStatisticsDocWise(goldEntries, predEntries, docId, evalResult, !gold.isMentionData());
 			}
-			computeEvalStatisticsDocWise(goldEntries, predEntries, docId, evalResult, !gold.isMentionData());
-		}
 
-		return evalResult;
+			results.put(entityType, evalResult);
+		}
+		return results;
 	}
 
-	public EntityEvaluationResult evaluate(List<String[]> gold, List<String[]> predicted) {
+	public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted) {
 		return evaluate(gold, predicted, EvaluationData.getDataFormatFromConfiguration(properties));
 	}
 
-	public EntityEvaluationResult evaluate(List<String[]> gold, List<String[]> predicted, EvaluationDataFormat format) {
+	public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted,
+			EvaluationDataFormat format) {
 		EvaluationData goldData = new EvaluationData(gold, format);
 		EvaluationData predData = new EvaluationData(predicted, format);
 		return evaluate(goldData, predData);
@@ -202,7 +222,8 @@ public class EntityEvaluator {
 		if (args.length > 2)
 			propertiesFile = new File(args[2]);
 
-		EntityEvaluator evaluator = propertiesFile == null ? new EntityEvaluator() : new EntityEvaluator(propertiesFile);
+		EntityEvaluator evaluator = propertiesFile == null ? new EntityEvaluator()
+				: new EntityEvaluator(propertiesFile);
 
 		EvaluationData goldData = null;
 		EvaluationData predData = null;
@@ -237,10 +258,13 @@ public class EntityEvaluator {
 			predData = EvaluationData.readDataFile(predFile, evaluator.dataFormat);
 		}
 
-		EntityEvaluationResult result = evaluator.evaluate(goldData, predData);
-
-		System.out.println(result.getEvaluationReportShort());
-		IOUtils.write(result.getEvaluationReportLong(), new FileOutputStream("EvaluationReport.txt"));
+		EntityEvaluationResults results = evaluator.evaluate(goldData, predData);
+		try (FileOutputStream fos = new FileOutputStream("EvaluationReport.txt")) {
+			for (EntityEvaluationResult result : results.values()) {
+				System.out.println(result.getEvaluationReportShort());
+				IOUtils.write(result.getEvaluationReportLong(), fos);
+			}
+		}
 
 	}
 

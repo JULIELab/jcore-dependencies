@@ -27,6 +27,8 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	private String docId;
 
 	private String entityId;
+	
+	private String entityType;
 
 	// public int begin;
 	// public int end;
@@ -62,12 +64,18 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	public EvaluationDataEntry(String docId, String entityId, int begin, int end) {
 		this.docId = docId;
 		this.entityId = entityId;
-		// this.begin = begin;
-		// this.end = end;
 		offsetRange = Range.between(begin, end);
 		comparisonType = ComparisonType.EXACT;
 		overlapType = OverlapType.PERCENT;
 		overlapSize = 100;
+		entityType = "entity";
+	}
+	
+	public EvaluationDataEntry(String docId, String entityId, int begin, int end, String entityString, String recognitionSystem, String entityType) {
+		this(docId, entityId, begin, end);
+		this.entityString = entityString;
+		this.recognitionSystem = recognitionSystem;
+		this.entityType = entityType;
 	}
 
 	public EvaluationDataEntry(String docId, String entityId, String entityString, String recognitionSystem) {
@@ -75,6 +83,15 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 		this.entityString = entityString;
 		this.recognitionSystem = recognitionSystem;
 	}
+	
+	public EvaluationDataEntry(String docId, String entityId, String entityString, String recognitionSystem, String entityType) {
+		this(docId, entityId, -1, -1);
+		this.entityString = entityString;
+		this.recognitionSystem = recognitionSystem;
+		this.entityType = entityType;
+	}
+	
+	
 
 	public EvaluationDataEntry() {
 		this(null, null, -1, -1);
@@ -230,8 +247,8 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	private String makeComparisonString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append(docId);
-		sb.append(entityId);
 		sb.append(offsetRange);
+		sb.append(entityId);
 		return sb.toString();
 	}
 
@@ -343,6 +360,14 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	 */
 	public void setReferenceObject(Object referenceObject) {
 		this.referenceObject = referenceObject;
+	}
+
+	public String getEntityType() {
+		return entityType;
+	}
+
+	public void setEntityType(String entityType) {
+		this.entityType = entityType;
 	}
 
 }
