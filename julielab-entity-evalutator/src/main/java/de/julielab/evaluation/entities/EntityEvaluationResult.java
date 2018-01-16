@@ -247,8 +247,8 @@ public class EntityEvaluationResult {
 			sb.append("\n");
 		}
 		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
-		sb.append("  TF: ").append(getSumFpDocWise()).append("\n");
-		sb.append("  FP: ").append(getSumFnDocWise()).append("\n");
+		sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
+		sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
 		sb.append("  Recall:    ").append(getOverallRecallDocWise()).append("\n");
 		sb.append("  Precision: ").append(getOverallPrecisionDocWise()).append("\n");
 		sb.append("  F-Score:   ").append(getOverallFMeasureDocWise()).append("\n");
@@ -266,14 +266,14 @@ public class EntityEvaluationResult {
 				sb.append("\n");
 			}
 			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
-			sb.append("  TF: ").append(getSumFpMentionWise()).append("\n");
-			sb.append("  FP: ").append(getSumFnMentionWise()).append("\n");
+			sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
+			sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
 			sb.append("  Recall:    ").append(getOverallRecallMentionWise()).append("\n");
 			sb.append("  Precision: ").append(getOverallPrecisionMentionWise()).append("\n");
 			sb.append("  F-Score:   ").append(getOverallFMeasureMentionWise()).append("\n");
 			sb.append("  Average Recall:    ").append(getAvgRecallMentionWise()).append("\n");
 			sb.append("  Average Precision: ").append(getAvgPrecisionMentionWise()).append("\n");
-			sb.append("  Average F-Score:   ").append(getAvgPrecisionMentionWise()).append("\n");
+			sb.append("  Average F-Score:   ").append(getAvgFMeasureMentionWise()).append("\n");
 		} else {
 			sb.append("No mention information available.");
 		}
@@ -286,8 +286,8 @@ public class EntityEvaluationResult {
 		sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
 		sb.append("Document Level:\n");
 		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
-		sb.append("  TF: ").append(getSumFpDocWise()).append("\n");
-		sb.append("  FP: ").append(getSumFnDocWise()).append("\n");
+		sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
+		sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
 		sb.append("  Recall:    ").append(getOverallRecallDocWise()).append("\n");
 		sb.append("  Precision: ").append(getOverallPrecisionDocWise()).append("\n");
 		sb.append("  F-Score:   ").append(getOverallFMeasureDocWise()).append("\n");
@@ -295,8 +295,8 @@ public class EntityEvaluationResult {
 		sb.append("Mention Level:\n");
 		if (null != statisticsByDocumentMentionWise) {
 			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
-			sb.append("  TF: ").append(getSumFpMentionWise()).append("\n");
-			sb.append("  FP: ").append(getSumFnMentionWise()).append("\n");
+			sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
+			sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
 			sb.append("  Recall:    ").append(getOverallRecallMentionWise()).append("\n");
 			sb.append("  Precision: ").append(getOverallPrecisionMentionWise()).append("\n");
 			sb.append("  F-Score:   ").append(getOverallFMeasureMentionWise()).append("\n");
