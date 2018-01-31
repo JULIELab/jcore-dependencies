@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xmi:XMI xmlns:cas="http:///uima/cas.ecore" xmlns:xmi="http://www.omg.org/XMI"
+	xmlns:pubmed="http:///de/julielab/jcore/types/pubmed.ecore" xmlns:tcas="http:///uima/tcas.ecore"
+	xmlns:stemnet="http:///de/julielab/jcore/types/stemnet.ecore"
+	xmlns:types="http:///de/julielab/jcore/types.ecore" xmi:version="2.0">
+	<cas:NULL xmi:id="0" />
+	<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView"
+		mimeType="text"
+		sofaString="Hepatitis B virus and celiac disease: HBV and Celiac Disease." />
+	<tcas:DocumentAnnotation xmi:id="8" sofa="1"
+		begin="0" end="61" language="x-unspecified" />
+	<types:AbstractText xmi:id="13" sofa="1" begin="61"
+		end="61" />
+	<types:Title xmi:id="20" sofa="1" begin="0" end="61" />
+	<types:RelatedArticleList xmi:id="27" sofa="1"
+		begin="0" end="0" relatedArticles="659" />
+	<types:AuthorInfo xmi:id="35" sofa="1" begin="0" end="0"
+		foreName="Ceres Concilio"
+		affiliation="Department of Pediatrics, School of Medicine, University of Sao Paulo, Sao Paulo, Brazil."
+		lastName="Romaldini" initials="CC" />
+	<types:AuthorInfo xmi:id="47" sofa="1" begin="0" end="0"
+		foreName="Dorina"
+		affiliation="Department of Pediatrics, School of Medicine, University of Sao Paulo, Sao Paulo, Brazil."
+		lastName="Barbieri" initials="D" />
+	<types:Date xmi:id="59" sofa="1" begin="0" end="0" day="0"
+		month="1" year="2011" />
+	<types:Journal xmi:id="69" sofa="1" begin="0" end="0"
+		name="Journal Article" pubDate="59" ISSN="1735-3408" volume="11"
+		title="Hepatitis monthly" shortTitle="Hepat Mon" issue="1" pages="46" />
+	<pubmed:Header xmi:id="86" sofa="1" begin="0" end="0"
+		source="22087118" docId="22087118" truncated="false" authors="655"
+		pubTypeList="69" language="eng" pkElements="647" citationStatus="PubMed-not-MEDLINE" />
+	<pubmed:ManualDescriptor xmi:id="111" sofa="1"
+		begin="0" end="0" meSHList="645" chemicalList="643" dBInfoList="641"
+		keywordList="639" />
+	<types:Sentence xmi:id="124" sofa="1" begin="0" end="61"
+		componentId="de.julielab.jcore.ae.SentenceAnnotator" id="T82471045" />
+	<types:Token xmi:id="131" sofa="1" begin="0" end="9"
+		componentId="JULIE Token Boundary Detector" id="1" posTag="636"
+		depRel="539" />
+	<types:Token xmi:id="146" sofa="1" begin="10" end="11"
+		componentId="JULIE Token Boundary Detector" id="2" posTag="633"
+		depRel="542" />
+	<types:Token xmi:id="161" sofa="1" begin="12" end="17"
+		componentId="JULIE Token Boundary Detector" id="3" posTag="630"
+		depRel="545" />
+	<types:Token xmi:id="176" sofa="1" begin="18" end="21"
+		componentId="JULIE Token Boundary Detector" id="4" posTag="627"
+		depRel="548" />
+	<types:Token xmi:id="191" sofa="1" begin="22" end="28"
+		componentId="JULIE Token Boundary Detector" id="5" posTag="624"
+		depRel="551" />
+	<types:Token xmi:id="206" sofa="1" begin="29" end="36"
+		componentId="JULIE Token Boundary Detector" id="6" posTag="621"
+		depRel="554" />
+	<types:Token xmi:id="221" sofa="1" begin="36" end="37"
+		componentId="JULIE Token Boundary Detector" id="7" posTag="618"
+		depRel="557" />
+	<types:Token xmi:id="236" sofa="1" begin="38" end="41"
+		componentId="JULIE Token Boundary Detector" id="8" posTag="615"
+		depRel="560" />
+	<types:Token xmi:id="251" sofa="1" begin="42" end="45"
+		componentId="JULIE Token Boundary Detector" id="9" posTag="612"
+		depRel="563" />
+	<types:Token xmi:id="266" sofa="1" begin="46" end="52"
+		componentId="JULIE Token Boundary Detector" id="10" posTag="609"
+		depRel="566" />
+	<types:Token xmi:id="281" sofa="1" begin="53" end="60"
+		componentId="JULIE Token Boundary Detector" id="11" posTag="606"
+		depRel="569" />
+	<types:Token xmi:id="296" sofa="1" begin="60" end="61"
+		componentId="JULIE Token Boundary Detector" id="12" posTag="603"
+		depRel="572" />
+	<types:PennBioIEPOSTag xmi:id="311" sofa="1"
+		begin="0" end="9" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="320" sofa="1"
+		begin="10" end="11" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="329" sofa="1"
+		begin="12" end="17" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="338" sofa="1"
+		begin="18" end="21" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="CC" />
+	<types:PennBioIEPOSTag xmi:id="347" sofa="1"
+		begin="22" end="28" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="JJ" />
+	<types:PennBioIEPOSTag xmi:id="356" sofa="1"
+		begin="29" end="36" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="365" sofa="1"
+		begin="36" end="37" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value=":" />
+	<types:PennBioIEPOSTag xmi:id="374" sofa="1"
+		begin="38" end="41" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="383" sofa="1"
+		begin="42" end="45" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="CC" />
+	<types:PennBioIEPOSTag xmi:id="392" sofa="1"
+		begin="46" end="52" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="401" sofa="1"
+		begin="53" end="60" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="NN" />
+	<types:PennBioIEPOSTag xmi:id="410" sofa="1"
+		begin="60" end="61" componentId="de.julielab.jcore.ae.OpenNLPPosTagger"
+		value="." />
+	<types:DependencyRelation xmi:id="419" sofa="1"
+		begin="0" end="9" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="161" projective="true" label="NMOD" />
+	<types:DependencyRelation xmi:id="429" sofa="1"
+		begin="10" end="11" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="161" projective="true" label="NMOD" />
+	<types:DependencyRelation xmi:id="439" sofa="1"
+		begin="0" end="0" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		projective="false" />
+	<types:DependencyRelation xmi:id="449" sofa="1"
+		begin="18" end="21" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="161" projective="true" label="CC" />
+	<types:DependencyRelation xmi:id="459" sofa="1"
+		begin="22" end="28" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="206" projective="true" label="NMOD" />
+	<types:DependencyRelation xmi:id="469" sofa="1"
+		begin="29" end="36" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="161" projective="true" label="COORD" />
+	<types:DependencyRelation xmi:id="479" sofa="1"
+		begin="36" end="37" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="161" projective="true" label="P" />
+	<types:DependencyRelation xmi:id="489" sofa="1"
+		begin="38" end="41" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="161" projective="true" label="NMOD" />
+	<types:DependencyRelation xmi:id="499" sofa="1"
+		begin="42" end="45" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="236" projective="true" label="CC" />
+	<types:DependencyRelation xmi:id="509" sofa="1"
+		begin="46" end="52" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="281" projective="true" label="NMOD" />
+	<types:DependencyRelation xmi:id="519" sofa="1"
+		begin="53" end="60" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="236" projective="true" label="COORD" />
+	<types:DependencyRelation xmi:id="529" sofa="1"
+		begin="60" end="61" componentId="de.julielab.jcore.mstparser.MSTParserAnnotator"
+		head="236" projective="true" label="P" />
+	<cas:FSArray xmi:id="539" elements="419" />
+	<cas:FSArray xmi:id="542" elements="429" />
+	<cas:FSArray xmi:id="545" elements="439" />
+	<cas:FSArray xmi:id="548" elements="449" />
+	<cas:FSArray xmi:id="551" elements="459" />
+	<cas:FSArray xmi:id="554" elements="469" />
+	<cas:FSArray xmi:id="557" elements="479" />
+	<cas:FSArray xmi:id="560" elements="489" />
+	<cas:FSArray xmi:id="563" elements="499" />
+	<cas:FSArray xmi:id="566" elements="509" />
+	<cas:FSArray xmi:id="569" elements="519" />
+	<cas:FSArray xmi:id="572" elements="529" />
+	<types:ChunkNP xmi:id="575" sofa="1" begin="0" end="21"
+		componentId="de.julielab.jcore.ae.OpenNLPChunker" />
+	<types:ChunkNP xmi:id="582" sofa="1" begin="22" end="37"
+		componentId="de.julielab.jcore.ae.OpenNLPChunker" />
+	<types:ChunkNP xmi:id="589" sofa="1" begin="38" end="45"
+		componentId="de.julielab.jcore.ae.OpenNLPChunker" />
+	<types:ChunkNP xmi:id="596" sofa="1" begin="46" end="61"
+		componentId="de.julielab.jcore.ae.OpenNLPChunker" />
+	<types:AutoDescriptor xmi:id="661" sofa="1" begin="0"
+		end="0" documentClasses="669" />
+	<tcas:Annotation xmi:id="1999" sofa="1" begin="0" end="17" />
+	<tcas:Annotation xmi:id="2016" sofa="1" begin="22" end="36" />
+	<tcas:Annotation xmi:id="2033" sofa="1" begin="46" end="60" />
+	<tcas:Annotation xmi:id="2050" sofa="1" begin="0" end="17" />
+	<tcas:Annotation xmi:id="2065" sofa="1" begin="38" end="41" />
+	<types:MeshMention xmi:id="2003" sofa="1" begin="0"
+		end="17" confidence="1.0"
+		componentId="de.julielab.jcore.lingpipegazetteer.GazetteerAnnotator"
+		specificType="D006515" />
+	<types:MeshMention xmi:id="2020" sofa="1" begin="22"
+		end="36" confidence="1.0"
+		componentId="de.julielab.jcore.lingpipegazetteer.GazetteerAnnotator"
+		specificType="D002446" />
+	<types:MeshMention xmi:id="2037" sofa="1" begin="46"
+		end="60" confidence="1.0"
+		componentId="de.julielab.jcore.lingpipegazetteer.GazetteerAnnotator"
+		specificType="D002446" />
+	<types:DocumentClass xmi:id="669" sofa="1" begin="0"
+		end="0" classname="Ageing Disease-Related" confidence="0.890538383351376" />
+	<cas:FSArray xmi:id="603" elements="410" />
+	<cas:FSArray xmi:id="606" elements="401" />
+	<cas:FSArray xmi:id="609" elements="392" />
+	<cas:FSArray xmi:id="612" elements="383" />
+	<cas:FSArray xmi:id="615" elements="374" />
+	<cas:FSArray xmi:id="618" elements="365" />
+	<cas:FSArray xmi:id="621" elements="356" />
+	<cas:FSArray xmi:id="624" elements="347" />
+	<cas:FSArray xmi:id="627" elements="338" />
+	<cas:FSArray xmi:id="630" elements="329" />
+	<cas:FSArray xmi:id="633" elements="320" />
+	<cas:FSArray xmi:id="636" elements="311" />
+	<cas:FSArray xmi:id="639" elements="" />
+	<cas:FSArray xmi:id="641" elements="" />
+	<cas:FSArray xmi:id="643" elements="" />
+	<cas:FSArray xmi:id="645" elements="" />
+	<types:PKElement xmi:id="647" sofa="1" begin="0" end="0"
+		value="3232303837313138" />
+	<cas:FSArray xmi:id="655" elements="35 47" />
+	<cas:FSArray xmi:id="659" elements="" />
+	<cas:View sofa="1"
+		members="8 13 20 27 35 47 59 69 86 111 124 131 146 161 176 191 206 221 236 251 266 281 296 311 320 329 338 347 356 365 374 383 392 401 410 419 429 439 449 459 469 479 489 499 509 519 529 539 542 545 548 551 554 557 560 563 566 569 572 575 582 589 596 661 1999 2016 2033 2050 2065 2003 2020 2037" />
+</xmi:XMI>
