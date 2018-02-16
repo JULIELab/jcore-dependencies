@@ -21,7 +21,9 @@ import static org.junit.Assert.assertTrue;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.util.Arrays;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -34,7 +36,7 @@ import com.ximpleware.ParseException;
 import com.ximpleware.VTDException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
-import com.ximpleware.*;
+import com.ximpleware.XMLModifier;
 
 /**
  * Tests for the Utils class.

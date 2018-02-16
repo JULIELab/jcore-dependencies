@@ -501,7 +501,7 @@ public class JulieXMLTools {
 	}
 
 	private static Map<String, String> buildNamespaceMap(VTDNav vn) throws VTDException {
-		Map<String, String> namespaceMap = new HashMap<String, String>();
+		Map<String, String> namespaceMap = new HashMap<>();
 
 		AutoPilot ap = new AutoPilot(vn);
 		ap.selectXPath("//namespace::*");
