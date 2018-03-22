@@ -241,7 +241,7 @@ public class XmiBuilder {
 											if (null != seenXmiElements.get(xmiId))
 												throw new IllegalArgumentException(
 														"Detected XMI ID clash between the following to elements: "
-																+ seenXmiElements.get(xmiId) + " and " + startElement
+																+ seenXmiElements.get(xmiId).getName().getLocalPart() + " and " + startElement.getName().getLocalPart()
 																+ "; the input data is inconsistent, please check the consistency of your database.");
 											seenXmiElements.put(xmiId, startElement);
 										}

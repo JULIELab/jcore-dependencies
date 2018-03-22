@@ -396,15 +396,13 @@ public class XmiSplitter {
                         // number instead of
                         // an xmi id
                         StorageElement storageElement = new StorageElement(endElement, enclosingStorageKey);
-                        System.out.println("Close: " + endElementName);
-                      //  checkStorageKeysNotEmpty(storageElement);
+                        checkStorageKeysNotEmpty(storageElement);
 //						List<Object> list = new ArrayList<Object>();
 //						list.add(event);
 //						list.add(enclosingStorageKey);
                         elementsToWrite.put(Integer.toString(othersCounter), storageElement);
                         othersCounter--;
                         if (endElementName.equals(enclosingElementName)) {
-                            System.out.println("Deleting enclosingStorageKeys: " + endElementName);
                             // stop looking for child nodes until the start tag
                             // of the next
                             // relevant element is encountered
@@ -432,7 +430,6 @@ public class XmiSplitter {
                     String elementNSUri = elementQName.getNamespaceURI();
                     String elementName = elementQName.getLocalPart();
                     String javaName = getTypeJavaName(element) + elementName;
-                    System.out.println("Start: " + elementName);
 
                     // store the xmi start tag of this document once and
                     // initialize writers with it
@@ -503,7 +500,7 @@ public class XmiSplitter {
                             storageKey = Collections.singleton(javaName);
                         } else if (xmiIdsToRetrieve.containsKey(xmiId) && !elementsToWrite.containsKey(xmiId)) {
                             isFeature = true;
-                            storageKey = xmiIdsToRetrieve.get(xmiId);
+                            storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
                         }
 
                         if (isDocElement || isAnnotation || isFeature) {
@@ -538,11 +535,10 @@ public class XmiSplitter {
                                                 if (!isPrimitive(annotationType, attributeName)) {
                                                     try {
                                                         recordReferencesForExtraction(attribute, storageKey, xmiIdsToRetrieve, elementsToWrite);
-                                                    }
-                                                    catch (Exception e) {
+                                                    } catch (Exception e) {
                                                         System.out.println(elementName);
-                                                            throw e;
-                                                        }
+                                                        throw e;
+                                                    }
                                                 }
                                             }
                                         }
@@ -660,15 +656,13 @@ public class XmiSplitter {
         for (int i = 0; i < elements.length; i++) {
             final String referenceXmiId = elements[i];
             if (!referenceXmiId.equals("")) {
-                if (!elementsToWrite.containsKey(elements[i])) {
+                if (!elementsToWrite.containsKey(referenceXmiId)) {
                     storageKey.forEach(key -> xmiIdsToRetrieve.put(referenceXmiId, key));
                 } else if (!elementsToWrite.get(referenceXmiId).getStorageKeys().containsAll(storageKey)) {
                     StorageElement storageElement = elementsToWrite.get(referenceXmiId);
                     Set<String> currentStorageKey = new HashSet<>(storageKey);
                     Set<String> storageElementStorageKey = new HashSet<>(storageElement.getStorageKeys());
                     Set<String> missingKeys = Sets.difference(currentStorageKey, storageElementStorageKey);
-                    System.out.println(currentStorageKey);
-                    System.out.println(storageElementStorageKey);
                     storageElement.addStorageKeys(missingKeys);
                 }
             }
@@ -689,7 +683,7 @@ public class XmiSplitter {
         try {
             for (String id : elementsToWrite.keySet()) {
                 StorageElement storageElement = elementsToWrite.get(id);
-checkStorageKeysNotEmpty(storageElement);
+                checkStorageKeysNotEmpty(storageElement);
                 // determine if this is the start tag of a parent (id >= 0,
                 // since xmi id is not negative), whose xmi id
                 // has to be changed, or a part of a child node or an end tag
@@ -819,11 +813,8 @@ checkStorageKeysNotEmpty(storageElement);
     }
 
     private void checkStorageKeysNotEmpty(StorageElement storageElement) {
-        if (storageElement.getStorageKeys().isEmpty()) {
-            XMLEvent element = storageElement.getElement();
-            throw new IllegalStateException("XML element or text item " + storageElement.getElementName() + " should be extracted and stored " +
-                    "but was not given any storage keys. This is a programming error.");
-        }
+        assert !storageElement.getStorageKeys().isEmpty() : "XML element or text item " + storageElement.getElementName() + " should be extracted and stored " +
+                "but was not given any storage keys. This is a programming error.";
     }
 
     /**
