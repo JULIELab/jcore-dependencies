@@ -4,15 +4,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -23,7 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import de.julielab.jcore.types.*;
+import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.LineIterator;
 import org.apache.uima.UIMAException;
 import org.apache.uima.UIMAFramework;
@@ -33,6 +28,7 @@ import org.apache.uima.cas.FSIterator;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -48,14 +44,9 @@ import org.xml.sax.SAXException;
 
 import com.google.common.collect.Lists;
 
-import de.julielab.jcore.types.AbstractSection;
-import de.julielab.jcore.types.AbstractSectionHeading;
-import de.julielab.jcore.types.AbstractText;
-import de.julielab.jcore.types.AuthorInfo;
-import de.julielab.jcore.types.Sentence;
-import de.julielab.jcore.types.Token;
 import de.julielab.jcore.types.pubmed.Header;
 import de.julielab.xml.XmiSplitter.XmiSplitterResult;
+import de.julielab.jcore.types.test.OtherToken;
 
 public class XmiSplitterTest {
 
@@ -137,6 +128,7 @@ public class XmiSplitterTest {
 		}
 		CAS cas2 = getTestCAS();
 		ByteArrayOutputStream assembledXmi = builder.buildXmi(inputData, DOC, cas2.getTypeSystem());
+        System.out.println(new String(assembledXmi.toByteArray()));
 		XmiCasDeserializer.deserialize(new ByteArrayInputStream(assembledXmi.toByteArray()), cas2);
 
 		ByteArrayOutputStream bas = new ByteArrayOutputStream();
@@ -360,10 +352,7 @@ public class XmiSplitterTest {
 		new Token(jcas, 0, 5).addToIndexes();
 		
 		XmiSplitter xmiSplitter = new XmiSplitter(Lists.newArrayList(TOKTYPE), true, true, DOC, new HashSet<>(Arrays.asList("de.julielab.jcore.types.pubmed.Header")));
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		XmiCasSerializer.serialize(jcas.getCas(), baos);
-
-		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ByteArrayInputStream bais = getByteArrayInputStream(jcas);
 		XmiSplitterResult result = xmiSplitter.process(bais, jcas, 0, Collections.<String, Integer> emptyMap());
 		System.out.println(result.xmiData.get(DOC).toString());
 		System.out.println(result.xmiData.get(TOKTYPE).toString());
@@ -397,10 +386,7 @@ public class XmiSplitterTest {
 		new Token(jCas, 0, 10).addToIndexes();
 
 		XmiSplitter xmiSplitter = new XmiSplitter(Lists.newArrayList(SENTTYPE, TOKTYPE), true, true, DOC, BASE_DOCUMENT_ANNOTATIONS);
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		XmiCasSerializer.serialize(jCas.getCas(), baos);
-
-		ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+        ByteArrayInputStream bais = getByteArrayInputStream(jCas);
 		XmiSplitterResult result = xmiSplitter.process(bais, jCas, 0, Collections.<String, Integer> emptyMap());
 		ByteArrayOutputStream docbaos = result.xmiData.get(DOC);
 		ByteArrayOutputStream sentbaos = result.xmiData.get(SENTTYPE);
@@ -412,7 +398,7 @@ public class XmiSplitterTest {
 		inputmap.put(TOKTYPE, new ByteArrayInputStream(tokbaos.toByteArray()));
 		XmiBuilder xmiBuilder = new XmiBuilder(result.namespaces, new String[] { SENTTYPE, TOKTYPE });
 		ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputmap, DOC, jCas.getTypeSystem());
-System.out.println(builtXmi.toString());
+
 		int maxXmiId = xmiSplitter.determineMaxXmiId(new ByteArrayInputStream(builtXmi.toByteArray()));
 		assertEquals(18, maxXmiId);
 
@@ -433,5 +419,69 @@ System.out.println(builtXmi.toString());
 		// respective bug. Now it's still here to check the bug stays fixed.
 		System.out.println(section);
 	}
+
+
+
+    @Test
+    public void testSharedArray() throws UIMAException, IOException, SAXException, XMISplitterException {
+	    // In this test we check that feature structures that have been referenced by annotations of two different types
+        // recursively are
+        // 1. Stored with each annotation type
+        // 2. Are unified in the case that both annotation types are used to build a new XMI document (de-duplication)
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "otherTokenTypeDescriptor");
+        jCas.setDocumentText("token1 token2");
+        Token t1 = new Token(jCas, 0, 6);
+        OtherToken t2 = new OtherToken(jCas, 7, 13);
+        PennBioIEPOSTag pos = new PennBioIEPOSTag(jCas, 0, 0);
+        FSArray fsArray = new FSArray(jCas, 1);
+        fsArray.set(0, pos);
+        t1.setPosTag(fsArray);
+        t2.setPosTag(fsArray);
+        t1.addToIndexes();t2.addToIndexes();
+
+
+        XmiSplitter xmiSplitter = new XmiSplitter(
+                Arrays.asList(Token.class.getCanonicalName(), OtherToken.class.getCanonicalName()),
+                true,
+                true,
+                "documents",
+                new HashSet<>());
+        XmiSplitterResult result = xmiSplitter.process(getByteArrayInputStream(jCas), jCas, 0, new HashMap<>());
+        ByteArrayOutputStream tokenBaos = result.xmiData.get(Token.class.getCanonicalName());
+        ByteArrayOutputStream otherTokenBaos = result.xmiData.get(OtherToken.class.getCanonicalName());
+        System.out.println(IOUtils.toString(new ByteArrayInputStream(tokenBaos.toByteArray())));
+        System.out.println(IOUtils.toString(new ByteArrayInputStream(otherTokenBaos.toByteArray())));
+
+        XmiBuilder xmiBuilder = new XmiBuilder(result.namespaces, new String[]{Token.class.getCanonicalName()});
+        LinkedHashMap<String, InputStream> annotations = new LinkedHashMap<>();
+        annotations.put(Token.class.getCanonicalName(), new ByteArrayInputStream(tokenBaos.toByteArray()));
+        annotations.put("documents", new ByteArrayInputStream(result.xmiData.get("documents").toByteArray()));
+        ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(annotations, "documents", jCas.getTypeSystem());
+        jCas.reset();
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas());
+
+
+        Token token = JCasUtil.selectSingle(jCas, Token.class);
+        assertNotNull(token.getPosTag());
+        assertEquals(1, token.getPosTag().size());
+
+        annotations = new LinkedHashMap<>();
+        annotations.put(OtherToken.class.getCanonicalName(), new ByteArrayInputStream(otherTokenBaos.toByteArray()));
+        annotations.put("documents", new ByteArrayInputStream(result.xmiData.get("documents").toByteArray()));
+        builtXmi = xmiBuilder.buildXmi(annotations, "documents", jCas.getTypeSystem());
+        jCas.reset();
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas());
+        OtherToken otherToken = JCasUtil.selectSingle(jCas, OtherToken.class);
+
+        assertNotNull(otherToken.getPosTag());
+        assertEquals(1, otherToken.getPosTag().size());
+    }
+
+    private ByteArrayInputStream getByteArrayInputStream(JCas jCas) throws SAXException {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+
+        return new ByteArrayInputStream(baos.toByteArray());
+    }
 
 }

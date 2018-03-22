@@ -168,6 +168,8 @@ public class XmiBuilder {
 			// document before it is closed. Then, we
 			// also add the cas:view element and be done.
 			XMLEventReader docReader = readers.get(docTableName);
+			if (docReader == null)
+                throw new IllegalArgumentException("No XMI data was passed for the given document data key \"" + docTableName + "\".");
 			while (docReader.hasNext()) {
 				XMLEvent docEvent = docReader.nextEvent();
 

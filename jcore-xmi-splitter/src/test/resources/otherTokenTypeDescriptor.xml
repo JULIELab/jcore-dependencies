@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<typeSystemDescription xmlns="http://uima.apache.org/resourceSpecifier">
+    <name>typeSystemDescriptor</name>
+    <description/>
+    <version>1.0</version>
+    <vendor/>
+  <imports>
+    <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+  </imports>
+  <types>
+    <typeDescription>
+      <name>de.julielab.jcore.types.test.OtherToken</name>
+      <description/>
+      <supertypeName>de.julielab.jcore.types.Annotation</supertypeName>
+      <features>
+        <featureDescription>
+          <name>posTag</name>
+          <description/>
+          <rangeTypeName>uima.cas.FSArray</rangeTypeName>
+          <elementType>de.julielab.jcore.types.POSTag</elementType>
+          <multipleReferencesAllowed>true</multipleReferencesAllowed>
+        </featureDescription>
+      </features>
+    </typeDescription>
+  </types>
+</typeSystemDescription>
