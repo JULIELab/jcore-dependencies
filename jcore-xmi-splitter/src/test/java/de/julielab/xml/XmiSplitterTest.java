@@ -155,16 +155,18 @@ public class XmiSplitterTest {
 		assertNotNull(xmiData.get(SENTTYPE));
 		assertNotNull(xmiData.get(TOKTYPE));
 		assertNotNull(xmiData.get(TDR));
+//        System.out.println("Tokens: " + new String(xmiData.get(TOKTYPE).toByteArray()));
+//        System.out.println("Dependencies: " + new String(xmiData.get(TDR).toByteArray()));
+//        System.exit(3);
 
 		// Lets check whether we can assemble what we jus split.
 		ByteArrayOutputStream assembleSplitDocument = assembleSplitDocument(elementsToStore, result, xmiData);
-		// Now make tests concerning the order of the annotations: It is
-		// important to us that the order we have input is kept so we can
-		// specify the first annotation outside the base document. The order we
-		// deserialize into the cas will be kept.
+		// Now make tests concerning the order of the annotations. This has been important in the past.
+        // It not any more, so failures at this point can just be regarded and the respective testing lines can
+        // be removed, if necessary.
 		String xmi = new String(assembleSplitDocument.toByteArray());
-		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
-		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
+//		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
+//		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
 
 		// No check that the annotation order is still correct after
 		// serialization.
@@ -172,9 +174,12 @@ public class XmiSplitterTest {
 		XmiCasDeserializer.deserialize(new ByteArrayInputStream(xmi.getBytes()), cas2);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		XmiCasSerializer.serialize(cas2, baos);
-		xmi = new String(baos.toByteArray());
-		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
-		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
+		cas2.reset();
+		// Check that deserialization still works
+		XmiCasDeserializer.deserialize(new ByteArrayInputStream(baos.toByteArray()),cas2 );
+//		xmi = new String(baos.toByteArray());
+//		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
+//		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
 	}
 
 	@Test

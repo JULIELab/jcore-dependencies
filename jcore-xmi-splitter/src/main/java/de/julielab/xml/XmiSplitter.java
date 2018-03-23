@@ -390,6 +390,7 @@ public class XmiSplitter {
                         EndElement endElement = event.asEndElement();
                         QName endElementQName = endElement.getName();
                         String endElementName = endElementQName.getLocalPart();
+//                        System.out.println("END: " + endElementName + " " + enclosingStorageKey);
                         // this is either the end tag of a child node or of the
                         // parent itself;
                         // add it to the elements to write but with a negative
@@ -494,10 +495,10 @@ public class XmiSplitter {
                         if (storeBaseDocument && (baseDocumentAnnotations.contains(javaName) || baseDocumentAnnotations.contains("all"))
                                 && !elementsToWrite.containsKey(xmiId)) {
                             isDocElement = true;
-                            storageKey = Collections.singleton(docTableName);
+                            storageKey = new ArrayList<>(Collections.singleton(docTableName));
                         } else if (elementsToStore.contains(javaName) && !elementsToWrite.containsKey(xmiId)) {
                             isAnnotation = true;
-                            storageKey = Collections.singleton(javaName);
+                            storageKey = new ArrayList<>(Collections.singleton(javaName));
                         } else if (xmiIdsToRetrieve.containsKey(xmiId) && !elementsToWrite.containsKey(xmiId)) {
                             isFeature = true;
                             storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
@@ -533,12 +534,9 @@ public class XmiSplitter {
                                             String attributeName = attributeQName.getLocalPart();
                                             if (!(attributePrefix.equals("xmi") && attributeName.equals("id"))) {
                                                 if (!isPrimitive(annotationType, attributeName)) {
-                                                    try {
-                                                        recordReferencesForExtraction(attribute, storageKey, xmiIdsToRetrieve, elementsToWrite);
-                                                    } catch (Exception e) {
-                                                        System.out.println(elementName);
-                                                        throw e;
-                                                    }
+                                                    recordReferencesForExtraction(attribute, storageKey, xmiIdsToRetrieve, elementsToWrite);
+                                                    if (elementName.equals("Token") && attributeName.equals("depRel"))
+                                                        System.out.println(attribute.getValue());
                                                 }
                                             }
                                         }
@@ -554,6 +552,7 @@ public class XmiSplitter {
                                     specialElements.add(element);
                                 }
                             }
+//                            System.out.println("START: " + elementName + " " + storageKey);
                             // add the element as list (element, prefix,
                             // namespace uri, element name, java name, table
                             // name)
@@ -681,6 +680,7 @@ public class XmiSplitter {
                                     HashMap<String, String> idMap) {
 
         try {
+            Deque<Collection<String>> storageKeyStack = new ArrayDeque<>();
             for (String id : elementsToWrite.keySet()) {
                 StorageElement storageElement = elementsToWrite.get(id);
                 checkStorageKeysNotEmpty(storageElement);
@@ -695,7 +695,17 @@ public class XmiSplitter {
                     String elementName = storageElement.getElementName();
                     String javaName = storageElement.getElementTypeJavaName();
                     Collection<String> tableName = storageElement.getStorageKeys();
+                    storageKeyStack.add(tableName);
                     StartElement start = eventFactory.createStartElement(elementPrefix, elementNSUri, elementName);
+//                    System.out.println(elementName + " " + tableName);
+//                    if (tableName.size() == 1 && tableName.iterator().next().equals("de.julielab.jcore.types.Token")) {
+//                        for (Iterator<Attribute> it = element.getAttributes(); it.hasNext();) {
+//                            Attribute a = it.next();
+//                            if (a.getName().getLocalPart().equals("depRel"))
+//                                System.out.println(id + " " + a.getName() + " " + a.getValue());
+//                        }
+//                    }
+//                    System.out.println("START: " + elementName + " " + tableName);
                     for (String key : tableName) {
                         XMLEventWriter tableWriter = writers.get(key).getKey();
                         tableWriter.add(start);
@@ -712,7 +722,7 @@ public class XmiSplitter {
                                     String attributeNSUri = attributeQName.getNamespaceURI();
                                     String value = attribute.getValue();
 
-                                    if (attributePrefix.equals("xmi") & attributeName.equals("id")) {
+                                    if (attributePrefix.equals("xmi") && attributeName.equals("id")) {
                                         value = idMap.get(value);
                                         int xmiId = Integer.parseInt(value);
                                         if (currentMaxXmiId < xmiId)
@@ -800,8 +810,10 @@ public class XmiSplitter {
                     }
                 } else if (Integer.parseInt(id) < 0) {
                     XMLEvent event = storageElement.getElement();
-                    Collection<String> storageKeys = storageElement.getStorageKeys();
+                    Collection<String> storageKeys = event.isEndDocument() ? storageKeyStack.removeLast() : storageKeyStack.getLast();
                     checkStorageKeysNotEmpty(storageElement);
+//                    if (event.isEndElement())
+//                    System.out.println("END: " + event.asEndElement().getName().getLocalPart() + " " + storageKeys);
                     for (String key : storageKeys)
                         writers.get(key).getKey().add(event);
                 }
