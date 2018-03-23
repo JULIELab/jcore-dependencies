@@ -77,7 +77,7 @@ public class XmiBuilder {
     /**
      * Maps a reader to each table name;
      */
-    private HashMap<String, XMLEventReader> readers;
+    private LinkedHashMap<String, XMLEventReader> readers;
     /**
      * Stores xmi ids of all elements (except for those defined in
      * {@link #noViewMembers}) to put them in the cas:View-element. TODO: How do
@@ -116,16 +116,16 @@ public class XmiBuilder {
      * Builds a single xmi representation out of the base document and the
      * selected annotations.
      *
-     * @param xmiData    The xmi data (document and annotations) as input streams
-     *                   mapped to table names. It is a <tt>LinkedHashMap</tt> because
-     *                   the order of the annotation data - e.g. first Sentences, then
-     *                   Tokens - influences the internal index order in the CAS. Thus,
-     *                   when serializing, the order of the <tt>LinkedHashMap</tt> will
-     *                   be reflected in the XMI. Since we rely on the order of
-     *                   appearance of annotations to determine the end of the base
-     *                   document, we must provide the correct order.
-     * @param docTable   The name of the table containing the base document.
-     * @param namespaces
+     * @param xmiData  The xmi data (document and annotations) as input streams
+     *                 mapped from storage keys. It is a <tt>LinkedHashMap</tt> because
+     *                 the order of the annotation data - e.g. first Sentences, then
+     *                 Tokens - influences the internal index order in the CAS. Thus,
+     *                 when serializing, the order of the <tt>LinkedHashMap</tt> will
+     *                 be reflected in the XMI. Since we rely on the order of
+     *                 appearance of annotations to determine the end of the base
+     *                 document, we must provide the correct order.
+     * @param docTable The name of the table containing the base document.
+     * @param ts
      * @return The combined xmi representation as output stream.
      */
     public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, String docTable, TypeSystem ts) {
@@ -148,7 +148,7 @@ public class XmiBuilder {
 
             // What happens now:
             // We want to add the annotations we got with the xmiData to the
-            // base document. So that we end up with a
+            // base document so that we end up with a
             // base document that is annotated by the passed annotations.
             // To achieve this, we first iterate through the elements of the
             // base document and do nothing more than to

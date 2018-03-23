@@ -128,7 +128,7 @@ public class XmiSplitterTest {
 		}
 		CAS cas2 = getTestCAS();
 		ByteArrayOutputStream assembledXmi = builder.buildXmi(inputData, DOC, cas2.getTypeSystem());
-        System.out.println(new String(assembledXmi.toByteArray()));
+        //System.out.println(new String(assembledXmi.toByteArray()));
 		XmiCasDeserializer.deserialize(new ByteArrayInputStream(assembledXmi.toByteArray()), cas2);
 
 		ByteArrayOutputStream bas = new ByteArrayOutputStream();
@@ -155,18 +155,18 @@ public class XmiSplitterTest {
 		assertNotNull(xmiData.get(SENTTYPE));
 		assertNotNull(xmiData.get(TOKTYPE));
 		assertNotNull(xmiData.get(TDR));
-//        System.out.println("Tokens: " + new String(xmiData.get(TOKTYPE).toByteArray()));
+    //    System.out.println("Tokens: " + new String(xmiData.get(TOKTYPE).toByteArray()));
 //        System.out.println("Dependencies: " + new String(xmiData.get(TDR).toByteArray()));
 //        System.exit(3);
 
-		// Lets check whether we can assemble what we jus split.
+		// Lets check whether we can assemble what we just split.
 		ByteArrayOutputStream assembleSplitDocument = assembleSplitDocument(elementsToStore, result, xmiData);
 		// Now make tests concerning the order of the annotations. This has been important in the past.
-        // It not any more, so failures at this point can just be regarded and the respective testing lines can
+        // It's not any more, so failures at this point can just be regarded and the respective testing lines can
         // be removed, if necessary.
 		String xmi = new String(assembleSplitDocument.toByteArray());
-//		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
-//		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
+		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
+		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
 
 		// No check that the annotation order is still correct after
 		// serialization.
@@ -177,9 +177,6 @@ public class XmiSplitterTest {
 		cas2.reset();
 		// Check that deserialization still works
 		XmiCasDeserializer.deserialize(new ByteArrayInputStream(baos.toByteArray()),cas2 );
-//		xmi = new String(baos.toByteArray());
-//		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
-//		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
 	}
 
 	@Test

@@ -146,8 +146,7 @@ public class XmiSplitter {
      * Creates an XmiSplitter that selects specified annotations and returns
      * them separately. Optionally, the base document will be returned as well.
      * This if optimal if the xmi data already contains some annotations
-     * together with the base document, but this still has to be stored for the
-     * first time.
+     * together with the base document, the base document has to be stored once.
      *
      * @param elementsToStore         A list of annotations to select and to return separately.
      *                                These should be given as the fully qualified java names of the
@@ -499,6 +498,11 @@ public class XmiSplitter {
                         } else if (elementsToStore.contains(javaName) && !elementsToWrite.containsKey(xmiId)) {
                             isAnnotation = true;
                             storageKey = new ArrayList<>(Collections.singleton(javaName));
+                            // it is possible that the annotation is also a feature that is already sought
+                            if (xmiIdsToRetrieve.containsKey(xmiId)) {
+                                isFeature = true;
+                                storageKey.addAll(xmiIdsToRetrieve.get(xmiId));
+                            }
                         } else if (xmiIdsToRetrieve.containsKey(xmiId) && !elementsToWrite.containsKey(xmiId)) {
                             isFeature = true;
                             storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
@@ -535,8 +539,6 @@ public class XmiSplitter {
                                             if (!(attributePrefix.equals("xmi") && attributeName.equals("id"))) {
                                                 if (!isPrimitive(annotationType, attributeName)) {
                                                     recordReferencesForExtraction(attribute, storageKey, xmiIdsToRetrieve, elementsToWrite);
-                                                    if (elementName.equals("Token") && attributeName.equals("depRel"))
-                                                        System.out.println(attribute.getValue());
                                                 }
                                             }
                                         }
@@ -567,6 +569,7 @@ public class XmiSplitter {
 //							list.add(javaName);
 //							list.add(storageKey);
                             elementsToWrite.put(xmiId, storageElement);
+
                             // for the special cas:NULL element, we have already
                             // set the value and don't want to override it
                             if (!specialXmiIds.keySet().contains(xmiId)) {
@@ -623,6 +626,7 @@ public class XmiSplitter {
             if (!xmiIdsToRetrieve.isEmpty()) {
                 docMode = false;
                 currentBais = new ByteArrayInputStream(ba);
+                System.out.println(xmiIdsToRetrieve);
                 processAndParse(currentBais, xmiIdsToRetrieve, elementsToWrite, idMap, specialXmiIds, specialElements);
             } else {
                 // Now, all XMI ID collisions have been resolved; put the
