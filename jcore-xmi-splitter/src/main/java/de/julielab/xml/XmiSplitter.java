@@ -1,10 +1,5 @@
 package de.julielab.xml;
 
-import static de.julielab.xml.XmiSplitUtilities.convertNSUri;
-import static de.julielab.xml.XmiSplitUtilities.getTypeJavaName;
-import static de.julielab.xml.XmiSplitUtilities.isFSArray;
-import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
-
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -38,6 +33,8 @@ import org.slf4j.LoggerFactory;
 import com.ctc.wstx.api.WstxInputProperties;
 import com.ctc.wstx.api.WstxOutputProperties;
 
+import static de.julielab.xml.XmiSplitUtilities.*;
+
 public class XmiSplitter {
 
     private static final Logger log = LoggerFactory.getLogger(XmiSplitter.class);
@@ -54,6 +51,7 @@ public class XmiSplitter {
 
     private boolean storeAll = false;
     private List<String> elementsToStore;
+    private Set<String> elementsToStoreSet;
     private boolean recursively = false;
     private boolean storeBaseDocument;
     private String docTableName;
@@ -184,6 +182,7 @@ public class XmiSplitter {
             this.elementsToStore = elementsToStore;
         }
         this.recursively = recursively;
+        this.elementsToStoreSet = new HashSet<>(elementsToStore);
         log.info(XmiSplitter.class.getName() + " initialized.");
     }
 
@@ -364,11 +363,9 @@ public class XmiSplitter {
             // come at the right place
             String enclosingElementName = "";
             Collection<String> enclosingStorageKey = Collections.emptyList();
+            Map<String, Type> xmi2ElementType = new HashMap<>();
             // Indicates that we are currently inside an annotation XML element that has children.
             boolean withinElement = false;
-            // XMI IDs of Sofas and cas:NULL
-            // Map<String, String> specialXmiIds = new HashMap<>();
-            // Set<XMLEvent> specialElements = new HashSet<>();
 
             while (reader.hasNext()) {
                 XMLEvent event = reader.nextEvent();
@@ -389,7 +386,6 @@ public class XmiSplitter {
                         EndElement endElement = event.asEndElement();
                         QName endElementQName = endElement.getName();
                         String endElementName = endElementQName.getLocalPart();
-//                        System.out.println("END: " + endElementName + " " + enclosingStorageKey);
                         // this is either the end tag of a child node or of the
                         // parent itself;
                         // add it to the elements to write but with a negative
@@ -397,9 +393,6 @@ public class XmiSplitter {
                         // an xmi id
                         StorageElement storageElement = new StorageElement(endElement, enclosingStorageKey);
                         checkStorageKeysNotEmpty(storageElement);
-//						List<Object> list = new ArrayList<Object>();
-//						list.add(event);
-//						list.add(enclosingStorageKey);
                         elementsToWrite.put(Integer.toString(othersCounter), storageElement);
                         othersCounter--;
                         if (endElementName.equals(enclosingElementName)) {
@@ -413,9 +406,6 @@ public class XmiSplitter {
                     } else if (event.isStartElement() || event.isCharacters()) {
                         // this is the start tag of a child node or its text
                         // content
-//						List<Object> list = new ArrayList<Object>();
-//						list.add(event);
-//						list.add(enclosingStorageKey);
                         StorageElement storageElement = new StorageElement(event, enclosingStorageKey);
                         checkStorageKeysNotEmpty(storageElement);
                         elementsToWrite.put(Integer.toString(othersCounter), storageElement);
@@ -500,19 +490,25 @@ public class XmiSplitter {
                             storageKey = new ArrayList<>(Collections.singleton(javaName));
                             // it is possible that the annotation is also a feature that is already sought
                             if (xmiIdsToRetrieve.containsKey(xmiId)) {
-                                isFeature = true;
-                                storageKey.addAll(xmiIdsToRetrieve.get(xmiId));
+                                // But even if we want to store recursively, we do not store annotations
+                                // on their own AND as part of a recursively stored other annotation type.
+                                // So clear the already given storage keys assigned to the current annotation.
+                                xmiIdsToRetrieve.removeAll(xmiId);
                             }
                         } else if (xmiIdsToRetrieve.containsKey(xmiId) && !elementsToWrite.containsKey(xmiId)) {
-                            isFeature = true;
-                            storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
+                            if (isFSArray(cas.getTypeSystem().getType(javaName)) || recursively) {
+                                isFeature = true;
+                                storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
+                            } else {
+                                xmiIdsToRetrieve.removeAll(xmiId);
+                            }
                         }
 
                         if (isDocElement || isAnnotation || isFeature) {
                             withinElement = true;
                             enclosingElementName = elementName;
                             enclosingStorageKey = storageKey;
-                            if (isDocElement || (isAnnotation && recursively) || isFeature) {
+                            if (isDocElement || isAnnotation || isFeature) {
                                 // look for attributes that are complex features
                                 // and store xmi ids of corresponding elements
                                 // together with the associated table names,
@@ -537,13 +533,12 @@ public class XmiSplitter {
                                             String attributePrefix = attributeQName.getPrefix();
                                             String attributeName = attributeQName.getLocalPart();
                                             if (!(attributePrefix.equals("xmi") && attributeName.equals("id"))) {
-                                                if (!isPrimitive(annotationType, attributeName)) {
+                                                Type featureType = getFeatureType(annotationType, attributeName);
+                                                if (isFSArray(featureType) || (!isPrimitive(featureType) && recursively)) {
                                                     recordReferencesForExtraction(attribute, storageKey, xmiIdsToRetrieve, elementsToWrite);
                                                 }
                                             }
                                         }
-                                    } else {
-                                        log.error("This should not happen. The XMISplitter code seems to have a logical error.");
                                     }
                                 } else {
                                     // this element is the unique <cas:NULL
@@ -554,20 +549,7 @@ public class XmiSplitter {
                                     specialElements.add(element);
                                 }
                             }
-//                            System.out.println("START: " + elementName + " " + storageKey);
-                            // add the element as list (element, prefix,
-                            // namespace uri, element name, java name, table
-                            // name)
-                            // mapped to xmi id;
-                            // assign new xmi id
                             StorageElement storageElement = new StorageElement(element, elementPrefix, elementNSUri, elementName, javaName, storageKey);
-//							List<Object> list = new ArrayList< >();
-//							list.add(element);
-//							list.add(elementPrefix);
-//							list.add(elementNSUri);
-//							list.add(elementName);
-//							list.add(javaName);
-//							list.add(storageKey);
                             elementsToWrite.put(xmiId, storageElement);
 
                             // for the special cas:NULL element, we have already
@@ -576,12 +558,14 @@ public class XmiSplitter {
                                 idMap.put(xmiId, Integer.toString(nextId));
                                 nextId++;
                             }
+
                             // remove xmi id from the "wanted" list with respect the current storage keys
                             if (xmiIdsToRetrieve.containsKey(xmiId)) {
                                 for (String key : storageKey)
                                     xmiIdsToRetrieve.remove(xmiId, key);
                             }
                         }
+
                     }
                 }
             } // end: reader.hasNext()
@@ -591,7 +575,7 @@ public class XmiSplitter {
             // since it may be referenced by elements stored somewhere outside
             // of the current document).
             Set<String> oldXmiIdCollisions = new HashSet<>();
-            for (String oldXmiId : idMap.keySet()) {
+            for (String oldXmiId : elementsToWrite.keySet()) {
                 if (!specialElements.contains(elementsToWrite.get(oldXmiId).getElement())) {
                     String newXmiId = idMap.get(oldXmiId);
                     if (specialXmiIds.keySet().contains(newXmiId)) {
@@ -626,7 +610,6 @@ public class XmiSplitter {
             if (!xmiIdsToRetrieve.isEmpty()) {
                 docMode = false;
                 currentBais = new ByteArrayInputStream(ba);
-                System.out.println(xmiIdsToRetrieve);
                 processAndParse(currentBais, xmiIdsToRetrieve, elementsToWrite, idMap, specialXmiIds, specialElements);
             } else {
                 // Now, all XMI ID collisions have been resolved; put the
@@ -663,10 +646,14 @@ public class XmiSplitter {
                     storageKey.forEach(key -> xmiIdsToRetrieve.put(referenceXmiId, key));
                 } else if (!elementsToWrite.get(referenceXmiId).getStorageKeys().containsAll(storageKey)) {
                     StorageElement storageElement = elementsToWrite.get(referenceXmiId);
-                    Set<String> currentStorageKey = new HashSet<>(storageKey);
                     Set<String> storageElementStorageKey = new HashSet<>(storageElement.getStorageKeys());
-                    Set<String> missingKeys = Sets.difference(currentStorageKey, storageElementStorageKey);
-                    storageElement.addStorageKeys(missingKeys);
+                    // Only add the current storage keys to the referenced feature structure if it is not
+                    // an annotation marked to be stored itself. We want to avoid duplication.
+                    if (!elementsToStoreSet.contains(storageElement.getElementTypeJavaName())) {
+                        Set<String> currentStorageKey = new HashSet<>(storageKey);
+                        Set<String> missingKeys = Sets.difference(currentStorageKey, storageElementStorageKey);
+                        storageElement.addStorageKeys(missingKeys);
+                    }
                 }
             }
         }

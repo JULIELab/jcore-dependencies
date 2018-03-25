@@ -76,23 +76,36 @@ public class XmiSplitUtilities {
 		return isFSArray;
 	}
 
-	/**
-	 * TODO: See class variable <b>primitives</b>... Are there any features
-	 * other than "sofa" that are complex but should not be stored recursively?
-	 * 
-	 * @param annotationType
-	 * @param featureName
-	 * @return
-	 */
+
 	public static boolean isPrimitive(Type annotationType, String featureName) {
 		boolean isPrimitive = false;
 		Type featureType = annotationType.getFeatureByBaseName(featureName)
 				.getRange();
-		if (featureType.isPrimitive()
-				| primitives.contains(featureType.toString())
-				| featureType.toString().equals("uima.cas.Sofa")) {
-			isPrimitive = true;
-		}
-		return isPrimitive;
+        return isPrimitive(featureType);
 	}
+
+    /**
+     * TODO: See class variable <b>primitives</b>... Are there any features
+     * other than "sofa" that are complex but should not be stored recursively?
+     *
+     * @param type
+     * @return
+     */
+    public static boolean isPrimitive(Type type) {
+        boolean isPrimitive = false;
+
+        if (type.isPrimitive()
+                || primitives.contains(type.toString())
+                || type.toString().equals("uima.cas.Sofa")) {
+            isPrimitive = true;
+        }
+        return isPrimitive;
+    }
+
+	public static Type getFeatureType(Type annotationType, String featureName) {
+		return annotationType.getFeatureByBaseName(featureName)
+				.getRange();
+	}
+
+
 }

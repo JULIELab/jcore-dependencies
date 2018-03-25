@@ -1,19 +1,10 @@
 package de.julielab.xml;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
+import static org.assertj.core.api.Assertions.*;
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 import java.util.Map.Entry;
+import java.util.stream.Stream;
 
 import de.julielab.jcore.types.*;
 import de.julielab.xml.util.XMISplitterException;
@@ -47,6 +38,8 @@ import com.google.common.collect.Lists;
 import de.julielab.jcore.types.pubmed.Header;
 import de.julielab.xml.XmiSplitter.XmiSplitterResult;
 import de.julielab.jcore.types.test.OtherToken;
+
+import static org.junit.Assert.*;
 
 public class XmiSplitterTest {
 
@@ -138,7 +131,12 @@ public class XmiSplitterTest {
 	}
 
 	@Test
-	public void testSplitterUpdatedDocument() throws Exception {
+	public void testSplitterUpdatedDocumentAndCircles() throws Exception {
+	    // This test tests two things:
+        // 1. If the XMI ID can be set to higher value than 0. This would be the case when we update a document.
+        // 2. Tokens and DependencyRelations are mutual features of each other, thus building a circle. Make sure that
+        //    a) The circles don't crash the splitter when resolving annotations recursively
+        //    b) Tokens and DependencyRelations are still stored separatly
 		List<String> elementsToStore = Lists.newArrayList(SENTTYPE, TOKTYPE, TDR);
 		CAS cas = getTestCAS();
 		XmiSplitter xmiSplitter = new XmiSplitter(elementsToStore, true, true, DOC, BASE_DOCUMENT_ANNOTATIONS);
@@ -155,12 +153,25 @@ public class XmiSplitterTest {
 		assertNotNull(xmiData.get(SENTTYPE));
 		assertNotNull(xmiData.get(TOKTYPE));
 		assertNotNull(xmiData.get(TDR));
-    //    System.out.println("Tokens: " + new String(xmiData.get(TOKTYPE).toByteArray()));
-//        System.out.println("Dependencies: " + new String(xmiData.get(TDR).toByteArray()));
-//        System.exit(3);
+
+        // Since we store tokens and dependency relations separately, we don't expect one to occur in the data
+		// of the other.
+		assertEquals(-1, new String(xmiData.get(TOKTYPE).toByteArray()).indexOf("types:DependencyRelation"));
+		assertEquals(-1, new String(xmiData.get(TDR).toByteArray()).indexOf("types:Token"));
 
 		// Lets check whether we can assemble what we just split.
 		ByteArrayOutputStream assembleSplitDocument = assembleSplitDocument(elementsToStore, result, xmiData);
+		cas.reset();
+		XmiCasDeserializer.deserialize(new ByteArrayInputStream(assembleSplitDocument.toByteArray()), cas);
+		// Deserialization works. Check the contents.
+        Collection<Token> tokens = JCasUtil.select(cas.getJCas(), Token.class);
+        assertThat(tokens).isNotEmpty();
+        for (Token token : tokens) {
+            // each token should be part of the dependency tree
+            assertThat(token.getDepRel()).hasSize(1);
+            Stream.of(token.getDepRel().toArray()).forEach(rel -> assertThat(rel).isNotNull());
+        }
+
 		// Now make tests concerning the order of the annotations. This has been important in the past.
         // It's not any more, so failures at this point can just be regarded and the respective testing lines can
         // be removed, if necessary.
@@ -168,8 +179,8 @@ public class XmiSplitterTest {
 		assertTrue("Sentence before Token", xmi.indexOf("Sentence") < xmi.indexOf("Token"));
 		assertTrue("Sentence before DependencyRelation", xmi.indexOf("Sentence") < xmi.indexOf("DependencyRelation"));
 
-		// No check that the annotation order is still correct after
-		// serialization.
+
+		// Just to be sure: serialize and deserialize twice to be sure we have created valid XMI
 		CAS cas2 = getTestCAS();
 		XmiCasDeserializer.deserialize(new ByteArrayInputStream(xmi.getBytes()), cas2);
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -178,6 +189,90 @@ public class XmiSplitterTest {
 		// Check that deserialization still works
 		XmiCasDeserializer.deserialize(new ByteArrayInputStream(baos.toByteArray()),cas2 );
 	}
+
+    @Test
+    public void testNonRecursive() throws Exception {
+        List<String> elementsToStore = Lists.newArrayList(SENTTYPE, TOKTYPE);
+        CAS cas = getTestCAS();
+        XmiSplitter xmiSplitter = new XmiSplitter(elementsToStore, false, true, DOC, BASE_DOCUMENT_ANNOTATIONS);
+        // Updated document. This value is nonsense in relation to the actual
+        // document, it has much more elements than 15, but it will do for the
+        // test.
+        int nextPossibleId = 0;
+        byte[] b = FileUtils.readFileToByteArray(new File(TEST_XMI));
+        XmiSplitterResult result = xmiSplitter.process(new ByteArrayInputStream(b), cas.getJCas(), nextPossibleId, defaultSofaIdMap);
+        LinkedHashMap<String, ByteArrayOutputStream> xmiData = result.xmiData;
+        assertNotNull(xmiData);
+        assertEquals(3, xmiData.size());
+        assertNotNull(xmiData.get(DOC));
+        assertNotNull(xmiData.get(SENTTYPE));
+        assertNotNull(xmiData.get(TOKTYPE));
+
+        System.out.println(new String(xmiData.get(TOKTYPE).toByteArray()));
+        // Since we store non-recursively, we don't expect one annotation to occur in the data
+        // of the other.
+        assertEquals(-1, new String(xmiData.get(TOKTYPE).toByteArray()).indexOf("types:DependencyRelation"));
+
+        // Lets check whether we can assemble what we just split.
+        ByteArrayOutputStream assembleSplitDocument = assembleSplitDocument(elementsToStore, result, xmiData);
+        cas.reset();
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(assembleSplitDocument.toByteArray()), cas);
+        // Deserialization works. Check the contents.
+        Collection<Token> tokens = JCasUtil.select(cas.getJCas(), Token.class);
+        assertThat(tokens).isNotEmpty();
+        for (Token token : tokens) {
+
+            assertThat(token.getDepRel()).isNull();
+        }
+
+
+    }
+
+    @Test
+    public void testTypeCirclesNonRecursively() throws Exception {
+        // This test checks if also the case of non-recursive storage works as expected, especially with circles
+        // (Token and DependencyRelation). Note that there are no circles on annotation level: tokens point to
+        // dependency relations and those have heads which in turn are tokens. Thus, the circle appears on the type
+        // level.
+        List<String> elementsToStore = Lists.newArrayList(SENTTYPE, TOKTYPE, TDR);
+        CAS cas = getTestCAS();
+        XmiSplitter xmiSplitter = new XmiSplitter(elementsToStore, false, true, DOC, BASE_DOCUMENT_ANNOTATIONS);
+
+        int nextPossibleId = 0;
+        byte[] b = FileUtils.readFileToByteArray(new File(TEST_XMI));
+        XmiSplitterResult result = xmiSplitter.process(new ByteArrayInputStream(b), cas.getJCas(), nextPossibleId, defaultSofaIdMap);
+        LinkedHashMap<String, ByteArrayOutputStream> xmiData = result.xmiData;
+        assertNotNull(xmiData);
+        assertEquals(4, xmiData.size());
+        assertNotNull(xmiData.get(DOC));
+        assertNotNull(xmiData.get(SENTTYPE));
+        assertNotNull(xmiData.get(TOKTYPE));
+        assertNotNull(xmiData.get(TDR));
+        // Since we store non-recursively, we don't expect one annotation to occur in the data
+        // of the other.
+        assertEquals(-1, new String(xmiData.get(TOKTYPE).toByteArray()).indexOf("types:DependencyRelation"));
+        assertEquals(-1, new String(xmiData.get(TDR).toByteArray()).indexOf("types:Token"));
+
+        // Lets check whether we can assemble what we just split.
+        ByteArrayOutputStream assembleSplitDocument = assembleSplitDocument(elementsToStore, result, xmiData);
+        cas.reset();
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(assembleSplitDocument.toByteArray()), cas);
+        // Deserialization works. Check the contents. We should still find the circles between tokens and
+        // dependency relations
+        Collection<Token> tokens = JCasUtil.select(cas.getJCas(), Token.class);
+        assertThat(tokens).isNotEmpty();
+        boolean headFound = false;
+        for (Token token : tokens) {
+            // each token should be part of the dependency tree
+            assertNotNull(token.getDepRel());
+            assertThat(token.getDepRel()).hasSize(1);
+            Stream.of(token.getDepRel().toArray()).forEach(rel -> assertThat(rel).isNotNull());
+            DependencyRelation depRel = token.getDepRel(0);
+            if (depRel.getHead() != null)
+                headFound = true;
+        }
+        assertTrue(headFound);
+    }
 
 	@Test
 	public void testBuilderIncompleteData() throws Exception {
@@ -451,22 +546,22 @@ public class XmiSplitterTest {
         XmiSplitterResult result = xmiSplitter.process(getByteArrayInputStream(jCas), jCas, 0, new HashMap<>());
         ByteArrayOutputStream tokenBaos = result.xmiData.get(Token.class.getCanonicalName());
         ByteArrayOutputStream otherTokenBaos = result.xmiData.get(OtherToken.class.getCanonicalName());
-        System.out.println(IOUtils.toString(new ByteArrayInputStream(tokenBaos.toByteArray())));
-        System.out.println(IOUtils.toString(new ByteArrayInputStream(otherTokenBaos.toByteArray())));
 
+        // Now build a new XMI document only with the Token data
         XmiBuilder xmiBuilder = new XmiBuilder(result.namespaces, new String[]{Token.class.getCanonicalName()});
         LinkedHashMap<String, InputStream> annotations = new LinkedHashMap<>();
         annotations.put(Token.class.getCanonicalName(), new ByteArrayInputStream(tokenBaos.toByteArray()));
         annotations.put("documents", new ByteArrayInputStream(result.xmiData.get("documents").toByteArray()));
         ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(annotations, "documents", jCas.getTypeSystem());
         jCas.reset();
+        // Deserialize the built XMI and check that there is exactly one POS tag
         XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas());
-
-
         Token token = JCasUtil.selectSingle(jCas, Token.class);
         assertNotNull(token.getPosTag());
         assertEquals(1, token.getPosTag().size());
 
+        // Now do the same with the OtherToken data. We still expect the same POS tag
+        xmiBuilder = new XmiBuilder(result.namespaces, new String[]{OtherToken.class.getCanonicalName()});
         annotations = new LinkedHashMap<>();
         annotations.put(OtherToken.class.getCanonicalName(), new ByteArrayInputStream(otherTokenBaos.toByteArray()));
         annotations.put("documents", new ByteArrayInputStream(result.xmiData.get("documents").toByteArray()));
@@ -474,7 +569,6 @@ public class XmiSplitterTest {
         jCas.reset();
         XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas());
         OtherToken otherToken = JCasUtil.selectSingle(jCas, OtherToken.class);
-
         assertNotNull(otherToken.getPosTag());
         assertEquals(1, otherToken.getPosTag().size());
     }

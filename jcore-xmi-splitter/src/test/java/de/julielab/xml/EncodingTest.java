@@ -43,7 +43,6 @@ import de.julielab.xml.XmiSplitter.XmiSplitterResult;
  * @author faessler
  *
  */
-@Ignore
 public class EncodingTest {
 	
 	private static final Logger log = LoggerFactory.getLogger(EncodingTest.class);

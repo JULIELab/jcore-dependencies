@@ -48,7 +48,7 @@
 		issue="10" pages="1861-5" />
 	<pubmed:Header xmi:id="149" sofa="1" begin="0" end="0"
 		source="2479566" docId="2479566" truncated="false" authors="10928"
-		pubTypeList="115 132" language="eng" pkElements="10920"
+		pubTypeList="115 132" language="eng"
 		citationStatus="MEDLINE" />
 	<types:Chemical xmi:id="175" sofa="1" begin="0" end="0"
 		registryNumber="0" nameOfSubstance="Antigens, CD4" />
@@ -3404,8 +3404,6 @@
 	<cas:FSArray xmi:id="10896" elements="175 184 193 202 211 220 229" />
 	<cas:FSArray xmi:id="10905"
 		elements="238 249 260 271 282 293 304 315 326 337 348 359 370" />
-	<types:PKElement xmi:id="10920" sofa="1" begin="0" end="0"
-		value="32343739353636" />
 	<cas:FSArray xmi:id="10928" elements="35 47 59 71 83" />
 	<cas:FSArray xmi:id="10935" elements="" />
 	<cas:View sofa="1"
