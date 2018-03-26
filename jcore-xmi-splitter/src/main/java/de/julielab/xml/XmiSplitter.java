@@ -4,6 +4,8 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.xml.namespace.QName;
 import javax.xml.stream.XMLEventFactory;
@@ -42,6 +44,8 @@ public class XmiSplitter {
     private static final XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
     private static final XMLEventFactory eventFactory = XMLEventFactory.newInstance();
     private static final QName xmiIdQName = new QName("http://www.omg.org/XMI", "id");
+    private static final QName elementsQName = new QName("", "elements");
+    private static final QName invalidElementQName = new QName("http://de.julielab/xmi/splitter", "invalidElement");
 
     static {
         // we split the XMI into non-valid XML slices, so don't check for
@@ -617,10 +621,58 @@ public class XmiSplitter {
                 // map into the general map so we can continue now assigning new
                 // IDs
                 idMap.putAll(specialXmiIds);
+                removeLooseEdgesAndFS(elementsToWrite, idMap, cas.getTypeSystem());
                 writeWithNewXmiIds(elementsToWrite, idMap);
             }
         } catch (XMLStreamException e) {
             throw new XMISplitterException(e);
+        }
+    }
+
+    private void removeLooseEdgesAndFS(LinkedHashMap<String, StorageElement> elementsToWrite, Map<String, String> idMap, TypeSystem ts) {
+        Set<String> looseXmiIds = new HashSet<>();
+        for (String xmiId : idMap.keySet()) {
+            StorageElement storageElement = elementsToWrite.get(xmiId);
+            XMLEvent event = storageElement.getElement();
+            if (event.isStartElement()) {
+                StartElement element = event.asStartElement();
+                Type elementType;
+                try {
+                    elementType = ts.getType(storageElement.getElementTypeJavaName());
+                } catch (NullPointerException e) {
+                    // This happens for XMI elements that to not directly represent a feature structure.
+                    // For JCoRe Tokens may have synonyms which are represented as child nodes of the token nodes.
+                    // But the synonyms are just strings and no feature structures.
+                    continue;
+                }
+                // the element type is null for the cas:NULL element
+                if (elementType != null && isFSArray(elementType)) {
+                    Attribute elementsAttribute = element.getAttributeByName(elementsQName);
+                    String[] xmiReferences = elementsAttribute.getValue().split("\\s+");
+                    int looseReferences = 0;
+                    for (String xmiReference : xmiReferences) {
+                        if (!elementsToWrite.keySet().contains(xmiReference)) {
+                            looseXmiIds.add(xmiReference);
+                            ++looseReferences;
+                        }
+                    }
+                    if (looseReferences == xmiReferences.length) {
+                        log.trace("Feature structure of type {} is an array type and all its elements are not on the" +
+                                " output list. The feature structure is removed from the output list as well.", elementType);
+                        looseXmiIds.add(xmiId);
+                    }
+                }
+            }
+        }
+
+        if (!looseXmiIds.isEmpty()) {
+            log.debug("Found {} loose XMI ID references, including array types for which all references are missing. " +
+                    "Removing the respective elements from the output list.", looseXmiIds.size());
+            for (String looseXmiId : looseXmiIds) {
+                // elementsToWrite.remove(looseXmiId);
+                idMap.remove(looseXmiId);
+            }
+            removeLooseEdgesAndFS(elementsToWrite, idMap, ts);
         }
     }
 
@@ -672,6 +724,7 @@ public class XmiSplitter {
 
         try {
             Deque<Collection<String>> storageKeyStack = new ArrayDeque<>();
+            Deque<QName> validElementStack = new ArrayDeque<>();
             for (String id : elementsToWrite.keySet()) {
                 StorageElement storageElement = elementsToWrite.get(id);
                 checkStorageKeysNotEmpty(storageElement);
@@ -680,23 +733,19 @@ public class XmiSplitter {
                 // has to be changed, or a part of a child node or an end tag
                 // (id < 0)
                 if (Integer.parseInt(id) >= 0) {
+                    if (!idMap.containsKey(id)) {
+                        validElementStack.add(invalidElementQName);
+                        continue;
+                    }
                     StartElement element = storageElement.getElement().asStartElement();
                     String elementPrefix = storageElement.getElementPrefix();
                     String elementNSUri = storageElement.getElementNSUri();
                     String elementName = storageElement.getElementName();
                     String javaName = storageElement.getElementTypeJavaName();
+                    validElementStack.add(element.getName());
                     Collection<String> tableName = storageElement.getStorageKeys();
                     storageKeyStack.add(tableName);
                     StartElement start = eventFactory.createStartElement(elementPrefix, elementNSUri, elementName);
-//                    System.out.println(elementName + " " + tableName);
-//                    if (tableName.size() == 1 && tableName.iterator().next().equals("de.julielab.jcore.types.Token")) {
-//                        for (Iterator<Attribute> it = element.getAttributes(); it.hasNext();) {
-//                            Attribute a = it.next();
-//                            if (a.getName().getLocalPart().equals("depRel"))
-//                                System.out.println(id + " " + a.getName() + " " + a.getValue());
-//                        }
-//                    }
-//                    System.out.println("START: " + elementName + " " + tableName);
                     for (String key : tableName) {
                         XMLEventWriter tableWriter = writers.get(key).getKey();
                         tableWriter.add(start);
@@ -714,14 +763,15 @@ public class XmiSplitter {
                                     String value = attribute.getValue();
 
                                     if (attributePrefix.equals("xmi") && attributeName.equals("id")) {
-                                        value = idMap.get(value);
+                                        value = Objects.requireNonNull(idMap.get(value));
                                         int xmiId = Integer.parseInt(value);
                                         if (currentMaxXmiId < xmiId)
                                             currentMaxXmiId = xmiId;
                                     } else {
+                                        // This is the 'elements' attribute of the FSArray
                                         String[] elements = splitElements(value);
                                         for (int i = 0; i < elements.length; i++) {
-                                            elements[i] = idMap.get(elements[i]);
+                                            elements[i] = Objects.requireNonNull(idMap.get(elements[i]));
                                         }
                                         value = StringUtils.join(elements, " ");
                                     }
@@ -744,16 +794,21 @@ public class XmiSplitter {
                                         // sofa. If we would change the sofa's XMI
                                         // ID and did not update all annotations,
                                         // the old annotations would be invalid.
-                                        value = elementName.toLowerCase().equals("sofa") ? value : idMap.get(value);
+                                        value = elementName.toLowerCase().equals("sofa") ? value : Objects.requireNonNull(idMap.get(value));
                                         int xmiId = Integer.parseInt(value);
                                         if (currentMaxXmiId < xmiId)
                                             currentMaxXmiId = xmiId;
                                     } else if (!isPrimitive(annotationType, attributeName)) {
                                         String[] elements = splitElements(value);
-                                        for (int i = 0; i < elements.length; i++) {
-                                            elements[i] = idMap.get(elements[i]);
-                                        }
-                                        value = StringUtils.join(elements, " ");
+                                        value = Stream.of(elements)
+                                                .filter(elementsToWrite::containsKey)
+                                                .map(idMap::get)
+                                                .filter(Objects::nonNull)
+                                                .collect(Collectors.joining(" "));
+//                                        for (int i = 0; i < elements.length; i++) {
+//                                            elements[i] = Objects.requireNonNull(idMap.get(elements[i]));
+//                                        }
+//                                        value = StringUtils.join(elements, " ");
                                     } else {
                                         if (attributeName.equals("sofa")) {
                                             // we need to replace the sofa reference
@@ -769,9 +824,11 @@ public class XmiSplitter {
                                             }
                                         }
                                     }
+                                    //     if (!StringUtils.isBlank(value)) {
                                     Attribute newAttribute = eventFactory.createAttribute(attributePrefix, attributeNSUri,
                                             attributeName, value);
                                     tableWriter.add(newAttribute);
+                                    //   }
                                 }
                             }
 
@@ -789,10 +846,6 @@ public class XmiSplitter {
                                 String attributeNSUri = attributeQName.getNamespaceURI();
                                 String value = attribute.getValue();
 
-                                // if (attributePrefix.equals("xmi")
-                                // & attributeName.equals("id")) {
-                                // value = idMap.get(value);
-                                // }
                                 Attribute newAttribute = eventFactory.createAttribute(attributePrefix, attributeNSUri,
                                         attributeName, value);
                                 tableWriter.add(newAttribute);
@@ -803,10 +856,13 @@ public class XmiSplitter {
                     XMLEvent event = storageElement.getElement();
                     Collection<String> storageKeys = event.isEndDocument() ? storageKeyStack.removeLast() : storageKeyStack.getLast();
                     checkStorageKeysNotEmpty(storageElement);
-//                    if (event.isEndElement())
-//                    System.out.println("END: " + event.asEndElement().getName().getLocalPart() + " " + storageKeys);
-                    for (String key : storageKeys)
-                        writers.get(key).getKey().add(event);
+                    if (!validElementStack.peekLast().equals(invalidElementQName)) {
+                        for (String key : storageKeys) {
+                            writers.get(key).getKey().add(event);
+                        }
+                        if (event.isEndElement() && event.asEndElement().getName().equals(validElementStack.peekLast()))
+                            validElementStack.removeLast();
+                    }
                 }
             }
             finalizeWriters();

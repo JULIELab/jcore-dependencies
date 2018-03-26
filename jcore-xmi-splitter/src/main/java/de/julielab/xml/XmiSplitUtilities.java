@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.xml.stream.events.StartElement;
 
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 
 public class XmiSplitUtilities {
@@ -107,5 +108,8 @@ public class XmiSplitUtilities {
 				.getRange();
 	}
 
+	public static boolean isReferenceFeature(Type type, String featureName) {
+        return isFSArray(type) || !type.getFeatureByBaseName(featureName).getRange().isPrimitive();
+    }
 
 }
