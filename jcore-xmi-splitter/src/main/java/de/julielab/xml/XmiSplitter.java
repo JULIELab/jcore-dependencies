@@ -877,14 +877,16 @@ public class XmiSplitter {
                     // Finally, for end elements we must remove the last deque elements belonging to their start
                     // elements.
                     XMLEvent event = storageElement.getElement();
-                    Collection<String> storageKeys = event.isEndDocument() ? storageKeyStack.removeLast() : storageKeyStack.getLast();
+                    Collection<String> storageKeys = storageKeyStack.peekLast();
                     checkStorageKeysNotEmpty(storageElement);
                     if (!validElementStack.peekLast().equals(invalidElementQName)) {
                         for (String key : storageKeys) {
                             writers.get(key).getKey().add(event);
                         }
-                        if (event.isEndElement() && event.asEndElement().getName().equals(validElementStack.peekLast()))
+                        if (event.isEndElement() && event.asEndElement().getName().equals(validElementStack.peekLast())) {
                             validElementStack.removeLast();
+                            storageKeyStack.removeLast();
+                        }
                     }
                 }
             }
