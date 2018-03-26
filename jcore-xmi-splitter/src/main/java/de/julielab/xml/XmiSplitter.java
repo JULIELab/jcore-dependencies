@@ -629,6 +629,14 @@ public class XmiSplitter {
         }
     }
 
+    /**
+     * Removes XMI IDs fom the {@code idMap} that belong to elements to can be omitted from output. Those are
+     *  FSArrays that only reference annotations which are not marked for output and thus can't be loaded
+     * again. The FSArrays then represent loose edges we want to remove.
+     * @param elementsToWrite The output list.
+     * @param idMap The XMI map (old XMI -> new XMI)
+     * @param ts The CAS type system.
+     */
     private void removeLooseEdgesAndFS(LinkedHashMap<String, StorageElement> elementsToWrite, Map<String, String> idMap, TypeSystem ts) {
         Set<String> looseXmiIds = new HashSet<>();
         for (String xmiId : idMap.keySet()) {
@@ -646,7 +654,10 @@ public class XmiSplitter {
                     continue;
                 }
                 // the element type is null for the cas:NULL element
+                // Also, we only handle FSArrays (or other collection feature structures, if necessary).
+                // Annotations that should be stored will never be removed.
                 if (elementType != null && isFSArray(elementType)) {
+                    // Get the 'elements' attribute of the FSArray to check the references
                     Attribute elementsAttribute = element.getAttributeByName(elementsQName);
                     String[] xmiReferences = elementsAttribute.getValue().split("\\s+");
                     int looseReferences = 0;
@@ -723,7 +734,14 @@ public class XmiSplitter {
                                     HashMap<String, String> idMap) {
 
         try {
+            // Required to get the correct storage key for child and end elements since the storage keys are only
+            // associated with their start element.
             Deque<Collection<String>> storageKeyStack = new ArrayDeque<>();
+            // Required because some elements in elementsToWrite should actually not be written. The XMI IDs of elements
+            // that have been removed - mostly FSArray elements that only point to annotations that are not being
+            // stored - have been removed from the idMap. But we can only see for the start element that we
+            // don't want to write it. Its text contents, child elements and end tag would be written anyway.
+            // Thus, we use the deque to mark the elements that should not be written as "invalidElements".
             Deque<QName> validElementStack = new ArrayDeque<>();
             for (String id : elementsToWrite.keySet()) {
                 StorageElement storageElement = elementsToWrite.get(id);
@@ -853,6 +871,11 @@ public class XmiSplitter {
                         }
                     }
                 } else if (Integer.parseInt(id) < 0) {
+                    // Here, we handle text contents and end elements. The need to get the correct storage keys,
+                    // associated with their respective start element, and also need to check if there start element
+                    // hasn't been declared to be invalid, i.e. removed from output.
+                    // Finally, for end elements we must remove the last deque elements belonging to their start
+                    // elements.
                     XMLEvent event = storageElement.getElement();
                     Collection<String> storageKeys = event.isEndDocument() ? storageKeyStack.removeLast() : storageKeyStack.getLast();
                     checkStorageKeysNotEmpty(storageElement);
