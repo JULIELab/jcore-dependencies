@@ -18,25 +18,18 @@ package de.julielab.xml;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 import java.util.Map;
 
+import com.ximpleware.*;
 import org.junit.Test;
-
-import com.ximpleware.AutoPilot;
-import com.ximpleware.EOFException;
-import com.ximpleware.EncodingException;
-import com.ximpleware.EntityException;
-import com.ximpleware.NavException;
-import com.ximpleware.ParseException;
-import com.ximpleware.VTDException;
-import com.ximpleware.VTDGen;
-import com.ximpleware.VTDNav;
-import com.ximpleware.XMLModifier;
 
 /**
  * Tests for the Utils class.
@@ -139,4 +132,11 @@ public class JulieXmlToolsTest {
 		// this fails ;-( the returned character is Ѐ, codepoint 0x400, thus the high surrogate is missing
 		assertEquals("\uD801\uDC00", vtdString);
 	}
+
+	@Test
+    public void testGetXpathValue() throws IOException, XPathParseException, NavException, XPathEvalException, ParseException {
+        ByteArrayInputStream bais = new ByteArrayInputStream("<xml><level1><level1.1>value1.1</level1.1><level1.2><content>thevalue</content></level1.2></level1></xml>".getBytes(StandardCharsets.UTF_8));
+        String xpathValue = JulieXMLTools.getXpathValue("/xml/level1/level1.2/content", bais);
+        assertEquals("thevalue", xpathValue);
+    }
 }
