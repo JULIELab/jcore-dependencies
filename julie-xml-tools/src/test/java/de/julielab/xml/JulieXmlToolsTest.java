@@ -79,7 +79,7 @@ public class JulieXmlToolsTest {
 		bos = new ByteArrayOutputStream();
 		xm.output(bos);
 		assertEquals("<test>Totally newest.</test>", new String(bos.toByteArray()));
-		assertEquals(-1, index);
+		assertEquals(2, index);
 
 		// If the element doesn't exist at all, the returned index should equal
 		// -1.

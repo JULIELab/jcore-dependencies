@@ -700,6 +700,7 @@ public class JulieXMLTools {
                 // If the element is empty, insert the new text.
             else {
                 xm.insertAfterHead(text);
+                textIndex = elementIndex + 1;
                 // The following lines wont change anything since the new text
                 // is only visible to the XMLModifier, not to the VTDNav...I
                 // think :-)
