@@ -132,11 +132,4 @@ public class JulieXmlToolsTest {
 		// this fails ;-( the returned character is Ѐ, codepoint 0x400, thus the high surrogate is missing
 		assertEquals("\uD801\uDC00", vtdString);
 	}
-
-	@Test
-    public void testGetXpathValue() throws IOException, XPathParseException, NavException, XPathEvalException, ParseException {
-        ByteArrayInputStream bais = new ByteArrayInputStream("<xml><level1><level1.1>value1.1</level1.1><level1.2><content>thevalue</content></level1.2></level1></xml>".getBytes(StandardCharsets.UTF_8));
-        String xpathValue = JulieXMLTools.getXpathValue("/xml/level1/level1.2/content", bais);
-        assertEquals("thevalue", xpathValue);
-    }
 }

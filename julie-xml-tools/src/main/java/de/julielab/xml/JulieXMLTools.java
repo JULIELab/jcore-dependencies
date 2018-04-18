@@ -685,6 +685,7 @@ public class JulieXMLTools {
             throws VTDException, UnsupportedEncodingException {
         ap.selectXPath(xpath);
         int elementIndex = ap.evalXPath();
+        LOG.trace("Setting element text to an XML element: Found element XPath {} at VTD token index {} (-1 means not found)", xpath, elementIndex);
         int textIndex = -1;
         // Go to the element to change, if existing.
         if (elementIndex != -1) {
@@ -695,10 +696,13 @@ public class JulieXMLTools {
             // length (node exists but has no text content).
             // int tokenLength = vn.getTokenLength(textIndex);
             // if (tokenLength > 0)
-            if (textIndex != -1)
+            if (textIndex != -1) {
                 xm.updateToken(textIndex, text);
-                // If the element is empty, insert the new text.
+                LOG.trace("Element text already existed at token index {} and is replaced.", textIndex);
+            }
             else {
+                LOG.trace("Element is empty, setting new text.");
+                // If the element is empty, insert the new text.
                 xm.insertAfterHead(text);
                 textIndex = elementIndex + 1;
                 // The following lines wont change anything since the new text
@@ -713,6 +717,7 @@ public class JulieXMLTools {
                 // }
             }
         }
+        LOG.trace("Returning the VTD XML index of the new element text as {}", textIndex);
         return textIndex;
     }
 
