@@ -59,7 +59,11 @@
             <artifactId>guava</artifactId>
             <version>23.5-jre</version>
         </dependency>
-    </dependencies>
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+		</dependency>
+	</dependencies>
 	<description>Parses CAS data in XMI format in order to select specified annotations (XmiSplitter) or or builds a single XMI representation out of the base document and the selected annotations (XmiBuilder).
 These tools are used by the JCoRe CAS to/from DB Reader/Consumer to store or read portions of XMI files from a PostgrSQL database.</description>
 	<organization>
