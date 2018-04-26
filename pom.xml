@@ -40,7 +40,8 @@
         <module>julielab-entity-evalutator</module>
         <module>linnaeus</module>
         <module>jcore-xmi-splitter</module>
-	</modules>
+        <module>jcore-db-test-utilities</module>
+    </modules>
 	
 	
 	<scm>
