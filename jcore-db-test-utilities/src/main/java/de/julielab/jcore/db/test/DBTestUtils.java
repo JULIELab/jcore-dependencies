@@ -52,11 +52,31 @@ public class DBTestUtils {
      * Imports the file at <code>datapath</code> into the empty database, creates a subset
      * named "testsubset" of the specified size by random selection, writes a test credentials file and configures
      * the CoStoSys to use it.
+     * @param datapath The file or directory with test data to import into the postgres container.
+     * @param dataTableSchema  The CoStoSys table schema for the imported data and the table it is imported into.
+     * @param subsetTableSize The size of the test subset that will be created for the test data table.
      * @param postgres The org.testcontainer with the Postgres database.
      * @throws SQLException If a database operation failes.
      */
     public static String setupDatabase(String datapath, String dataTableSchema, int subsetTableSize, PostgreSQLContainer postgres) throws SQLException {
-        DataBaseConnector dbc = new DataBaseConnector(postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword());
+        DataBaseConnector dbc = getDataBaseConnector(postgres);
+        String testsubset = setupDatabase(dbc, datapath, dataTableSchema, subsetTableSize, postgres);
+        dbc.close();
+        return testsubset;
+    }
+
+    /**
+     * Imports the file at <code>datapath</code> into the empty database, creates a subset
+     * named "testsubset" of the specified size by random selection, writes a test credentials file and configures
+     * the CoStoSys to use it.
+     * @param dbc A database connector connected to the postgres container.
+     * @param datapath The file or directory with test data to import into the postgres container.
+     * @param dataTableSchema  The CoStoSys table schema for the imported data and the table it is imported into.
+     * @param subsetTableSize The size of the test subset that will be created for the test data table.
+     * @param postgres The org.testcontainer with the Postgres database.
+     * @throws SQLException If a database operation failes.
+     */
+    public static String setupDatabase(DataBaseConnector dbc, String datapath, String dataTableSchema, int subsetTableSize, PostgreSQLContainer postgres) throws SQLException {
         dbc.setActiveTableSchema(dataTableSchema);
         dbc.createTable(Constants.DEFAULT_DATA_TABLE_NAME, "Test data table for DBReaderTest.");
         dbc.importFromXMLFile(datapath, Constants.DEFAULT_DATA_TABLE_NAME);
@@ -76,7 +96,10 @@ public class DBTestUtils {
             e.printStackTrace();
         }
         System.setProperty(Constants.HIDDEN_CONFIG_PATH, hiddenConfigPath);
-        dbc.close();
         return testsubset;
+    }
+
+    public static DataBaseConnector getDataBaseConnector(PostgreSQLContainer postgres) {
+        return new DataBaseConnector(postgres.getJdbcUrl(), postgres.getUsername(), postgres.getPassword());
     }
 }
