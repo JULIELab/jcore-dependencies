@@ -214,7 +214,7 @@ public class JulieXMLTools {
             ap.selectXPath(forEachXpath);
             final int startIndex = ap.evalXPath();
             if (startIndex == -1)
-                LOG.warn("Couldn't find XPath: " + forEachXpath + " in document " + identifier);
+                LOG.debug("Couldn't find XPath: " + forEachXpath + " in document " + identifier);
 
             final Map<String, FieldValueSource> navigators = new HashMap<String, FieldValueSource>();
             for (Map<String, String> field : fields) {
@@ -364,7 +364,7 @@ public class JulieXMLTools {
             ap.selectXPath(forEachXpath);
             final int startIndex = ap.evalXPath();
             if (startIndex == -1)
-                LOG.info("Couldn't find XPath: " + forEachXpath + " in document " + identifier);
+                LOG.debug("Couldn't find XPath: " + forEachXpath + " in document " + identifier);
 
             final Map<String, FieldValueSource> navigators = new HashMap<String, FieldValueSource>();
             for (Map<String, String> field : fields) {
