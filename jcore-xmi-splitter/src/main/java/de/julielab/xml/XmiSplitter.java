@@ -454,8 +454,8 @@ public class XmiSplitter {
                 // special ID
                 // map into the general map so we can continue now assigning new
                 // IDs
-                idMap.putAll(specialXmiIds);
                 removeLooseEdgesAndFS(elementsToWrite, idMap, cas.getTypeSystem());
+                idMap.putAll(specialXmiIds);
                 writeWithNewXmiIds(elementsToWrite, idMap);
             }
         } catch (XMLStreamException e) {
@@ -464,7 +464,7 @@ public class XmiSplitter {
     }
 
     /**
-     * Removes XMI IDs fom the {@code idMap} that belong to elements to can be omitted from output. Those are
+     * Removes XMI IDs fom the {@code idMap} that belong to elements that should be omitted from output. Those are
      * FSArrays that only reference annotations which are not marked for output and thus can't be loaded
      * again. The FSArrays then represent loose edges we want to remove.
      *
