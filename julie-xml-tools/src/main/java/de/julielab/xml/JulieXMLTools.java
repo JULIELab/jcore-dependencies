@@ -15,7 +15,6 @@
 
 package de.julielab.xml;
 
-import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import com.ximpleware.*;
 import com.ximpleware.EOFException;
 import com.ximpleware.extended.*;
@@ -26,15 +25,17 @@ import org.slf4j.LoggerFactory;
 import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.sql.Timestamp;
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
+import java.util.zip.ZipFile;
 
 interface FieldValueSource {
-    public Object getFieldValue() throws Exception;
+    Object getFieldValue() throws FieldValueRetrievalException;
 }
 
 /**
@@ -77,15 +78,24 @@ public class JulieXMLTools {
                 if (fileName.endsWith(".gz") || fileName.endsWith(".gzip")) {
                     is = new GZIPInputStream(new FileInputStream(fileName));
                 } else if (fileName.endsWith(".zip")) {
-                    final ZipInputStream zis = new ZipInputStream(new FileInputStream(fileName));
+                    LOG.info("Got a ZIP archive at {}. It will be scanned for XML entry files.", fileName);
+                    ZipFile zipFile = new ZipFile(fileName, StandardCharsets.UTF_8);
+                    final List<ZipEntry> sortedEntries = zipFile.stream().sorted((a, b) -> a.getName().compareTo(b.getName())).collect(Collectors.toList());
+
                     return new Iterator<Map<String, Object>>() {
 
-                        private ZipEntry entry = zis.getNextEntry();
+                        private Iterator<ZipEntry> zipEntryIt = sortedEntries.iterator();
+                        private ZipEntry entry = nextZipEntry();
                         private Iterator<Map<String, Object>> internalIterator;
 
                         @Override
                         public boolean hasNext() {
                             return entry != null || (internalIterator != null && internalIterator.hasNext());
+                        }
+
+                        private boolean hasValidEnding(String filename) {
+                            String lc = filename;
+                            return lc.endsWith("xml") || lc.endsWith("xml.gz") || lc.endsWith("xml.gzip");
                         }
 
                         @Override
@@ -94,24 +104,33 @@ public class JulieXMLTools {
                                 return internalIterator.next();
                             } else if (entry != null) {
                                 while ((internalIterator == null || !internalIterator.hasNext()) && entry != null) {
+                                    if (entry.isDirectory() || !hasValidEnding(entry.getName())) {
+                                        LOG.info("Skipping ZIP entry {}", entry.getName());
+                                        entry = nextZipEntry();
+                                        continue;
+                                    }
                                     VTDNav vn = null;
                                     try {
-                                        vn = getVTDNav(zis, bufferSize);
+                                        LOG.info("Processing ZIP entry {}", entry.getName());
+                                        InputStream entryIs = zipFile.getInputStream(entry);
+                                        if (entry.getName().toLowerCase().endsWith(".gz") || entry.getName().toLowerCase().endsWith("gzip"))
+                                            entryIs = new GZIPInputStream(entryIs);
+                                        vn = getVTDNav(entryIs, bufferSize);
                                     } catch (ParseException e) {
                                         e.printStackTrace();
-                                    } catch (FileTooBigException e) {
-                                        e.printStackTrace();
-                                    }
-                                    internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
-                                    try {
-                                        entry = zis.getNextEntry();
                                     } catch (IOException e) {
                                         e.printStackTrace();
                                     }
+                                    internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
+                                    entry = nextZipEntry();
                                 }
                                 return internalIterator.next();
                             }
                             return null;
+                        }
+
+                        private ZipEntry nextZipEntry() {
+                            return zipEntryIt.hasNext() ? zipEntryIt.next() : null;
                         }
                     };
 
@@ -307,15 +326,9 @@ public class JulieXMLTools {
                         }
                         index = ap.evalXPath();
                         return row;
-                    } catch (XPathEvalException e) {
-                        e.printStackTrace();
-                    } catch (NavException e) {
-                        e.printStackTrace();
                     } catch (XPathEvalExceptionHuge e) {
                         e.printStackTrace();
                     } catch (NavExceptionHuge e) {
-                        e.printStackTrace();
-                    } catch (IOException e) {
                         e.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -464,8 +477,6 @@ public class JulieXMLTools {
                         e.printStackTrace();
                     } catch (NavException e) {
                         e.printStackTrace();
-                    } catch (IOException e) {
-                        e.printStackTrace();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -589,8 +600,7 @@ public class JulieXMLTools {
                     "Array index out of bounds - please check whether the file you try to read is less then 2GB in size.",
                     oob);
         } finally {
-            if (!(is instanceof ZipInputStream))
-                is.close();
+            is.close();
         }
         return streamContent;
     }
@@ -813,7 +823,7 @@ class ConstantFieldValueSource implements FieldValueSource {
         this.value = value;
     }
 
-    public Object getFieldValue() throws Exception {
+    public Object getFieldValue() {
         return value;
     }
 
@@ -871,20 +881,23 @@ class XPathNavigator extends AbstractFieldValueSource {
         this.options = options;
     }
 
-    public Object getFieldValue()
-            throws XPathEvalException, NavException, NavException, IOException, XPathEvalException {
+    public Object getFieldValue() throws FieldValueRetrievalException {
         List<String> retList = new ArrayList<String>();
 
-        while (apFE.evalXPath() != -1) {
-            if (options.returnXMLFragment) {
-                long fragment = vn.getElementFragment();
-                int offset = (int) fragment;
-                int length = (int) (fragment >> 32);
-                retList.add(options.resolveEntities ? vn.toString(offset, length) : vn.toRawString(offset, length));
-            } else {
-                retList.add(apXP.evalXPathToString());
+        try {
+            while (apFE.evalXPath() != -1) {
+                if (options.returnXMLFragment) {
+                    long fragment = vn.getElementFragment();
+                    int offset = (int) fragment;
+                    int length = (int) (fragment >> 32);
+                    retList.add(options.resolveEntities ? vn.toString(offset, length) : vn.toRawString(offset, length));
+                } else {
+                    retList.add(apXP.evalXPathToString());
+                }
+                apXP.resetXPath();
             }
-            apXP.resetXPath();
+        } catch (XPathEvalException | NavException e) {
+            throw new FieldValueRetrievalException(e);
         }
         apFE.resetXPath();
         Object retobj = null;
@@ -929,39 +942,43 @@ class XPathNavigatorHuge extends AbstractFieldValueSource {
     }
 
     public Object getFieldValue()
-            throws XPathEvalException, NavException, NavExceptionHuge, IOException, XPathEvalExceptionHuge {
+            throws FieldValueRetrievalException {
         List<String> retList = new ArrayList<String>();
 
-        while (apFE.evalXPath() != -1) {
-            if (options.returnXMLFragment) {
-                long[] fragment = vn.getElementFragment();
-                long offset = fragment[0];
-                long length = fragment[1];
-                // Assumption: if the user wants the whole XML fragment,
-                // it is likely he wants it to be valid XML, so don't
-                // resolve
-                // entities.
-                try {
-                    // getting the XML fragment in the VTD-XML-Huge version
-                    // is a bit messy; we need to get the data storage
-                    // object
-                    // and write the required data into an OutputStream
-                    // which
-                    // we can read.
-                    JulieXMLBuffer mb = (JulieXMLBuffer) vn.getXML();
-                    byte[] fragmentBytes = mb.getFragment(offset, length);
-                    retList.add(new String(fragmentBytes));
-                } catch (ClassCastException e) {
-                    JulieXMLTools.LOG.error(
-                            "Casting from com.ximpleware.extended.IByteBuffer to " + JulieXMLBuffer.class.getName()
-                                    + " failed. You must pass an Instance of" + JulieXMLBuffer.class.getName()
-                                    + " to the VTDGenHuge object which contains the XML data to be parsed.");
-                    e.printStackTrace();
+        try {
+            while (apFE.evalXPath() != -1) {
+                if (options.returnXMLFragment) {
+                    long[] fragment = vn.getElementFragment();
+                    long offset = fragment[0];
+                    long length = fragment[1];
+                    // Assumption: if the user wants the whole XML fragment,
+                    // it is likely he wants it to be valid XML, so don't
+                    // resolve
+                    // entities.
+                    try {
+                        // getting the XML fragment in the VTD-XML-Huge version
+                        // is a bit messy; we need to get the data storage
+                        // object
+                        // and write the required data into an OutputStream
+                        // which
+                        // we can read.
+                        JulieXMLBuffer mb = (JulieXMLBuffer) vn.getXML();
+                        byte[] fragmentBytes = mb.getFragment(offset, length);
+                        retList.add(new String(fragmentBytes));
+                    } catch (ClassCastException e) {
+                        JulieXMLTools.LOG.error(
+                                "Casting from com.ximpleware.extended.IByteBuffer to " + JulieXMLBuffer.class.getName()
+                                        + " failed. You must pass an Instance of" + JulieXMLBuffer.class.getName()
+                                        + " to the VTDGenHuge object which contains the XML data to be parsed.");
+                        e.printStackTrace();
+                    }
+                } else {
+                    retList.add(apXP.evalXPathToString());
                 }
-            } else {
-                retList.add(apXP.evalXPathToString());
+                apXP.resetXPath();
             }
-            apXP.resetXPath();
+        } catch (XPathEvalExceptionHuge | NavExceptionHuge | IOException e) {
+            throw new FieldValueRetrievalException(e);
         }
         apFE.resetXPath();
         Object retobj = null;
