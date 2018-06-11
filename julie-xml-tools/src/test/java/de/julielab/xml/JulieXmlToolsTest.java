@@ -15,6 +15,9 @@
 
 package de.julielab.xml;
 
+import static de.julielab.xml.JulieXMLConstants.NAME;
+import static de.julielab.xml.JulieXMLConstants.XPATH;
+import static de.julielab.xml.JulieXMLTools.createField;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,12 +28,11 @@ import java.io.IOException;
 import java.lang.reflect.Method;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 import com.ximpleware.*;
 import org.junit.Test;
-
+import static org.assertj.core.api.Assertions.*;
 /**
  * Tests for the Utils class.
  * 
@@ -132,4 +134,21 @@ public class JulieXmlToolsTest {
 		// this fails ;-( the returned character is Ѐ, codepoint 0x400, thus the high surrogate is missing
 		assertEquals("\uD801\uDC00", vtdString);
 	}
+
+    /**
+     * Tests whether the reading of a ZIP archive works as intended. The test archive includes three files, each with
+     * a value for the XPath <code>/root/testcontent</code>. We should the the values in a single iterator.
+     */
+	@Test
+	public void testArchiveReading() {
+        List<Map<String, String>> fields = new ArrayList<>();
+        fields.add(createField(NAME, "contents", XPATH, "testcontent"));
+        Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/zipArchiveReading/archive.zip", 1024, "/root", fields, false);
+        Set<String> values = new HashSet<>();
+        while (rowIt.hasNext()) {
+            Map<String, Object> row =  rowIt.next();
+            values.add((String) row.get("contents"));
+        }
+        assertThat(values).contains("first", "second", "third");
+    }
 }

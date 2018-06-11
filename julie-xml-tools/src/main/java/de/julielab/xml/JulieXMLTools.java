@@ -15,6 +15,7 @@
 
 package de.julielab.xml;
 
+import com.sun.xml.internal.xsom.impl.scd.Iterators;
 import com.ximpleware.*;
 import com.ximpleware.EOFException;
 import com.ximpleware.extended.*;
@@ -29,6 +30,7 @@ import java.sql.Timestamp;
 import java.util.*;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
+import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 interface FieldValueSource {
@@ -49,25 +51,21 @@ public class JulieXMLTools {
     /**
      * Convenience method for quick construction of a row iterator over an XML
      * document.
-     *
+     * <p>
      * <p>
      * The <code>fileName</code> determines the location of the XML file to
      * return data records from. For more detailed information see
      * {@link #constructRowIterator(VTDNav, String, List, String)}.
      *
-     * @param fileName
-     *            XML file to return data rows from.
-     * @param bufferSize
-     *            Size of buffers while reading the file at
-     *            <code>fileName</code>.
-     * @param forEachXpath
-     *            An XPath expression determining the XML elements to retrieve
-     *            data records from.
-     * @param fields
-     *            List of attribute-value pairs determining the record fields
-     *            returned by the iterator.
+     * @param fileName     XML file to return data rows from.
+     * @param bufferSize   Size of buffers while reading the file at
+     *                     <code>fileName</code>.
+     * @param forEachXpath An XPath expression determining the XML elements to retrieve
+     *                     data records from.
+     * @param fields       List of attribute-value pairs determining the record fields
+     *                     returned by the iterator.
      * @return An iterator over all rows extracted from the XMl document pointed
-     *         to by <code>fileName</code>.
+     * to by <code>fileName</code>.
      */
     public static Iterator<Map<String, Object>> constructRowIterator(String fileName, int bufferSize,
                                                                      String forEachXpath, final List<Map<String, String>> fields, boolean largeFileSize) {
@@ -79,8 +77,44 @@ public class JulieXMLTools {
                 if (fileName.endsWith(".gz") || fileName.endsWith(".gzip")) {
                     is = new GZIPInputStream(new FileInputStream(fileName));
                 } else if (fileName.endsWith(".zip")) {
-                    is = new ZipInputStream(new FileInputStream(fileName));
-                    ((ZipInputStream) is).getNextEntry();
+                    final ZipInputStream zis = new ZipInputStream(new FileInputStream(fileName));
+                    return new Iterator<Map<String, Object>>() {
+
+                        private ZipEntry entry = zis.getNextEntry();
+                        private Iterator<Map<String, Object>> internalIterator;
+
+                        @Override
+                        public boolean hasNext() {
+                            return entry != null || (internalIterator != null && internalIterator.hasNext());
+                        }
+
+                        @Override
+                        public Map<String, Object> next() {
+                            if (internalIterator != null && internalIterator.hasNext()) {
+                                return internalIterator.next();
+                            } else if (entry != null) {
+                                while ((internalIterator == null || !internalIterator.hasNext()) && entry != null) {
+                                    VTDNav vn = null;
+                                    try {
+                                        vn = getVTDNav(zis, bufferSize);
+                                    } catch (ParseException e) {
+                                        e.printStackTrace();
+                                    } catch (FileTooBigException e) {
+                                        e.printStackTrace();
+                                    }
+                                    internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
+                                    try {
+                                        entry = zis.getNextEntry();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                                return internalIterator.next();
+                            }
+                            return null;
+                        }
+                    };
+
                 } else {
                     is = new FileInputStream(fileName);
                 }
@@ -141,27 +175,22 @@ public class JulieXMLTools {
      * Convenience method for quick construction of a row iterator over an XML
      * document.
      *
-     * <p>
+     *
      * <code>data</code> contains the XML data to return data records from. For
      * more detailed information see
      * {@link #constructRowIterator(VTDNav, String, List, String)}.
      *
-     * @param data
-     *            Byte array containing an XML document.
-     * @param bufferSize
-     *            Size of buffers while reading the file at
-     *            <code>fileName</code>.
-     * @param forEachXpath
-     *            An XPath expression determining the XML elements to retrieve
-     *            data records from.
-     * @param fields
-     *            List of attribute-value pairs determining the record fields
-     *            returned by the iterator.
-     * @param identifier
-     *            A string identifying the XML document in <code>data</code>,
-     *            needed for error messages.
+     * @param data         Byte array containing an XML document.
+     * @param bufferSize   Size of buffers while reading the file at
+     *                     <code>fileName</code>.
+     * @param forEachXpath An XPath expression determining the XML elements to retrieve
+     *                     data records from.
+     * @param fields       List of attribute-value pairs determining the record fields
+     *                     returned by the iterator.
+     * @param identifier   A string identifying the XML document in <code>data</code>,
+     *                     needed for error messages.
      * @return An iterator over all rows extracted from the XMl document pointed
-     *         to by <code>fileName</code>.
+     * to by <code>fileName</code>.
      */
     public static Iterator<Map<String, Object>> constructRowIterator(byte[] data, int bufferSize, String forEachXpath,
                                                                      List<Map<String, String>> fields, String identifier) {
@@ -191,19 +220,15 @@ public class JulieXMLTools {
      * configurable.
      * </ul>
      *
-     * @param vn
-     *            <code>VTDNavHuge</code> object to the XML object. The object
-     *            should not have been used before, so the current VTD index
-     *            points to the document root.
-     * @param forEachXpath
-     *            An absolute XPath expression determining the slice(s) of the
-     *            XML document from which data rows are extracted.
-     * @param fields
-     *            The fields to be returned with each data row.
-     * @param identifier
-     *            Used in error messages
+     * @param vn           <code>VTDNavHuge</code> object to the XML object. The object
+     *                     should not have been used before, so the current VTD index
+     *                     points to the document root.
+     * @param forEachXpath An absolute XPath expression determining the slice(s) of the
+     *                     XML document from which data rows are extracted.
+     * @param fields       The fields to be returned with each data row.
+     * @param identifier   Used in error messages
      * @return An iterator over all rows extracted from the XMl document
-     *         navigated by <code>vn</code>.
+     * navigated by <code>vn</code>.
      */
     private static Iterator<Map<String, Object>> constructRowIterator(VTDNavHuge vn, String forEachXpath,
                                                                       List<Map<String, String>> fields, String identifier) {
@@ -342,16 +367,13 @@ public class JulieXMLTools {
      * "/MedlineCitationSet/MedlineCitation/PMID". </samp>
      * </p>
      *
-     * @param vn
-     *            The {@link VTDNav} object which navigates over the XML
-     *            document to retrieve records from.
-     * @param forEachXpath
-     *            An XPath expression determining the XML elements for each of
-     *            which one row should be created.
-     * @param fields
-     *            The fields to be returned with each data row.
+     * @param vn           The {@link VTDNav} object which navigates over the XML
+     *                     document to retrieve records from.
+     * @param forEachXpath An XPath expression determining the XML elements for each of
+     *                     which one row should be created.
+     * @param fields       The fields to be returned with each data row.
      * @return An iterator over all rows extracted from the XMl document
-     *         navigated by <code>vn</code>.
+     * navigated by <code>vn</code>.
      */
     public static Iterator<Map<String, Object>> constructRowIterator(final VTDNav vn, String forEachXpath,
                                                                      final List<Map<String, String>> fields, String identifier) {
@@ -529,13 +551,11 @@ public class JulieXMLTools {
      * Reads an <code>InputStream</code> buffer wise, concatenates all buffers
      * and returns one <code>byte[]</code> of exact length of the read data.
      *
-     * @param is
-     *            <code>InputStream</code> to read.
-     * @param bufferSize
-     *            Size of maximum bytes to read by one <code>is.read()</code>
-     *            call.
+     * @param is         <code>InputStream</code> to read.
+     * @param bufferSize Size of maximum bytes to read by one <code>is.read()</code>
+     *                   call.
      * @return A <code>byte[]</code> containing all the data of the
-     *         <code>InputStream</code>.
+     * <code>InputStream</code>.
      * @throws IOException
      */
     public static byte[] readStream(InputStream is, int bufferSize) throws IOException {
@@ -569,7 +589,8 @@ public class JulieXMLTools {
                     "Array index out of bounds - please check whether the file you try to read is less then 2GB in size.",
                     oob);
         } finally {
-            is.close();
+            if (!(is instanceof ZipInputStream))
+                is.close();
         }
         return streamContent;
     }
@@ -632,18 +653,15 @@ public class JulieXMLTools {
      * Returns the fragment of XML, where <tt>vn</tt> currently points to, as a
      * string.
      *
-     * @param vn
-     *            The XML navigator.
-     * @param fragmentType
-     *            Either {@link #ELEMENT_FRAGMENT} or {@link #CONTENT_FRAGMENT}.
-     *            Determines which respective method on <tt>vn</tt> is called.
-     *            The first returns the whole element, including starting and
-     *            end tag, the latter omits the tags of the element and only
-     *            returns its enclosed contents.
-     * @param returnRawString
-     *            Whether to return a raw string, i.e. the pure XML fragment
-     *            without resolving XML entities, or a "readable" string which
-     *            then possibly cannot be used for further XML parsing.
+     * @param vn              The XML navigator.
+     * @param fragmentType    Either {@link #ELEMENT_FRAGMENT} or {@link #CONTENT_FRAGMENT}.
+     *                        Determines which respective method on <tt>vn</tt> is called.
+     *                        The first returns the whole element, including starting and
+     *                        end tag, the latter omits the tags of the element and only
+     *                        returns its enclosed contents.
+     * @param returnRawString Whether to return a raw string, i.e. the pure XML fragment
+     *                        without resolving XML entities, or a "readable" string which
+     *                        then possibly cannot be used for further XML parsing.
      * @return The XML fragment of the current element <tt>vn</tt> points to.
      * @throws NavException
      */
@@ -654,6 +672,18 @@ public class JulieXMLTools {
         return returnRawString ? vn.toRawString(offset, length) : vn.toString(offset, length);
     }
 
+    public static Map<String, String> createField(String... configuration) {
+        if (configuration.length % 2 == 1)
+            throw new IllegalArgumentException("An even number of arguments is required. The even indexes " +
+                    "are field property keys, the odd indexes are the values to the previous key.");
+        Map<String, String> field = new HashMap<>();
+        for (int i = 0; i < configuration.length; i = i + 2) {
+            String s = configuration[i];
+            field.put(s, configuration[i + 1]);
+        }
+        return field;
+    }
+
     /**
      * Sets the text content of an XML element pointed to by <code>xpath</code>
      * to <code>text</code>.
@@ -662,23 +692,17 @@ public class JulieXMLTools {
      * <code>xpath</code>.
      * </p>
      *
-     * @param vn
-     *            <code>VTDNav</code> object navigating the XML document to
-     *            modify.
-     * @param ap
-     *            <code>AutoPilot</code> object bound to <code>vn</code>.
-     * @param xm
-     *            <code>XMLModifier</code> object bound to <code>vn</code>.
-     * @param xpath
-     *            An XPath expression pointing to the XML element whose text
-     *            should be set.
-     * @param text
-     *            The text which is to be set to the XML element pointed to by
-     *            <code>xpath</code>.
+     * @param vn    <code>VTDNav</code> object navigating the XML document to
+     *              modify.
+     * @param ap    <code>AutoPilot</code> object bound to <code>vn</code>.
+     * @param xm    <code>XMLModifier</code> object bound to <code>vn</code>.
+     * @param xpath An XPath expression pointing to the XML element whose text
+     *              should be set.
+     * @param text  The text which is to be set to the XML element pointed to by
+     *              <code>xpath</code>.
      * @return The VTD index of the changed element, -1 otherwise.
-     * @throws VTDException
-     *             If something with navigation or modification of the XML
-     *             document goes wrong.
+     * @throws VTDException                 If something with navigation or modification of the XML
+     *                                      document goes wrong.
      * @throws UnsupportedEncodingException
      */
     public static int setElementText(VTDNav vn, AutoPilot ap, XMLModifier xm, String xpath, String text)
@@ -699,8 +723,7 @@ public class JulieXMLTools {
             if (textIndex != -1) {
                 xm.updateToken(textIndex, text);
                 LOG.trace("Element text already existed at token index {} and is replaced.", textIndex);
-            }
-            else {
+            } else {
                 LOG.trace("Element is empty, setting new text.");
                 // If the element is empty, insert the new text.
                 xm.insertAfterHead(text);
@@ -833,7 +856,6 @@ class Options {
  * 'forEach' element ahead.
  *
  * @author faessler
- *
  */
 class XPathNavigator extends AbstractFieldValueSource {
     private VTDNav vn;
@@ -886,7 +908,6 @@ class XPathNavigator extends AbstractFieldValueSource {
  * "Huge" classes from VTD XML intended to process very large XML files.
  *
  * @author faessler
- *
  */
 class XPathNavigatorHuge extends AbstractFieldValueSource {
     private VTDNavHuge vn;
