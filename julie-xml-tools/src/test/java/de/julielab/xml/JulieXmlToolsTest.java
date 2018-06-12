@@ -15,6 +15,7 @@
 
 package de.julielab.xml;
 
+import static de.julielab.xml.JulieXMLConstants.CONSTANT_VALUE;
 import static de.julielab.xml.JulieXMLConstants.NAME;
 import static de.julielab.xml.JulieXMLConstants.XPATH;
 import static de.julielab.xml.JulieXMLTools.createField;
@@ -31,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 import com.ximpleware.*;
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 import static org.assertj.core.api.Assertions.*;
 /**
@@ -150,5 +152,17 @@ public class JulieXmlToolsTest {
             values.add((String) row.get("contents"));
         }
         assertThat(values).contains("first", "second", "third");
+    }
+
+    @Test
+    public void testConstantFieldValue() {
+        List<Map<String, String>> fields = new ArrayList<>();
+        fields.add(createField(NAME, "contents", XPATH, "."));
+        fields.add(createField(NAME, "constValueField", CONSTANT_VALUE, "THIS IS A CONSTANT"));
+        Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/simple-test.xml", 1024, "/testdoc/level1/level2", fields, false);
+        while (rowIt.hasNext()) {
+            Map<String, Object> row = rowIt.next();
+            assertThat(row).hasValueSatisfying(new Condition<>(val -> val.equals("THIS IS A CONSTANT"), "Constant field value"));
+        }
     }
 }

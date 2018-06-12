@@ -299,6 +299,9 @@ public class JulieXMLTools {
                 } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.EXTRACT_FROM_FILENAME))) {
                     String[] path = identifier.split("/");
                     navigators.put(fieldName, new FileNameValueSource(path[path.length - 1], field));
+                } else if (field.get(JulieXMLConstants.CONSTANT_VALUE) != null) {
+                    String value = field.get(JulieXMLConstants.CONSTANT_VALUE);
+                    navigators.put(fieldName, new ConstantFieldValueSource(value));
                 } else {
                     LOG.warn("Field with name \"" + fieldName
                             + "\" does not define a source to get a value from (e.g. XML XPath or file name) and will not have imported any values.");
@@ -446,6 +449,9 @@ public class JulieXMLTools {
                     navigators.put(fieldName, new FileNameValueSource(path[path.length - 1], field));
                 } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.TIMESTAMP))) {
                     navigators.put(fieldName, new TimestampValueSource());
+                } else if (field.get(JulieXMLConstants.CONSTANT_VALUE) != null) {
+                    String value = field.get(JulieXMLConstants.CONSTANT_VALUE);
+                    navigators.put(fieldName, new ConstantFieldValueSource(value));
                 } else {
                     LOG.warn("Field with name \"" + fieldName
                             + "\" does not define a source to get a value from (e.g. XML XPath or file name) and will not have imported any values.");
@@ -817,8 +823,6 @@ class ConstantFieldValueSource implements FieldValueSource {
     protected ConstantFieldValueSource() {
     }
 
-    ;
-
     public ConstantFieldValueSource(String value) {
         this.value = value;
     }
@@ -873,8 +877,7 @@ class XPathNavigator extends AbstractFieldValueSource {
     private AutoPilot apXP; // AutoPilot "XPath"
     private Options options;
 
-    public XPathNavigator(VTDNav nv, AutoPilot apForEach, AutoPilot apXPath, Options options)
-            throws XPathEvalException, NavException, XPathEvalException, NavException, XPathParseException {
+    public XPathNavigator(VTDNav nv, AutoPilot apForEach, AutoPilot apXPath, Options options) {
         this.vn = nv;
         this.apFE = apForEach;
         this.apXP = apXPath;
