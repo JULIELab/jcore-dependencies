@@ -53,7 +53,7 @@ public class XmiSplitter {
     }
 
     private boolean storeAll = false;
-    private List<String> elementsToStore;
+    private List<String> annotationModulesToExtract;
     private Set<String> elementsToStoreSet;
     private boolean recursively = false;
     private boolean storeBaseDocument;
@@ -137,9 +137,9 @@ public class XmiSplitter {
     /**
      * TODO
      */
-    public XmiSplitter(List<String> elementsToStore, boolean recursively, boolean storeBaseDocument,
+    public XmiSplitter(List<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
                        String docTableName, Set<String> baseDocumentAnnotations, int attribute_size) {
-        this(elementsToStore, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+        this(annotationModulesToExtract, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
         inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
     }
 
@@ -149,20 +149,20 @@ public class XmiSplitter {
      * This if optimal if the xmi data already contains some annotations
      * together with the base document, the base document has to be stored once.
      *
-     * @param elementsToStore         A list of annotations to select and to return separately.
-     *                                These should be given as the fully qualified java names of the
-     *                                annotation types. If not, the fully qualified java name will
-     *                                be retrieved from the types namespace and used as table name.
-     * @param recursively             If set to true, annotations that are features of the selected
-     *                                annotations will also be returned.
-     * @param storeBaseDocument       If set to true, the base document will be returned as well. In
-     *                                this case the name of the document table as well as as the
-     *                                first annotation type has to be given.
-     * @param docTableName            The table to store the base document. Can be null if
-     *                                storeBaseDocument is set to false.
-     * @param baseDocumentAnnotations The names of those annotation types that should be stored together with the document.
+     * @param annotationModulesToExtract A list of annotations to select and to return separately.
+     *                                   These should be given as the fully qualified java names of the
+     *                                   annotation types. If not, the fully qualified java name will
+     *                                   be retrieved from the types namespace and used as table name.
+     * @param recursively                If set to true, annotations that are features of the selected
+     *                                   annotations will also be returned.
+     * @param storeBaseDocument          If set to true, the base document will be returned as well. In
+     *                                   this case the name of the document table as well as as the
+     *                                   first annotation type has to be given.
+     * @param docTableName               The table to store the base document. Can be null if
+     *                                   storeBaseDocument is set to false.
+     * @param baseDocumentAnnotations    The names of those annotation types that should be stored together with the document.
      */
-    public XmiSplitter(List<String> elementsToStore, boolean recursively, boolean storeBaseDocument,
+    public XmiSplitter(List<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
                        String docTableName, Set<String> baseDocumentAnnotations) {
         this.storeBaseDocument = storeBaseDocument;
         this.baseDocumentAnnotations = baseDocumentAnnotations != null ? baseDocumentAnnotations
@@ -173,19 +173,19 @@ public class XmiSplitter {
                         "If storeBaseDocument is set to true, the table name to store the base document has to be given!");
             this.docTableName = docTableName;
             this.firstAnnotationType = firstAnnotationType;
-            this.elementsToStore = new ArrayList<String>();
-            this.elementsToStore.add(docTableName);
-            for (String element : elementsToStore) {
-                this.elementsToStore.add(element);
+            this.annotationModulesToExtract = new ArrayList<String>();
+            this.annotationModulesToExtract.add(docTableName);
+            for (String element : annotationModulesToExtract) {
+                this.annotationModulesToExtract.add(element);
             }
             this.baseDocumentAnnotations.add("uima.cas.NULL");
             this.baseDocumentAnnotations.add("uima.tcas.DocumentAnnotation");
             this.baseDocumentAnnotations.add("uima.cas.Sofa");
         } else {
-            this.elementsToStore = elementsToStore;
+            this.annotationModulesToExtract = annotationModulesToExtract;
         }
         this.recursively = recursively;
-        this.elementsToStoreSet = new HashSet<>(elementsToStore);
+        this.elementsToStoreSet = new HashSet<>(annotationModulesToExtract);
         log.info(XmiSplitter.class.getName() + " initialized.");
     }
 
@@ -207,8 +207,8 @@ public class XmiSplitter {
      */
     public XmiSplitter(String tableName) {
         storeAll = true;
-        elementsToStore = new ArrayList<String>();
-        elementsToStore.add(tableName);
+        annotationModulesToExtract = new ArrayList<String>();
+        annotationModulesToExtract.add(tableName);
         log.info(XmiSplitter.class.getName() + " initialized.");
     }
 
@@ -258,8 +258,8 @@ public class XmiSplitter {
     }
 
     private void checkParameters(TypeSystem typeSystem) {
-        for (int i = 1; i < elementsToStore.size(); i++) {
-            String javaName = elementsToStore.get(i);
+        for (int i = 1; i < annotationModulesToExtract.size(); i++) {
+            String javaName = annotationModulesToExtract.get(i);
             if (typeSystem.getType(javaName) == null)
                 if (recursively)
                     throw new IllegalArgumentException("The type system does not contain the type \"" + javaName
@@ -275,7 +275,7 @@ public class XmiSplitter {
      * @param bais The current xmi data as input stream.
      */
     public int determineMaxXmiId(ByteArrayInputStream bais) {
-        // String tableName = elementsToStore.get(0);
+        // String tableName = annotationModulesToExtract.get(0);
         byte[] ba = getByteArray(bais);
         ByteArrayInputStream currentBais = new ByteArrayInputStream(ba);
 
@@ -309,15 +309,15 @@ public class XmiSplitter {
         writers = new LinkedHashMap<String, Map.Entry<XMLEventWriter, ByteArrayOutputStream>>();
         xmiStartTag = null;
 
+        if (storeBaseDocument)
+            docMode = true;
+        othersCounter = -1;
         Multimap<String, String> xmiIdsToRetrieve = HashMultimap.create();
         LinkedHashMap<String, StorageElement> elementsToWrite = new LinkedHashMap<>();
         HashMap<String, String> idMap = new HashMap<>();
         Map<String, String> specialXmiIds = new HashMap<>();
         Set<XMLEvent> specialElements = new HashSet<>();
 
-        if (storeBaseDocument)
-            docMode = true;
-        othersCounter = -1;
         processAndParse(bais, xmiIdsToRetrieve, elementsToWrite, idMap, specialXmiIds, specialElements);
     }
 
@@ -328,7 +328,7 @@ public class XmiSplitter {
      * stored, if the recursive parameter is set to true.
      *
      * @param bais             The current xmi data as input stream.
-     * @param xmiIdsToRetrieve The global variable {@link #elementsToStore} contains all annotation names the should be extracted
+     * @param xmiIdsToRetrieve The global variable {@link #annotationModulesToExtract} contains all annotation names the should be extracted
      *                         from any given XMI document for storage. However, the respective XMI annotation elements may refer
      *                         to complex features like arrays and lists. To also store these feature structures together with
      *                         the original annotation, {@code xmiIdsToRetrieve} maps their XMI IDs to the storage keys associated
@@ -351,9 +351,7 @@ public class XmiSplitter {
      * @param specialElements  The XML elements belonging to Sofa or cas:NULL elements.
      */
     @SuppressWarnings("rawtypes")
-    private void processAndParse(ByteArrayInputStream bais, Multimap<String, String> xmiIdsToRetrieve,
-                                 LinkedHashMap<String, StorageElement> elementsToWrite, HashMap<String, String> idMap,
-                                 Map<String, String> specialXmiIds, Set<XMLEvent> specialElements) throws XMISplitterException {
+    private void processAndParse(ByteArrayInputStream bais, Multimap<String, String> xmiIdsToRetrieve, LinkedHashMap<String, StorageElement> elementsToWrite, HashMap<String, String> idMap, Map<String, String> specialXmiIds, Set<XMLEvent> specialElements) throws XMISplitterException {
 
         byte[] ba = getByteArray(bais);
         ByteArrayInputStream currentBais = new ByteArrayInputStream(ba);
@@ -372,9 +370,6 @@ public class XmiSplitter {
 
             while (reader.hasNext()) {
                 XMLEvent event = reader.nextEvent();
-                boolean isDocElement = false;
-                boolean isAnnotation = false;
-                boolean isFeature = false;
                 // Groups annotation elements and associated feature structures and text data that should be stored
                 // together. When recursively storing annotations or when different annotations reference the
                 // very same feature structure (e.g. an FSArray) is may actually happen that a single feature structure
@@ -401,13 +396,15 @@ public class XmiSplitter {
                 }
 
                 if (event.isStartElement()) {
-                    StartElementHandler startElementHandler = new StartElementHandler(event, xmiIdsToRetrieve, elementsToWrite, idMap, specialXmiIds, specialElements, enclosingElementName, isFeature, isAnnotation, isDocElement, withinElement, enclosingStorageKey, storageKey).invoke();
+                    StartElementHandler startElementHandler = new StartElementHandler(event, xmiIdsToRetrieve, elementsToWrite, idMap, specialXmiIds, specialElements, enclosingElementName, withinElement, enclosingStorageKey, storageKey).invoke();
                     enclosingElementName = startElementHandler.getEnclosingElementName();
                     enclosingStorageKey = startElementHandler.getEnclosingStorageKey();
                     withinElement = startElementHandler.isWithinElement();
                 }
-            } // end: reader.hasNext()
+            }
             reader.close();
+
+
             // Now give an element, that perhaps got the Sofa XMI ID as new ID
             // another XMI ID to avoid collisions (because the Sofa keeps it ID
             // since it may be referenced by elements stored somewhere outside
@@ -445,6 +442,8 @@ public class XmiSplitter {
                         oldXmiId, nextId);
                 nextId++;
             }
+
+
             if (!xmiIdsToRetrieve.isEmpty()) {
                 docMode = false;
                 currentBais = new ByteArrayInputStream(ba);
@@ -810,17 +809,17 @@ public class XmiSplitter {
         if (!(typesNSUri == null)) {
             String typesJavaName = convertNSUri(typesNSUri);
             if (!storeBaseDocument) {
-                for (int i = 0; i < elementsToStore.size(); i++) {
-                    if (!elementsToStore.get(i).contains(".")) {
-                        String javaName = typesJavaName + elementsToStore.get(i);
-                        elementsToStore.set(i, javaName);
+                for (int i = 0; i < annotationModulesToExtract.size(); i++) {
+                    if (!annotationModulesToExtract.get(i).contains(".")) {
+                        String javaName = typesJavaName + annotationModulesToExtract.get(i);
+                        annotationModulesToExtract.set(i, javaName);
                     }
                 }
             } else {
-                for (int i = 1; i < elementsToStore.size(); i++) {
-                    if (!elementsToStore.get(i).contains(".")) {
-                        String javaName = typesJavaName + elementsToStore.get(i);
-                        elementsToStore.set(i, javaName);
+                for (int i = 1; i < annotationModulesToExtract.size(); i++) {
+                    if (!annotationModulesToExtract.get(i).contains(".")) {
+                        String javaName = typesJavaName + annotationModulesToExtract.get(i);
+                        annotationModulesToExtract.set(i, javaName);
                     }
                 }
                 if (!firstAnnotationType.contains("."))
@@ -867,11 +866,11 @@ public class XmiSplitter {
      */
     public List<String> getAnnotationsToStore() {
         if (!storeBaseDocument) {
-            return elementsToStore;
+            return annotationModulesToExtract;
         } else {
             ArrayList<String> annosWithoutBaseDocument = new ArrayList<String>();
-            for (int i = 1; i < elementsToStore.size(); i++) {
-                annosWithoutBaseDocument.add(elementsToStore.get(i));
+            for (int i = 1; i < annotationModulesToExtract.size(); i++) {
+                annosWithoutBaseDocument.add(annotationModulesToExtract.get(i));
             }
             return annosWithoutBaseDocument;
         }
@@ -963,14 +962,11 @@ public class XmiSplitter {
         private Map<String, String> specialXmiIds;
         private Set<XMLEvent> specialElements;
         private String enclosingElementName;
-        private boolean isFeature;
-        private boolean isAnnotation;
-        private boolean isDocElement;
         private boolean withinElement;
         private Collection<String> enclosingStorageKey;
         private Collection<String> storageKey;
 
-        public StartElementHandler(XMLEvent event, Multimap<String, String> xmiIdsToRetrieve, LinkedHashMap<String, StorageElement> elementsToWrite, HashMap<String, String> idMap, Map<String, String> specialXmiIds, Set<XMLEvent> specialElements, String enclosingElementName, boolean isFeature, boolean isAnnotation, boolean isDocElement, boolean withinElement, Collection<String> enclosingStorageKey, Collection<String> storageKey) {
+        public StartElementHandler(XMLEvent event, Multimap<String, String> xmiIdsToRetrieve, LinkedHashMap<String, StorageElement> elementsToWrite, HashMap<String, String> idMap, Map<String, String> specialXmiIds, Set<XMLEvent> specialElements, String enclosingElementName, boolean withinElement, Collection<String> enclosingStorageKey, Collection<String> storageKey) {
             this.event = event;
             this.xmiIdsToRetrieve = xmiIdsToRetrieve;
             this.elementsToWrite = elementsToWrite;
@@ -978,9 +974,6 @@ public class XmiSplitter {
             this.specialXmiIds = specialXmiIds;
             this.specialElements = specialElements;
             this.enclosingElementName = enclosingElementName;
-            this.isFeature = isFeature;
-            this.isAnnotation = isAnnotation;
-            this.isDocElement = isDocElement;
             this.withinElement = withinElement;
             this.enclosingStorageKey = enclosingStorageKey;
             this.storageKey = storageKey;
@@ -1066,12 +1059,13 @@ public class XmiSplitter {
                 // they might be referenced by previously encountered
                 // elements (e.g. the AbstractText might refer to
                 // AbstractSections).
+                boolean toBeWritten = false;
                 if (storeBaseDocument && (baseDocumentAnnotations.contains(javaName) || baseDocumentAnnotations.contains("all"))
                         && !elementsToWrite.containsKey(xmiId)) {
-                    isDocElement = true;
+                    toBeWritten = true;
                     storageKey = new ArrayList<>(Collections.singleton(docTableName));
-                } else if (elementsToStore.contains(javaName) && !elementsToWrite.containsKey(xmiId)) {
-                    isAnnotation = true;
+                } else if (annotationModulesToExtract.contains(javaName) && !elementsToWrite.containsKey(xmiId)) {
+                    toBeWritten = true;
                     storageKey = new ArrayList<>(Collections.singleton(javaName));
                     // it is possible that the annotation is also a feature that is already sought
                     if (xmiIdsToRetrieve.containsKey(xmiId)) {
@@ -1082,30 +1076,27 @@ public class XmiSplitter {
                     }
                 } else if (xmiIdsToRetrieve.containsKey(xmiId) && !elementsToWrite.containsKey(xmiId)) {
                     if (isFSArray(cas.getTypeSystem().getType(javaName)) || recursively) {
-                        isFeature = true;
+                        toBeWritten = true;
                         storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
                     } else {
                         xmiIdsToRetrieve.removeAll(xmiId);
                     }
                 }
 
-                if (isDocElement || isAnnotation || isFeature) {
+                if (toBeWritten) {
                     withinElement = true;
                     enclosingElementName = elementName;
                     enclosingStorageKey = storageKey;
-                    if (isDocElement || isAnnotation || isFeature) {
-                        Type annotationType = cas.getTypeSystem().getType(javaName);
-                        if (annotationType != null) {
-                            recordXmiReferences(element, annotationType, xmiIdsToRetrieve, elementsToWrite, storageKey);
-
-                        } else {
-                            // this element is the unique <cas:NULL
-                            // xmi:id="..."> element
-                            // retain its xmi:id
-                            casNULLId = Integer.parseInt(xmiId);
-                            specialXmiIds.put(xmiId, xmiId);
-                            specialElements.add(element);
-                        }
+                    Type annotationType = cas.getTypeSystem().getType(javaName);
+                    if (annotationType != null) {
+                        recordXmiReferences(element, annotationType, xmiIdsToRetrieve, elementsToWrite, storageKey);
+                    } else {
+                        // this element is the unique <cas:NULL
+                        // xmi:id="..."> element
+                        // retain its xmi:id
+                        casNULLId = Integer.parseInt(xmiId);
+                        specialXmiIds.put(xmiId, xmiId);
+                        specialElements.add(element);
                     }
                     StorageElement storageElement = new StorageElement(element, elementPrefix, elementNSUri, elementName, javaName, storageKey);
                     elementsToWrite.put(xmiId, storageElement);
@@ -1133,7 +1124,7 @@ public class XmiSplitter {
          * name and adds the xmi start tag to each writer.
          */
         private void initializeWriters() {
-            for (String tableName : elementsToStore) {
+            for (String tableName : annotationModulesToExtract) {
                 Map.Entry<XMLEventWriter, ByteArrayOutputStream> entry = getWriterEntry();
                 if (!(xmiStartTag == null)) {
                     writers.put(tableName, entry);

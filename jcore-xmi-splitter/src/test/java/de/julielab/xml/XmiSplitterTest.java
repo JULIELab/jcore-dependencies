@@ -540,7 +540,6 @@ public class XmiSplitterTest {
         t1.addToIndexes();
         t2.addToIndexes();
 
-
         XmiSplitter xmiSplitter = new XmiSplitter(
                 Arrays.asList(Token.class.getCanonicalName(), OtherToken.class.getCanonicalName()),
                 true,
