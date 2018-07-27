@@ -27,7 +27,6 @@ import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.CasCreationUtils;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,7 +35,6 @@ import com.google.common.collect.Lists;
 
 import de.julielab.jcore.types.Lemma;
 import de.julielab.jcore.types.Token;
-import de.julielab.xml.XmiSplitter.XmiSplitterResult;
 
 /**
  * This test requires a new source XMI file because the given one uses a deprecated type system
@@ -132,14 +130,14 @@ public class EncodingTest {
 		lemma.setValue("𝒟 4");
 		token.setLemma(lemma);
 	
-		XmiSplitter xmiSplitter = new XmiSplitter(elementsToStore, true, true, DOC, XmiSplitterTest.BASE_DOCUMENT_ANNOTATIONS);
+		StaxXmiSplitter xmiSplitter = new StaxXmiSplitter(elementsToStore, true, true, DOC, StaxXmiSplitterTest.BASE_DOCUMENT_ANNOTATIONS);
 		// When storing the base document, begin with 0.
 		int nextPossibleId = 0;
 //		byte[] b = FileUtils.readFileToByteArray(new File(TEST_XMI));
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		XmiCasSerializer.serialize(cas,baos);
 
-		XmiSplitterResult result = xmiSplitter.process(new ByteArrayInputStream(baos.toByteArray()), cas.getJCas(), nextPossibleId, defaultSofaIdMap);
+		XmiSplitterResult result = xmiSplitter.process(baos.toByteArray(), cas.getJCas(), nextPossibleId, defaultSofaIdMap);
 		Map<String, ByteArrayOutputStream> xmiData = (Map<String, ByteArrayOutputStream>) result.xmiData;
 		HashMap<String, String> namespaceMap = (HashMap<String, String>) result.namespaces;
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NAMESPACEMAP_BIN))) {
