@@ -28,6 +28,7 @@ public class JeDISVTDGraphNode {
 
     public JeDISVTDGraphNode() {
         annotationModuleLabels = Collections.emptySet();
+        predecessors = Collections.emptyList();
     }
 
     public long getElementFragment() {
@@ -103,7 +104,7 @@ public class JeDISVTDGraphNode {
     }
 
     public void addPredecessor(JeDISVTDGraphNode referencingNode) {
-        if (predecessors == null)
+        if (predecessors.isEmpty())
             predecessors = new ArrayList<>();
         predecessors.add(referencingNode);
     }

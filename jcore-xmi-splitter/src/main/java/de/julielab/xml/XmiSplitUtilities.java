@@ -10,6 +10,10 @@ import org.apache.uima.cas.Type;
 
 public class XmiSplitUtilities {
 
+    public static final String CAS_NULL = "uima.cas.NULL";
+    public static final String CAS_VIEW = "uima.cas.View";
+    public static final String CAS_SOFA = "uima.cas.Sofa";
+
     /**
      * The default types namespace that is assumed if not the fully qualified
      * java name is given for an annotation.
@@ -108,6 +112,12 @@ public class XmiSplitUtilities {
 
     public static boolean isReferenceFeature(Type type, String featureName) {
         return isFSArray(type) || !type.getFeatureByBaseName(featureName).getRange().isPrimitive();
+    }
+
+    public static boolean isAnnotationType(String qualifiedTypename) {
+        // The uima.cas prefix is given to all types in package org.apache.uima.jcas.cas which includes all
+        // the technical array types and the TOP type. That should qualify as the "non-annotation" types.
+        return !qualifiedTypename.startsWith("uima.cas");
     }
 
 }

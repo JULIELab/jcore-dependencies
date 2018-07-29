@@ -12,18 +12,13 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
-import java.util.stream.Collectors;
+import java.util.function.Function;
 import java.util.stream.Stream;
 
-import static de.julielab.xml.XmiSplitUtilities.isFSArray;
-import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
+import static de.julielab.xml.XmiSplitUtilities.*;
 import static java.util.stream.Collectors.toSet;
 
 public class VtdXmlXmiSplitter extends XmiSplitter {
-
-    private static final String CAS_NULL = "uima.cas.NULL";
-    private static final String CAS_VIEW = "uima.cas.View";
-    private static final String CAS_SOFA = "uima.cas.Sofa";
 
     private static final int SECOND_SOFA_MAP_KEY = -2;
 
@@ -91,20 +86,21 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         if (null == moduleAnnotationNames)
             return;
         for (JeDISVTDGraphNode node : nodesByXmiId.values()) {
-            Stream<String> allLabels = determineLabelsForNode(node, moduleAnnotationNames);
+            Stream<String> allLabels = determineLabelsForNode(node, moduleAnnotationNames, recursively);
             node.setAnnotationModuleLabels(allLabels.collect(toSet()));
         }
     }
 
-    private Stream<String> determineLabelsForNode(JeDISVTDGraphNode node, Set<String> moduleAnnotationNames) {
-        if (moduleAnnotationNames.contains(node.getTypeName())) {
-            return Stream.of(node.getTypeName());
-        } else {
-            if (node.getPredecessors() != null) {
-                return node.getPredecessors().stream().flatMap(p -> determineLabelsForNode(p, moduleAnnotationNames));
-            }
+    private Stream<String> determineLabelsForNode(JeDISVTDGraphNode node, Set<String> moduleAnnotationNames, boolean recursively) {
+        Function<JeDISVTDGraphNode, Stream<String>> fetchLabelsRecursively = n -> n.getPredecessors().stream().flatMap(p -> determineLabelsForNode(p, moduleAnnotationNames, recursively));
+        if (XmiSplitUtilities.isAnnotationType(node.getTypeName())) {
+            if (moduleAnnotationNames.contains(node.getTypeName()))
+                return recursively ? Stream.concat(fetchLabelsRecursively.apply(node), Stream.of(node.getTypeName())) : Stream.of(node.getTypeName());
+            else if (recursively)
+                return fetchLabelsRecursively.apply(node);
+            return Stream.empty();
         }
-        return Stream.empty();
+        return fetchLabelsRecursively.apply(node);
     }
 
     private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, JCas aCas) throws VTDException {
