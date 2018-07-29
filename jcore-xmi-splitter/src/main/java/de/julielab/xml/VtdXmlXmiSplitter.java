@@ -11,21 +11,38 @@ import org.apache.uima.jcas.JCas;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.xml.XmiSplitUtilities.isFSArray;
 import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
+import static java.util.stream.Collectors.toSet;
 
 public class VtdXmlXmiSplitter extends XmiSplitter {
 
     private static final String CAS_NULL = "uima.cas.NULL";
     private static final String CAS_VIEW = "uima.cas.View";
+    private static final String CAS_SOFA = "uima.cas.Sofa";
+
+    private static final int SECOND_SOFA_MAP_KEY = -2;
+
+    private final Set<String> moduleAnnotationNames;
+    private final boolean recursively;
+    private final boolean storeBaseDocument;
+    private final String docTableName;
+    private final Set<String> baseDocumentAnnotations;
     private Map<Integer, JeDISVTDGraphNode> nodesByXmiId;
     private VTDNav vn;
+
+    public VtdXmlXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
+                             String docTableName, Set<String> baseDocumentAnnotations) {
+        this.moduleAnnotationNames = moduleAnnotationNames;
+        this.recursively = recursively;
+        this.storeBaseDocument = storeBaseDocument;
+        this.docTableName = docTableName;
+        this.baseDocumentAnnotations = baseDocumentAnnotations;
+    }
 
     public VTDNav getVTDNav() {
         return vn;
@@ -37,14 +54,15 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
 
     @Override
     public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
-        nodesByXmiId = new HashMap<>();
+
 
         VTDGen vg = new VTDGen();
         vg.setDoc(xmiData);
         try {
             vg.parse(true);
             vn = vg.getNav();
-            createJedisNodes(aCas, vn);
+            nodesByXmiId = createJedisNodes(vn, aCas);
+            labelNodes(nodesByXmiId, moduleAnnotationNames, recursively);
 
 
             VTDGen annoModule = new VTDGen();
@@ -69,7 +87,28 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         return null;
     }
 
-    private void createJedisNodes(JCas aCas, VTDNav vn) throws VTDException {
+    private void labelNodes(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Set<String> moduleAnnotationNames, boolean recursively) {
+        if (null == moduleAnnotationNames)
+            return;
+        for (JeDISVTDGraphNode node : nodesByXmiId.values()) {
+            Stream<String> allLabels = determineLabelsForNode(node, moduleAnnotationNames);
+            node.setAnnotationModuleLabels(allLabels.collect(toSet()));
+        }
+    }
+
+    private Stream<String> determineLabelsForNode(JeDISVTDGraphNode node, Set<String> moduleAnnotationNames) {
+        if (moduleAnnotationNames.contains(node.getTypeName())) {
+            return Stream.of(node.getTypeName());
+        } else {
+            if (node.getPredecessors() != null) {
+                return node.getPredecessors().stream().flatMap(p -> determineLabelsForNode(p, moduleAnnotationNames));
+            }
+        }
+        return Stream.empty();
+    }
+
+    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, JCas aCas) throws VTDException {
+        Map<Integer, JeDISVTDGraphNode> nodesByXmiId = new HashMap<>();
         Map<String, String> namespaceMap = JulieXMLTools.buildNamespaceMap(vn);
         vn.toElement(VTDNav.FIRST_CHILD);
         vn.toElement(VTDNav.FIRST_CHILD);
@@ -87,8 +126,12 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
                     n.setSofaXmiId(Integer.parseInt(vn.toString(sofaAttrIndex)));
                 Stream<Integer> referencedXmiIds = getReferencedXmiIds(vn, n.getTypeName(), aCas.getTypeSystem());
                 referencedXmiIds.map(refId -> nodesByXmiId.computeIfAbsent(refId, JeDISVTDGraphNode::new)).forEach(referenced -> referenced.addPredecessor(n));
+
+                if (n.getTypeName().equals(CAS_SOFA))
+                    nodesByXmiId.put(SECOND_SOFA_MAP_KEY, n);
             }
         } while (vn.toElement(VTDNav.NEXT_SIBLING));
+        return nodesByXmiId;
     }
 
     private Stream<Integer> getReferencedXmiIds(VTDNav vn, String typeName, TypeSystem ts) throws NavException {

@@ -1,8 +1,6 @@
 package de.julielab.xml;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class JeDISVTDGraphNode {
     private int vtdIndex;
@@ -16,11 +14,20 @@ public class JeDISVTDGraphNode {
 
 
     public JeDISVTDGraphNode(Integer oldXmiId) {
-        this.oldXmiId = oldXmiId;
+        this(); this.oldXmiId = oldXmiId;
+    }
+
+    @Override
+    public String toString() {
+        return "JeDISVTDGraphNode{" +
+                "oldXmiId=" + oldXmiId +
+                ", annotationModuleLabels=" + annotationModuleLabels +
+                ", typeName='" + typeName + '\'' +
+                '}';
     }
 
     public JeDISVTDGraphNode() {
-
+        annotationModuleLabels = Collections.emptySet();
     }
 
     public long getElementFragment() {
@@ -99,5 +106,15 @@ public class JeDISVTDGraphNode {
         if (predecessors == null)
             predecessors = new ArrayList<>();
         predecessors.add(referencingNode);
+    }
+
+    public void addAnnotationModuleLabel(String typeName) {
+        if (annotationModuleLabels.isEmpty())
+            annotationModuleLabels = new HashSet<>();
+        annotationModuleLabels.add(typeName);
+    }
+
+    public void addAnnotationModuleLabels(Set<String> labels) {
+        labels.forEach(this::addAnnotationModuleLabel);
     }
 }
