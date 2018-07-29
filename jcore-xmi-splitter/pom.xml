@@ -63,7 +63,11 @@
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 		</dependency>
-	</dependencies>
+        <dependency>
+            <groupId>de.julielab</groupId>
+            <artifactId>julie-xml-tools</artifactId>
+            <version>0.4.0</version>
+        </dependency></dependencies>
 	<description>Parses CAS data in XMI format in order to select specified annotations (XmiSplitter) or or builds a single XMI representation out of the base document and the selected annotations (XmiBuilder).
 These tools are used by the JCoRe CAS to/from DB Reader/Consumer to store or read portions of XMI files from a PostgrSQL database.</description>
 	<organization>
