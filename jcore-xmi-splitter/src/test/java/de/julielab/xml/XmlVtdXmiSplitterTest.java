@@ -102,10 +102,11 @@ public class XmlVtdXmiSplitterTest {
         // Recursively here does mean that annotation modules contain annotations of their original type as well as
         // annotations referenced directly or indirectly from this type. For example, the token module would
         // also include POSTags and dependency relations.
+        // Here, we will define to create Token and PennBioIEPOSTag labels. The token references dependency relations
+        // as well as POSTags. Since the DependencyRelation type is not in the list, it should be included with the
+        // tokens. The PosTags should not.
         Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
-                DependencyRelation.class.getCanonicalName(),
-                Sentence.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
         VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, false, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
@@ -115,7 +116,10 @@ public class XmlVtdXmiSplitterTest {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         // The dependency relation should be included with the token annotation module
         JeDISVTDGraphNode depRel = nodesByXmiId.get(6852);
-        System.out.println(depRel);
-        assertThat(depRel.getAnnotationModuleLabels()).containsExactlyInAnyOrder(Token.class.getCanonicalName(), DependencyRelation.class.getCanonicalName());
+        assertThat(depRel.getAnnotationModuleLabels()).containsExactlyInAnyOrder(Token.class.getCanonicalName());
+
+        JeDISVTDGraphNode posTag = nodesByXmiId.get(3610);
+        // The POSTag should be stored on its own
+        assertThat(posTag.getAnnotationModuleLabels()).containsExactlyInAnyOrder(PennBioIEPOSTag.class.getCanonicalName());
     }
 }

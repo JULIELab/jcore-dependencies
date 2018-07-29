@@ -1,5 +1,6 @@
 package de.julielab.xml;
 
+import com.google.common.collect.Sets;
 import com.ximpleware.*;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.StringUtils;
@@ -22,6 +23,8 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
 
     private static final int SECOND_SOFA_MAP_KEY = -2;
 
+    private static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
+
     private final Set<String> moduleAnnotationNames;
     private final boolean recursively;
     private final boolean storeBaseDocument;
@@ -36,7 +39,10 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         this.recursively = recursively;
         this.storeBaseDocument = storeBaseDocument;
         this.docTableName = docTableName;
-        this.baseDocumentAnnotations = baseDocumentAnnotations;
+        this.baseDocumentAnnotations = baseDocumentAnnotations == null ? Collections.emptySet() : baseDocumentAnnotations;
+
+        if (moduleAnnotationNames != null && baseDocumentAnnotations != null && !Sets.intersection(moduleAnnotationNames, baseDocumentAnnotations).isEmpty())
+            throw new IllegalArgumentException("The annotation types to build modules from and the annotation types to added to the base document overlap in: " + Sets.intersection(moduleAnnotationNames, baseDocumentAnnotations));
     }
 
     public VTDNav getVTDNav() {
@@ -92,13 +98,20 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
     }
 
     private Stream<String> determineLabelsForNode(JeDISVTDGraphNode node, Set<String> moduleAnnotationNames, boolean recursively) {
+        if (!node.getAnnotationModuleLabels().isEmpty())
+            return node.getAnnotationModuleLabels().stream();
         Function<JeDISVTDGraphNode, Stream<String>> fetchLabelsRecursively = n -> n.getPredecessors().stream().flatMap(p -> determineLabelsForNode(p, moduleAnnotationNames, recursively));
+        // All labels are "emitted" from annotations on the "to create a module for" list.
         if (XmiSplitUtilities.isAnnotationType(node.getTypeName())) {
             if (moduleAnnotationNames.contains(node.getTypeName()))
-                return recursively ? Stream.concat(fetchLabelsRecursively.apply(node), Stream.of(node.getTypeName())) : Stream.of(node.getTypeName());
+                return Stream.of(node.getTypeName());
+            else if (storeBaseDocument && baseDocumentAnnotations.contains(node.getTypeName()))
+                return Stream.of(DOCUMENT_MODULE_LABEL);
             else if (recursively)
                 return fetchLabelsRecursively.apply(node);
             return Stream.empty();
+        } else if (storeBaseDocument && node.getTypeName().equals(CAS_SOFA)) {
+            return Stream.of(DOCUMENT_MODULE_LABEL);
         }
         return fetchLabelsRecursively.apply(node);
     }

@@ -6,6 +6,11 @@ import java.util.Map;
 
 public class XmiSplitterResult {
 
+    /**
+     * Keys: Fully qualified Java-style type names. For the base document data, the document table name (given as a
+     * parameter to the splitter).
+     * Values: XML data of the respective annotation (and document data) modules
+     */
     public LinkedHashMap<String, ByteArrayOutputStream> xmiData;
     public int maxXmiId;
     public Map<String, String> namespaces;
