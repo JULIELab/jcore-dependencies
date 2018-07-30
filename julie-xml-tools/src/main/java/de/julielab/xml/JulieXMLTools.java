@@ -505,12 +505,27 @@ public class JulieXMLTools {
         return null;
     }
 
-    private static void declareNamespaces(AutoPilot ap, Map<String, String> namespaceMap) {
+    /**
+     * Declares the given namespaces to the passed auto pilot. The <tt>namespaceMap</tt>
+     * can automatically be derived from an XML document by calling {@link #buildNamespaceMap(VTDNav)}.
+     * @param ap
+     * @param namespaceMap
+     */
+    public static void declareNamespaces(AutoPilot ap, Map<String, String> namespaceMap) {
         for (Map.Entry<String, String> entry : namespaceMap.entrySet())
             ap.declareXPathNameSpace(entry.getKey(), entry.getValue());
     }
 
-    private static Map<String, String> buildNamespaceMap(VTDNav vn) throws VTDException {
+    /**
+     * Reads the namespace axis of the XML document associated with <tt>vn</tt> and returns
+     * a map connecting the namespace prefixes with their URI. This map can be passed to
+     * {@link #declareNamespaces(AutoPilot, Map)} to declare all the namespaces of the document
+     * to an {@link AutoPilot}.
+     * @param vn
+     * @return
+     * @throws VTDException
+     */
+    public static Map<String, String> buildNamespaceMap(VTDNav vn) throws VTDException {
         Map<String, String> namespaceMap = new HashMap<>();
 
         AutoPilot ap = new AutoPilot(vn);
@@ -519,7 +534,7 @@ public class JulieXMLTools {
         String nsDeclaration = null;
         try {
 
-            int i = -1;
+            int i;
             while ((i = ap.evalXPath()) != -1) {
                 nsDeclaration = vn.toString(i);
                 if (nsDeclaration.contains(":")) {
