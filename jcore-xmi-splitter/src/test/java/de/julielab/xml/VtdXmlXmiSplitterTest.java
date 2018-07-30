@@ -20,7 +20,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
-public class XmlVtdXmiSplitterTest {
+public class VtdXmlXmiSplitterTest {
     @Test
     public void testEmbeddedFeatures() throws IOException, XMISplitterException, UIMAException, NavException {
         // These embedded features are, for example, StringArrays that can not be references by other annotations
@@ -121,5 +121,29 @@ public class XmlVtdXmiSplitterTest {
         JeDISVTDGraphNode posTag = nodesByXmiId.get(3610);
         // The POSTag should be stored on its own
         assertThat(posTag.getAnnotationModuleLabels()).containsExactlyInAnyOrder(PennBioIEPOSTag.class.getCanonicalName());
+    }
+
+    @Test
+    public void testAnnotationModules() throws IOException, XMISplitterException, UIMAException, NavException {
+        Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
+                Token.class.getCanonicalName(),
+                PennBioIEPOSTag.class.getCanonicalName()));
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, null, null);
+        byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        splitter.process(xmiData, jCas, 0, null);
+
+        Map<String, Set<JeDISVTDGraphNode>> annotationModules = splitter.getAnnotationModules();
+        assertThat(annotationModules.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(), PennBioIEPOSTag.class.getCanonicalName(), VtdXmlXmiSplitter.DOCUMENT_MODULE_LABEL);
+
+        // Check that all nodes ended up in the correct module. That means they should have the label of
+        // their module.
+        for (Map.Entry<String, Set<JeDISVTDGraphNode>> e : annotationModules.entrySet()) {
+            String typeName = e.getKey();
+            Set<JeDISVTDGraphNode> nodes = e.getValue();
+            for (JeDISVTDGraphNode node : nodes) {
+                assertThat(node.getAnnotationModuleLabels()).containsExactly(typeName);
+            }
+        }
     }
 }

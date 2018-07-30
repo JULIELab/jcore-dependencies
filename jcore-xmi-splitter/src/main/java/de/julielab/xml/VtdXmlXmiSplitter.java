@@ -10,8 +10,6 @@ import org.apache.uima.cas.TypeSystem;
 import org.apache.uima.jcas.JCas;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -21,16 +19,16 @@ import static java.util.stream.Collectors.toSet;
 
 public class VtdXmlXmiSplitter extends XmiSplitter {
 
-    private static final int SECOND_SOFA_MAP_KEY = -2;
-
-    private static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
-
+    public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
+    private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private final Set<String> moduleAnnotationNames;
     private final boolean recursively;
     private final boolean storeBaseDocument;
     private final String docTableName;
     private final Set<String> baseDocumentAnnotations;
+    private int currentSecondSofaMapKey;
     private Map<Integer, JeDISVTDGraphNode> nodesByXmiId;
+    private Map<String, Set<JeDISVTDGraphNode>> annotationModules;
     private VTDNav vn;
 
     public VtdXmlXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
@@ -49,7 +47,11 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         return vn;
     }
 
-    public Map<Integer, JeDISVTDGraphNode> getNodesByXmiId() {
+    Map<String, Set<JeDISVTDGraphNode>> getAnnotationModules() {
+        return annotationModules;
+    }
+
+    Map<Integer, JeDISVTDGraphNode> getNodesByXmiId() {
         return nodesByXmiId;
     }
 
@@ -62,30 +64,101 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         try {
             vg.parse(true);
             vn = vg.getNav();
-            nodesByXmiId = createJedisNodes(vn, aCas);
+            Map<String, String> namespaceMap = JulieXMLTools.buildNamespaceMap(vn);
+            nodesByXmiId = createJedisNodes(vn, namespaceMap, aCas);
             labelNodes(nodesByXmiId, moduleAnnotationNames, recursively);
+            annotationModules = createAnnotationModules(nodesByXmiId);
+            XmiSplitterResult xmiSplitterResult = createXmiSplitterResult(nodesByXmiId, annotationModules, existingSofaIdMap, nextPossibleId, vn);
+            xmiSplitterResult.namespaces = namespaceMap;
+            return xmiSplitterResult;
 
 
-            VTDGen annoModule = new VTDGen();
-            annoModule.setDoc("<jedisAnnotationModule></jedisAnnotationModule>".getBytes());
-            annoModule.parse(true);
-            VTDNav annoModNav = annoModule.getNav();
-            XMLModifier annoModMod = new XMLModifier(annoModNav);
-            annoModMod.insertAfterHead("hallo");
-            annoModMod.outputAndReparse();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-            annoModMod.output(baos);
+//            VTDGen annoModule = new VTDGen();
+//            annoModule.setDoc("<jedisAnnotationModule></jedisAnnotationModule>".getBytes());
+//            annoModule.parse(true);
+//            VTDNav annoModNav = annoModule.getNav();
+//            XMLModifier annoModMod = new XMLModifier(annoModNav);
+//            annoModMod.insertAfterHead("hallo");
+//            annoModMod.outputAndReparse();
+//            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+//            annoModMod.output(baos);
 
-        } catch (ParseException e) {
-            throw new XMISplitterException(e);
         } catch (VTDException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+            throw new XMISplitterException(e);
         }
-        return null;
+    }
+
+    private XmiSplitterResult createXmiSplitterResult(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Set<JeDISVTDGraphNode>> annotationModules, Map<String, Integer> existingSofaIdMap, int nextPossibleId, VTDNav vn) throws NavException {
+        Map<String, Integer> updatedSofaIdMap = null != existingSofaIdMap ? new HashMap<>(existingSofaIdMap) : new HashMap<>();
+        int currentXmiId = nextPossibleId;
+        LinkedHashMap<String, ByteArrayOutputStream> annotationModuleData = new LinkedHashMap<>();
+        adaptSofaIdMap(nodesByXmiId, updatedSofaIdMap);
+        for (String moduleName : annotationModules.keySet()) {
+            Set<JeDISVTDGraphNode> moduleNodes = annotationModules.get(moduleName);
+            for (JeDISVTDGraphNode node : moduleNodes) {
+
+
+                String xmlElement = vn.toString(node.getByteOffset(), node.getByteLength());
+            }
+        }
+        return new XmiSplitterResult(null, 0, null, null);
+    }
+
+    /**
+     * Sets the correct XMI:ID values to the Sofa nodes. The values are either derived from <tt>updatedSofaIdMap</tt>,
+     * if the sofaID value of the respective sofa is already contained there, or writes its own ID.
+     * For Sofas that are not known in the <tt>updatedSofaIdMap</tt>, their original XMI:ID value will be recorded,
+     * if the base document data is to be stored. Otherwise, these Sofa nodes will receive a new XMI:ID value equal
+     * to <code>Integer.MIN_VALUE</code> to indicate that no annotations referencing this sofa can be stored.
+     *
+     * @param nodesByXmiId
+     * @param updatedSofaIdMap
+     */
+    private void adaptSofaIdMap(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Integer> updatedSofaIdMap) {
+        // Adapt and / or get the XMI IDs of the sofa elements that are valid in the document annotation module.
+        // We need to keep the Sofa XMI ID constant across all modules. Otherwise, some annotations will
+        // reference a wrong element since the Sofa XMI:ID can change across serializations.
+        int sofaKey = SECOND_SOFA_MAP_KEY_START;
+        while (nodesByXmiId.containsKey(sofaKey)) {
+            SofaVTDGraphNode sofaNode = (SofaVTDGraphNode) nodesByXmiId.get(sofaKey);
+            Integer sofaXmiId = sofaNode.getOldXmiId();
+            String sofaID = sofaNode.getSofaID();
+            int newSofaXmiId;
+            if (!updatedSofaIdMap.containsKey(sofaID)) {
+                if (storeBaseDocument) {
+                    updatedSofaIdMap.put(sofaID, sofaXmiId);
+                    newSofaXmiId = sofaXmiId;
+                } else {
+                    // This is the signal for "Annotations of this sofa cannot be stored because the Sofa
+                    // Itself is not in the potentially existing document data and will also not be stored,
+                    // so no annotations referencing it can be stored
+                    newSofaXmiId = Integer.MIN_VALUE;
+                }
+            } else {
+                newSofaXmiId = updatedSofaIdMap.get(sofaID);
+            }
+
+            sofaNode.setNewXmiId(newSofaXmiId);
+
+            --sofaKey;
+        }
+    }
+
+
+    private Map<String, Set<JeDISVTDGraphNode>> createAnnotationModules(Map<Integer, JeDISVTDGraphNode> nodesByXmiId) {
+        Map<String, Set<JeDISVTDGraphNode>> modules = new HashMap<>();
+        for (JeDISVTDGraphNode node : nodesByXmiId.values()) {
+            for (String label : node.getAnnotationModuleLabels()) {
+                modules.compute(label, (l, list) -> {
+                    Set<JeDISVTDGraphNode> ret;
+                    if (list == null) ret = new HashSet<>();
+                    else ret = list;
+                    ret.add(node);
+                    return ret;
+                });
+            }
+        }
+        return modules;
     }
 
     private void labelNodes(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Set<String> moduleAnnotationNames, boolean recursively) {
@@ -116,9 +189,9 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         return fetchLabelsRecursively.apply(node);
     }
 
-    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, JCas aCas) throws VTDException {
+    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, Map<String, String> namespaceMap, JCas aCas) throws VTDException {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = new HashMap<>();
-        Map<String, String> namespaceMap = JulieXMLTools.buildNamespaceMap(vn);
+        currentSecondSofaMapKey = SECOND_SOFA_MAP_KEY_START;
         vn.toElement(VTDNav.FIRST_CHILD);
         vn.toElement(VTDNav.FIRST_CHILD);
         do {
@@ -126,10 +199,11 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
             if (xmiIdIndex >= 0) {
                 int i = vn.getCurrentIndex();
                 int oldXmiId = Integer.parseInt(vn.toString(xmiIdIndex));
-                JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, JeDISVTDGraphNode::new);
+                String typeName = getTypeName(vn, namespaceMap, i);
+                JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, typeName.equals(CAS_SOFA) ? SofaVTDGraphNode::new : JeDISVTDGraphNode::new);
                 n.setVtdIndex(i);
                 n.setElementFragment(vn.getElementFragment());
-                n.setTypeName(getTypeName(vn, namespaceMap, i));
+                n.setTypeName(typeName);
                 int sofaAttrIndex = vn.getAttrVal("sofa");
                 if (sofaAttrIndex > -1)
                     n.setSofaXmiId(Integer.parseInt(vn.toString(sofaAttrIndex)));
@@ -137,7 +211,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
                 referencedXmiIds.map(refId -> nodesByXmiId.computeIfAbsent(refId, JeDISVTDGraphNode::new)).forEach(referenced -> referenced.addPredecessor(n));
 
                 if (n.getTypeName().equals(CAS_SOFA))
-                    nodesByXmiId.put(SECOND_SOFA_MAP_KEY, n);
+                    nodesByXmiId.put(currentSecondSofaMapKey--, n);
             }
         } while (vn.toElement(VTDNav.NEXT_SIBLING));
         return nodesByXmiId;
