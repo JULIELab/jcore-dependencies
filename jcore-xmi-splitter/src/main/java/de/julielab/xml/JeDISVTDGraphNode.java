@@ -11,10 +11,17 @@ public class JeDISVTDGraphNode {
     protected int sofaXmiId;
     protected String typeName;
     protected List<JeDISVTDGraphNode> predecessors;
+    private Map<String, List<Integer>> referencedXmiIds;
 
 
     public JeDISVTDGraphNode(Integer oldXmiId) {
-        this(); this.oldXmiId = oldXmiId;
+        this();
+        this.oldXmiId = oldXmiId;
+    }
+
+    public JeDISVTDGraphNode() {
+        annotationModuleLabels = Collections.emptySet();
+        predecessors = Collections.emptyList();
     }
 
     @Override
@@ -26,13 +33,12 @@ public class JeDISVTDGraphNode {
                 '}';
     }
 
-    public JeDISVTDGraphNode() {
-        annotationModuleLabels = Collections.emptySet();
-        predecessors = Collections.emptyList();
-    }
-
     public long getElementFragment() {
         return elementFragment;
+    }
+
+    public void setElementFragment(long elementFragment) {
+        this.elementFragment = elementFragment;
     }
 
     public int getByteOffset() {
@@ -40,11 +46,7 @@ public class JeDISVTDGraphNode {
     }
 
     public int getByteLength() {
-        return (int)(elementFragment >> 32);
-    }
-
-    public void setElementFragment(long elementFragment) {
-        this.elementFragment = elementFragment;
+        return (int) (elementFragment >> 32);
     }
 
     public int getVtdIndex() {
@@ -117,5 +119,13 @@ public class JeDISVTDGraphNode {
 
     public void addAnnotationModuleLabels(Set<String> labels) {
         labels.forEach(this::addAnnotationModuleLabel);
+    }
+
+    public Map<String, List<Integer>> getReferencedXmiIds() {
+        return referencedXmiIds;
+    }
+
+    public void setReferencedXmiIds(Map<String, List<Integer>> referencedXmiIds) {
+        this.referencedXmiIds = referencedXmiIds;
     }
 }
