@@ -22,7 +22,7 @@ import static de.julielab.xml.XmiSplitUtilities.*;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
-public class VtdXmlXmiSplitter extends XmiSplitter {
+public class VtdXmlXmiSplitter implements XmiSplitter {
 
     public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final String REFERENCE_IDS_SPLIT_REGEX = "\\s+";
@@ -126,7 +126,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
                     if (node.getSofaXmiId() == SOFA_UNKNOWN)
                         throw new IllegalArgumentException("An annotation module is requested that belongs to a Sofa that is not present in existing document data and that is also not to be stored now. This would bring inconsistency into the stored data because some elements would refer to a Sofa that does not exist.");
 
-                    String xmlElement = vn.toString(node.getByteOffset(), node.getByteLength());
+                    String xmlElement = vn.toRawString(node.getByteOffset(), node.getByteLength());
                     int oldSofaXmiId = node.getSofaXmiId();
                     // Adapt sofa ID and xmi:id for this annotation
                     if (oldSofaXmiId != NO_SOFA_KEY)
@@ -248,7 +248,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
             Integer xmiIdIndex = vn.getAttrVal("xmi:id");
             if (xmiIdIndex >= 0) {
                 int i = vn.getCurrentIndex();
-                int oldXmiId = Integer.parseInt(vn.toString(xmiIdIndex));
+                int oldXmiId = Integer.parseInt(vn.toRawString(xmiIdIndex));
                 String typeName = getTypeName(vn, namespaceMap, i);
                 JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, typeName.equals(CAS_SOFA) ? SofaVTDGraphNode::new : JeDISVTDGraphNode::new);
                 n.setVtdIndex(i);
@@ -256,7 +256,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
                 n.setTypeName(typeName);
                 int sofaAttrIndex = vn.getAttrVal("sofa");
                 if (sofaAttrIndex > -1)
-                    n.setSofaXmiId(Integer.parseInt(vn.toString(sofaAttrIndex)));
+                    n.setSofaXmiId(Integer.parseInt(vn.toRawString(sofaAttrIndex)));
                 else
                     n.setSofaXmiId(NO_SOFA_KEY);
 
@@ -266,7 +266,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
 
                 if (n.getTypeName().equals(CAS_SOFA)) {
                     nodesByXmiId.put(currentSecondSofaMapKey--, n);
-                    ((SofaVTDGraphNode) n).setSofaID(vn.toString(vn.getAttrVal("sofaID")));
+                    ((SofaVTDGraphNode) n).setSofaID(vn.toRawString(vn.getAttrVal("sofaID")));
                 }
             }
         } while (vn.toElement(VTDNav.NEXT_SIBLING));
@@ -283,7 +283,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
         Function<String, List<Integer>> refAttributeValue2Integers = referenceString -> Stream.of(referenceString).filter(StringUtils::isNotBlank).map(refStr -> refStr.split("\\s+")).flatMap(Stream::of).map(Integer::parseInt).collect(toList());
 
         if (isFSArray(annotationType)) {
-            String referenceString = vn.toString(vn.getAttrVal("elements"));
+            String referenceString = vn.toRawString(vn.getAttrVal("elements"));
             referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
         } else if (!isFSArray(annotationType)) {
             List<Feature> features = annotationType.getFeatures();
@@ -292,7 +292,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
                 if (isFSArray(featureType) || !isPrimitive(featureType)) {
                     int attributeIndex = vn.getAttrVal(f.getShortName());
                     if (attributeIndex >= 0) {
-                        String referenceString = vn.toString(attributeIndex);
+                        String referenceString = vn.toRawString(attributeIndex);
                         referencesByFeatureBaseName.put(f.getShortName(), refAttributeValue2Integers.apply(referenceString));
                     }
                 }
@@ -303,7 +303,7 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
     }
 
     private String getTypeName(VTDNav vn, Map<String, String> namespaceMap, int i) throws NavException {
-        String elementName = vn.toString(i);
+        String elementName = vn.toRawString(i);
         int indexOfColon = elementName.indexOf(':');
         String namespace = elementName.substring(0, indexOfColon);
         String name = elementName.substring(indexOfColon + 1);

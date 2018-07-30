@@ -36,7 +36,7 @@ import com.ctc.wstx.api.WstxOutputProperties;
 
 import static de.julielab.xml.XmiSplitUtilities.*;
 
-public class StaxXmiSplitter extends XmiSplitter {
+public class StaxXmiSplitter implements XmiSplitter {
 
     private static final Logger log = LoggerFactory.getLogger(StaxXmiSplitter.class);
     private static final XMLInputFactory inputFactory = XMLInputFactory.newInstance();

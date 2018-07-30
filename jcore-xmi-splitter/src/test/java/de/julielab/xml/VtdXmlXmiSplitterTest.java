@@ -8,6 +8,7 @@ import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
+import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
@@ -194,7 +195,7 @@ public class VtdXmlXmiSplitterTest {
     }
 
     @Test
-    public void testSplitAndBuild()throws Exception {
+    public void testSplitAndBuild() throws Exception {
         Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
@@ -206,7 +207,7 @@ public class VtdXmlXmiSplitterTest {
         XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, moduleAnnotationNames.stream().toArray(String[]::new));
-        LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k,v) -> v, LinkedHashMap::new));
+        LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
         ByteArrayOutputStream newXmiData = builder.buildXmi(inputMap, "docs", jCas.getTypeSystem());
 
         jCas.reset();
@@ -217,6 +218,22 @@ public class VtdXmlXmiSplitterTest {
         assertThat(JCasUtil.select(jCas, DependencyRelation.class)).hasSize(208);
         assertThat(JCasUtil.select(jCas, PennBioIEPOSTag.class)).hasSize(208);
         assertThat(JCasUtil.select(jCas, Gene.class)).hasSize(0);
+    }
+
+    @Test
+    public void testSpecialXMLCharacter() throws Exception {
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        jCas.setDocumentText("This is p < 0.5.");
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, "docs", Collections.emptySet());
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
+
+        XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
+        LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
+        assertThatCode(() -> builder.buildXmi(inputMap, "docs", jCas.getTypeSystem())).doesNotThrowAnyException();
     }
 
 }
