@@ -9,6 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.fit.factory.JCasFactory;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.junit.Test;
 
@@ -59,6 +60,12 @@ public class VtdXmlXmiSplitterTest {
         JeDISVTDGraphNode token = fsArray.getPredecessors().get(0);
         assertThat(token.getTypeName()).isEqualTo("de.julielab.jcore.types.Token");
         assertThat(token.getOldXmiId()).isEqualTo(3430);
+
+        JeDISVTDGraphNode tokenNode = nodesByXmiId.get(1135);
+        Map<String, List<Integer>> referencedXmiIds = tokenNode.getReferencedXmiIds();
+        assertThat(referencedXmiIds.keySet()).containsExactlyInAnyOrder("posTag", "depRel");
+        assertThat(referencedXmiIds.get("posTag")).containsExactly(10760);
+        assertThat(referencedXmiIds.get("depRel")).containsExactly(7691);
     }
 
     @Test
@@ -157,7 +164,8 @@ public class VtdXmlXmiSplitterTest {
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
-        XmiSplitterResult result = splitter.process(xmiData, jCas, 0, null);
+        XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
+
         assertThat(result.currentSofaIdMap).hasSize(1);
         assertThat(result.maxXmiId).isGreaterThan(1);
         assertThat(result.namespaces).hasSize(6);
@@ -195,11 +203,7 @@ public class VtdXmlXmiSplitterTest {
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
-        XmiSplitterResult result = splitter.process(xmiData, jCas, 0, null);
-
-        for (String name : result.xmiData.keySet()) {
-            System.out.println(new String(result.xmiData.get(name).toByteArray()));
-        }
+        XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, moduleAnnotationNames.stream().toArray(String[]::new));
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k,v) -> v, LinkedHashMap::new));
@@ -208,5 +212,11 @@ public class VtdXmlXmiSplitterTest {
         jCas.reset();
 
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(newXmiData.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
+
+        assertThat(JCasUtil.select(jCas, Token.class)).hasSize(208);
+        assertThat(JCasUtil.select(jCas, DependencyRelation.class)).hasSize(208);
+        assertThat(JCasUtil.select(jCas, PennBioIEPOSTag.class)).hasSize(208);
+        assertThat(JCasUtil.select(jCas, Gene.class)).hasSize(0);
     }
+
 }

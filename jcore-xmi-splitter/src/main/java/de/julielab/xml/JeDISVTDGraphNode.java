@@ -22,6 +22,7 @@ public class JeDISVTDGraphNode {
     public JeDISVTDGraphNode() {
         annotationModuleLabels = Collections.emptySet();
         predecessors = Collections.emptyList();
+        referencedXmiIds = Collections.emptyMap();
     }
 
     @Override

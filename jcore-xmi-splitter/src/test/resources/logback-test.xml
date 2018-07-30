@@ -8,9 +8,8 @@
     </encoder>
   </appender>
   
-  <logger name="de.julielab" level="DEBUG"/>
 
-  <root level="INFO">
+  <root level="WARN">
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

@@ -132,6 +132,12 @@ public class VtdXmlXmiSplitter extends XmiSplitter {
                     if (oldSofaXmiId != NO_SOFA_KEY)
                         xmlElement = xmlElement.replaceFirst("sofa=\"[0-9]+\"", "sofa=\"" + nodesByXmiId.get(node.getSofaXmiId()).getNewXmiId() + "\"");
                     xmlElement = xmlElement.replaceFirst("xmi:id=\"[0-9]+\"", "xmi:id=\"" + node.getNewXmiId() + "\"");
+                    // Update the XMI IDs of the references
+                    for (String featureName : node.getReferencedXmiIds().keySet()) {
+                        List<Integer> references = node.getReferencedXmiIds().get(featureName);
+                        String newReferenceString = references.stream().map(oldId -> nodesByXmiId.get(oldId).getNewXmiId()).map(String::valueOf).collect(Collectors.joining(" "));
+                        xmlElement = xmlElement.replaceFirst(featureName + "=\"([0-9]+(\\s+)?)\"", featureName + "=\"" + newReferenceString + "\"");
+                    }
                     baos.write(xmlElement.getBytes(StandardCharsets.UTF_8));
                 }
             } catch (IOException e) {
