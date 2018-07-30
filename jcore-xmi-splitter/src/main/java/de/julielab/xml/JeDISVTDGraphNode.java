@@ -3,14 +3,14 @@ package de.julielab.xml;
 import java.util.*;
 
 public class JeDISVTDGraphNode {
-    private int vtdIndex;
-    private long elementFragment;
-    private Integer oldXmiId;
-    private Integer newXmiId;
-    private Set<String> annotationModuleLabels;
-    private int sofaXmiId;
-    private String typeName;
-    private List<JeDISVTDGraphNode> predecessors;
+    protected int vtdIndex;
+    protected long elementFragment;
+    protected Integer oldXmiId;
+    protected Integer newXmiId;
+    protected Set<String> annotationModuleLabels;
+    protected int sofaXmiId;
+    protected String typeName;
+    protected List<JeDISVTDGraphNode> predecessors;
 
 
     public JeDISVTDGraphNode(Integer oldXmiId) {

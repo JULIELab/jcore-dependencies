@@ -11,6 +11,16 @@ public class SofaVTDGraphNode extends JeDISVTDGraphNode {
         return sofaID;
     }
 
+    @Override
+    public String toString() {
+        return "SofaVTDGraphNode{" +
+                ", oldXmiId=" + oldXmiId +
+                ", annotationModuleLabels=" + annotationModuleLabels +
+                ", typeName='" + typeName + '\'' +
+                "sofaID='" + sofaID + '\'' +
+                '}';
+    }
+
     public void setSofaID(String sofaID) {
         this.sofaID = sofaID;
     }
