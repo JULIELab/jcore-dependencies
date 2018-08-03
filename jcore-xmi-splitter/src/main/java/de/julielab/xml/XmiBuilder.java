@@ -485,11 +485,15 @@ public class XmiBuilder {
                         annotationMissing = true;
                     } else {
                         Attribute attributeByName = fsArray.getAttributeByName(fsArrayElements);
-                        String elementsString = attributeByName.getValue();
-                        String[] elements = elementsString.split(" ");
-                        for (String element : elements) {
-                            if (!seenXmiElements.containsKey(element))
-                                annotationMissing = true;
+                        if (attributeByName != null) {
+                            String elementsString = attributeByName.getValue();
+                            String[] elements = elementsString.split(" ");
+                            for (String element : elements) {
+                                if (!seenXmiElements.containsKey(element))
+                                    annotationMissing = true;
+                            }
+                        } else {
+                            annotationMissing = true;
                         }
                     }
                 } else {

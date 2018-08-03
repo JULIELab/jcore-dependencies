@@ -191,7 +191,6 @@ public class VtdXmlXmiSplitter implements XmiSplitter {
         }
     }
 
-
     private Map<String, Set<JeDISVTDGraphNode>> createAnnotationModules(Map<Integer, JeDISVTDGraphNode> nodesByXmiId) {
         Map<String, Set<JeDISVTDGraphNode>> modules = new HashMap<>();
         for (JeDISVTDGraphNode node : nodesByXmiId.values()) {
