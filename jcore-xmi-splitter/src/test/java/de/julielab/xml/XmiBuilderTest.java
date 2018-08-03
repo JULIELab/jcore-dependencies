@@ -65,7 +65,6 @@ public class XmiBuilderTest {
     }
 
     @Test
-    // TODO make it work!!
     public void testArrayShareNotAllowedMultipleElements() throws UIMAException, SAXException, XMISplitterException, IOException {
         // In this test we check that we handle correctly arrays that may not be shared. Those arrays are represented
         // in memory as FSArray but in XMI the FSArray is left out: the array-valued feature just lists all the
