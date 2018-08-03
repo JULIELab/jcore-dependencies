@@ -12,6 +12,7 @@ import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.FSArray;
 import org.junit.Test;
 
 import java.io.*;
@@ -235,5 +236,32 @@ public class VtdXmlXmiSplitterTest {
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
         assertThatCode(() -> builder.buildXmi(inputMap, "docs", jCas.getTypeSystem())).doesNotThrowAnyException();
     }
+
+    @Test
+    public void testmuh() throws Exception {
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        jCas.setDocumentText("This is p < 0.5.");
+
+        AutoDescriptor ad = new AutoDescriptor(jCas);
+        ad.addToIndexes();
+        FSArray fsa = new FSArray(jCas, 2);
+        DocumentClass dc = new DocumentClass(jCas);
+        dc.setClassname("myclass");
+        fsa.set(0, dc);
+        fsa.set(1, dc);
+        ad.setDocumentClasses(fsa);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+        System.out.println(new String(baos.toByteArray()));
+
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, "docs", Collections.emptySet());
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
+
+        XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
+        LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
+        assertThatCode(() -> builder.buildXmi(inputMap, "docs", jCas.getTypeSystem())).doesNotThrowAnyException();
+    }
+
 
 }

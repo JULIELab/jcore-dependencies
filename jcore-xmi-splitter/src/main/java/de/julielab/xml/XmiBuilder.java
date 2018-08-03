@@ -476,24 +476,34 @@ public class XmiBuilder {
                 boolean featureHasArrayRange = featureRange.isArray();
                 // boolean arrayFound = false;
                 if (featureHasArrayRange) {
-                    // The type range is an array, thus we have to follow the
-                    // reference to the array and check whether the array's
-                    // references are valid.
-                    StartElement fsArray = seenXmiElements.get(xmiRefId);
+                    // Only when multiple references to the same feature array is allowed, an FSArray XMI element
+                    // is created. Otherwise, all referenced element xmi:ids are just mentioned as the feature value
+                    // itself
+                    if (feature.isMultipleReferencesAllowed()) {
+                        // The type range is an array, thus we have to follow the
+                        // reference to the array and check whether the array's
+                        // references are valid.
+                        StartElement fsArray = seenXmiElements.get(xmiRefId);
 
-                    if (null == fsArray) {
-                        annotationMissing = true;
-                    } else {
-                        Attribute attributeByName = fsArray.getAttributeByName(fsArrayElements);
-                        if (attributeByName != null) {
+                        if (null == fsArray) {
+                            annotationMissing = true;
+                        } else {
+                            Attribute attributeByName = fsArray.getAttributeByName(fsArrayElements);
+                            if (attributeByName == null)
+                                throw new IllegalStateException("Programming error: The array feature " + featureBaseName + " should be accessed as FSArray for the element " + elementName + ". However, it does not have the \"" + fsArrayElements + "\" attribute. The value of the " + featureBaseName + " attribute is \"" + xmiRefId + "\".");
                             String elementsString = attributeByName.getValue();
                             String[] elements = elementsString.split(" ");
                             for (String element : elements) {
                                 if (!seenXmiElements.containsKey(element))
                                     annotationMissing = true;
                             }
-                        } else {
-                            annotationMissing = true;
+                        }
+                    } else {
+                        String elementsString = xmiRefId;
+                        String[] elements = elementsString.split(" ");
+                        for (String element : elements) {
+                            if (!seenXmiElements.containsKey(element))
+                                annotationMissing = true;
                         }
                     }
                 } else {
