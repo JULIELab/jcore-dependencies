@@ -1,76 +1,85 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
-	<parent>
-		<artifactId>jcore-parent</artifactId>
-		<groupId>de.julielab</groupId>
-		<version>2.3.0-SNAPSHOT</version>
-	</parent>
-	<artifactId>jcore-xmi-splitter</artifactId>
-	<name>JCoRe XMI Splitter Tools</name>
-	<build>
-		<resources>
-			<resource>
-				<directory>src/main/resources</directory>
-				<includes>
-					<include>de/julielab/jcore/types/jcore-xmi-splitter-types.xml</include>
-				</includes>
-			</resource>
-		</resources>
-	</build>
-	<dependencies>
-		<dependency>
-			<groupId>org.slf4j</groupId>
-			<artifactId>slf4j-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.apache.commons</groupId>
-			<artifactId>commons-lang3</artifactId>
-			<version>3.1</version>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.10</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>ch.qos.logback</groupId>
-			<artifactId>logback-classic</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>de.julielab</groupId>
-			<artifactId>jcore-types</artifactId>
-			<version>${project.parent.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.codehaus.woodstox</groupId>
-			<artifactId>woodstox-core-asl</artifactId>
-			<version>4.4.1</version>
-		</dependency>
-		<dependency>
-			<groupId>de.julielab</groupId>
-			<artifactId>xercesImpl</artifactId>
-			<version>2.11.0.1</version>
-		</dependency>
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <artifactId>jcore-parent</artifactId>
+        <groupId>de.julielab</groupId>
+        <version>2.3.0-SNAPSHOT</version>
+    </parent>
+    <artifactId>jcore-xmi-splitter</artifactId>
+    <name>JCoRe XMI Splitter Tools</name>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>de/julielab/jcore/types/jcore-xmi-splitter-types.xml</include>
+                </includes>
+            </resource>
+        </resources>
+    </build>
+    <dependencies>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.10</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.uima</groupId>
+            <artifactId>uimaj-core</artifactId>
+            <version>${uima-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.uima</groupId>
+            <artifactId>uimafit-core</artifactId>
+            <version>${uimafit-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>de.julielab</groupId>
+            <artifactId>xercesImpl</artifactId>
+            <version>2.11.0.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.woodstox</groupId>
+            <artifactId>woodstox-core-asl</artifactId>
+            <version>4.4.1</version>
+        </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
             <version>23.5-jre</version>
         </dependency>
-		<dependency>
-			<groupId>org.assertj</groupId>
-			<artifactId>assertj-core</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>org.assertj</groupId>
+            <artifactId>assertj-core</artifactId>
+        </dependency>
         <dependency>
             <groupId>de.julielab</groupId>
             <artifactId>julie-xml-tools</artifactId>
-        </dependency></dependencies>
-	<description>Parses CAS data in XMI format in order to select specified annotations (XmiSplitter) or or builds a single XMI representation out of the base document and the selected annotations (XmiBuilder).
-These tools are used by the JCoRe CAS to/from DB Reader/Consumer to store or read portions of XMI files from a PostgrSQL database.</description>
-	<organization>
-		<name>JULIE Lab Jena, Germany</name>
-		<url>http://www.julielab.de</url>
-	</organization>
+        </dependency>
+    </dependencies>
+    <description>Parses CAS data in XMI format in order to select specified annotations (XmiSplitter) or or builds a
+        single XMI representation out of the base document and the selected annotations (XmiBuilder).
+        These tools are used by the JCoRe CAS to/from DB Reader/Consumer to store or read portions of XMI files from a
+        PostgrSQL database.
+    </description>
+    <organization>
+        <name>JULIE Lab Jena, Germany</name>
+        <url>http://www.julielab.de</url>
+    </organization>
 </project>
