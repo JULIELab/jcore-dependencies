@@ -1,15 +1,15 @@
 package de.julielab.xml;
 
+import org.apache.uima.cas.Type;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.xml.stream.events.StartElement;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.stream.events.StartElement;
-
-import org.apache.uima.cas.Feature;
-import org.apache.uima.cas.Type;
-
 public class XmiSplitUtilities {
-
+private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.class);
     public static final String CAS_NULL = "uima.cas.NULL";
     public static final String CAS_VIEW = "uima.cas.View";
     public static final String CAS_SOFA = "uima.cas.Sofa";

@@ -67,7 +67,7 @@ public class DBTestUtils {
 
     /**
      * Imports the file at <code>datapath</code> into the empty database, creates a subset
-     * named "testsubset" of the specified size by random selection, writes a test credentials file and configures
+     * named "testsubset" of the specified size by random selection, writes a test credentials file to "src/test/resources/hiddenConfig.txt" and configures
      * the CoStoSys to use it.
      * @param dbc A database connector connected to the postgres container.
      * @param datapath The file or directory with test data to import into the postgres container.
@@ -83,7 +83,17 @@ public class DBTestUtils {
         String testsubset = "testsubset";
         dbc.createSubsetTable(testsubset, Constants.DEFAULT_DATA_TABLE_NAME, "Test subset");
         dbc.initRandomSubset(subsetTableSize, testsubset, Constants.DEFAULT_DATA_TABLE_NAME);
-        String hiddenConfigPath = "src/test/resources/hiddenConfig.txt";
+        createAndSetHiddenConfig("src/test/resources/hiddenConfig.txt", postgres);
+        return testsubset;
+    }
+
+    /**
+     * Creates a database credentials configuration file for test purposes to the provided path.
+     * @param path The path where the credentials file should be stored.
+     * @param postgres The testcontainers.org postgres container from which the credentials are retrieved.
+     */
+    public static void createAndSetHiddenConfig(String path, PostgreSQLContainer postgres) {
+        String hiddenConfigPath = path;
         try (BufferedWriter w = new BufferedWriter(new FileWriter(hiddenConfigPath))) {
             w.write(postgres.getDatabaseName());
             w.newLine();
@@ -96,7 +106,6 @@ public class DBTestUtils {
             e.printStackTrace();
         }
         System.setProperty(Constants.HIDDEN_CONFIG_PATH, hiddenConfigPath);
-        return testsubset;
     }
 
     public static DataBaseConnector getDataBaseConnector(PostgreSQLContainer postgres) {

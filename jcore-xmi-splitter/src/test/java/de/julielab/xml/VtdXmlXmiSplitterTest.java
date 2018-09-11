@@ -238,7 +238,7 @@ public class VtdXmlXmiSplitterTest {
     }
 
     @Test
-    public void testmuh() throws Exception {
+    public void testNonsharedArrayWithMultipleEntries() throws Exception {
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         jCas.setDocumentText("This is p < 0.5.");
 
@@ -247,21 +247,22 @@ public class VtdXmlXmiSplitterTest {
         FSArray fsa = new FSArray(jCas, 2);
         DocumentClass dc = new DocumentClass(jCas);
         dc.setClassname("myclass");
+        DocumentClass dc2 = new DocumentClass(jCas);
+        dc2.setClassname("anotherclass");
         fsa.set(0, dc);
-        fsa.set(1, dc);
+        fsa.set(1, dc2);
         ad.setDocumentClasses(fsa);
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        System.out.println(new String(baos.toByteArray()));
-
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, "docs", Collections.emptySet());
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, "docs", new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())));
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        assertThatCode(() -> builder.buildXmi(inputMap, "docs", jCas.getTypeSystem())).doesNotThrowAnyException();
+        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, "docs", jCas.getTypeSystem());
+        jCas.reset();
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }
-
 
 }
