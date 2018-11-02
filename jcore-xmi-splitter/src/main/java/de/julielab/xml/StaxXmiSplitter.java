@@ -26,18 +26,18 @@ import static java.util.stream.Collectors.toList;
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 
-public class StaxXmiSplitter2 extends AbstractXmiSplitter {
+public class StaxXmiSplitter extends AbstractXmiSplitter {
     public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final int NO_SOFA_KEY = -1;
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private static final int SOFA_UNKNOWN = Integer.MIN_VALUE;
-    private final static Logger log = LoggerFactory.getLogger(StaxXmiSplitter2.class);
+    private final static Logger log = LoggerFactory.getLogger(StaxXmiSplitter.class);
     private static final Object depthMarker = new Object();
     private Deque<Object> depthDeque = new ArrayDeque<>();
     private byte[] currentXmiData;
 
-    public StaxXmiSplitter2(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
-                            String docTableName, Set<String> baseDocumentAnnotations) {
+    public StaxXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
+                           String docTableName, Set<String> baseDocumentAnnotations) {
         super(moduleAnnotationNames, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
     }
 

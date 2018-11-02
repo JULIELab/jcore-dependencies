@@ -23,12 +23,12 @@ import java.util.stream.Collectors;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class Stax2SplitterTest {
+public class StaxXmiSplitterTest {
     @Test
     public void testEmbeddedFeatures() throws IOException, XMISplitterException, UIMAException, NavException {
         // These embedded features are, for example, StringArrays that can not be references by other annotations
         // than the one it was originally set to.
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(null, false, false, null, null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(null, false, false, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -45,7 +45,7 @@ public class Stax2SplitterTest {
 
     @Test
     public void testReferences() throws Exception {
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(null, false, false, null, null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(null, false, false, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -78,7 +78,7 @@ public class Stax2SplitterTest {
                 DependencyRelation.class.getCanonicalName(),
                 Sentence.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(moduleAnnotationNames, false, false, null, null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, false, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -116,7 +116,7 @@ public class Stax2SplitterTest {
         Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(moduleAnnotationNames, true, false, null, null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, false, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -136,13 +136,13 @@ public class Stax2SplitterTest {
         Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(moduleAnnotationNames, true, true, null, null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
 
         Map<String, Set<JeDISVTDGraphNode>> annotationModules = splitter.getAnnotationModules();
-        assertThat(annotationModules.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(), PennBioIEPOSTag.class.getCanonicalName(), StaxXmiSplitter2.DOCUMENT_MODULE_LABEL);
+        assertThat(annotationModules.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(), PennBioIEPOSTag.class.getCanonicalName(), StaxXmiSplitter.DOCUMENT_MODULE_LABEL);
 
         // Check that all nodes ended up in the correct module. That means they should have the label of
         // their module.
@@ -161,7 +161,7 @@ public class Stax2SplitterTest {
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
         Set<String> baseDocumentAnnotations = new HashSet<>(Arrays.asList(Title.class.getCanonicalName(), Header.class.getCanonicalName()));
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
@@ -200,7 +200,7 @@ public class Stax2SplitterTest {
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
         Set<String> baseDocumentAnnotations = new HashSet<>(Arrays.asList(Title.class.getCanonicalName(), Header.class.getCanonicalName()));
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
@@ -228,7 +228,7 @@ public class Stax2SplitterTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
 
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(Collections.emptySet(), true, true, "docs", Collections.emptySet());
+        StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, "docs", Collections.emptySet());
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
@@ -254,7 +254,7 @@ public class Stax2SplitterTest {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        StaxXmiSplitter2 splitter = new StaxXmiSplitter2(Collections.emptySet(), true, true, "docs", new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())));
+        StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, "docs", new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())));
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
