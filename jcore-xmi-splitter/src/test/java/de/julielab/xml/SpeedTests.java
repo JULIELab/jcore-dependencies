@@ -38,9 +38,9 @@ public class SpeedTests {
 
     @Test
     public void semedicoXmiStax() throws Exception {
-        List<String> moduleAnnotationNames = Arrays.asList(
+        Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
-                PennBioIEPOSTag.class.getCanonicalName());
+                PennBioIEPOSTag.class.getCanonicalName()));
         Set<String> baseDocumentAnnotations = new HashSet<>(Arrays.asList(Title.class.getCanonicalName(), Header.class.getCanonicalName()));
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");

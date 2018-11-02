@@ -1,5 +1,6 @@
 package de.julielab.xml;
 
+import com.ctc.wstx.api.WstxInputProperties;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -35,10 +36,30 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     private static final Object depthMarker = new Object();
     private Deque<Object> depthDeque = new ArrayDeque<>();
     private byte[] currentXmiData;
+    private XMLInputFactory inputFactory;
 
     public StaxXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
                            String docTableName, Set<String> baseDocumentAnnotations) {
         super(moduleAnnotationNames, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+        inputFactory = XMLInputFactory.newFactory();
+    }
+
+    /**
+     * For large documents, the XMI sofa string can be very large (tenth of megabytes). The StAX XML parser has
+     * configurable limit on the maximum size of attribute values. This constructor allows to pass a value for this
+     * limit.
+     *
+     * @param annotationModulesToExtract
+     * @param recursively
+     * @param storeBaseDocument
+     * @param docTableName
+     * @param baseDocumentAnnotations
+     * @param attribute_size
+     */
+    public StaxXmiSplitter(Set<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
+                           String docTableName, Set<String> baseDocumentAnnotations, int attribute_size) {
+        this(annotationModulesToExtract, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+        inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
     }
 
     @Override
@@ -50,7 +71,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
         this.currentXmiData = xmiData;
         try {
-            final XMLStreamReader reader = XMLInputFactory.newFactory().createXMLStreamReader(new ByteArrayInputStream(xmiData));
+            final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(xmiData));
             log.debug("Building namespace map");
             Map<String, String> namespaceMap = buildNamespaceMap(reader);
             log.debug("Creating JeDIS nodes");

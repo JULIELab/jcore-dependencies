@@ -24,6 +24,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class StaxXmiSplitterTest {
+
+    public static final HashSet<String> BASE_DOCUMENT_ANNOTATIONS = new HashSet<>(Arrays.asList("de.julielab.jcore.types.AbstractSectionHeading", "de.julielab.jcore.types.AbstractSection", "de.julielab.jcore.types.AbstractText"));
+
     @Test
     public void testEmbeddedFeatures() throws IOException, XMISplitterException, UIMAException, NavException {
         // These embedded features are, for example, StringArrays that can not be references by other annotations

@@ -10,10 +10,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
@@ -105,7 +102,7 @@ public class EncodingTest {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		List<String> elementsToStore = Lists.newArrayList(TOKTYPE, SENTTYPE, POSTYPE);
+		Set<String> elementsToStore = new HashSet(Lists.newArrayList(TOKTYPE, SENTTYPE, POSTYPE));
 		CAS cas = getTestCAS();
 		XmiCasDeserializer.deserialize(new FileInputStream(TEST_XMI), cas);
 		// manipulate the first token to add a unicode character with a 3-byte codepoint
