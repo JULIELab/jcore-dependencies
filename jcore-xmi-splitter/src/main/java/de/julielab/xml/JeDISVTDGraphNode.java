@@ -3,7 +3,6 @@ package de.julielab.xml;
 import java.util.*;
 
 public class JeDISVTDGraphNode {
-    protected int vtdIndex;
     protected long elementFragment;
     protected Integer oldXmiId;
     protected Integer newXmiId;
@@ -12,6 +11,7 @@ public class JeDISVTDGraphNode {
     protected String typeName;
     protected List<JeDISVTDGraphNode> predecessors;
     private Map<String, List<Integer>> referencedXmiIds;
+    private int startOffset;
 
 
     public JeDISVTDGraphNode(Integer oldXmiId) {
@@ -48,14 +48,6 @@ public class JeDISVTDGraphNode {
 
     public int getByteLength() {
         return (int) (elementFragment >> 32);
-    }
-
-    public int getVtdIndex() {
-        return vtdIndex;
-    }
-
-    public void setVtdIndex(int vtdIndex) {
-        this.vtdIndex = vtdIndex;
     }
 
     public Integer getOldXmiId() {
@@ -128,5 +120,13 @@ public class JeDISVTDGraphNode {
 
     public void setReferencedXmiIds(Map<String, List<Integer>> referencedXmiIds) {
         this.referencedXmiIds = referencedXmiIds;
+    }
+
+    public int getStartOffset() {
+        return startOffset;
+    }
+
+    public void setStartOffset(int startOffset) {
+        this.startOffset = startOffset;
     }
 }
