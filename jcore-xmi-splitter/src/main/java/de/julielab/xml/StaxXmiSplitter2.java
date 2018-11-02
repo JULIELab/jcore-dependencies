@@ -1,13 +1,6 @@
 package de.julielab.xml;
 
-import com.google.common.collect.Sets;
-import com.ximpleware.NavException;
-import com.ximpleware.VTDException;
-import com.ximpleware.VTDGen;
-import com.ximpleware.VTDNav;
 import de.julielab.xml.util.XMISplitterException;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.io.input.XmlStreamReader;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.uima.cas.Feature;
@@ -22,7 +15,6 @@ import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamReader;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
 import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -30,85 +22,74 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.xml.XmiSplitUtilities.*;
-import static de.julielab.xml.XmiSplitUtilities.isFSArray;
-import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
 import static java.util.stream.Collectors.toList;
 import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 
-public class StaxXmiSplitter2 implements XmiSplitter {
+public class StaxXmiSplitter2 extends AbstractXmiSplitter {
     public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final int NO_SOFA_KEY = -1;
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
+    private static final int SOFA_UNKNOWN = Integer.MIN_VALUE;
     private final static Logger log = LoggerFactory.getLogger(StaxXmiSplitter2.class);
     private static final Object depthMarker = new Object();
-    private final Set<String> moduleAnnotationNames;
-    private final boolean recursively;
-    private final boolean storeBaseDocument;
-    private final String docTableName;
-    private final Set<String> baseDocumentAnnotations;
-    private int currentSecondSofaMapKey;
-    private Map<Integer, JeDISVTDGraphNode> nodesByXmiId;
-    private Map<String, Set<JeDISVTDGraphNode>> annotationModules;
-    private Set<Integer> unavailableXmiId;
     private Deque<Object> depthDeque = new ArrayDeque<>();
+    private byte[] currentXmiData;
 
     public StaxXmiSplitter2(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
                             String docTableName, Set<String> baseDocumentAnnotations) {
-        this.moduleAnnotationNames = moduleAnnotationNames != null ? new HashSet<>(moduleAnnotationNames) : null;
-        this.recursively = recursively;
-        this.storeBaseDocument = storeBaseDocument;
-        this.docTableName = docTableName;
-        this.baseDocumentAnnotations = baseDocumentAnnotations == null ? Collections.emptySet() : baseDocumentAnnotations;
+        super(moduleAnnotationNames, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+    }
 
-        if (storeBaseDocument)
-            this.moduleAnnotationNames.add(DOCUMENT_MODULE_LABEL);
-
-        if (moduleAnnotationNames != null && baseDocumentAnnotations != null && !Sets.intersection(moduleAnnotationNames, baseDocumentAnnotations).isEmpty())
-            throw new IllegalArgumentException("The annotation types to build modules from and the annotation types to added to the base document overlap in: " + Sets.intersection(moduleAnnotationNames, baseDocumentAnnotations));
+    @Override
+    protected String getNodeXml(JeDISVTDGraphNode node) {
+        return new String(Arrays.copyOfRange(currentXmiData, node.getByteOffset(), node.getByteOffset() + node.getByteLength()));
     }
 
     @Override
     public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
+        this.currentXmiData = xmiData;
         try {
             final XMLStreamReader reader = XMLInputFactory.newFactory().createXMLStreamReader(new ByteArrayInputStream(xmiData));
             log.debug("Building namespace map");
             Map<String, String> namespaceMap = buildNamespaceMap(reader);
             log.debug("Creating JeDIS nodes");
             nodesByXmiId = createJedisNodes(reader, namespaceMap, aCas);
-//            log.debug("Labeling nodes");
-//            labelNodes(nodesByXmiId, moduleAnnotationNames, recursively);
-//            log.debug("Creating annotation modules");
-//            annotationModules = createAnnotationModules(nodesByXmiId);
-//            log.debug("Assigning new XMI IDs");
-//            ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
-//            log.debug("Slicing XMI data into annotation module data");
-//            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, existingSofaIdMap, nextPossibleId, vn);
-//            Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-//            log.debug("Returning XMI annotation module result");
-//            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap);
-//        } catch (VTDException e) {
-//            throw new XMISplitterException(e);
-//        }
+            log.debug("Labeling nodes");
+            labelNodes(nodesByXmiId, moduleAnnotationNames, recursively);
+            log.debug("Creating annotation modules");
+            annotationModules = createAnnotationModules(nodesByXmiId);
+            log.debug("Assigning new XMI IDs");
+            ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
+            log.debug("Slicing XMI data into annotation module data");
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, existingSofaIdMap, nextPossibleId);
+            Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+            log.debug("Returning XMI annotation module result");
+            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap);
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
         return null;
     }
 
+
     private Map<Integer, JeDISVTDGraphNode> createJedisNodes(XMLStreamReader reader, Map<String, String> namespaceMap, JCas aCas) throws XMLStreamException {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = new HashMap<>();
         currentSecondSofaMapKey = SECOND_SOFA_MAP_KEY_START;
         forwardTo(reader, r -> depthDeque.size() == 2);
+        JeDISVTDGraphNode lastNode = null;
         do {
+            // Now that we have reached the beginning of the next element, we can compute the byte length of the previous element
+            if (lastNode != null && lastNode.getByteLength() == 0)
+                lastNode.setByteLength(reader.getLocation().getCharacterOffset() - lastNode.getByteOffset());
             String xmiIdValue = reader.getAttributeValue(namespaceMap.get("xmi"), "id");
             if (xmiIdValue != null) {
                 int oldXmiId = Integer.parseInt(reader.getAttributeValue(namespaceMap.get("xmi"), "id"));
                 String typeName = getTypeName(reader);
                 JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, typeName.equals(CAS_SOFA) ? SofaVTDGraphNode::new : JeDISVTDGraphNode::new);
-                n.setStartOffset(reader.getLocation().getCharacterOffset());
+                n.setByteOffset(reader.getLocation().getCharacterOffset());
                 n.setTypeName(typeName);
-                String sofaId = reader.getAttributeValue(namespaceMap.get("cas"),"sofa");
+                String sofaId = reader.getAttributeValue(namespaceMap.get("cas"), "sofa");
                 if (sofaId != null)
                     n.setSofaXmiId(Integer.parseInt(sofaId));
                 else
@@ -122,12 +103,16 @@ public class StaxXmiSplitter2 implements XmiSplitter {
                     nodesByXmiId.put(currentSecondSofaMapKey--, n);
                     ((SofaVTDGraphNode) n).setSofaID(reader.getAttributeValue(null, "sofaID"));
                 }
+                lastNode = n;
             }
         } while (forwardTo(reader, r -> depthDeque.size() == 2 && r.getEventType() == START_ELEMENT));
+        // Set the byte length for the last node
+        if (lastNode != null && lastNode.getByteLength() == 0)
+            lastNode.setByteLength(reader.getLocation().getCharacterOffset() - lastNode.getByteOffset());
         return nodesByXmiId;
     }
 
-    private Map<String, List<Integer>> getReferencedXmiIds(XMLStreamReader reader, String typeName, TypeSystem ts, Map<String, String> namespaceMap)  {
+    private Map<String, List<Integer>> getReferencedXmiIds(XMLStreamReader reader, String typeName, TypeSystem ts, Map<String, String> namespaceMap) {
         if (typeName.equals(CAS_NULL) || typeName.equals(CAS_VIEW))
             return Collections.emptyMap();
 
@@ -164,7 +149,7 @@ public class StaxXmiSplitter2 implements XmiSplitter {
         return map;
     }
 
-    private String getTypeName(XMLStreamReader reader){
+    private String getTypeName(XMLStreamReader reader) {
         String namespace = reader.getName().getNamespaceURI();
         String name = reader.getName().getLocalPart();
         String nsUri = XmiSplitUtilities.convertNSUri(namespace);
@@ -186,9 +171,5 @@ public class StaxXmiSplitter2 implements XmiSplitter {
         if (!reader.hasNext())
             log.debug("Reached end of XML.");
         return reader.hasNext();
-    }
-
-    Map<Integer, JeDISVTDGraphNode> getNodesByXmiId() {
-        return nodesByXmiId;
     }
 }

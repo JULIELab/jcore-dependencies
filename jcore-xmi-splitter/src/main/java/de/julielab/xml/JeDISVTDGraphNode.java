@@ -11,7 +11,8 @@ public class JeDISVTDGraphNode {
     protected String typeName;
     protected List<JeDISVTDGraphNode> predecessors;
     private Map<String, List<Integer>> referencedXmiIds;
-    private int startOffset;
+    private int byteOffset;
+    private int byteLength;
 
 
     public JeDISVTDGraphNode(Integer oldXmiId) {
@@ -40,14 +41,18 @@ public class JeDISVTDGraphNode {
 
     public void setElementFragment(long elementFragment) {
         this.elementFragment = elementFragment;
+        byteOffset = (int) elementFragment;
+        byteLength = (int) (elementFragment >> 32);
     }
 
-    public int getByteOffset() {
-        return (int) elementFragment;
+
+    public void setByteLength(int byteLength) {
+        this.byteLength = byteLength;
     }
 
     public int getByteLength() {
-        return (int) (elementFragment >> 32);
+        return byteLength;
+
     }
 
     public Integer getOldXmiId() {
@@ -122,11 +127,12 @@ public class JeDISVTDGraphNode {
         this.referencedXmiIds = referencedXmiIds;
     }
 
-    public int getStartOffset() {
-        return startOffset;
+    public int getByteOffset() {
+        return byteOffset;
     }
 
-    public void setStartOffset(int startOffset) {
-        this.startOffset = startOffset;
+    public void setByteOffset(int byteOffset) {
+        this.byteOffset = byteOffset;
     }
+
 }
