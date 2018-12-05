@@ -20,6 +20,7 @@ import static de.julielab.xml.JulieXMLConstants.NAME;
 import static de.julielab.xml.JulieXMLConstants.XPATH;
 import static de.julielab.xml.JulieXMLTools.createField;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.ByteArrayInputStream;
@@ -153,6 +154,22 @@ public class JulieXmlToolsTest {
         }
         assertThat(values).contains("first", "second", "third");
     }
+
+	@Test
+	public void testArchiveReading2() {
+	    // This test exists due to a bug where non-XML files within ZIP archives were omitted which would
+        // lead to a null row returned if the last archive entry was a non-XML file. This shouldn't happen any more.
+		List<Map<String, String>> fields = new ArrayList<>();
+		fields.add(createField(NAME, "pmid", XPATH, "PMID"));
+		Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/zipArchiveReading/test.zip", 1024, "/PubmedArticleSet/PubmedArticle/MedlineCitation", fields, false);
+		Set<String> values = new HashSet<>();
+		while (rowIt.hasNext()) {
+			Map<String, Object> row =  rowIt.next();
+			assertNotNull(row.get("pmid"));
+            values.add((String) row.get("pmid"));
+		}
+        assertThat(values).contains("1", "2");
+	}
 
     @Test
     public void testConstantFieldValue() {

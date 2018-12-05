@@ -74,23 +74,52 @@ public class JulieXMLTools {
             if (largeFileSize) {
                 return constructRowIteratorHuge(fileName, forEachXpath, fields);
             } else {
-                InputStream is = null;
+                InputStream is;
                 if (fileName.endsWith(".gz") || fileName.endsWith(".gzip")) {
                     is = new GZIPInputStream(new FileInputStream(fileName));
                 } else if (fileName.endsWith(".zip")) {
                     LOG.info("Got a ZIP archive at {}. It will be scanned for XML entry files.", fileName);
                     ZipFile zipFile = new ZipFile(fileName, StandardCharsets.UTF_8);
-                    final List<ZipEntry> sortedEntries = zipFile.stream().sorted((a, b) -> a.getName().compareTo(b.getName())).collect(Collectors.toList());
+                    final List<ZipEntry> sortedEntries = zipFile.stream().sorted(Comparator.comparing(ZipEntry::getName)).collect(Collectors.toList());
 
                     return new Iterator<Map<String, Object>>() {
 
                         private Iterator<ZipEntry> zipEntryIt = sortedEntries.iterator();
                         private ZipEntry entry = nextZipEntry();
                         private Iterator<Map<String, Object>> internalIterator;
+                        private Map<String, Object> nextRow;
 
                         @Override
                         public boolean hasNext() {
-                            return entry != null || (internalIterator != null && internalIterator.hasNext());
+                            if (nextRow == null) {
+                                if (internalIterator != null && internalIterator.hasNext()) {
+                                    nextRow = internalIterator.next();
+                                } else if (entry != null) {
+                                    while ((internalIterator == null || !internalIterator.hasNext()) && entry != null) {
+                                        if (entry.isDirectory() || !hasValidEnding(entry.getName())) {
+                                            LOG.info("Skipping ZIP entry {}", entry.getName());
+                                            entry = nextZipEntry();
+                                            continue;
+                                        }
+                                        VTDNav vn = null;
+                                        try {
+                                            LOG.info("Processing ZIP entry {}", entry.getName());
+                                            InputStream entryIs = zipFile.getInputStream(entry);
+                                            if (entry.getName().toLowerCase().endsWith(".gz") || entry.getName().toLowerCase().endsWith("gzip"))
+                                                entryIs = new GZIPInputStream(entryIs);
+                                            vn = getVTDNav(entryIs, bufferSize);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
+                                        entry = nextZipEntry();
+                                    }
+                                    nextRow = internalIterator.next();
+                                }
+                            }
+                            return nextRow != null;
                         }
 
                         private boolean hasValidEnding(String filename) {
@@ -100,33 +129,10 @@ public class JulieXMLTools {
 
                         @Override
                         public Map<String, Object> next() {
-                            if (internalIterator != null && internalIterator.hasNext()) {
-                                return internalIterator.next();
-                            } else if (entry != null) {
-                                while ((internalIterator == null || !internalIterator.hasNext()) && entry != null) {
-                                    if (entry.isDirectory() || !hasValidEnding(entry.getName())) {
-                                        LOG.info("Skipping ZIP entry {}", entry.getName());
-                                        entry = nextZipEntry();
-                                        continue;
-                                    }
-                                    VTDNav vn = null;
-                                    try {
-                                        LOG.info("Processing ZIP entry {}", entry.getName());
-                                        InputStream entryIs = zipFile.getInputStream(entry);
-                                        if (entry.getName().toLowerCase().endsWith(".gz") || entry.getName().toLowerCase().endsWith("gzip"))
-                                            entryIs = new GZIPInputStream(entryIs);
-                                        vn = getVTDNav(entryIs, bufferSize);
-                                    } catch (ParseException e) {
-                                        e.printStackTrace();
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                    internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
-                                    entry = nextZipEntry();
-                                }
-                                return internalIterator.next();
-                            }
-                            return null;
+                            hasNext();
+                            Map<String, Object> ret = nextRow;
+                            nextRow = null;
+                            return ret;
                         }
 
                         private ZipEntry nextZipEntry() {
@@ -508,6 +514,7 @@ public class JulieXMLTools {
     /**
      * Declares the given namespaces to the passed auto pilot. The <tt>namespaceMap</tt>
      * can automatically be derived from an XML document by calling {@link #buildNamespaceMap(VTDNav)}.
+     *
      * @param ap
      * @param namespaceMap
      */
@@ -521,6 +528,7 @@ public class JulieXMLTools {
      * a map connecting the namespace prefixes with their URI. This map can be passed to
      * {@link #declareNamespaces(AutoPilot, Map)} to declare all the namespaces of the document
      * to an {@link AutoPilot}.
+     *
      * @param vn
      * @return
      * @throws VTDException
