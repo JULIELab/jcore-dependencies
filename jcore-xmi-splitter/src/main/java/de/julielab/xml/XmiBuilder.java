@@ -1,41 +1,5 @@
 package de.julielab.xml;
 
-import static de.julielab.xml.XmiSplitUtilities.TYPES_NAMESPACE;
-import static de.julielab.xml.XmiSplitUtilities.getTypeJavaName;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
-import java.io.SequenceInputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.Vector;
-
-import javax.xml.namespace.NamespaceContext;
-import javax.xml.namespace.QName;
-import javax.xml.stream.XMLEventFactory;
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLEventWriter;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.Namespace;
-import javax.xml.stream.events.StartDocument;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
@@ -43,7 +7,18 @@ import org.apache.uima.cas.TypeSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.ctc.wstx.api.WstxInputProperties;
+import javax.xml.namespace.QName;
+import javax.xml.stream.*;
+import javax.xml.stream.events.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.SequenceInputStream;
+import java.util.*;
+import java.util.Map.Entry;
+
+import static de.julielab.xml.XmiSplitUtilities.TYPES_NAMESPACE;
+import static de.julielab.xml.XmiSplitUtilities.getTypeJavaName;
 
 public class XmiBuilder {
 
@@ -104,8 +79,8 @@ public class XmiBuilder {
     public XmiBuilder(Map<String, String> nsAndXmiVersionMap, String[] annotationsToRetrieve, long attribute_size) {
         this.annotationNames = completeTypeNames(annotationsToRetrieve);
         setXMIStartElementData(nsAndXmiVersionMap);
-        if (attribute_size > 0)
-            inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+        //if (attribute_size > 0)
+          //  inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
     }
 
     public XmiBuilder(Map<String, String> nsAndXmiVersionMap, String[] annotationsToRetrieve) {
@@ -659,22 +634,19 @@ public class XmiBuilder {
         List<Namespace> xmiNS = new ArrayList<>();
         for (Entry<String, String> nsEntry : namespacesAndXmiVersion.entrySet()) {
             if (nsEntry.getKey().equals("xmi:version")) {
-                QName qName = new QName(nsEntry.getKey());
+                QName qName = new QName("http://www.omg.org/XMI", "version");
                 xmiAtt.add(eventFactory.createAttribute(qName, nsEntry.getValue()));
             } else
                 xmiNS.add(eventFactory.createNamespace(nsEntry.getKey(), nsEntry.getValue()));
         }
 
-        StartDocument startDoc = eventFactory.createStartDocument();
         StartElement xmiStart = eventFactory.createStartElement("xmi", "http://www.omg.org/XMI", "XMI",
                 xmiAtt.iterator(), xmiNS.iterator());
 
         try {
             xmlStartDocBytes = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>".getBytes();
-            ByteArrayOutputStream baos = new ByteArrayOutputStream(xmlStartDocBytes.length * 2);
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
             XMLEventWriter w = outputFactory.createXMLEventWriter(baos);
-            baos = new ByteArrayOutputStream();
-            w = outputFactory.createXMLEventWriter(baos);
             w.add(xmiStart);
             w.add(eventFactory.createCharacters("dummy"));
             w.add(eventFactory.createEndElement("xmi", "http://www.omg.org/XMI", "XMI"));

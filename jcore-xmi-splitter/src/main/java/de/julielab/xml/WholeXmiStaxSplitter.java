@@ -1,7 +1,5 @@
 package de.julielab.xml;
 
-import com.ctc.wstx.api.WstxInputProperties;
-import com.ctc.wstx.api.WstxOutputProperties;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Sets;
@@ -37,7 +35,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
     static {
         // we split the XMI into non-valid XML slices, so don't check for
         // correct structure
-        outputFactory.setProperty(WstxOutputProperties.P_OUTPUT_VALIDATE_STRUCTURE, Boolean.FALSE);
+        //outputFactory.setProperty(WstxOutputProperties.P_OUTPUT_VALIDATE_STRUCTURE, Boolean.FALSE);
     }
 
     private boolean storeAll = false;
@@ -134,7 +132,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
      */
     public WholeXmiStaxSplitter(String tableName, int attribute_size) {
         this(tableName);
-        inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+        //inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
     }
 
     /**

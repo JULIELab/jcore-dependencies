@@ -1,6 +1,5 @@
 package de.julielab.xml;
 
-import com.ctc.wstx.api.WstxInputProperties;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -59,7 +58,8 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public StaxXmiSplitter(Set<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
                            String docTableName, Set<String> baseDocumentAnnotations, int attribute_size) {
         this(annotationModulesToExtract, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
-        inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+     //   inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+
     }
 
     @Override
@@ -71,7 +71,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
         this.currentXmiData = xmiData;
         try {
-            final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(xmiData));
+            final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(xmiData), "UTF-8");
             log.debug("Building namespace map");
             Map<String, String> namespaceMap = buildNamespaceMap(reader);
             log.debug("Creating JeDIS nodes");
@@ -101,8 +101,9 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         JeDISVTDGraphNode lastNode = null;
         do {
             // Now that we have reached the beginning of the next element, we can compute the byte length of the previous element
-            if (lastNode != null && lastNode.getByteLength() == 0)
+            if (lastNode != null && lastNode.getByteLength() == 0) {
                 lastNode.setByteLength(reader.getLocation().getCharacterOffset() - lastNode.getByteOffset());
+            }
             String xmiIdValue = reader.getAttributeValue(namespaceMap.get("xmi"), "id");
             if (xmiIdValue != null) {
                 int oldXmiId = Integer.parseInt(reader.getAttributeValue(namespaceMap.get("xmi"), "id"));
