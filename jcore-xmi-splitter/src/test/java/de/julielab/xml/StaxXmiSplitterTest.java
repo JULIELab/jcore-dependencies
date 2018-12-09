@@ -289,4 +289,28 @@ public class StaxXmiSplitterTest {
         final ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputMap, "documents", jCas.getTypeSystem());
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }
+
+    @Test
+    public void testAACRXMI2() throws Exception {
+        // There shouldn't be anything special about the document used in this test, yet it showed strange - and wrong -
+        // splitting behaviour in practice.
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+
+        Set<String> moduleAnnotationNames = Collections.emptySet();
+        Set<String> baseAnnotations = new HashSet<>(Arrays.asList("de.julielab.jcore.types.AbstractText",
+                "de.julielab.jcore.types.Title",
+                "de.julielab.jcore.types.Header",
+                "de.julielab.jcore.types.pubmed.Header",
+                "de.julielab.jcore.types.pubmed.ManualDescriptor"));
+        final XmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "documents", baseAnnotations);
+
+        final byte[] bytes = IOUtils.toByteArray(new FileInputStream("src/test/resources/test-xmis/AACR_2017-2282.xmi"));
+        final XmiSplitterResult splitterResult = splitter.process(bytes, jCas, 0, null);
+
+        final XmiBuilder xmiBuilder = new XmiBuilder(splitterResult.namespaces, new String[0]);
+        LinkedHashMap<String, InputStream> inputMap = splitterResult.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
+        final ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputMap, "documents", jCas.getTypeSystem());
+        System.out.println(new String(builtXmi.toByteArray()));
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
+    }
 }

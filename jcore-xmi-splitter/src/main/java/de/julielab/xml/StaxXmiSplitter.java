@@ -72,6 +72,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         this.currentXmiData = xmiData;
         try {
             final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(xmiData), "UTF-8");
+            log.debug("Employed StAX implementation: {}", reader.getClass());
             log.debug("Building namespace map");
             Map<String, String> namespaceMap = buildNamespaceMap(reader);
             log.debug("Creating JeDIS nodes");
