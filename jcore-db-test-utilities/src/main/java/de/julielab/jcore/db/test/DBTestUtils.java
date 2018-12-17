@@ -23,7 +23,7 @@ public class DBTestUtils {
      * @throws ConfigurationException If the creation of the configuration file failed.
      */
     public static String createTestCostosysConfig(String schemaName, int maxActiveConnections, PostgreSQLContainer postgres) throws ConfigurationException {
-        return createTestCostosysConfig("src/test/resources/testconfig.xml", schemaName, maxActiveConnections, postgres);
+        return createTestCostosysConfig("src/test/resources/testconfig-"+System.nanoTime() + ".xml", schemaName, maxActiveConnections, postgres);
     }
     /**
      * Writes a CoStoSys test configuration to <code>targetPath</code>.
@@ -42,7 +42,7 @@ public class DBTestUtils {
         costosysconfig.setProperty("databaseConnectorConfiguration.DBConnectionInformation.DBConnections.DBConnection[@url]", postgres.getJdbcUrl());
         costosysconfig.setProperty("databaseConnectorConfiguration.DBConnectionInformation.maxActiveDBConnections", maxActiveConnections);
 
-        FileHandler fh = new FileHandler((FileBased) costosysconfig);
+        FileHandler fh = new FileHandler(costosysconfig);
         String costosysConfig = targetPath;
         fh.save(costosysConfig);
         return costosysConfig;
