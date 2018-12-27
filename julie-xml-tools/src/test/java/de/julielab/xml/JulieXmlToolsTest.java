@@ -182,4 +182,28 @@ public class JulieXmlToolsTest {
             assertThat(row).hasValueSatisfying(new Condition<>(val -> val.equals("THIS IS A CONSTANT"), "Constant field value"));
         }
     }
+
+	/**
+	 * This is not really a test but more of a playground to check detailed behaviour of VTD "interactively" (i.e.
+	 * by editing the test's code, letting it run and checking the outcome).
+	 * @throws Exception
+	 */
+	@Test
+	public void testNavAPInteraction() throws Exception {
+		// At first test whether existing text is replaced correctly.
+		String testXMLWithText = "<test><content>one</content><content>two</content><content>three</content></test>";
+		VTDGen vg = new VTDGen();
+		vg.setDoc(testXMLWithText.getBytes());
+		vg.parse(true);
+		VTDNav vn = vg.getNav();
+		AutoPilot ap = new AutoPilot(vn);
+		ap.selectXPath("/test/content");
+		int index;
+		while((index = ap.evalXPath()) != -1) {
+
+			System.out.println(index);
+			System.out.println(vn.getCurrentIndex());
+
+		}
+	}
 }

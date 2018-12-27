@@ -1,5 +1,10 @@
 package de.julielab.xml;
 
+import com.ximpleware.VTDNav;
+import com.ximpleware.extended.VTDNavHuge;
+
+import java.util.List;
+
 public abstract class JulieXMLConstants {
 
     /**
@@ -162,4 +167,19 @@ public abstract class JulieXMLConstants {
      * </p>
      */
     public static final String CONSTANT_VALUE = "constantValue";
+
+    /**
+     * <p>
+     * Used by the {@link JulieXMLTools#constructRowIterator(VTDNav, String, List, String)} and
+     * {@link JulieXMLTools#constructRowIterator(VTDNavHuge, String, List, String)} methods. Adds to each row
+     * the VTD token index of the beginning of the respective row, i.e. the XML element.
+     * </p>
+     * <p>
+     * When using this functionality to navigate the XML with the VTDNav object given to the row constructor,
+     * take care to always set back the original VTDNav state for the current row. This can be achieved by
+     * calling {@link VTDNav#push()} before and {@link VTDNav#pop()} after manipulations of the VTDNav
+     * object.
+     * </p>
+     */
+    public static final String VTD_INDEX = "vtdIndex";
 }

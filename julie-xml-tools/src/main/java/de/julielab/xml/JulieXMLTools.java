@@ -333,6 +333,7 @@ public class JulieXMLTools {
 
                             row.put(fieldName, fieldValue);
                         }
+                        row.put(JulieXMLConstants.VTD_INDEX, index);
                         index = ap.evalXPath();
                         return row;
                     } catch (XPathEvalExceptionHuge e) {
@@ -483,6 +484,7 @@ public class JulieXMLTools {
 
                             row.put(fieldName, fieldValue);
                         }
+                        row.put(JulieXMLConstants.VTD_INDEX, index);
                         index = ap.evalXPath();
                         return row;
                     } catch (XPathEvalException e) {
@@ -754,11 +756,6 @@ public class JulieXMLTools {
         if (elementIndex != -1) {
             textIndex = vn.getText();
             // If the element already has text, change it.
-            // Since VTD XML 2.11, a non-existent text node does not lead to a
-            // -1 index (node does not exist) but to a text node with zero
-            // length (node exists but has no text content).
-            // int tokenLength = vn.getTokenLength(textIndex);
-            // if (tokenLength > 0)
             if (textIndex != -1) {
                 xm.updateToken(textIndex, text);
                 LOG.trace("Element text already existed at token index {} and is replaced.", textIndex);
@@ -767,16 +764,6 @@ public class JulieXMLTools {
                 // If the element is empty, insert the new text.
                 xm.insertAfterHead(text);
                 textIndex = elementIndex + 1;
-                // The following lines wont change anything since the new text
-                // is only visible to the XMLModifier, not to the VTDNav...I
-                // think :-)
-                // textIndex = elementIndex;
-                // Determine the new character data position.
-                // while (vn.getTokenType(textIndex) !=
-                // VTDNav.TOKEN_CHARACTER_DATA
-                // && vn.getTokenType(textIndex) != VTDNav.TOKEN_CDATA_VAL) {
-                // ++textIndex;
-                // }
             }
         }
         LOG.trace("Returning the VTD XML index of the new element text as {}", textIndex);
@@ -899,6 +886,7 @@ class XPathNavigator extends AbstractFieldValueSource {
     private AutoPilot apFE; // AutoPilot "ForEach"
     private AutoPilot apXP; // AutoPilot "XPath"
     private Options options;
+    private int vtdIndexOfLastValue = -1;
 
     public XPathNavigator(VTDNav nv, AutoPilot apForEach, AutoPilot apXPath, Options options) {
         this.vn = nv;
@@ -926,7 +914,7 @@ class XPathNavigator extends AbstractFieldValueSource {
             throw new FieldValueRetrievalException(e);
         }
         apFE.resetXPath();
-        Object retobj = null;
+        Object retobj;
         if (retList.size() > 0) {
             if (options.returnArray)
                 retobj = retList.toArray(new String[retList.size()]);
