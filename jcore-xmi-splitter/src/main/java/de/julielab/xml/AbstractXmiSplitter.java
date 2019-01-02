@@ -166,9 +166,9 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
         return nodesByXmiId;
     }
 
-    protected abstract String getNodeXml(JeDISVTDGraphNode node);
+    protected abstract String getNodeXml(JeDISVTDGraphNode node) throws XMISplitterException;
 
-    protected LinkedHashMap<String, ByteArrayOutputStream> createAnnotationModuleData(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Set<JeDISVTDGraphNode>> annotationModules, Map<String, Integer> existingSofaIdMap, int nextPossibleId) throws XMISplitterException {
+    protected LinkedHashMap<String, ByteArrayOutputStream> createAnnotationModuleData(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Set<JeDISVTDGraphNode>> annotationModules) throws XMISplitterException {
         LinkedHashMap<String, ByteArrayOutputStream> annotationModuleData = new LinkedHashMap<>();
         for (String moduleName : annotationModules.keySet()) {
             if (!storeBaseDocument && moduleName.equals(DOCUMENT_MODULE_LABEL))

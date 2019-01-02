@@ -41,7 +41,7 @@ public class StaxXmiSplitterTest {
         // Also, we add the sofa with the special ID -2 (as a duplicate to its original, but a priori unknown ID)
         assertThat(nodesByXmiId).hasSize(1441);
         JeDISVTDGraphNode tokenWithSynonyms = nodesByXmiId.get(3430);
-        String s = new String(Arrays.copyOfRange(xmiData, tokenWithSynonyms.getByteOffset(), tokenWithSynonyms.getByteOffset()+tokenWithSynonyms.getByteLength()));
+        String s = new String(Arrays.copyOfRange(xmiData, tokenWithSynonyms.getByteOffset(), tokenWithSynonyms.getByteOffset() + tokenWithSynonyms.getByteLength()));
         assertThat(s).contains("<synonyms>exchange</synonyms");
         assertThat(s).contains("<hypernyms>chemical phenomenon</hypernyms");
     }
@@ -313,4 +313,26 @@ public class StaxXmiSplitterTest {
         System.out.println(new String(builtXmi.toByteArray()));
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }
+
+
+    @Test
+    public void testCorrectSofaId() throws Exception {
+        // This test checks that already existing sofa XMI mappings are respected. This is a crucial feature
+        // because if an existing sofaID <-> sofa xmi:id mapping is not respected, annotations added to an existing
+        // base document might have differing xmi references to the sofa which will render the data inconsistent.
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        jCas.setDocumentText("This is a simple sentence.");
+        new Sentence(jCas, 0, jCas.getDocumentText().length()).addToIndexes();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList("de.julielab.jcore.types.Sentence")), true, true, "docs", Collections.emptySet());
+        Map<String, Integer> sofaIdMap = new HashMap<>();
+        sofaIdMap.put("_InitialView", 9999);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
+
+        assertThat(new String(result.xmiData.get("de.julielab.jcore.types.Sentence").toByteArray(), "UTF-8")).contains("sofa=\"9999\"");
+    }
+
 }

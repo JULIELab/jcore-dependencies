@@ -84,7 +84,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, existingSofaIdMap, nextPossibleId);
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules);
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
             return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap);
@@ -112,7 +112,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
                 JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, typeName.equals(CAS_SOFA) ? SofaVTDGraphNode::new : JeDISVTDGraphNode::new);
                 n.setByteOffset(reader.getLocation().getCharacterOffset());
                 n.setTypeName(typeName);
-                String sofaId = reader.getAttributeValue(namespaceMap.get("cas"), "sofa");
+                String sofaId = reader.getAttributeValue(null, "sofa");
                 if (sofaId != null)
                     n.setSofaXmiId(Integer.parseInt(sofaId));
                 else

@@ -53,8 +53,12 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
     }
 
     @Override
-    protected String getNodeXml(JeDISVTDGraphNode node) {
-        return null;
+    protected String getNodeXml(JeDISVTDGraphNode node) throws XMISplitterException {
+        try {
+            return vn.toRawString(node.getByteOffset(), node.getByteLength());
+        } catch (NavException e) {
+            throw new XMISplitterException(e);
+        }
     }
 
     @Override
@@ -75,7 +79,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, existingSofaIdMap, nextPossibleId, vn);
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules);
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
             return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap);
@@ -83,42 +87,6 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
             throw new XMISplitterException(e);
         }
     }
-
-
-    private LinkedHashMap<String, ByteArrayOutputStream> createAnnotationModuleData(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Set<JeDISVTDGraphNode>> annotationModules, Map<String, Integer> existingSofaIdMap, int nextPossibleId, VTDNav vn) throws NavException, XMISplitterException {
-        LinkedHashMap<String, ByteArrayOutputStream> annotationModuleData = new LinkedHashMap<>();
-        for (String moduleName : annotationModules.keySet()) {
-            if (!storeBaseDocument && moduleName.equals(DOCUMENT_MODULE_LABEL))
-                continue;
-            Set<JeDISVTDGraphNode> moduleNodes = annotationModules.get(moduleName);
-            try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                annotationModuleData.put(moduleName.equals(DOCUMENT_MODULE_LABEL) ? docTableName : moduleName, baos);
-                for (JeDISVTDGraphNode node : moduleNodes) {
-                    if (node.getSofaXmiId() == SOFA_UNKNOWN)
-                        throw new IllegalArgumentException("An annotation module is requested that belongs to a Sofa that is not present in existing document data and that is also not to be stored now. This would bring inconsistency into the stored data because some elements would refer to a Sofa that does not exist.");
-
-                    String xmlElement = vn.toRawString(node.getByteOffset(), node.getByteLength());
-                    int oldSofaXmiId = node.getSofaXmiId();
-                    // Adapt sofa ID and xmi:id for this annotation
-                    if (oldSofaXmiId != NO_SOFA_KEY) {
-                        xmlElement = xmlElement.replaceFirst("sofa=\"[0-9]+\"", "sofa=\"" + nodesByXmiId.get(node.getSofaXmiId()).getNewXmiId() + "\"");
-                    }
-                    xmlElement = xmlElement.replaceFirst("xmi:id=\"[0-9]+\"", "xmi:id=\"" + node.getNewXmiId() + "\"");
-                    // Update the XMI IDs of the references
-                    for (String featureName : node.getReferencedXmiIds().keySet()) {
-                        List<Integer> references = node.getReferencedXmiIds().get(featureName);
-                        String newReferenceString = references.stream().map(oldId -> nodesByXmiId.get(oldId).getNewXmiId()).map(String::valueOf).collect(Collectors.joining(" "));
-                        xmlElement = xmlElement.replaceFirst(featureName + "=\"[0-9\\s]+\"", featureName + "=\"" + newReferenceString + "\"");
-                    }
-                    baos.write(xmlElement.getBytes(StandardCharsets.UTF_8));
-                }
-            } catch (IOException e) {
-                throw new XMISplitterException(e);
-            }
-        }
-        return annotationModuleData;
-    }
-
 
 
     private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, Map<String, String> namespaceMap, JCas aCas) throws VTDException {
