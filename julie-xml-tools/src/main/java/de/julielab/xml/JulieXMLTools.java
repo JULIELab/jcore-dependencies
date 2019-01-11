@@ -329,7 +329,9 @@ public class JulieXMLTools {
                     try {
                         for (String fieldName : navigators.keySet()) {
                             FieldValueSource navi = navigators.get(fieldName);
+                            vn.push();
                             Object fieldValue = navi.getFieldValue();
+                            vn.pop();
 
                             row.put(fieldName, fieldValue);
                         }
@@ -464,7 +466,6 @@ public class JulieXMLTools {
                             + "\" does not define a source to get a value from (e.g. XML XPath or file name) and will not have imported any values.");
                 }
             }
-
             return new Iterator<Map<String, Object>>() {
 
                 int index = startIndex;
@@ -480,7 +481,9 @@ public class JulieXMLTools {
                     try {
                         for (String fieldName : navigators.keySet()) {
                             FieldValueSource navi = navigators.get(fieldName);
+                            vn.push();
                             Object fieldValue = navi.getFieldValue();
+                            vn.pop();
 
                             row.put(fieldName, fieldValue);
                         }
