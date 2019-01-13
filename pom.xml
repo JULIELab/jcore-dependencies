@@ -23,6 +23,7 @@
     </licenses>
     <url>https://github.com/JULIELab/jcore-dependencies</url>
     <modules>
+        <module>abner-1.5</module>
         <module>aliasi-lingpipe</module>
         <module>biosem-event-extractor</module>
         <module>dragontool</module>
@@ -36,6 +37,9 @@
         <module>linnaeus</module>
         <module>jcore-xmi-splitter</module>
         <module>jcore-db-test-utilities</module>
+        <module>jcore-mallet-0.4</module>
+        <module>secondstring-2003</module>
+        <module>openjgraph</module>
     </modules>
     <scm>
         <connection>scm:git:git://github.com/JULIELab/jcore-dependencies.git</connection>
