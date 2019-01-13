@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>jcore-dependencies</artifactId>
+        <groupId>de.julielab</groupId>
+        <version>2.3.0</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>abner-1.5</artifactId>
+    <version>1.0.0</version>
+    <repositories>
+        <!-- For JLex -->
+        <repository>
+            <id>wso2</id>
+            <url>http://dist.wso2.org/maven2/</url>
+        </repository>
+    </repositories>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>de.julielab</groupId>
+            <artifactId>jcore-mallet-0.4</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>JLex</groupId>
+            <artifactId>JLex</artifactId>
+            <version>0.0</version>
+            <scope>provided</scope>
+        </dependency>
+    </dependencies>
+
+
+</project>

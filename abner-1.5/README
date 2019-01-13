@@ -1,0 +1,66 @@
+================================================================
+ABNER: A Biomedical Named Entity Recognizer
+Version 1.5 (March 2005)
+http://www.cs.wisc.edu/~bsettles/abner/
+================================================================
+
+Burr Settles (bsettles@cs.wisc.edu)
+Department of Computer Sciences
+Department of Biostatistics & Medical Informatics
+University of Wisconsin-Madison
+Madison, WI 53706 USA
+
+================================================================
+LICENSE & STUFF
+================================================================
+
+(c) 2004 Burr Settles.
+
+ABNER is released "open source" under the terms of the Common Public
+License (see the file "LICENSE" included in this distribution). You
+are free to modify or make contributions to this source code under the
+terms of that license. Feel free to submit bug fixes, code
+modifications, new models, and other contributions to the author at
+the address above.
+
+Please give ABNER proper acknowledgement with any derivative works or
+research. More details at the project website:
+
+	http://www.cs.wisc.edu/~bsettles/abner/
+
+Thank you.
+
+================================================================
+COMPILING THE CODE
+================================================================
+
+First, make sure you have the following tools installed and working:
+
+  o Java SDK 1.4 - http://java.sun.com/j2ee/download.html
+  o MALLET 0.3.1 - http://mallet.cs.umass.edu/
+  o JLex - http://www.cs.princeton.edu/~appel/modern/java/JLex/
+
+Next, you will need to edit variables in the "Makefile" to reflect
+where the appropriate tools are installed on your system. After that,
+simply enter the command:
+
+	% make
+
+And that should do it.
+
+NOTE: The trained CRF model files are *not* included with the source
+distribution (to minimize file size and redundancy). You may use the
+API to train your own models, or download "abner.jar" from the project
+website extract the default models with the command:
+
+	% jar xf abner.jar abner/resources/*crf
+
+================================================================
+USING THE API
+================================================================
+
+This distribution includes two simple files that illustrate basic
+functionality of ABNER's API:
+
+  o TaggingExample.java
+  o TrainingExample.java
