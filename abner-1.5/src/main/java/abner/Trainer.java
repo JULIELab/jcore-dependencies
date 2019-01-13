@@ -75,13 +75,28 @@ public class Trainer {
 	train(trainFile, modelFile, null);
     }
 
+	/**
+	 <p>Identical to the other train routine, but the set of tags
+	 (e.g. "PROTEIN", "DNA", etc.) allows the model to periodically
+	 output progress in terms of precision/recall/f1 during
+	 training. <i>Note: do not use "B-" or "I-" prefixes.</i>
+	 */
+	public void train (String trainFile, String modelFile, String[] tags) {
+	    try (FileInputStream fis = new FileInputStream(trainFile)) {
+            System.out.println("Reading '"+trainFile+"' file...");
+            train(fis, modelFile, tags);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
        <p>Identical to the other train routine, but the set of tags
        (e.g. "PROTEIN", "DNA", etc.) allows the model to periodically
        output progress in terms of precision/recall/f1 during
        training. <i>Note: do not use "B-" or "I-" prefixes.</i>
     */
-    public void train (String trainFile, String modelFile, String[] tags) {
+    public void train (InputStream is, String modelFile, String[] tags) {
 
 	try {
 
@@ -130,9 +145,8 @@ public class Trainer {
 	    crf = new CRF4 (p, null);
 
 	    // read in the traing set files
-	    System.out.println("Reading '"+trainFile+"' file...");
 	    InstanceList trainingData = new InstanceList (p);
-	    trainingData.add (new LineGroupIterator (new FileReader (new File (trainFile)), 
+	    trainingData.add (new LineGroupIterator (new InputStreamReader (is),
 						     Pattern.compile("^.*$"), false));
 
 	    System.out.println ("Doing the deed...");

@@ -108,17 +108,25 @@ public class Tagger {
        External constructor: Load a trained CRF specified by the
        external model file.
     */
-    public Tagger(File f) {
-	try {
-	    System.err.println("Loading external tagging module from '"+f.getPath()+"'...");
-	    ObjectInputStream ois = new ObjectInputStream(new FileInputStream(f));
-	    initialize(ois);
-	    ois.close();
-	    myMode = EXTERNAL;
-	} catch (Exception e) {
-	    System.err.println(e);
-	}
+    public Tagger(File f) throws FileNotFoundException {
+		this(new FileInputStream(f));
+		System.err.println("Loaded external tagging module from '"+f.getPath()+"'...");
     }
+
+	/**
+	 External constructor: Load a trained CRF specified by the
+	 external model file.
+	 */
+	public Tagger(InputStream is) {
+		try {
+			ObjectInputStream ois = new ObjectInputStream(is);
+			initialize(ois);
+			ois.close();
+			myMode = EXTERNAL;
+		} catch (Exception e) {
+			System.err.println(e);
+		}
+	}
 
     
 
