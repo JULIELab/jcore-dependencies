@@ -37,6 +37,11 @@ public class IOBToken extends IOToken {
 			this.label = label.substring(2);
 		}
 	}
+
+	public IOBToken(String text, String label, String pos) {
+		this(text, label);
+		this.pos = pos;
+	}
     
     public String toString() {
         String ret = text+"\t\t\t"+iobMark;
@@ -46,12 +51,4 @@ public class IOBToken extends IOToken {
         return ret;
     }
     
-    /**
-     * @deprecated
-     * I don't know where we need this for!
-     * KT, 14.11.2008
-     */
-    public IOToken toXIoToken() {
-      return new IOToken(text, label);
-    }
 }

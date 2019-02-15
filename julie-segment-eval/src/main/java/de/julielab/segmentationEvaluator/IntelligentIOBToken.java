@@ -55,14 +55,15 @@ public class IntelligentIOBToken extends IOToken {
 			this.label = label;
 			this.iobMark = "I";
 		}
+	}
 
+	public IntelligentIOBToken(String text, String label, String pos) {
+		this(text, label);
+		this.pos = pos;
 	}
 
 	public String toString() {
 		String ret = text + "\t\t\t" + iobMark + CONCATENATOR + label;
-		// if (!iobMark.equals("O")) {
-		// ret += "_"+label;
-		// }
 		return ret;
 	}
 
