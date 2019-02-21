@@ -12,8 +12,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.TreeSet;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -31,249 +33,283 @@ import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
 
 public class EntityEvaluator {
 
-	public static final String PROP_ERROR_ANALYZER = "error-analyzer";
-	public static final String PROP_ERROR_STATS = "error-statistics-class";
-	public static final String PROP_COMPARISON_TYPE = "comparison-type";
-	public static final String PROP_OVERLAP_TYPE = "overlap-type";
-	public static final String PROP_OVERLAP_SIZE = "overlap-size";
-	public static final String PROP_WITH_IDS = "with-ids";
+    public static final String PROP_ERROR_ANALYZER = "error-analyzer";
+    public static final String PROP_ERROR_STATS = "error-statistics-class";
+    public static final String PROP_COMPARISON_TYPE = "comparison-type";
+    public static final String PROP_OVERLAP_TYPE = "overlap-type";
+    public static final String PROP_OVERLAP_SIZE = "overlap-size";
+    public static final String PROP_WITH_IDS = "with-ids";
+    public static final Logger log = LoggerFactory.getLogger(EntityEvaluator.class);
+    private ComparisonType comparisonType;
+    private OverlapType overlapType;
+    private int overlapSize;
+    private boolean withIds;
+    private Properties properties;
+    private EvaluationDataFormat dataFormat;
 
-	private ComparisonType comparisonType;
-	private OverlapType overlapType;
-	private int overlapSize;
-	private boolean withIds;
-	private Properties properties;
+    public EntityEvaluator() {
+        comparisonType = EvaluationDataEntry.ComparisonType.EXACT;
+        overlapType = EvaluationDataEntry.OverlapType.PERCENT;
+        overlapSize = 100;
+        withIds = true;
+        dataFormat = new GeneNormalizationFormat();
 
-	private EvaluationDataFormat dataFormat;
+        log.debug("ComparisonType: {}", comparisonType);
+        log.debug("OverlapType: {}", overlapType);
+        log.debug("OverlapSize: {}", overlapSize);
+        log.debug("WithIds: {}", withIds);
+    }
 
-	public static final Logger log = LoggerFactory.getLogger(EntityEvaluator.class);
+    public EntityEvaluator(File propertiesFile) throws FileNotFoundException, IOException {
+        // this is just a very complicated way to say "load the properties and set them
+        // to the constructor"
+        this(((Supplier<Properties>) () -> {
+            Properties p = new Properties();
+            try {
+                p.load(new FileInputStream(propertiesFile));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return p;
+        }).get());
 
-	public EntityEvaluator() {
-		comparisonType = EvaluationDataEntry.ComparisonType.EXACT;
-		overlapType = EvaluationDataEntry.OverlapType.PERCENT;
-		overlapSize = 100;
-		withIds = true;
-		dataFormat = new GeneNormalizationFormat();
+    }
 
-		log.debug("ComparisonType: {}", comparisonType);
-		log.debug("OverlapType: {}", overlapType);
-		log.debug("OverlapSize: {}", overlapSize);
-		log.debug("WithIds: {}", withIds);
-	}
+    public EntityEvaluator(Properties properties) throws FileNotFoundException, IOException {
+        this.properties = properties;
 
-	public EntityEvaluator(File propertiesFile) throws FileNotFoundException, IOException {
-		// this is just a very complicated way to say "load the properties and set them
-		// to the constructor"
-		this(new Supplier<Properties>() {
-			@Override
-			public Properties get() {
-				Properties p = new Properties();
-				try {
-					p.load(new FileInputStream(propertiesFile));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				return p;
-			}
-		}.get());
+        comparisonType = EvaluationDataEntry.ComparisonType.valueOf(properties
+                .getProperty(PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.EXACT.toString()).toUpperCase());
+        overlapType = EvaluationDataEntry.OverlapType.valueOf(properties
+                .getProperty(PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.PERCENT.toString()).toUpperCase());
+        overlapSize = Integer.parseInt(properties.getProperty(PROP_OVERLAP_SIZE, "100"));
+        withIds = Boolean.parseBoolean(properties.getProperty(PROP_WITH_IDS, "true"));
 
-	}
+        String errorAnalyzerClass = properties.getProperty(PROP_ERROR_ANALYZER);
+        String errorStatisticsClass = properties.getProperty(PROP_ERROR_STATS);
 
-	public EntityEvaluator(Properties properties) throws FileNotFoundException, IOException {
-		this.properties = properties;
+        log.debug("ComparisonType: {}", comparisonType);
+        log.debug("OverlapType: {}", overlapType);
+        log.debug("OverlapSize: {}", overlapSize);
+        log.debug("Error analysis: {}", errorAnalyzerClass);
+        log.debug("Print error statistics class: {}", errorStatisticsClass);
+        log.debug("With IDs: {}", withIds);
+    }
 
-		comparisonType = EvaluationDataEntry.ComparisonType.valueOf(properties
-				.getProperty(PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.EXACT.toString()).toUpperCase());
-		overlapType = EvaluationDataEntry.OverlapType.valueOf(properties
-				.getProperty(PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.PERCENT.toString()).toUpperCase());
-		overlapSize = Integer.parseInt(properties.getProperty(PROP_OVERLAP_SIZE, "100"));
-		withIds = Boolean.parseBoolean(properties.getProperty(PROP_WITH_IDS, "true"));
+    public static void main(String[] args) throws IOException {
+        if (args.length == 0) {
+            System.err.println(
+                    "Usage: " + EntityEvaluator.class.getSimpleName() + " -g <gold data> [-a <alternative gold data>] -p <pred data> [-c configration file]");
+            System.exit(1);
+        }
 
-		String errorAnalyzerClass = properties.getProperty(PROP_ERROR_ANALYZER);
-		String errorStatisticsClass = properties.getProperty(PROP_ERROR_STATS);
+        File goldFile = null;
+        File goldAltFile = null;
+        File predFile = null;
+        File configFile = null;
 
-		log.debug("ComparisonType: {}", comparisonType);
-		log.debug("OverlapType: {}", overlapType);
-		log.debug("OverlapSize: {}", overlapSize);
-		log.debug("Error analysis: {}", errorAnalyzerClass);
-		log.debug("Print error statistics class: {}", errorStatisticsClass);
-		log.debug("With IDs: {}", withIds);
-	}
+        for (int i = 0; i < args.length; i++) {
+            String arg = args[i];
+            if (arg.startsWith("-")) {
+                if (i >= args.length) {
+                    System.err.println("Missing value for parameter " + arg);
+                    System.exit(1);
+                }
+                String value = args[i + 1];
+                switch (arg) {
+                    case "-g":
+                        goldFile = new File(value);
+                        break;
+                    case "-a":
+                        goldAltFile = new File(value);
+                        break;
+                    case "-p":
+                        predFile = new File(value);
+                        break;
+                    case "-c":
+                        configFile = new File(value);
+                        break;
+                    default:
+                        System.err.println("Unknown parameter " + arg);
+                        System.exit(2);
+                }
+            }
+        }
 
-	public Properties getProperties() {
-		return properties;
-	}
+        if (goldFile == null || predFile == null) {
+            System.err.println("Missing gold or prediction file.");
+            System.err.println(
+                    "Usage: " + EntityEvaluator.class.getSimpleName() + " -g <gold data> [-a <alternative gold data>] -p <pred data> [-c configration file]");
+            System.exit(3);
+        }
 
-	public EntityEvaluationResults evaluate(EvaluationData gold, EvaluationData predicted) {
-		if (comparisonType != EvaluationDataEntry.ComparisonType.EXACT) {
-			log.debug(
-					"Converting gold and predicted entity entries to the following comparison method: ComparisonType - {}; OverlapType - {}; OverlapSize - {}",
-					comparisonType, overlapType, overlapSize);
-			for (EvaluationDataEntry entry : gold) {
-				entry.setComparisonType(comparisonType);
-				entry.setOverlapType(overlapType);
-				entry.setOverlapSize(overlapSize);
-			}
-			for (EvaluationDataEntry entry : predicted) {
-				entry.setComparisonType(comparisonType);
-				entry.setOverlapType(overlapType);
-				entry.setOverlapSize(overlapSize);
-			}
-		}
-		if (!withIds) {
-			log.debug("Converting gold and predicted entity entries for evaluation without IDs.");
-			for (EvaluationDataEntry entry : gold) {
-				entry.setEntityId("0");
-			}
-			for (EvaluationDataEntry entry : predicted) {
-				entry.setEntityId("0");
-			}
-		}
 
-		Map<String, EvaluationData> goldByEntityTypes = gold.sliceIntoEntityTypes();
-		if (goldByEntityTypes.size() > 1)
-			goldByEntityTypes.put(EntityEvaluationResults.OVERALL, gold);
-		Map<String, EvaluationData> predictedByEntityTypes = predicted.sliceIntoEntityTypes();
-		if (predictedByEntityTypes.size() > 1)
-			predictedByEntityTypes.put(EntityEvaluationResults.OVERALL, predicted);
+        EntityEvaluator evaluator = configFile == null ? new EntityEvaluator()
+                : new EntityEvaluator(configFile);
 
-		EntityEvaluationResults results = new EntityEvaluationResults();
+        EvaluationData goldData = null;
+        EvaluationData goldAltData = null;
+        EvaluationData predData = null;
+        if (configFile == null
+                || evaluator.getProperties().getProperty(EvaluationData.PROP_INPUT_FORMAT_CLASS) == null) {
+            System.out.println("No configuration file given, trying to guess data format.");
 
-		for (String entityType : Sets.union(goldByEntityTypes.keySet(), predictedByEntityTypes.keySet())) {
+            List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
+                    new GeneNormalizationNoOffsetsFormat());
+            EvaluationDataFormat foundFormat = null;
+            int i = 0;
+            while (foundFormat == null && i < formats.size()) {
+                EvaluationDataFormat format = formats.get(i);
+                try {
+                    goldData = EvaluationData.readDataFile(goldFile, format);
+                    if (goldAltFile != null)
+                        goldAltData = EvaluationData.readDataFile(goldAltFile, format);
+                    predData = EvaluationData.readDataFile(predFile, format);
+                    foundFormat = format;
+                } catch (NumberFormatException e) {
+                    System.out.println(format.getClass().getSimpleName() + " did cause exception, trying the next.");
+                }
+                ++i;
+            }
+            if (foundFormat == null) {
+                System.out.println("All input data format specifications failed: "
+                        + formats.stream().map(f -> f.getClass().getSimpleName()).collect(Collectors.joining(", ")));
+                System.out.println("Please use a configuration file and specify the correct format class.");
+                System.exit(1);
+            }
+            evaluator.setDataFormat(foundFormat);
+        } else {
+            goldData = EvaluationData.readDataFile(goldFile, evaluator.dataFormat);
+            predData = EvaluationData.readDataFile(predFile, evaluator.dataFormat);
+        }
 
-			Multimap<String, EvaluationDataEntry> goldByDoc = goldByEntityTypes
-					.getOrDefault(entityType, new EvaluationData(gold.isMentionData())).organizeByDocument();
-			Multimap<String, EvaluationDataEntry> predByDoc = predictedByEntityTypes
-					.getOrDefault(entityType, new EvaluationData(predicted.isMentionData())).organizeByDocument();
+        EntityEvaluationResults results = evaluator.evaluate(goldData, predData);
+        try (FileOutputStream fos = new FileOutputStream("EvaluationReport.txt")) {
+            for (EntityEvaluationResult result : results.values()) {
+                System.out.println(result.getEvaluationReportShort());
+                IOUtils.write(result.getEvaluationReportLong(), fos);
+            }
+        }
 
-			EntityEvaluationResult evalResult = new EntityEvaluationResult();
-			evalResult.setEntityType(entityType);
+    }
 
-			for (String docId : Sets.union(goldByDoc.keySet(), predByDoc.keySet())) {
-				Collection<EvaluationDataEntry> goldEntries = goldByDoc.get(docId);
-				Collection<EvaluationDataEntry> predEntries = predByDoc.get(docId);
-				if (gold.isMentionData() && predicted.isMentionData()) {
-					computeEvalStatisticsMentionWise(goldEntries, predEntries, docId, evalResult, gold.isMentionData());
-				}
-				computeEvalStatisticsDocWise(goldEntries, predEntries, docId, evalResult, !gold.isMentionData());
-			}
+    public Properties getProperties() {
+        return properties;
+    }
 
-			results.put(entityType, evalResult);
-		}
-		return results;
-	}
+    public EntityEvaluationResults evaluate(EvaluationData gold, EvaluationData predicted) {
+        return evaluate(gold, null, predicted);
+    }
 
-	public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted) {
-		return evaluate(gold, predicted, EvaluationData.getDataFormatFromConfiguration(properties));
-	}
+    public EntityEvaluationResults evaluate(EvaluationData gold, EvaluationData alternative, EvaluationData predicted) {
+        if (comparisonType != EvaluationDataEntry.ComparisonType.EXACT || !withIds) {
+            log.debug(
+                    "Converting gold and predicted entity entries to the following comparison method: ComparisonType - {}; OverlapType - {}; OverlapSize - {}",
+                    comparisonType, overlapType, overlapSize);
+            Consumer<Stream<EvaluationDataEntry>> entryConfigurator = s -> {
+                if (!withIds)
+                    log.debug("Converting gold and predicted entity entries for evaluation without IDs.");
+                s.forEach(e -> {
+                    e.setComparisonType(comparisonType);
+                    e.setOverlapType(overlapType);
+                    e.setOverlapSize(overlapSize);
+                    if (!withIds)
+                        e.setEntityId("0");
+                });
+            };
 
-	public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted,
-			EvaluationDataFormat format) {
-		EvaluationData goldData = new EvaluationData(gold, format);
-		EvaluationData predData = new EvaluationData(predicted, format);
-		return evaluate(goldData, predData);
-	}
+            entryConfigurator.accept(gold.stream());
+            if (alternative != null)
+                entryConfigurator.accept(alternative.stream());
+            entryConfigurator.accept(predicted.stream());
+        }
 
-	private void computeEvalStatisticsMentionWise(Collection<EvaluationDataEntry> goldEntries,
-			Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
-			boolean doErrorAnalysis) {
-		// We must use TreeSets for overlap-comparisons because then the hash
-		// values won't work for HashMap.
-		TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>(goldEntries);
-		TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
 
-		SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
-		SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
-		SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
+        Map<String, EvaluationData> goldByEntityTypes = gold.sliceIntoEntityTypes();
+        if (goldByEntityTypes.size() > 1)
+            goldByEntityTypes.put(EntityEvaluationResults.OVERALL, gold);
+        Map<String, EvaluationData> predictedByEntityTypes = predicted.sliceIntoEntityTypes();
+        if (predictedByEntityTypes.size() > 1)
+            predictedByEntityTypes.put(EntityEvaluationResults.OVERALL, predicted);
 
-		evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.MENTION);
-	}
+        EntityEvaluationResults results = new EntityEvaluationResults();
 
-	private void computeEvalStatisticsDocWise(Collection<EvaluationDataEntry> goldEntries,
-			Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
-			boolean doErrorAnalysis) {
-		// We must use TreeSets for overlap-comparisons because then the hash
-		// values won't work for HashMap.
-		TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>();
-		for (EvaluationDataEntry entry : goldEntries)
-			goldSet.add(entry.toDocWiseEntry());
-		TreeSet<EvaluationDataEntry> predSet = new TreeSet<>();
-		for (EvaluationDataEntry entry : predEntries)
-			predSet.add(entry.toDocWiseEntry());
+        for (String entityType : Sets.union(goldByEntityTypes.keySet(), predictedByEntityTypes.keySet())) {
 
-		SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
-		SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
-		SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
+            Multimap<String, EvaluationDataEntry> goldByDoc = goldByEntityTypes
+                    .getOrDefault(entityType, new EvaluationData(gold.isMentionData())).organizeByDocument();
+            Multimap<String, EvaluationDataEntry> predByDoc = predictedByEntityTypes
+                    .getOrDefault(entityType, new EvaluationData(predicted.isMentionData())).organizeByDocument();
 
-		evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.DOCUMENT);
+            EntityEvaluationResult evalResult = new EntityEvaluationResult();
+            evalResult.setEntityType(entityType);
 
-	}
+            for (String docId : Sets.union(goldByDoc.keySet(), predByDoc.keySet())) {
+                Collection<EvaluationDataEntry> goldEntries = goldByDoc.get(docId);
+                Collection<EvaluationDataEntry> predEntries = predByDoc.get(docId);
+                if (gold.isMentionData() && predicted.isMentionData()) {
+                    computeEvalStatisticsMentionWise(goldEntries, predEntries, docId, evalResult, gold.isMentionData());
+                }
+                computeEvalStatisticsDocWise(goldEntries, predEntries, docId, evalResult, !gold.isMentionData());
+            }
 
-	public static void main(String[] args) throws IOException {
-		if (args.length < 2 || args.length > 3) {
-			System.err.println(
-					"Usage: " + EntityEvaluator.class.getSimpleName() + " <gold data> <pred data> [properties file]");
-			System.exit(1);
-		}
+            results.put(entityType, evalResult);
+        }
+        return results;
+    }
 
-		File goldFile = new File(args[0]);
-		File predFile = new File(args[1]);
-		File propertiesFile = null;
-		if (args.length > 2)
-			propertiesFile = new File(args[2]);
+    public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted) {
+        return evaluate(gold, predicted, EvaluationData.getDataFormatFromConfiguration(properties));
+    }
 
-		EntityEvaluator evaluator = propertiesFile == null ? new EntityEvaluator()
-				: new EntityEvaluator(propertiesFile);
+    public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted,
+                                            EvaluationDataFormat format) {
+        EvaluationData goldData = new EvaluationData(gold, format);
+        EvaluationData predData = new EvaluationData(predicted, format);
+        return evaluate(goldData, predData);
+    }
 
-		EvaluationData goldData = null;
-		EvaluationData predData = null;
-		if (propertiesFile == null
-				|| evaluator.getProperties().getProperty(EvaluationData.PROP_INPUT_FORMAT_CLASS) == null) {
-			System.out.println("No properties file given, trying to guess data format.");
+    private void computeEvalStatisticsMentionWise(Collection<EvaluationDataEntry> goldEntries,
+                                                  Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
+                                                  boolean doErrorAnalysis) {
+        // We must use TreeSets for overlap-comparisons because then the hash
+        // values won't work for HashMap.
+        TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>(goldEntries);
+        TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
 
-			List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
-					new GeneNormalizationNoOffsetsFormat());
-			EvaluationDataFormat foundFormat = null;
-			int i = 0;
-			while (foundFormat == null && i < formats.size()) {
-				EvaluationDataFormat format = formats.get(i);
-				try {
-					goldData = EvaluationData.readDataFile(goldFile, format);
-					predData = EvaluationData.readDataFile(predFile, format);
-					foundFormat = format;
-				} catch (NumberFormatException e) {
-					System.out.println(format.getClass().getSimpleName() + " did cause exception, trying the next.");
-				}
-				++i;
-			}
-			if (foundFormat == null) {
-				System.out.println("All input data format specifications failed: "
-						+ formats.stream().map(f -> f.getClass().getSimpleName()).collect(Collectors.joining(", ")));
-				System.out.println("Please use a configuration file and specify the correct format class.");
-				System.exit(1);
-			}
-			evaluator.setDataFormat(foundFormat);
-		} else {
-			goldData = EvaluationData.readDataFile(goldFile, evaluator.dataFormat);
-			predData = EvaluationData.readDataFile(predFile, evaluator.dataFormat);
-		}
+        SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
+        SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
+        SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
 
-		EntityEvaluationResults results = evaluator.evaluate(goldData, predData);
-		try (FileOutputStream fos = new FileOutputStream("EvaluationReport.txt")) {
-			for (EntityEvaluationResult result : results.values()) {
-				System.out.println(result.getEvaluationReportShort());
-				IOUtils.write(result.getEvaluationReportLong(), fos);
-			}
-		}
+        evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.MENTION);
+    }
 
-	}
+    private void computeEvalStatisticsDocWise(Collection<EvaluationDataEntry> goldEntries,
+                                              Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
+                                              boolean doErrorAnalysis) {
+        // We must use TreeSets for overlap-comparisons because then the hash
+        // values won't work for HashMap.
+        TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>();
+        for (EvaluationDataEntry entry : goldEntries)
+            goldSet.add(entry.toDocWiseEntry());
+        TreeSet<EvaluationDataEntry> predSet = new TreeSet<>();
+        for (EvaluationDataEntry entry : predEntries)
+            predSet.add(entry.toDocWiseEntry());
 
-	public EvaluationDataFormat getDataFormat() {
-		return dataFormat;
-	}
+        SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
+        SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
+        SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
 
-	public void setDataFormat(EvaluationDataFormat dataFormat) {
-		this.dataFormat = dataFormat;
-	}
+        evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.DOCUMENT);
+
+    }
+
+    public EvaluationDataFormat getDataFormat() {
+        return dataFormat;
+    }
+
+    public void setDataFormat(EvaluationDataFormat dataFormat) {
+        this.dataFormat = dataFormat;
+    }
 
 }

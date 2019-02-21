@@ -14,11 +14,11 @@ import java.util.Properties;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 import de.julielab.evaluation.entities.format.EvaluationDataColumn;
 import de.julielab.evaluation.entities.format.EvaluationDataFormat;

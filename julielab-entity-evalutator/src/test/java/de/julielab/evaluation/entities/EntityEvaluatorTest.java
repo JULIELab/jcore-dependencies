@@ -129,13 +129,13 @@ public class EntityEvaluatorTest {
 
 	@Test
 	public void testByMainCall() throws IOException {
-		EntityEvaluator.main(new String[] { "src/test/resources/bc2Gold.genelist",
-				"src/test/resources/bc2Pred.genelist" });
+		EntityEvaluator.main(new String[] { "-g", "src/test/resources/bc2Gold.genelist",
+				"-p", "src/test/resources/bc2Pred.genelist" });
 	}
 
 	@Test
 	public void testByMainCallNoOffsets() throws IOException {
-		EntityEvaluator.main(new String[] { "src/test/resources/bc2GNtest.genelist",
-				"src/test/resources/bc2GNtest.genelist" });
+		EntityEvaluator.main(new String[] { "-g", "src/test/resources/bc2GNtest.genelist",
+				"-p", "src/test/resources/bc2GNtest.genelist" });
 	}
 }
