@@ -5,8 +5,8 @@ import java.util.Set;
 import com.google.common.collect.Sets.SetView;
 
 public class EvaluationDataEntrySets {
-	public EvaluationDataEntrySets(SetView<EvaluationDataEntry> tpSet, SetView<EvaluationDataEntry> fpSet,
-			SetView<EvaluationDataEntry> fnSet) {
+	public EvaluationDataEntrySets(Set<EvaluationDataEntry> tpSet, Set<EvaluationDataEntry> fpSet,
+			Set<EvaluationDataEntry> fnSet) {
 		this.tpSet = tpSet;
 		this.fpSet = fpSet;
 		this.fnSet = fnSet;

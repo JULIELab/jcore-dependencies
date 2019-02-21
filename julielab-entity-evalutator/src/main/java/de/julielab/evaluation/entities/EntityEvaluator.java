@@ -5,14 +5,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -162,8 +157,7 @@ public class EntityEvaluator {
                 EvaluationDataFormat format = formats.get(i);
                 try {
                     goldData = EvaluationData.readDataFile(goldFile, format);
-                    if (goldAltFile != null)
-                        goldAltData = EvaluationData.readDataFile(goldAltFile, format);
+                    goldAltData = goldAltFile != null ? EvaluationData.readDataFile(goldAltFile, format) : new EvaluationData();
                     predData = EvaluationData.readDataFile(predFile, format);
                     foundFormat = format;
                 } catch (NumberFormatException e) {
@@ -183,7 +177,7 @@ public class EntityEvaluator {
             predData = EvaluationData.readDataFile(predFile, evaluator.dataFormat);
         }
 
-        EntityEvaluationResults results = evaluator.evaluate(goldData, predData);
+        EntityEvaluationResults results = evaluator.evaluate(goldData, goldAltData, predData);
         try (FileOutputStream fos = new FileOutputStream("EvaluationReport.txt")) {
             for (EntityEvaluationResult result : results.values()) {
                 System.out.println(result.getEvaluationReportShort());
@@ -198,7 +192,7 @@ public class EntityEvaluator {
     }
 
     public EntityEvaluationResults evaluate(EvaluationData gold, EvaluationData predicted) {
-        return evaluate(gold, null, predicted);
+        return evaluate(gold, new EvaluationData(), predicted);
     }
 
     public EntityEvaluationResults evaluate(EvaluationData gold, EvaluationData alternative, EvaluationData predicted) {
@@ -217,20 +211,21 @@ public class EntityEvaluator {
                         e.setEntityId("0");
                 });
             };
-
             entryConfigurator.accept(gold.stream());
-            if (alternative != null)
-                entryConfigurator.accept(alternative.stream());
+            entryConfigurator.accept(alternative.stream());
             entryConfigurator.accept(predicted.stream());
         }
 
 
-        Map<String, EvaluationData> goldByEntityTypes = gold.sliceIntoEntityTypes();
-        if (goldByEntityTypes.size() > 1)
-            goldByEntityTypes.put(EntityEvaluationResults.OVERALL, gold);
-        Map<String, EvaluationData> predictedByEntityTypes = predicted.sliceIntoEntityTypes();
-        if (predictedByEntityTypes.size() > 1)
-            predictedByEntityTypes.put(EntityEvaluationResults.OVERALL, predicted);
+        Function<EvaluationData, Map<String, EvaluationData>> toLabelGroups = data -> {
+            final Map<String, EvaluationData> map = data.groupByEntityTypes();
+            if (map.size() > 1)
+                map.put(EntityEvaluationResults.OVERALL, data);
+            return map;
+        };
+        Map<String, EvaluationData> goldByEntityTypes = toLabelGroups.apply(gold);
+        Map<String, EvaluationData> goldAltByEntityTypes = toLabelGroups.apply(alternative);
+        Map<String, EvaluationData> predictedByEntityTypes = toLabelGroups.apply(predicted);
 
         EntityEvaluationResults results = new EntityEvaluationResults();
 
@@ -238,6 +233,8 @@ public class EntityEvaluator {
 
             Multimap<String, EvaluationDataEntry> goldByDoc = goldByEntityTypes
                     .getOrDefault(entityType, new EvaluationData(gold.isMentionData())).organizeByDocument();
+            Multimap<String, EvaluationDataEntry> goldAltByDoc = goldAltByEntityTypes
+                    .getOrDefault(entityType, new EvaluationData(predicted.isMentionData())).organizeByDocument();
             Multimap<String, EvaluationDataEntry> predByDoc = predictedByEntityTypes
                     .getOrDefault(entityType, new EvaluationData(predicted.isMentionData())).organizeByDocument();
 
@@ -246,11 +243,12 @@ public class EntityEvaluator {
 
             for (String docId : Sets.union(goldByDoc.keySet(), predByDoc.keySet())) {
                 Collection<EvaluationDataEntry> goldEntries = goldByDoc.get(docId);
+                Collection<EvaluationDataEntry> goldAltEntries = goldAltByDoc.get(docId);
                 Collection<EvaluationDataEntry> predEntries = predByDoc.get(docId);
                 if (gold.isMentionData() && predicted.isMentionData()) {
-                    computeEvalStatisticsMentionWise(goldEntries, predEntries, docId, evalResult, gold.isMentionData());
+                    computeEvalStatisticsMentionWise(goldEntries, goldAltEntries, predEntries, docId, evalResult);
                 }
-                computeEvalStatisticsDocWise(goldEntries, predEntries, docId, evalResult, !gold.isMentionData());
+                computeEvalStatisticsDocWise(goldEntries, predEntries, docId, evalResult);
             }
 
             results.put(entityType, evalResult);
@@ -269,24 +267,42 @@ public class EntityEvaluator {
         return evaluate(goldData, predData);
     }
 
-    private void computeEvalStatisticsMentionWise(Collection<EvaluationDataEntry> goldEntries,
-                                                  Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
-                                                  boolean doErrorAnalysis) {
+    private void computeEvalStatisticsMentionWise(Collection<EvaluationDataEntry> goldEntries, Collection<EvaluationDataEntry> goldAltEntries,
+                                                  Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult) {
         // We must use TreeSets for overlap-comparisons because then the hash
         // values won't work for HashMap.
         TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>(goldEntries);
+        TreeSet<EvaluationDataEntry> goldAltSet = new TreeSet<>(goldAltEntries);
         TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
 
-        SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
+        SetView<EvaluationDataEntry> tpGoldSet = Sets.intersection(predSet, goldSet);
+        SetView<EvaluationDataEntry> tpAltSet = Sets.intersection(predSet, goldAltSet);
+        final SetView<EvaluationDataEntry> tpSet = Sets.union(tpGoldSet, tpAltSet);
+
         SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
-        SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
+        fpSet = Sets.difference(fpSet, goldAltSet);
+
+        TreeSet<EvaluationDataEntry> goldAltOverlapSet = new TreeSet<>((e1, e2) -> e1.overlaps(e2) ? 0 : e1.getBegin() - e2.getBegin());
+        TreeSet<EvaluationDataEntry> predOverlapSet = new TreeSet<>((e1, e2) -> e1.overlaps(e2) ? 0 : e1.getBegin() - e2.getBegin());
+        goldAltOverlapSet.addAll(goldAltEntries);
+        predOverlapSet.addAll(predEntries);
+        TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>();
+        for (EvaluationDataEntry gold : Sets.difference(goldSet, tpSet)) {
+            final EvaluationDataEntry predFloor = predOverlapSet.floor(gold);
+            EvaluationDataEntry floor = goldAltOverlapSet.floor(gold);
+            if (floor != null && floor.overlaps(gold)) {
+                if (!floor.equals(predFloor))
+                    fnSet.add(gold);
+            } else {
+                fnSet.add(gold);
+            }
+        }
 
         evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.MENTION);
     }
 
     private void computeEvalStatisticsDocWise(Collection<EvaluationDataEntry> goldEntries,
-                                              Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult,
-                                              boolean doErrorAnalysis) {
+                                              Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult) {
         // We must use TreeSets for overlap-comparisons because then the hash
         // values won't work for HashMap.
         TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>();

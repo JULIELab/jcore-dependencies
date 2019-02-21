@@ -264,7 +264,7 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 				.collect(Collectors.toCollection(EvaluationData::new));
 	}
 
-	public Map<String, EvaluationData> sliceIntoEntityTypes() {
+	public Map<String, EvaluationData> groupByEntityTypes() {
 		return stream().collect(
 				Collectors.groupingBy(EvaluationDataEntry::getEntityType, HashMap::new,
 						Collectors.mapping(Function.identity(), Collectors.toCollection(() -> new EvaluationData(isMentionData)))));

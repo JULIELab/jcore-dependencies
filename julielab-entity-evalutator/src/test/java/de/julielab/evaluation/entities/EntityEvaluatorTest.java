@@ -19,6 +19,7 @@ public class EntityEvaluatorTest {
 
 	@Test
 	public void testByApiCall() {
+		// Format: docId, entityId, begin, end
 		String[] g1 = { "1", "1", "2", "4" }; // x
 		String[] g2 = { "1", "2", "5", "8" };
 		String[] g3 = { "2", "2", "7", "10" }; // x

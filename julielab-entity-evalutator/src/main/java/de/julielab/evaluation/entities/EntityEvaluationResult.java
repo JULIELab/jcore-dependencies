@@ -3,6 +3,7 @@ package de.julielab.evaluation.entities;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import com.google.common.collect.Sets.SetView;
@@ -14,8 +15,8 @@ public class EntityEvaluationResult {
 	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise;
 	private String entityType;
 
-	public void addStatisticsByDocument(String docId, SetView<EvaluationDataEntry> tpSet,
-			SetView<EvaluationDataEntry> fpSet, SetView<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
+	public void addStatisticsByDocument(String docId, Set<EvaluationDataEntry> tpSet,
+			Set<EvaluationDataEntry> fpSet, Set<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
 		switch (statsMode) {
 		case DOCUMENT:
 			if (null == statisticsByDocumentDocWise)
