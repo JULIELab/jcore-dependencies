@@ -12,7 +12,9 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import de.julielab.java.utilities.spanutils.OffsetMap;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -282,21 +284,13 @@ public class EntityEvaluator {
         SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
         fpSet = Sets.difference(fpSet, goldAltSet);
 
-        TreeSet<EvaluationDataEntry> goldAltOverlapSet = new TreeSet<>((e1, e2) -> e1.overlaps(e2) ? 0 : e1.getBegin() - e2.getBegin());
-        TreeSet<EvaluationDataEntry> predOverlapSet = new TreeSet<>((e1, e2) -> e1.overlaps(e2) ? 0 : e1.getBegin() - e2.getBegin());
-        goldAltOverlapSet.addAll(goldAltEntries);
-        predOverlapSet.addAll(predEntries);
-        TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>();
-        for (EvaluationDataEntry gold : Sets.difference(goldSet, tpSet)) {
-            final EvaluationDataEntry predFloor = predOverlapSet.floor(gold);
-            EvaluationDataEntry floor = goldAltOverlapSet.floor(gold);
-            if (floor != null && floor.overlaps(gold)) {
-                if (!floor.equals(predFloor))
-                    fnSet.add(gold);
-            } else {
-                fnSet.add(gold);
-            }
-        }
+        // Now compute the false negatives. We will start with the complete gold set and remove found gold items. The leftovers are the fns.
+        final OffsetMap<EvaluationDataEntry> goldOffsetMap = goldSet.stream().collect(Collectors.toMap(EvaluationDataEntry::getOffsetRange, Function.identity(), (e1, e2) -> e1, OffsetMap::new));
+        TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>(goldEntries);
+        // Remove the found elements from the gold set
+        tpGoldSet.forEach(fnSet::remove);
+        // Remove the gold elements whose correspondence in the alternative set has been found. The mapping between gold items and alternative items is that for each alternative the gold item with the largest overlap is mapped to it.
+        tpAltSet.stream().map(e -> Range.between(e.getBegin(), e.getEnd())).map(goldOffsetMap::getLargestOverlapping).forEach(fnSet::remove);
 
         evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.MENTION);
     }

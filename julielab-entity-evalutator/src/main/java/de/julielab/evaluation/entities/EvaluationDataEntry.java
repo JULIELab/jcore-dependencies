@@ -15,14 +15,7 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 		CHARS, PERCENT
 	}
 
-	public static Comparator<EvaluationDataEntry> beginComparator = new Comparator<EvaluationDataEntry>() {
-
-		@Override
-		public int compare(EvaluationDataEntry o1, EvaluationDataEntry o2) {
-			return o1.getBegin() - o2.getBegin();
-		}
-
-	};
+	public static Comparator<EvaluationDataEntry> beginComparator = (o1, o2) -> o1.getBegin() - o2.getBegin();
 
 	private String docId;
 
