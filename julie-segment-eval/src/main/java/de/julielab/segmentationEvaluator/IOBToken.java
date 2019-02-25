@@ -50,5 +50,13 @@ public class IOBToken extends IOToken {
         }
         return ret;
     }
+
+    /**
+     * Used in the jcore-iob-consumer
+     * @return
+     */
+    public IOToken toXIoToken() {
+        return new IOToken(text, label);
+    }
     
 }

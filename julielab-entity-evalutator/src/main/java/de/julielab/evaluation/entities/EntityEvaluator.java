@@ -273,7 +273,16 @@ public class EntityEvaluator {
         final OffsetMap<EvaluationDataEntry> goldOffsetMap = goldSet.stream().collect(Collectors.toMap(EvaluationDataEntry::getOffsetRange, Function.identity(), (e1, e2) -> e1, OffsetMap::new));
 
         SetView<EvaluationDataEntry> tpGoldSet = Sets.intersection(predSet, goldSet);
-        Set<EvaluationDataEntry> tpAltSet = Sets.intersection(predSet, goldAltSet).stream().map(e -> Range.between(e.getBegin(), e.getEnd())).map(goldOffsetMap::getOverlapping).map(Map::values).flatMap(Collection::stream).collect(Collectors.toSet());
+        Set<EvaluationDataEntry> tpAltSet = new HashSet<>();
+        // Find those gold entries that have been hit through an alternative. Note that in the end, the gold entries
+        // and not the alternative entries will be collected. This is because one alternative might actually indicate
+        // multiple gold hits (if the alternative spans multiple gold entities) and if we would only add the alternative
+        // we would not calculate enough TPs.
+        for (EvaluationDataEntry e : Sets.intersection(predSet, goldAltSet)) {
+            final Range<Integer> range = Range.between(e.getBegin(), e.getEnd());
+            final Set<EvaluationDataEntry> overlappingGold = goldOffsetMap.getOverlapping(range).values().stream().filter(gold -> gold.getEntityId().equals(e.getEntityId())).collect(Collectors.toSet());
+            tpAltSet.addAll(overlappingGold);
+        }
         final SetView<EvaluationDataEntry> tpSet = Sets.union(tpGoldSet, tpAltSet);
 
         SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
@@ -283,8 +292,10 @@ public class EntityEvaluator {
         TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>(goldEntries);
         // Remove the found elements from the gold set
         tpGoldSet.forEach(fnSet::remove);
-        // Remove the gold elements whose correspondence in the alternative set has been found.
-        tpAltSet.stream().map(e -> Range.between(e.getBegin(), e.getEnd())).map(goldOffsetMap::getOverlapping).map(Map::values).flatMap(Collection::stream).filter(Objects::nonNull).forEach(fnSet::remove);
+        // Remove the gold elements whose correspondence in the alternative set has been found. Since we collected
+        // the original gold mentions of the found alternatives (see comment above), we don't need to handle
+        // alternatives here.
+        tpAltSet.forEach(fnSet::remove);
 
         evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.MENTION);
     }
