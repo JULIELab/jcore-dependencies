@@ -1,32 +1,26 @@
 package de.julielab.evaluation.entities;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.*;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
+import com.google.common.collect.Multimap;
+import com.google.common.collect.Sets;
+import com.google.common.collect.Sets.SetView;
+import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
+import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
+import de.julielab.evaluation.entities.format.EvaluationDataFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
 import de.julielab.java.utilities.spanutils.OffsetMap;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.Range;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Multimap;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
-
-import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
-import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
-import de.julielab.evaluation.entities.format.EvaluationDataFormat;
-import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
-import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
+import java.io.*;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class EntityEvaluator {
 
@@ -276,21 +270,21 @@ public class EntityEvaluator {
         TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>(goldEntries);
         TreeSet<EvaluationDataEntry> goldAltSet = new TreeSet<>(goldAltEntries);
         TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
+        final OffsetMap<EvaluationDataEntry> goldOffsetMap = goldSet.stream().collect(Collectors.toMap(EvaluationDataEntry::getOffsetRange, Function.identity(), (e1, e2) -> e1, OffsetMap::new));
 
         SetView<EvaluationDataEntry> tpGoldSet = Sets.intersection(predSet, goldSet);
-        SetView<EvaluationDataEntry> tpAltSet = Sets.intersection(predSet, goldAltSet);
+        Set<EvaluationDataEntry> tpAltSet = Sets.intersection(predSet, goldAltSet).stream().map(e -> Range.between(e.getBegin(), e.getEnd())).map(goldOffsetMap::getOverlapping).map(Map::values).flatMap(Collection::stream).collect(Collectors.toSet());
         final SetView<EvaluationDataEntry> tpSet = Sets.union(tpGoldSet, tpAltSet);
 
         SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
         fpSet = Sets.difference(fpSet, goldAltSet);
 
         // Now compute the false negatives. We will start with the complete gold set and remove found gold items. The leftovers are the fns.
-        final OffsetMap<EvaluationDataEntry> goldOffsetMap = goldSet.stream().collect(Collectors.toMap(EvaluationDataEntry::getOffsetRange, Function.identity(), (e1, e2) -> e1, OffsetMap::new));
         TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>(goldEntries);
         // Remove the found elements from the gold set
         tpGoldSet.forEach(fnSet::remove);
-        // Remove the gold elements whose correspondence in the alternative set has been found. The mapping between gold items and alternative items is that for each alternative the gold item with the largest overlap is mapped to it.
-        tpAltSet.stream().map(e -> Range.between(e.getBegin(), e.getEnd())).map(goldOffsetMap::getLargestOverlapping).forEach(fnSet::remove);
+        // Remove the gold elements whose correspondence in the alternative set has been found.
+        tpAltSet.stream().map(e -> Range.between(e.getBegin(), e.getEnd())).map(goldOffsetMap::getOverlapping).map(Map::values).flatMap(Collection::stream).filter(Objects::nonNull).forEach(fnSet::remove);
 
         evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.MENTION);
     }
