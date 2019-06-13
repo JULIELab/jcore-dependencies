@@ -15,7 +15,7 @@ public abstract class JulieXMLConstants {
 	 * <samp> <b>Example:</b>
 	 * <p>
 	 * Assume we have a file with the following structure:
-	 * 
+	 *
 	 * <pre>
 	 * &lt;MedlineCitationSet&gt;
 	 * 		&lt;MedlineCitation&gt;
@@ -49,7 +49,7 @@ public abstract class JulieXMLConstants {
 	 * Constant for the name of a field attribute.
 	 * <p>
 	 * If set to true, the value of the database table column corresponding to the field definition with the
-	 * <code>RETRIEVE</code> attribute will be retrieved by the CoSoSys DataBaseConnector's query methods.
+	 * <code>RETRIEVE</code> attribute will be retrieved by the CoStoSys DataBaseConnector's query methods.
 	 */
 	public static final String RETRIEVE = "retrieve";
 
@@ -99,7 +99,6 @@ public abstract class JulieXMLConstants {
 	 * <p>
 	 * Determines the String to be used when concatenating multiple hits of an XPath. Multiple hits can also be returned
 	 * as an array. See the <code>RETURN_ARRAY</code> constant for more information.
-	 * 
 	 */
 	public static final String CONCAT_STRING = "concatString";
 
@@ -108,20 +107,20 @@ public abstract class JulieXMLConstants {
 	 * <p>
 	 * If set to true, the file name - if the XML document is read from file - is used to extract values. This is done
 	 * on a 'match with regular expression and replace with' fashion. Therefore, using this attribute requires to
-	 * deliver values for the attributes <code>REGEX</code> and <code>REPLACE_WITH</code> as well.
+	 * deliver values for the attributes {@link #REGEX} and {@link #REPLACE_WITH} as well.
 	 */
 	public static final String EXTRACT_FROM_FILENAME = "extractFromFileName";
 
 
-/**
+	/**
 	 * Constant for the name of a field attribute.
 	 * <p>
 	 * If set to true, extracted XML text passages will be XML entity resolved. That is, special characters will be substituted by their human readable counterpart.
-	 * <p>
+	 *
 	 * <samp>
 	 * <b>Example:</b>
 	 * <p>
-	 * The text 
+	 * The text
 	 * <pre>The population of butterflies \& bees represents &#x0026;lt; 30% of all insects</pre>
 	 * contains the XML entities '&' and '<' in an escaped fashion so not to collide with the XML parsing process. Switching <code>RESOLVE_ENTITIES</code> to true will
 	 * result in the string
@@ -161,4 +160,26 @@ public abstract class JulieXMLConstants {
 	 */
 	public static final String TYPE = "type";
 
+	/**
+	 * Constant for the name of a field attribute>
+	 * <p>
+	 * The value of this attribute will always be the value of the field that specifies the attribute.
+	 * </p>
+	 */
+	public static final String CONSTANT_VALUE = "constantValue";
+
+	/**
+	 * <p>
+	 * Used by the {@link JulieXMLTools#constructRowIterator(VTDNav, String, List, String)} and
+	 * {@link JulieXMLTools#constructRowIterator(VTDNavHuge, String, List, String)} methods. Adds to each row
+	 * the VTD token index of the beginning of the respective row, i.e. the XML element.
+	 * </p>
+	 * <p>
+	 * When using this functionality to navigate the XML with the VTDNav object given to the row constructor,
+	 * take care to always set back the original VTDNav state for the current row. This can be achieved by
+	 * calling {@link VTDNav#push()} before and {@link VTDNav#pop()} after manipulations of the VTDNav
+	 * object.
+	 * </p>
+	 */
+	public static final String VTD_INDEX = "vtdIndex";
 }
