@@ -6,8 +6,12 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.projects.seg_plus_coref;
 
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.types.*;
+import bsh.EvalError;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.Sequence;
 import edu.umass.cs.mallet.base.util.CommandOption;
 
 import java.io.File;
@@ -16,12 +20,7 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.logging.FileHandler;
 import java.util.logging.Logger;
-import java.util.logging.*;
-import java.util.Enumeration;
 import java.util.regex.Pattern;
-import java.util.List;
-
-import bsh.EvalError;
 
 /**
  * Methods that are useful for CRF TUIs.

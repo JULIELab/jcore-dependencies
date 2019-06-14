@@ -1,6 +1,7 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
+import dragon.matrix.IntSuperSparseMatrix;
+
 import java.io.File;
 
 /**

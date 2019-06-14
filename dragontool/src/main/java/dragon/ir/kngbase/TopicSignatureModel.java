@@ -1,11 +1,17 @@
 package dragon.ir.kngbase;
 
-import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.matrix.*;
-import dragon.util.*;
+import dragon.ir.index.IRSignatureIndexList;
+import dragon.matrix.DoubleSuperSparseMatrix;
+import dragon.matrix.IntSparseMatrix;
+import dragon.nlp.Counter;
+import dragon.nlp.Token;
+import dragon.util.MathUtil;
+
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * <p>A program for topic signature model estimation</p>

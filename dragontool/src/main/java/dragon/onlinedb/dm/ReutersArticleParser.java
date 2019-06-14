@@ -1,6 +1,8 @@
 package dragon.onlinedb.dm;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
+import dragon.onlinedb.BasicArticleParser;
 
 /**
  * <p>Reuters article parser</p>

@@ -11,11 +11,11 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.util.Lexer;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
+
 import java.io.*;
 /**
  * Read from File or BufferedRead in the data field and produce a TokenSequence.

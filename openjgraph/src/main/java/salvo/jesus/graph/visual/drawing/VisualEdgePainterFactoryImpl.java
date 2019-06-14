@@ -1,7 +1,10 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import salvo.jesus.graph.DirectedEdge;
+import salvo.jesus.graph.DirectedWeightedEdge;
+import salvo.jesus.graph.WeightedEdge;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraphComponent;
 
 /**
  * Factory for returning <tt>VisualEdgePainter</tt>s, depending on

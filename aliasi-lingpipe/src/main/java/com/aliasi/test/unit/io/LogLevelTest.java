@@ -1,11 +1,9 @@
 package com.aliasi.test.unit.io;
 
 import com.aliasi.io.LogLevel;
-
 import org.junit.Test;
+
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
 
 
 public class LogLevelTest {

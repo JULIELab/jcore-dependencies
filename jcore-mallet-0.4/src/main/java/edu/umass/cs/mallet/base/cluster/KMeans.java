@@ -13,22 +13,15 @@
 
 package edu.umass.cs.mallet.base.cluster;
 
-import edu.umass.cs.mallet.base.cluster.Clustering;
-import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.types.Metric;
 import edu.umass.cs.mallet.base.types.SparseVector;
-import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.util.VectorStats;
 
-import java.util.logging.*;
-import java.lang.reflect.Method;
-import java.lang.Class;
-import java.lang.Double;
-import java.lang.Integer;
-import java.lang.IllegalArgumentException;
-import java.util.Random;
 import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Logger;
 
 public class KMeans extends Clusterer {
     

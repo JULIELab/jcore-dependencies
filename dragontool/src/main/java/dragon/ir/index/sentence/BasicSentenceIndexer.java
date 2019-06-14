@@ -1,7 +1,9 @@
 package dragon.ir.index.sentence;
 
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.extract.ConceptExtractor;
+import dragon.nlp.extract.TripleExtractor;
+
 import java.util.ArrayList;
 
 /**

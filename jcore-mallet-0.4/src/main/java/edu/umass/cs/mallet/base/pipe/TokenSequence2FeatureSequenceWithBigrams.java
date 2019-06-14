@@ -9,7 +9,9 @@ package edu.umass.cs.mallet.base.pipe;
 
 import edu.umass.cs.mallet.base.types.*;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 /**
  * Convert the token sequence in the data field of each instance to a feature sequence that
  * preserves bigram information.

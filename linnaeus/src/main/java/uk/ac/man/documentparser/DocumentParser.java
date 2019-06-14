@@ -1,5 +1,16 @@
 package uk.ac.man.documentparser;
 
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import martin.common.Misc;
+import martin.common.MyConnection;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.input.*;
+import uk.ac.man.documentparser.input.util.CleanUnicode;
+import uk.ac.man.documentparser.input.util.DocumentBuffer;
+import uk.ac.man.documentparser.input.util.Skipper;
+import uk.ac.man.documentparser.input.util.Splitter;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,35 +21,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.input.BMCFactory;
-import uk.ac.man.documentparser.input.BMCXMLFactory;
-import uk.ac.man.documentparser.input.DatabaseIterator;
-import uk.ac.man.documentparser.input.DatabaseListIterator;
-import uk.ac.man.documentparser.input.Directory;
-import uk.ac.man.documentparser.input.DocumentIterator;
-import uk.ac.man.documentparser.input.ElsevierFactory;
-import uk.ac.man.documentparser.input.IDIterator;
-import uk.ac.man.documentparser.input.InputFactory;
-import uk.ac.man.documentparser.input.MedlineIndexFactory;
-import uk.ac.man.documentparser.input.MedlinePMCIndexFactory;
-import uk.ac.man.documentparser.input.OTMI;
-import uk.ac.man.documentparser.input.OTMIFactory;
-import uk.ac.man.documentparser.input.PMCAbstract;
-import uk.ac.man.documentparser.input.PMCFactory;
-import uk.ac.man.documentparser.input.PMCIndexFactory;
-import uk.ac.man.documentparser.input.TextFile;
-import uk.ac.man.documentparser.input.TextFileFactory;
-import uk.ac.man.documentparser.input.util.CleanUnicode;
-import uk.ac.man.documentparser.input.util.DocumentBuffer;
-import uk.ac.man.documentparser.input.util.Skipper;
-import uk.ac.man.documentparser.input.util.Splitter;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.Misc;
-import martin.common.MyConnection;
 
 public class DocumentParser {
 

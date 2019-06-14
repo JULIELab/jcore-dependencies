@@ -1,24 +1,21 @@
 
 package com.aliasi.test.unit.features;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
-
 import com.aliasi.features.KnownFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
 import com.aliasi.util.ObjectToDoubleMap;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
-
 import java.util.Arrays;
-import java.util.Map;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 public class KnownFeatureExtractorTest {
 

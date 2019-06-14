@@ -17,7 +17,7 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import java.util.*;
+import java.util.ArrayList;
 
 public class InvertedIndex
 {

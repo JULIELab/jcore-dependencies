@@ -1,13 +1,17 @@
 package cc.mallet.util;
 
-import java.sql.*;
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-
-import cc.mallet.types.*;
 import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
+import cc.mallet.pipe.iterator.CsvIterator;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+
+import java.io.File;
+import java.io.FileReader;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Pattern;
 
 public class DBInstanceStore {
 

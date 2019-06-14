@@ -15,12 +15,10 @@
 package edu.umass.cs.mallet.base.types;
 
 import edu.umass.cs.mallet.base.util.PropertyList;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.io.ObjectOutputStream;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
 
 /** A representation of a piece of text, usually a single word, to

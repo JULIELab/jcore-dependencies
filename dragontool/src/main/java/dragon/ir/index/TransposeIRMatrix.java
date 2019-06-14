@@ -1,8 +1,15 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.matrix.IntFlatSparseMatrix;
+import dragon.matrix.IntGiantSparseMatrix;
+import dragon.matrix.IntSparseMatrix;
+import dragon.util.ByteArrayConvert;
+import dragon.util.ByteArrayWriter;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 
 /**
  * <p>The class is used to transpose a given IR indexing matrix such as termdoc to docterm </p>

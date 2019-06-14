@@ -11,9 +11,12 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
 import cc.mallet.types.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * convert the property list on a token into a feature vector
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

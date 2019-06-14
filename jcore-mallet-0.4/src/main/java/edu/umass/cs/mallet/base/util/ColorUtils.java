@@ -9,7 +9,6 @@ package edu.umass.cs.mallet.base.util;
 import edu.umass.cs.mallet.base.types.MatrixOps;
 
 import java.awt.*;
-import java.text.DecimalFormat;
 
 /**
  * Utilities for dealing with RGB-style colors.

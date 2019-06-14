@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
 
 /**
  * <p>Window feature type </p>

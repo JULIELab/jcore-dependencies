@@ -8,14 +8,12 @@
 package edu.umass.cs.mallet.base.pipe;
 
 import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.Labeling;
 import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Labeling;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 
-import java.util.logging.*;
-import java.util.*;
+import java.util.logging.Logger;
 
 
 /**

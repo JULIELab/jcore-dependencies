@@ -17,13 +17,11 @@
 package com.aliasi.hmm;
 
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.tag.TagLattice;
-
 import com.aliasi.util.ScoredObject;
 
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 

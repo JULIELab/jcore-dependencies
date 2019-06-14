@@ -14,12 +14,9 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.util.PropertyList;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 public class DenseFeatureVector extends DenseVector 
 {

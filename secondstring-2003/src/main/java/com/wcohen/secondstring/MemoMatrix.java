@@ -1,7 +1,5 @@
 package com.wcohen.secondstring;
 
-import java.text.DecimalFormat;
-
 /** A matrix of doubles, defined recursively by the compute(i,j)
  * method, that will not be recomputed more than necessary.
  *

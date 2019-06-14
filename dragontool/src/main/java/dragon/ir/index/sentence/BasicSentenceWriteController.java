@@ -1,8 +1,12 @@
 package dragon.ir.index.sentence;
 
 import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.onlinedb.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.SimplePairList;
+import dragon.onlinedb.BasicArticle;
+import dragon.onlinedb.BasicCollectionWriter;
+
 import java.util.ArrayList;
 
 /**

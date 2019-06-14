@@ -11,20 +11,16 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.base.fst;
 
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.minimize.*;
-import edu.umass.cs.mallet.base.minimize.tests.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.util.*;
-import junit.framework.*;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.regex.*;
-import java.util.logging.*;
+import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+
 import java.io.*;
+import java.util.Random;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * This class's main method trains, tests, or runs a generic CRF-based

@@ -11,7 +11,7 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.types.*;
+import cc.mallet.types.InstanceList;
 /**
 	 Bagging Trainer.
 

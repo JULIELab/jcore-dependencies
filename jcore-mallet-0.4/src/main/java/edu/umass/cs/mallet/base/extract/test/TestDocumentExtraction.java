@@ -6,12 +6,14 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract.test;
 
-import junit.framework.*;
+import edu.umass.cs.mallet.base.extract.*;
+import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.types.LabelSequence;
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.extract.*;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.util.regex.Pattern;
 

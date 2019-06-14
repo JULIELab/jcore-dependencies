@@ -14,16 +14,18 @@
 
 package edu.umass.cs.mallet.base.pipe.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.types.tests.TestSerializable;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.util.ArrayListUtils;
-import junit.framework.*;
-import java.util.ArrayList;
-import java.util.regex.*;
+import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
+import edu.umass.cs.mallet.base.pipe.tsf.RegexMatches;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.tests.TestSerializable;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 public class TestInstancePipe extends TestCase
 {

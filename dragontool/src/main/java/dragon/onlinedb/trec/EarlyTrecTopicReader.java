@@ -1,7 +1,9 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
 import dragon.util.FileUtil;
+
 import java.util.ArrayList;
 /**
  * <p>TREC topic reader earlier than 2004 </p>

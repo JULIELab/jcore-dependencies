@@ -16,7 +16,8 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import java.util.logging.*;
+import java.util.logging.LogRecord;
+import java.util.logging.SimpleFormatter;
 
 public class PlainLogFormatter extends SimpleFormatter {
 

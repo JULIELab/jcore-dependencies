@@ -1,7 +1,8 @@
 package dragon.ir.topicmodel;
 
-import dragon.ir.index.*;
-import java.util.*;
+import dragon.ir.index.IndexReader;
+
+import java.util.Random;
 
 /**
  * <p>LDA Gibbs sampling two dimensional topical model</p>

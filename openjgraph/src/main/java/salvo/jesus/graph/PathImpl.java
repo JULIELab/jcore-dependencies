@@ -1,5 +1,6 @@
 package salvo.jesus.graph;
-import salvo.jesus.graph.listener.*;
+
+import salvo.jesus.graph.listener.PathListener;
 
 /**
  * An implementation of the <tt>Path</tt> interface that is a non-simple path.

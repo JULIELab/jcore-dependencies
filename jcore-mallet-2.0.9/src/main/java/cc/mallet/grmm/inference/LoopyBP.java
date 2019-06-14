@@ -7,15 +7,17 @@
 
 package cc.mallet.grmm.inference;
 
-import java.util.Iterator;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Random;
-import java.io.ObjectOutputStream;
+import cc.mallet.grmm.types.Factor;
+import cc.mallet.grmm.types.FactorGraph;
+import cc.mallet.grmm.types.Variable;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
-import cc.mallet.grmm.types.*;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Random;
 
 
 

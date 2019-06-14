@@ -3,9 +3,8 @@ package com.aliasi.test.unit.features;
 import com.aliasi.util.FeatureExtractor;
 
 import java.io.Serializable;
-
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 public class SerializableMockFeatureExtractor
     implements FeatureExtractor<Integer>, Serializable {

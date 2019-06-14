@@ -1,10 +1,17 @@
 package dragon.ir.classification;
 
-import dragon.ir.classification.featureselection.*;
-import dragon.ir.index.*;
-import dragon.matrix.*;
+import dragon.ir.classification.featureselection.FeatureSelector;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.DoubleFlatDenseMatrix;
+import dragon.matrix.Row;
+import dragon.matrix.SparseMatrix;
 import dragon.matrix.vector.DoubleVector;
-import java.io.*;
+
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * <p>Naive Bayesian classifier which uses Laplacian smoothing</p>

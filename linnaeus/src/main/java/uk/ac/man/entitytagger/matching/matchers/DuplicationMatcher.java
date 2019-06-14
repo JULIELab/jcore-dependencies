@@ -1,17 +1,12 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.generate.GenerateMatchers;
 import uk.ac.man.entitytagger.matching.Matcher;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 public class DuplicationMatcher extends Matcher {
 	private Matcher matcher;

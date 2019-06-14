@@ -14,13 +14,15 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.regex.*;
-import java.io.*;
-
 import cc.mallet.types.Instance;
 import cc.mallet.util.Strings;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An iterator that generates instances from an initial

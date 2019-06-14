@@ -2,8 +2,7 @@ package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.Citation;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.NodePair;
+
 import java.util.List;
 
 /**

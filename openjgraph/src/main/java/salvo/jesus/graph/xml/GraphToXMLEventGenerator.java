@@ -1,9 +1,8 @@
 package salvo.jesus.graph.xml;
 
-import org.w3c.dom.*;
-import org.apache.xml.serialize.XMLSerializer;
-import java.io.*;
-import salvo.jesus.graph.*;
+import salvo.jesus.graph.Edge;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
 import salvo.jesus.graph.visual.VisualGraph;
 
 /**

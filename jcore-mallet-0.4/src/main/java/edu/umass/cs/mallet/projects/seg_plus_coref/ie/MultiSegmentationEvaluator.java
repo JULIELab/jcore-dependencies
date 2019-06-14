@@ -22,16 +22,16 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.ie;
 
-import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.*;
 
-import java.io.*;
-import java.util.logging.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.logging.Logger;
 
 public class MultiSegmentationEvaluator extends TransducerEvaluator
 {

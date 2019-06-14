@@ -1,8 +1,11 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
-import java.util.*;
-import java.io.*;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.Visitor;
+
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * Abstract class for an algorithm implementing graph traversal.

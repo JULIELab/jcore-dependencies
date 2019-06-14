@@ -1,6 +1,7 @@
 package salvo.jesus.graph.visual.drawing;
 
 import salvo.jesus.graph.visual.VisualGraphComponent;
+
 import java.io.Serializable;
 
 /**

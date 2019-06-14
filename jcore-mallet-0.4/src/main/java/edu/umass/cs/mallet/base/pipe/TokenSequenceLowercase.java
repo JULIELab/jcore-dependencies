@@ -11,10 +11,14 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * Convert the text in each token in the token sequence in the data field to lower case.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

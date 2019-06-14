@@ -1,8 +1,13 @@
 package dragon.onlinedb;
 
-import dragon.nlp.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.SimpleElement;
+import dragon.nlp.SimpleElementList;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 /**
  * <p>Basic class of handling article index information</p>
  * <p> </p>

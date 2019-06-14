@@ -1,6 +1,6 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * Compute the difference between pairs of strings.

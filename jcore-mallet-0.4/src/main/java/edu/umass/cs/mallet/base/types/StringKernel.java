@@ -10,7 +10,9 @@
  */
 
 package edu.umass.cs.mallet.base.types;
-import edu.umass.cs.mallet.base.util.*;
+
+import edu.umass.cs.mallet.base.util.CommandOption;
+
 import java.util.LinkedHashMap;
 
 /**

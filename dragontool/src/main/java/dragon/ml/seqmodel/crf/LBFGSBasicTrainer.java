@@ -1,6 +1,7 @@
 package dragon.ml.seqmodel.crf;
 
-import dragon.matrix.*;
+import dragon.matrix.DoubleDenseMatrix;
+import dragon.matrix.DoubleFlatDenseMatrix;
 import dragon.ml.seqmodel.data.DataSequence;
 import dragon.ml.seqmodel.data.Dataset;
 import dragon.ml.seqmodel.feature.Feature;

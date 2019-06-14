@@ -15,27 +15,19 @@
 
 package de.julielab.xml;
 
-import static de.julielab.xml.JulieXMLConstants.CONSTANT_VALUE;
-import static de.julielab.xml.JulieXMLConstants.NAME;
-import static de.julielab.xml.JulieXMLConstants.XPATH;
-import static de.julielab.xml.JulieXMLTools.createField;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.lang.reflect.Method;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-
 import com.ximpleware.*;
 import org.assertj.core.api.Condition;
 import org.junit.Test;
-import static org.assertj.core.api.Assertions.*;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
+
+import static de.julielab.xml.JulieXMLConstants.*;
+import static de.julielab.xml.JulieXMLTools.createField;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 /**
  * Tests for the Utils class.
  * 

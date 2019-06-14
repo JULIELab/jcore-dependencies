@@ -1,8 +1,14 @@
 package dragon.ir.classification;
 
-import dragon.ir.classification.featureselection.*;
-import dragon.ir.index.*;
-import dragon.matrix.*;
+import dragon.ir.classification.featureselection.DocFrequencySelector;
+import dragon.ir.classification.featureselection.FeatureSelector;
+import dragon.ir.classification.featureselection.NullFeatureSelector;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.DoubleRow;
+import dragon.matrix.IntRow;
+import dragon.matrix.Row;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Basic function class for classifying</p>

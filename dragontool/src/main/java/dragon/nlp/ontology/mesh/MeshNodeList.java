@@ -1,8 +1,11 @@
 package dragon.nlp.ontology.mesh;
 
-import java.io.*;
-import java.util.*;
-import dragon.util.*;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>List of mesh nodes</p>

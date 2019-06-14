@@ -1,9 +1,15 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.data.Dataset;
 import dragon.ml.seqmodel.model.ModelGraph;
-import java.util.*;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.Vector;
 
 /**
  * The FeatureGenerator is an aggregator over all these different

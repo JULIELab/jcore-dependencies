@@ -1,13 +1,18 @@
 package salvo.jesus.graph.xml;
 
+import org.apache.xerces.dom.DocumentImpl;
+import org.apache.xml.serialize.OutputFormat;
+import org.apache.xml.serialize.XMLSerializer;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import org.xml.sax.*;
-import org.w3c.dom.*;
-import org.apache.xml.serialize.*;
-import org.apache.xerces.dom.*;
-import java.io.*;
-import java.util.*;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.io.IOException;
+import java.util.TreeMap;
 
 /**
  * An implmentation of GraphToXMLHandler that serializes a Graph and/or

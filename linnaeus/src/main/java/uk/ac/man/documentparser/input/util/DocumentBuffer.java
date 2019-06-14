@@ -1,12 +1,12 @@
 package uk.ac.man.documentparser.input.util;
 
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.input.DocumentIterator;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.logging.Logger;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.input.DocumentIterator;
 
 public class DocumentBuffer implements DocumentIterator {
 	

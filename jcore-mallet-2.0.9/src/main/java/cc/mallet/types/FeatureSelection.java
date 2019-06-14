@@ -16,9 +16,12 @@
 
 package cc.mallet.types;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.BitSet;
 import java.util.regex.Pattern;
-import java.io.*;
 
 public class FeatureSelection implements AlphabetCarrying, Serializable
 {

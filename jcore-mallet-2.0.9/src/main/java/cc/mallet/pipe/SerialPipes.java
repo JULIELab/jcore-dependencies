@@ -7,15 +7,17 @@
 
 package cc.mallet.pipe;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.io.*;
-
-import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.iterator.EmptyInstanceIterator;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.Instance;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 /**
  * Convert an instance through a sequence of pipes.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

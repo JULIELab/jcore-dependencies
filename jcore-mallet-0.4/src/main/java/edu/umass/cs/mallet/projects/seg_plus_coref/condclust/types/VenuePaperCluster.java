@@ -24,12 +24,12 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
 
-import java.util.*;
+import edu.umass.cs.mallet.base.util.PropertyList;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.PaperCitation;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.VenueCitation;
+
+import java.util.Collection;
 
 /** Stores a Paper, its Venue, a potential paper cluster, and a
  * potential venue cluster. Label is true iff Paper belongs in Paper

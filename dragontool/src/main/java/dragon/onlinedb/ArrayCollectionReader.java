@@ -1,6 +1,7 @@
 package dragon.onlinedb;
 
 import dragon.util.SortedArray;
+
 import java.util.ArrayList;
 
 /**

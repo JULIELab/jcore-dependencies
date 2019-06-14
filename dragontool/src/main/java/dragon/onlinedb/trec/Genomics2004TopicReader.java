@@ -1,9 +1,12 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.BasicArticle;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.util.ArrayList;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
 
 /**
  * <p>Genomics 2005 topic reader</p>

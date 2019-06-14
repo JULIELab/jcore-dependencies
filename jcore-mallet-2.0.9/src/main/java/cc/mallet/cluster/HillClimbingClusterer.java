@@ -1,10 +1,10 @@
 package cc.mallet.cluster;
 
-import java.util.LinkedList;
-
 import cc.mallet.cluster.neighbor_evaluator.NeighborEvaluator;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.InstanceList;
+
+import java.util.LinkedList;
 
 
 /**

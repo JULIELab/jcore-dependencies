@@ -11,24 +11,16 @@
 
 package cc.mallet.pipe.tests;
 
-import java.io.File;
-import java.util.Iterator;
-import java.util.regex.Pattern;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
-import cc.mallet.pipe.CharSequence2TokenSequence;
-import cc.mallet.pipe.FeatureSequence2FeatureVector;
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.SerialPipes;
-import cc.mallet.pipe.Target2Label;
-import cc.mallet.pipe.TokenSequence2FeatureSequence;
-import cc.mallet.pipe.TokenSequenceLowercase;
-import cc.mallet.pipe.TokenSequenceRemoveStopwords;
+import cc.mallet.pipe.*;
 import cc.mallet.pipe.iterator.FileIterator;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.regex.Pattern;
 
 @Ignore
 public class TestRainbowStyle {

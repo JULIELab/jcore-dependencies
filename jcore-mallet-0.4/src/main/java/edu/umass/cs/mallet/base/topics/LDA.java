@@ -7,10 +7,13 @@
 
 package edu.umass.cs.mallet.base.topics;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.FeatureSequence;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.util.Random;
-import java.util.Arrays;
+
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * Latent Dirichlet Allocation.

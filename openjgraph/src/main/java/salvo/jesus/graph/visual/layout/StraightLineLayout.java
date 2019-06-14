@@ -1,9 +1,13 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import salvo.jesus.graph.visual.GraphEditor;
+import salvo.jesus.graph.visual.GraphScrollPane;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraph;
+
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
 
 public class StraightLineLayout extends OrthogonalLineLayout {
 

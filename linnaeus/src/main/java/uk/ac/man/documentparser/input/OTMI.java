@@ -1,21 +1,18 @@
 package uk.ac.man.documentparser.input;
 
+import martin.common.xml.XPath;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
-import martin.common.xml.XPath;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
 
 public class OTMI implements DocumentIterator {
 

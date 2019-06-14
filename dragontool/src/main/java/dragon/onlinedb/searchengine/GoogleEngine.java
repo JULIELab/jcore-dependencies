@@ -1,7 +1,7 @@
 package dragon.onlinedb.searchengine;
 
-import org.apache.commons.httpclient.util.URIUtil;
 import dragon.util.HttpUtil;
+import org.apache.commons.httpclient.util.URIUtil;
 
 /**
  * <p>Google Search Engine</p>

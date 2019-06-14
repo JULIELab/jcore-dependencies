@@ -1,9 +1,14 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
 import dragon.util.SortedArray;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 /**
  * <p>UMLS ontology for extracting UMLS defined medical concepts (CUIs) from text </p>
  * <p>Description: </p>

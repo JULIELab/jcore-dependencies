@@ -1,6 +1,7 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.data.Dataset;
 
 /**
  * <p>Interface of feature type which is actually a factory generating certain type of features</p>

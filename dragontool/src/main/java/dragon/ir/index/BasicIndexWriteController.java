@@ -1,6 +1,8 @@
 package dragon.ir.index;
 
-import dragon.nlp.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.SimplePairList;
+
 import java.util.ArrayList;
 
 /**

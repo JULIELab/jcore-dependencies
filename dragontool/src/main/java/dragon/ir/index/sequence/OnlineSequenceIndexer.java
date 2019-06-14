@@ -1,6 +1,8 @@
 package dragon.ir.index.sequence;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRCollection;
+import dragon.ir.index.IRDocIndexList;
+import dragon.ir.index.IRTermIndexList;
 import dragon.nlp.SimpleElementList;
 import dragon.nlp.extract.ConceptExtractor;
 /**

@@ -7,22 +7,15 @@ package cc.mallet.topics;
  *   multinomial mixture models.
  */
 
-import cc.mallet.optimize.Optimizable;
 import cc.mallet.classify.MaxEnt;
-
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Instance;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Dirichlet;
-import cc.mallet.types.MatrixOps;
-
+import cc.mallet.optimize.Optimizable;
+import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.MalletProgressMessageLogger;
 
-import java.util.logging.*;
-import java.text.NumberFormat;
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.logging.Logger;
 
 public class DMROptimizable implements Optimizable.ByGradientValue {
 

@@ -1,6 +1,7 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * The match method proposed by Monge and Elkan.  They called this

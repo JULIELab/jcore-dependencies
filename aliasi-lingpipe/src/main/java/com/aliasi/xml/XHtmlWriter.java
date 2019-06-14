@@ -16,11 +16,11 @@
 
 package com.aliasi.xml;
 
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 
 /**
  * An <code>XHtmlWriter</code> provides constants and convenience

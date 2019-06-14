@@ -11,14 +11,13 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.FeatureSelection;
-import edu.umass.cs.mallet.base.classify.Classifier;
 import edu.umass.cs.mallet.base.util.CommandOption;
-import edu.umass.cs.mallet.base.util.BshInterpreter;
-import java.io.*;
-import java.util.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.Random;
 /**
  * Abstract parent of all classifier trainers.
  * <p>

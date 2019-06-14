@@ -7,8 +7,12 @@
 package cc.mallet.grmm.util;
 
 
-import java.io.*;
-import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.types.Factor;
+import cc.mallet.grmm.types.FactorGraph;
+import cc.mallet.grmm.types.Variable;
+
+import java.io.IOException;
+import java.io.Writer;
 
 /**
  * $Id: ModelReader.java,v 1.1 2007/10/22 21:37:58 mccallum Exp $

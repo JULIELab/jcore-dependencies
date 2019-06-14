@@ -19,14 +19,16 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.io.*;
-import java.util.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
+import edu.umass.cs.mallet.base.util.BshInterpreter;
+import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.IoUtils;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+
 //import bsh.Interpreter;
-import java.util.regex.*;
 
 public class InstanceListTUI
 {

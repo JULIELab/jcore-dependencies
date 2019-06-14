@@ -11,13 +11,15 @@
 
 package cc.mallet.types;
 
-import java.util.Arrays;
-import java.io.*;
-
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationTargetException;
-
 import cc.mallet.util.PropertyList;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Arrays;
 /**
 	 A vector that allocates memory only for non-zero values.
 

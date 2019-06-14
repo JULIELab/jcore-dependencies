@@ -1,10 +1,13 @@
 package dragon.nlp.tool.lemmatiser;
 
-import dragon.nlp.tool.Tagger;
 import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.util.EnvVariable;
 import dragon.util.FileUtil;
-import dragon.util.*;
-import java.io.*;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.File;
 import java.util.ArrayList;
 /**
  * <p>English lemmatiser which is adapted from WordNet </p>

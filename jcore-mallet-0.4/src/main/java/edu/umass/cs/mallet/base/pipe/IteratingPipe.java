@@ -11,16 +11,14 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import java.util.Iterator;
-import java.util.ArrayList;
+import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
 import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.util.UriUtils;
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.pipe.PipeOutputAccumulator;
-import edu.umass.cs.mallet.base.pipe.PipeOutputArrayList;
-import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * Converts the iterator in the data field to a PipeOutputAccumulation of the values
  * spanned by the iterator.

@@ -23,16 +23,16 @@
 
 package cc.mallet.cluster;
 
-import java.util.ArrayList;
-import java.util.Random;
-import java.util.logging.Logger;
-
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Metric;
 import cc.mallet.types.SparseVector;
 import cc.mallet.util.VectorStats;
+
+import java.util.ArrayList;
+import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * KMeans Clusterer

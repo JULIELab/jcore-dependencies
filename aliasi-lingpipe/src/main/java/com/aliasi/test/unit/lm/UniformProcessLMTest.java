@@ -1,15 +1,11 @@
 package com.aliasi.test.unit.lm;
 
 import com.aliasi.lm.UniformProcessLM;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
-
 import java.io.IOException;
+
+import static junit.framework.Assert.*;
 
 
 public class UniformProcessLMTest  {

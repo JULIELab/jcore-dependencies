@@ -1,9 +1,11 @@
 package dragon.ir.search.expand;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
 import dragon.ir.query.*;
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexComparator;
 import dragon.util.SortedArray;
+
 import java.util.ArrayList;
 /**
  * <p>Abstract Query Expansion</p>

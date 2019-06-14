@@ -1,7 +1,8 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.SimpleTokenizer;
+import com.wcohen.secondstring.tokens.Token;
+import com.wcohen.secondstring.tokens.Tokenizer;
 
 /**
  * Jensen-Shannon distance of two unigram language models, smoothed

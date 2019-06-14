@@ -1,6 +1,6 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
+import java.util.Iterator;
 
 /**
  * Abstract StringDistance implementation, implementing a few useful defaults.

@@ -1,9 +1,14 @@
 package dragon.nlp;
 
-import dragon.nlp.compare.*;
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.nlp.compare.IndexComparator;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>The list data structure for simple element data </p>

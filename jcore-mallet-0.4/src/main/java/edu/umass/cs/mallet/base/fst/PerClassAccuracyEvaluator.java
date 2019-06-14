@@ -6,13 +6,12 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.fst;
 
-import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.util.MalletLogger;
 
-import java.util.logging.Logger;
-import java.util.Arrays;
 import java.io.PrintStream;
 import java.text.DecimalFormat;
+import java.util.logging.Logger;
 
 /**
  * @author Charles Sutton

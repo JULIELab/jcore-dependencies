@@ -24,9 +24,11 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
-import java.util.regex.*;
+
 import java.io.File;
 import java.io.FileFilter;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class XMLFileFilter implements FileFilter
 {

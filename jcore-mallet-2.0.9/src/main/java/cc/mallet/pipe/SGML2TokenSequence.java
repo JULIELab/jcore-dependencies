@@ -12,10 +12,6 @@
 package cc.mallet.pipe;
 
 
-import java.io.*;
-import java.util.regex.*;
-import java.util.logging.Logger;
-
 import cc.mallet.extract.StringSpan;
 import cc.mallet.extract.StringTokenization;
 import cc.mallet.types.Instance;
@@ -23,6 +19,11 @@ import cc.mallet.types.Token;
 import cc.mallet.types.TokenSequence;
 import cc.mallet.util.CharSequenceLexer;
 import cc.mallet.util.MalletLogger;
+
+import java.io.*;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
 	 Converts a string containing simple SGML tags into a dta TokenSequence of words,
 	 paired with a target TokenSequence containing the SGML tags in effect for each word.

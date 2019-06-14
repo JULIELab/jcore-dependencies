@@ -1,14 +1,22 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.visual.drawing.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.graph.*;
-import java.util.*;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.*;
-import org.apache.log4j.*;
+import org.apache.log4j.Category;
+import salvo.jesus.graph.Tree;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.Visitor;
+import salvo.jesus.graph.algorithm.BreadthFirstTraversal;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.awt.*;
+import java.awt.geom.Arc2D;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * An implementation of a radial tree layout drawing, as described on

@@ -8,15 +8,10 @@
 
 package edu.umass.cs.mallet.base.classify;
 
+import edu.umass.cs.mallet.base.types.*;
+
 import java.io.Serializable;
 import java.util.Arrays;
-
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.FeatureSelection;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.Labeling;
 
 
 /**

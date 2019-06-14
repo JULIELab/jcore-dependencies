@@ -1,5 +1,4 @@
 package salvo.jesus.graph;
-import java.util.*;
 
 /**
  * LabeledGraphComponentImpl provides a default implementation for

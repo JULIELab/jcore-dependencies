@@ -16,15 +16,7 @@
 
 package com.aliasi.util;
 
-import java.util.Comparator;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
-import java.util.ArrayList;
+import java.util.*;
 /**
  * An <code>ObjectToCounterMap</code> maintains a mapping from objects
  * to integer counters, which may be incremented or set.  Objects not

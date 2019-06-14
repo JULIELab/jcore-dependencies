@@ -1,6 +1,6 @@
 package dragon.nlp;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexSortable;
 /**
  * <p>This is a light data structure for pair data</p>
  * <p></p>

@@ -1,7 +1,10 @@
 package dragon.ir.index;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 
 /**

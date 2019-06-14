@@ -1,17 +1,8 @@
 package de.julielab.xml;
 
-import static org.junit.Assert.assertEquals;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.*;
-
+import com.google.common.collect.Lists;
+import de.julielab.jcore.types.Lemma;
+import de.julielab.jcore.types.Token;
 import org.apache.uima.UIMAFramework;
 import org.apache.uima.analysis_engine.AnalysisEngine;
 import org.apache.uima.cas.CAS;
@@ -28,10 +19,10 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Lists;
+import java.io.*;
+import java.util.*;
 
-import de.julielab.jcore.types.Lemma;
-import de.julielab.jcore.types.Token;
+import static org.junit.Assert.assertEquals;
 
 /**
  * This test requires a new source XMI file because the given one uses a deprecated type system

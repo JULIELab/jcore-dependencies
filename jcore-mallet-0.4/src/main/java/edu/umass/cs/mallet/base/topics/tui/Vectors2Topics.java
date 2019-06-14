@@ -7,15 +7,15 @@
 
 package edu.umass.cs.mallet.base.topics.tui;
 
+import edu.umass.cs.mallet.base.topics.LDA;
+import edu.umass.cs.mallet.base.topics.TopicalNGrams;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.util.CommandOption;
 import edu.umass.cs.mallet.base.util.Random;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.topics.TopicalNGrams;
-import edu.umass.cs.mallet.base.topics.LDA;
 
 import java.io.File;
-import java.io.ObjectOutputStream;
 import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 
 // TODO: Does this really belong in classify.tui?  Perhaps we should make a topics.tui?
 

@@ -1,11 +1,14 @@
 package dragon.nlp.ontology.mesh;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
-import dragon.nlp.compare.*;
-import dragon.nlp.ontology.*;
-import dragon.util.*;
-import java.util.*;
+import dragon.matrix.DoubleSuperSparseMatrix;
+import dragon.nlp.Term;
+import dragon.nlp.Token;
+import dragon.nlp.compare.AlphabetaComparator;
+import dragon.nlp.ontology.SimilarityMetric;
+import dragon.util.SortedArray;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * <p>Similarity measures of comparing two MeSH nodes </p>

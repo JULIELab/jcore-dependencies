@@ -8,11 +8,13 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
-import java.net.URI;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Transform an array of character Sequences into a token sequence.

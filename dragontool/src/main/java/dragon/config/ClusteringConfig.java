@@ -1,9 +1,9 @@
 package dragon.config;
 
-import dragon.ir.index.*;
 import dragon.ir.clustering.*;
-import dragon.ir.clustering.clustermodel.*;
-import dragon.ir.clustering.docdistance.*;
+import dragon.ir.clustering.clustermodel.ClusterModel;
+import dragon.ir.clustering.docdistance.DocDistance;
+import dragon.ir.index.IndexReader;
 import dragon.matrix.SparseMatrix;
 
 /**

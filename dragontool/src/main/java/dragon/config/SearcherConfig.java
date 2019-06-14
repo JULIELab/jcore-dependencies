@@ -1,9 +1,9 @@
 package dragon.config;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IndexReader;
 import dragon.ir.search.*;
-import dragon.ir.search.smooth.*;
-import dragon.ir.search.feedback.*;
+import dragon.ir.search.feedback.Feedback;
+import dragon.ir.search.smooth.Smoother;
 
 /**
  * <p>Searcher configuration </p>

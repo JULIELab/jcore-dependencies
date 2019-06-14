@@ -11,7 +11,7 @@
 
 package cc.mallet.extract;
 
-import cc.mallet.types.*;
+import cc.mallet.types.Sequence;
 
 public interface Tokenization extends Sequence //??
 {

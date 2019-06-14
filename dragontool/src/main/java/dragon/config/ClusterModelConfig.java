@@ -1,9 +1,12 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.clustering.clustermodel.*;
+import dragon.ir.clustering.clustermodel.ClusterModel;
+import dragon.ir.clustering.clustermodel.CosineClusterModel;
+import dragon.ir.clustering.clustermodel.EuclideanClusterModel;
+import dragon.ir.clustering.clustermodel.MultinomialClusterModel;
+import dragon.ir.index.IndexReader;
 import dragon.ir.kngbase.KnowledgeBase;
-import dragon.matrix.*;
+import dragon.matrix.DoubleSparseMatrix;
 
 /**
  * <p>Cluster model configuration</p>

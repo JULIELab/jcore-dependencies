@@ -12,16 +12,12 @@
 
 package edu.umass.cs.mallet.base.minimize;
 
-import edu.umass.cs.mallet.base.minimize.LineMinimizer;
-import edu.umass.cs.mallet.base.minimize.Minimizable;
-import edu.umass.cs.mallet.base.minimize.BackTrackLineSearch;
 import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 
-import java.util.logging.*;
-import java.util.Vector;
-import java.util.Collection;
 import java.util.LinkedList;
+import java.util.Vector;
+import java.util.logging.Logger;
 
 public class LimitedMemoryBFGS implements Minimizer.ByGradient
 {

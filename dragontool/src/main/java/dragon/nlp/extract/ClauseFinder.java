@@ -1,7 +1,10 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Word;
+import dragon.nlp.tool.HeppleTagger;
+import dragon.nlp.tool.MedPostTagger;
+import dragon.nlp.tool.Tagger;
 /**
  * <p>Identify clauses in an English sentence</p>
  * <p>It is used to identify and mark all cluases in a sentence. this module should be executed after the

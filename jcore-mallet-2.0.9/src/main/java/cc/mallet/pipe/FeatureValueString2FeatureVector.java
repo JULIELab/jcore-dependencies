@@ -23,11 +23,11 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
 import cc.mallet.types.Alphabet;
-import cc.mallet.types.Instance;
 import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+
+import java.io.Serializable;
 
 public class FeatureValueString2FeatureVector extends Pipe implements Serializable {
 

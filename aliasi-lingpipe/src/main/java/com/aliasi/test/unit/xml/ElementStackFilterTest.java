@@ -16,19 +16,16 @@
 
 package com.aliasi.test.unit.xml;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
-
 import com.aliasi.xml.ElementStackFilter;
 import com.aliasi.xml.SimpleElementHandler;
+import org.junit.Test;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
 
 import java.util.EmptyStackException;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class ElementStackFilterTest  {
 

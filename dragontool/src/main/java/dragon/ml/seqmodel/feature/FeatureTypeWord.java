@@ -1,6 +1,8 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.BasicToken;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.data.Dataset;
 
 /**
  *

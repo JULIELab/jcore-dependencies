@@ -1,12 +1,7 @@
 package extractors;
 
 
-import is2.data.Cluster;
-import is2.data.D4;
-import is2.data.Instances;
-import is2.data.Long2IntInterface;
-import is2.data.MFB;
-import is2.data.ParseNBest;
+import is2.data.*;
 import is2.util.DB;
 
 import java.util.Arrays;

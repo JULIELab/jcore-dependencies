@@ -39,7 +39,7 @@
 package cc.mallet.classify.evaluate;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Vector;
 /**
  * Framework for standard graph. Can hold up to N data series
  */

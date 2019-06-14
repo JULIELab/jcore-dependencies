@@ -1,16 +1,9 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import com.wcohen.secondstring.tokens.Token;
 import com.wcohen.secondstring.tokens.SimpleTokenizer;
-import com.wcohen.secondstring.tokens.NGramTokenizer;
-import java.util.Hashtable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Set;
-import java.util.HashSet;
+import com.wcohen.secondstring.tokens.Token;
+
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.

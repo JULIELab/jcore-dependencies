@@ -8,9 +8,9 @@
 package cc.mallet.grmm.inference;
 
 
-import java.io.Serializable;
-
 import cc.mallet.grmm.types.*;
+
+import java.io.Serializable;
 
 
 /**

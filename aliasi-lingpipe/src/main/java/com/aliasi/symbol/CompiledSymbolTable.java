@@ -18,12 +18,7 @@ package com.aliasi.symbol;
 
 import com.aliasi.util.AbstractExternalizable;
 
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.Serializable;
-
+import java.io.*;
 import java.util.Arrays;
 
 /**

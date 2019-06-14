@@ -7,34 +7,17 @@
 
 package cc.mallet.fst;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Reader;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.iterator.LineGroupIterator;
+import cc.mallet.types.*;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AugmentableFeatureVector;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelSequence;
-import cc.mallet.types.Sequence;
-
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.iterator.LineGroupIterator;
-
-import cc.mallet.util.CommandOption;
-import cc.mallet.util.MalletLogger;
 
 /**
  * This class's main method trains, tests, or runs a generic CRF-based

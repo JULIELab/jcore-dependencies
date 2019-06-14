@@ -17,24 +17,13 @@
 package com.aliasi.hmm;
 
 import com.aliasi.symbol.SymbolTable;
-
-import com.aliasi.tag.Tagger;
-import com.aliasi.tag.NBestTagger;
-import com.aliasi.tag.TagLattice;
-import com.aliasi.tag.MarginalTagger;
-import com.aliasi.tag.ScoredTagging;
-import com.aliasi.tag.Tagging;
-
-import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Iterators;
-import com.aliasi.util.Scored;
-import com.aliasi.util.ScoredObject;
-import com.aliasi.util.Strings;
+import com.aliasi.tag.*;
+import com.aliasi.util.*;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 /**
  * An <code>HmmDecoder</code> provides implementations of first-best,

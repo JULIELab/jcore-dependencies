@@ -25,13 +25,13 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import java.util.List;
-import java.util.Iterator;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import org.jdom.Element;
+import org.jdom.Text;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.PropertyList;
-import org.jdom.*;
+import java.util.Iterator;
+import java.util.List;
 
 public class LinearDistanceMentionPair extends Pipe
 {

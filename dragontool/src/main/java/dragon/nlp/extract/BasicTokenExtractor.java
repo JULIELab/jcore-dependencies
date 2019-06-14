@@ -1,7 +1,10 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Token;
+import dragon.nlp.Word;
+import dragon.nlp.tool.Lemmatiser;
+
 import java.util.ArrayList;
 
 /**

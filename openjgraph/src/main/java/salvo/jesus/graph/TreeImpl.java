@@ -1,8 +1,8 @@
 package salvo.jesus.graph;
 
-import java.util.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.graph.listener.*;
+import salvo.jesus.graph.listener.TreeListener;
+
+import java.util.List;
 
 /**
  * An implementation of a <tt>Tree</tt>. This implementation

@@ -17,15 +17,11 @@
 package com.aliasi.chunk;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.hmm.HmmCharLmEstimator;
-
 import com.aliasi.lm.LanguageModel;
 import com.aliasi.lm.NGramBoundaryLM;
 import com.aliasi.lm.NGramProcessLM;
-
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
 import com.aliasi.util.Strings;
@@ -33,7 +29,6 @@ import com.aliasi.util.Strings;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import java.util.HashMap;
 import java.util.Map;
 

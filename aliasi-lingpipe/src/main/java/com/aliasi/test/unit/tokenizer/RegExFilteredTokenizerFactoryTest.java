@@ -1,17 +1,12 @@
 package com.aliasi.test.unit.tokenizer;
 
-import com.aliasi.tokenizer.RegExFilteredTokenizerFactory;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import com.aliasi.tokenizer.RegExFilteredTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import com.aliasi.util.AbstractExternalizable;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
+import org.junit.Test;
 
 import java.util.regex.Pattern;
 
-import org.junit.Test;
 import static com.aliasi.test.unit.Asserts.assertNotSerializable;
 import static com.aliasi.test.unit.tokenizer.TokenizerTest.assertFactory;
 

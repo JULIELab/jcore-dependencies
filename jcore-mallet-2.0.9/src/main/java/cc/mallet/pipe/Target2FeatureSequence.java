@@ -11,9 +11,15 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.TokenSequence;
 
-import cc.mallet.types.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /** Convert a token sequence in the target field into a feature sequence in the target field.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
  */

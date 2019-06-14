@@ -18,19 +18,14 @@ package com.aliasi.test.unit.sentences;
 
 import com.aliasi.sentences.MedlineSentenceModel;
 import com.aliasi.sentences.SentenceModel;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertTrue;
-import static org.junit.Assert.assertArrayEquals;
-
 import java.io.IOException;
-
 import java.util.HashSet;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class MedlineSentenceModelTest  {
 

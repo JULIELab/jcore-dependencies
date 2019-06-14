@@ -1,7 +1,8 @@
 package dragon.ir.classification;
 
 import dragon.ir.classification.featureselection.FeatureSelector;
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 import dragon.matrix.Row;
 /**
  * <p>Interface of Text Classifier</p>

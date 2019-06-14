@@ -1,11 +1,13 @@
 package salvo.jesus.graph.javax.swing;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.event.*;
-import java.util.*;
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
+import java.util.Vector;
 
 
 /**

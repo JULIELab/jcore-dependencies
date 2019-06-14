@@ -1,10 +1,8 @@
 package com.aliasi.test.unit.classify;
 
 import com.aliasi.classify.BinaryLMClassifier;
-
 import com.aliasi.lm.NGramBoundaryLM;
 import com.aliasi.lm.NGramProcessLM;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

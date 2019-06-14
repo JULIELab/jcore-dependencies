@@ -7,15 +7,15 @@
 
 package cc.mallet.fst.semi_supervised.constraints;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-
 import cc.mallet.fst.SumLattice;
 import cc.mallet.fst.semi_supervised.StateLabelMap;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.FeatureVectorSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
+
+import java.util.ArrayList;
+import java.util.BitSet;
 
 /** 
  * GE Constraint on the probability of self-transitions in the FST.

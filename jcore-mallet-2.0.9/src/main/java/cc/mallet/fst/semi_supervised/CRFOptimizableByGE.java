@@ -7,13 +7,6 @@
 
 package cc.mallet.fst.semi_supervised;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.concurrent.Callable;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.SumLattice;
 import cc.mallet.fst.SumLatticeDefault;
@@ -23,6 +16,13 @@ import cc.mallet.types.FeatureVectorSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.MatrixOps;
+
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Optimizable for CRF using Generalized Expectation constraints that

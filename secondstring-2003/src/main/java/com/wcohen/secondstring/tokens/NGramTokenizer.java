@@ -1,6 +1,7 @@
 package com.wcohen.secondstring.tokens;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Wraps another tokenizer, and adds all computes all ngrams of

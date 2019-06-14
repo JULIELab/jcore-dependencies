@@ -1,7 +1,8 @@
 package dragon.ir.clustering.docdistance;
 
-import dragon.ir.index.*;
-import dragon.matrix.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.DoubleSparseMatrix;
 
 /**
  * <p>Document distance measure of using KL divergence</p>

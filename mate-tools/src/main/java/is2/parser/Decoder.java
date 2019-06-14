@@ -1,12 +1,10 @@
 package is2.parser;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutorService;
-
-
 import is2.data.DataFES;
 import is2.data.Parse;
-import is2.util.DB;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutorService;
 
 
 /**

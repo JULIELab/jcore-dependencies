@@ -1,8 +1,10 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
+import dragon.matrix.IntGiantSparseMatrix;
+import dragon.matrix.IntSuperSparseMatrix;
+import dragon.nlp.SimpleElementList;
 import dragon.onlinedb.CollectionReader;
+
 import java.io.File;
 
 /**

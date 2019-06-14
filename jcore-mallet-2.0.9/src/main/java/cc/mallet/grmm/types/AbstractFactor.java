@@ -7,10 +7,10 @@
 package cc.mallet.grmm.types;
 
 
+import cc.mallet.util.Randoms;
+
 import java.util.Collection;
 import java.util.Iterator;
-
-import cc.mallet.util.Randoms;
 
 /**
  * An Abstract class from which new Factor classes can be subclassed.

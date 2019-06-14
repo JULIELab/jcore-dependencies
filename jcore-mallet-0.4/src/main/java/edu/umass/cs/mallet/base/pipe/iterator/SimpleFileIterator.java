@@ -11,14 +11,12 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.*;
-import java.io.*;
-import java.io.LineNumberReader;
-import java.io.Reader;
-import java.util.regex.*;
+import edu.umass.cs.mallet.base.types.Instance;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URI;
-import java.net.URISyntaxException;
 
 public class SimpleFileIterator extends AbstractPipeInputIterator
 {

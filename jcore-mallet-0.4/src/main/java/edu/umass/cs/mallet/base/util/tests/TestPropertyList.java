@@ -15,7 +15,9 @@
 package edu.umass.cs.mallet.base.util.tests;
 
 import edu.umass.cs.mallet.base.util.PropertyList;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestPropertyList extends TestCase
 {

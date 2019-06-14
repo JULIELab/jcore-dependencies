@@ -17,12 +17,15 @@
 
 package edu.umass.cs.mallet.base.pipe.tsf;
 
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.PropertyList;
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.Token;
-import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class OffsetPropertyConjunctions extends Pipe implements Serializable
 {

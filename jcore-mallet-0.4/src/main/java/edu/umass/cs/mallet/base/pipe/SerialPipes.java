@@ -11,14 +11,16 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.lang.reflect.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.io.*;
 /**
  * Convert an instance through a sequence of pipes.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

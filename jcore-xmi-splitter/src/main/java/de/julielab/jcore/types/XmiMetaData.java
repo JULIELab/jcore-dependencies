@@ -3,11 +3,10 @@
 /* First created by JCasGen Thu Jun 29 12:11:09 CEST 2017 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas; 
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.jcas.cas.TOP_Type;
-
 import org.apache.uima.jcas.cas.StringArray;
+import org.apache.uima.jcas.cas.TOP_Type;
 import org.apache.uima.jcas.tcas.Annotation;
 
 

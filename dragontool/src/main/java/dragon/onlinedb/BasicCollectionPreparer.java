@@ -1,7 +1,8 @@
 package dragon.onlinedb;
 
-import dragon.onlinedb.amazon.*;
-import dragon.util.*;
+import dragon.onlinedb.amazon.AmazonReviewQuery;
+import dragon.util.FileUtil;
+
 import java.io.BufferedReader;
 
 /**

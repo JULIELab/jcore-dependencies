@@ -1,6 +1,10 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.NullVisitor;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.Visitor;
+
 import java.util.*;
 
 /**

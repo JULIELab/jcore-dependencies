@@ -7,10 +7,10 @@
 
 package cc.mallet.classify.constraints.pr;
 
-import java.util.BitSet;
-
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.InstanceList;
+
+import java.util.BitSet;
 
 /**
  * Interface for expectation constraints for use with Posterior Regularization (PR).

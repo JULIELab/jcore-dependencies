@@ -1,11 +1,15 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.*;
-import java.awt.geom.*;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.util.*;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * An implementation of a directed-force layout using logarithmic springs

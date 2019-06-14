@@ -6,15 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract.pipe;
 
+import edu.umass.cs.mallet.base.extract.StringSpan;
+import edu.umass.cs.mallet.base.extract.StringTokenization;
+import edu.umass.cs.mallet.base.extract.Tokenization;
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.types.Token;
-import edu.umass.cs.mallet.base.extract.Tokenization;
-import edu.umass.cs.mallet.base.extract.StringTokenization;
-import edu.umass.cs.mallet.base.extract.StringSpan;
-
-import java.util.ArrayList;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 
 /**
  * Heuristically converts a simple token sequence into a Tokenization

@@ -1,7 +1,7 @@
 package salvo.jesus.graph.java.awt.geom;
 
-import java.awt.geom.*;
-import java.io.*;
+import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 /**
  * A <tt>java.awt.geom.Point2D.Double</tt> that is serializable.

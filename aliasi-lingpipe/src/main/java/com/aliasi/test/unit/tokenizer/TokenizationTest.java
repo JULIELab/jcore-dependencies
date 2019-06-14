@@ -1,23 +1,15 @@
 package com.aliasi.test.unit.tokenizer;
 
-import com.aliasi.util.AbstractExternalizable;
-
 import com.aliasi.tokenizer.*;
-
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertNotNull;
-
-import static org.junit.Assert.assertArrayEquals;
-
 import java.io.IOException;
-
 import java.util.Arrays;
+
+import static com.aliasi.test.unit.Asserts.assertFullEquals;
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class TokenizationTest {
 

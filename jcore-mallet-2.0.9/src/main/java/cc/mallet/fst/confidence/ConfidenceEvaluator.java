@@ -7,12 +7,13 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.Vector;
+import cc.mallet.fst.Segment;
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Sequence;
+
 import java.util.Collections;
 import java.util.Comparator;
-
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import java.util.Vector;
 
 public class ConfidenceEvaluator
 {

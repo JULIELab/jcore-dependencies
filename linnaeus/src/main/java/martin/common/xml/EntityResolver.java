@@ -1,10 +1,10 @@
 package martin.common.xml;
 
-import java.io.IOException;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.IOException;
 
 public class EntityResolver implements org.xml.sax.EntityResolver {
 

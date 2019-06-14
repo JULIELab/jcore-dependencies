@@ -11,10 +11,14 @@
 
 package cc.mallet.pipe;
 
-import java.util.regex.*;
-import java.io.*;
-
 import cc.mallet.types.Instance;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
 	 Given a string, return only the portion of the string inside a regex parenthesized group.
 

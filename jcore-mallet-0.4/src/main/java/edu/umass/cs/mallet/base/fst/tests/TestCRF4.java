@@ -14,23 +14,25 @@
 
 package edu.umass.cs.mallet.base.fst.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.maximize.*;
-import edu.umass.cs.mallet.base.maximize.tests.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
+import edu.umass.cs.mallet.base.fst.CRF4;
+import edu.umass.cs.mallet.base.fst.TokenAccuracyEvaluator;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.maximize.tests.TestMaximizable;
-import junit.framework.*;
+import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
+import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
+import edu.umass.cs.mallet.base.pipe.tsf.OffsetConjunctions;
+import edu.umass.cs.mallet.base.pipe.tsf.TokenText;
+import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.util.FileUtils;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import java.net.URI;
-import java.util.Iterator;
-import java.util.ArrayList;
+import java.io.*;
 import java.util.Random;
 import java.util.regex.Pattern;
-import java.io.*;
 
 public class TestCRF4 extends TestCase {
 

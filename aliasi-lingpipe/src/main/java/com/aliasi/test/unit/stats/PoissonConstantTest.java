@@ -1,14 +1,12 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.PoissonConstant;
-
 import org.junit.Test;
+
+import java.io.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-
-import java.io.*;
 
 public class PoissonConstantTest  {
     

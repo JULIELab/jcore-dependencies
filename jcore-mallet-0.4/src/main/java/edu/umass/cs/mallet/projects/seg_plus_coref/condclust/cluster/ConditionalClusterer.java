@@ -24,12 +24,19 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.cluster;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.*;
-import edu.umass.cs.mallet.base.cluster.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
+
+import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Labeling;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.LRUCache;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.NodeClusterPair;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.VenuePaperCluster;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.Citation;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.PaperCitation;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.VenueCitation;
+
 import java.util.*;
 
 /** Trains the conditional clusterer to predict "yes" or "no" for a

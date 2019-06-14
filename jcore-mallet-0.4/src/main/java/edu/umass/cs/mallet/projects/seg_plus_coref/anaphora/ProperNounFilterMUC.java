@@ -25,8 +25,6 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import java.util.*;
-
 public class ProperNounFilterMUC extends Filter
 {
 

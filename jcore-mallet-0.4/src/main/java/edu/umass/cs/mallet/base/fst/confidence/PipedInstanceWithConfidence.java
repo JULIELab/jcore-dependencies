@@ -11,7 +11,7 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Instance;
 
 /**
 	 Helper class to store confidence of an Instance.

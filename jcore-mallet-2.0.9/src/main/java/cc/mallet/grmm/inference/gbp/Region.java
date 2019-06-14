@@ -7,12 +7,11 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.*;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.Variable;
-
 import gnu.trove.THashSet;
+
+import java.util.*;
 
 /**
  * Created: May 27, 2005

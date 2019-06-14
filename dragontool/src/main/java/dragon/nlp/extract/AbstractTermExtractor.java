@@ -1,11 +1,13 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.nlp.Term;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.util.FileUtil;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  * <p>Abstract class for UMLS term (CUI) extraction </p>

@@ -1,9 +1,12 @@
 package dragon.nlp;
 
 import dragon.nlp.compare.IndexComparator;
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+import dragon.util.SortedArray;
+
+import java.io.File;
+import java.util.ArrayList;
 
 /**
  * <p>Simple pair list is the list for pair data elements </p>

@@ -18,22 +18,17 @@
 
 package abner;
 
-import java.io.*;
-import java.lang.*;
-import java.net.*;
-import java.util.Vector;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Collections;
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.regex.*;
+import edu.umass.cs.mallet.base.fst.CRF4;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.types.Sequence;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.minimize.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.types.*;
+
+import java.io.*;
+import java.net.URL;
+import java.util.Vector;
+import java.util.regex.Pattern;
 
 
 /**

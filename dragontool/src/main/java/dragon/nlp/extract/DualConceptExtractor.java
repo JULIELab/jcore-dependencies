@@ -1,7 +1,10 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
+import dragon.nlp.Document;
+import dragon.nlp.DocumentParser;
+import dragon.nlp.Sentence;
 import dragon.onlinedb.Article;
+
 import java.util.ArrayList;
 
 /**

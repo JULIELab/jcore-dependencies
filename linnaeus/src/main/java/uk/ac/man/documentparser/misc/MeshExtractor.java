@@ -1,14 +1,14 @@
 package uk.ac.man.documentparser.misc;
 
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import martin.common.SQL;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Logger;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.SQL;
 
 public class MeshExtractor {
 

@@ -7,17 +7,18 @@
 package cc.mallet.grmm.learning;
 
 
-import java.util.ArrayList;
-import java.util.regex.*;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-
 import cc.mallet.extract.StringSpan;
 import cc.mallet.extract.StringTokenization;
 import cc.mallet.grmm.util.LabelsAssignment;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Generic pipe that takes a linegroup of the form:

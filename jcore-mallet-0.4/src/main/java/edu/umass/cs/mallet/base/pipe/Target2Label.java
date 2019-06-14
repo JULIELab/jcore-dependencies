@@ -11,9 +11,9 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
+import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.LabelAlphabet;
-import edu.umass.cs.mallet.base.types.Instance;
 /** Convert object in the target field into a label in the target field.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
  */

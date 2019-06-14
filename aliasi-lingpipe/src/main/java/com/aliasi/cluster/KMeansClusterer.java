@@ -19,25 +19,15 @@ package com.aliasi.cluster;
 import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
 import com.aliasi.stats.Statistics;
-
 import com.aliasi.symbol.MapSymbolTable;
-
-// import com.aliasi.util.Arrays;
-import com.aliasi.util.Distance;
 import com.aliasi.util.FeatureExtractor;
 import com.aliasi.util.ObjectToDoubleMap;
 import com.aliasi.util.SmallSet;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
+
+// import com.aliasi.util.Arrays;
 
 
 /**

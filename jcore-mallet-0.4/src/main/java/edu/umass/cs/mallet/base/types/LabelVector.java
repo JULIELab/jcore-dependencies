@@ -14,9 +14,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.RankedFeatureVector;
-
 public class LabelVector extends RankedFeatureVector implements Labeling
 {
 	public LabelVector (LabelAlphabet dict,

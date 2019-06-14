@@ -1,6 +1,9 @@
 package dragon.util;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.RandomAccessFile;
 
 /**
  * <p>Fast file input stream </p>

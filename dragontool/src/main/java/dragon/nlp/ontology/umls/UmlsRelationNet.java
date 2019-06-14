@@ -1,9 +1,13 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.matrix.*;
-import dragon.util.*;
-import java.io.*;
-import java.sql.*;
+import dragon.matrix.DoubleFlatSparseMatrix;
+import dragon.util.DBUtil;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 /**
  * <p>UMLS relation net for relation operations </p>

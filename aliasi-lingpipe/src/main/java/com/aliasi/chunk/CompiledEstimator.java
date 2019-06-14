@@ -17,12 +17,10 @@
 package com.aliasi.chunk;
 
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.tokenizer.TokenCategorizer;
 
 import java.io.IOException;
 import java.io.ObjectInput;
-
 import java.util.ArrayList;
 import java.util.List;
 

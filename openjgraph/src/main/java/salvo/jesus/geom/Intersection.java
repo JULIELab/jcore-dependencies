@@ -1,8 +1,12 @@
 package salvo.jesus.geom;
 
-import java.awt.*;
-import java.awt.geom.*;
 import org.apache.log4j.Category;
+
+import java.awt.*;
+import java.awt.geom.FlatteningPathIterator;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.PathIterator;
 
 /**
  * The Intersection class provides methods for determining

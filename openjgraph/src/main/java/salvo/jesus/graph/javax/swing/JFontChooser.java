@@ -1,9 +1,11 @@
 package salvo.jesus.graph.javax.swing;
 
-import java.awt.*;
+import salvo.jesus.graph.java.awt.Fonts;
+
 import javax.swing.*;
-import java.util.*;
-import salvo.jesus.graph.java.awt.*;
+import java.awt.*;
+import java.util.Arrays;
+import java.util.Comparator;
 
 /**
  * A font chooser object. Currently, there is no dialog box option for

@@ -10,13 +10,15 @@
 
 package cc.mallet.types;
 
-import java.util.logging.*;
-import java.io.*;
-
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Labeling;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.PropertyList;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
 	 A machine learning "example" to be used in training, testing or

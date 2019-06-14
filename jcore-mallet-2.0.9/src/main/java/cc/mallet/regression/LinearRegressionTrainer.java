@@ -1,11 +1,15 @@
 package cc.mallet.regression;
 
-import java.util.Arrays;
-import java.io.*;
-import java.text.NumberFormat;
+import cc.mallet.optimize.Optimizable;
+import cc.mallet.optimize.Optimizer;
+import cc.mallet.optimize.OrthantWiseLimitedMemoryBFGS;
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 
-import cc.mallet.types.*;
-import cc.mallet.optimize.*;
+import java.io.File;
+import java.text.NumberFormat;
+import java.util.Arrays;
 
 public class LinearRegressionTrainer implements Optimizable.ByGradientValue {
 

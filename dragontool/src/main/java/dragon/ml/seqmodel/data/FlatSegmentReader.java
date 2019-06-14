@@ -1,7 +1,9 @@
 package dragon.ml.seqmodel.data;
 
 import dragon.util.FileUtil;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.StringTokenizer;
 
 /**

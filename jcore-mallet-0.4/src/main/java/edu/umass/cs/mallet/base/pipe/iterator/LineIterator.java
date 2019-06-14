@@ -11,14 +11,11 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Instance;
+
 import java.io.*;
-import java.io.LineNumberReader;
-import java.io.Reader;
-import java.util.regex.*;
-import java.net.URI;
-import java.net.URISyntaxException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LineIterator extends AbstractPipeInputIterator
 {

@@ -1,7 +1,10 @@
 package dragon.matrix;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.ByteArrayConvert;
+import dragon.util.FileUtil;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 /**
  * <p>The abstract sparse matrix for handling extreme large sparse matrirwhich will write matrix data to disk whenever
  * it's over fulsh interval by default 1000,000 and superior to AbstractSuperSparseMatrix, however it's lack of some

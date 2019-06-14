@@ -1,8 +1,11 @@
 package dragon.onlinedb.trec;
 
 import dragon.nlp.Token;
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.BasicArticle;
 import dragon.util.SortedArray;
+
 import java.util.Date;
 /**
  * <p>sgm-styled news article parser </p>

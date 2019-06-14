@@ -11,12 +11,16 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.Sequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.fst.*;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 /**
  * Abstract class that estimates the confidence of a {@link Sequence}

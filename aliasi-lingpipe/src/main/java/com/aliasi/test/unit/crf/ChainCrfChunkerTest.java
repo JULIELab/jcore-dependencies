@@ -1,65 +1,22 @@
 package com.aliasi.test.unit.crf;
 
-import com.aliasi.chunk.BioTagChunkCodec;
-import com.aliasi.chunk.Chunk;
-import com.aliasi.chunk.Chunker;
-import com.aliasi.chunk.ChunkFactory;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.chunk.ChunkingImpl;
-import com.aliasi.chunk.TagChunkCodec;
-
+import com.aliasi.chunk.*;
 import com.aliasi.corpus.Corpus;
 import com.aliasi.corpus.ObjectHandler;
-
+import com.aliasi.crf.ChainCrf;
+import com.aliasi.crf.ChainCrfChunker;
 import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
-import com.aliasi.matrix.DenseVector;
-import com.aliasi.matrix.Vector;
-
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
-import com.aliasi.symbol.SymbolTable;
-import com.aliasi.symbol.SymbolTableCompiler;
-
-import com.aliasi.crf.ChainCrf;
-import com.aliasi.crf.ChainCrfChunker;
-import com.aliasi.crf.ForwardBackwardTagLattice;
-
-import com.aliasi.tag.ScoredTagging;
-import com.aliasi.tag.Tagging;
-import com.aliasi.tag.TagLattice;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToDoubleMap;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import org.junit.Test;
 
 import java.io.IOException;
-import java.io.Serializable;
-
-import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
-
-import static org.junit.Assert.assertArrayEquals;
-
-import static com.aliasi.test.unit.Asserts.succeed;
 
 public class ChainCrfChunkerTest {
 

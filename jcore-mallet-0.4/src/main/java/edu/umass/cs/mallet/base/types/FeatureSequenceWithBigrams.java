@@ -7,11 +7,9 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.pipe.TokenSequenceRemoveStopwords;
-
-import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /** A FeatureSequence with a parallel record of bigrams, kept in a separate dictionary
  *  @author <a href="mailto:mccallum@cs.umass.edu">Andrew McCallum</a>

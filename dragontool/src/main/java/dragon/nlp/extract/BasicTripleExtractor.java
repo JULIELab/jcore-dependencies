@@ -1,11 +1,16 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
-import java.util.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Triple;
+import dragon.nlp.Word;
+import dragon.nlp.ontology.SemanticNet;
+import dragon.nlp.tool.Tagger;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
 import java.io.PrintWriter;
+import java.util.ArrayList;
 
 /**
  * <p>Triple Extraction</p>

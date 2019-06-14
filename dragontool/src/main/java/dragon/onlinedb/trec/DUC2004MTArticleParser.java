@@ -1,6 +1,8 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.BasicArticle;
 
 /**
  * <p>DUC 2004 MT article parser </p>

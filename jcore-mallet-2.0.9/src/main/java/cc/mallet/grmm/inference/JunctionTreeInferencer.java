@@ -7,17 +7,16 @@
 
 package cc.mallet.grmm.inference;
 
-import org._3pq.jgrapht.GraphHelper;
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.alg.ConnectivityInspector;
-import org._3pq.jgrapht.graph.SimpleGraph;
-import org._3pq.jgrapht.graph.ListenableUndirectedGraph;
-import org._3pq.jgrapht.traverse.BreadthFirstIterator;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.grmm.util.Graphs;
 import cc.mallet.types.Alphabet;
 import cc.mallet.util.MalletLogger;
+import org._3pq.jgrapht.GraphHelper;
+import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.alg.ConnectivityInspector;
+import org._3pq.jgrapht.graph.ListenableUndirectedGraph;
+import org._3pq.jgrapht.graph.SimpleGraph;
+import org._3pq.jgrapht.traverse.BreadthFirstIterator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;

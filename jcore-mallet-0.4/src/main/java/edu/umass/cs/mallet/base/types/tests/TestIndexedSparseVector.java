@@ -14,9 +14,11 @@
 
 package edu.umass.cs.mallet.base.types.tests;
 
-import edu.umass.cs.mallet.base.types.IndexedSparseVector;
-import junit.framework.*;
 import edu.umass.cs.mallet.base.types.DenseVector;
+import edu.umass.cs.mallet.base.types.IndexedSparseVector;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestIndexedSparseVector extends TestCase
 {

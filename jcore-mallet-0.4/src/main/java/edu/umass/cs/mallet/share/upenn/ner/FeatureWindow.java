@@ -1,11 +1,11 @@
 package edu.umass.cs.mallet.share.upenn.ner;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.*;
-
-import java.util.*;
-import gnu.trove.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+import edu.umass.cs.mallet.base.util.PropertyList;
+import gnu.trove.TObjectDoubleHashMap;
 
 /**
  * Adds all features of tokens in the window to the center token.

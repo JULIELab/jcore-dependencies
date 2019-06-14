@@ -1,9 +1,11 @@
 package salvo.jesus.graph.visual;
 
+import salvo.jesus.graph.javax.swing.JTabPanel;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import salvo.jesus.graph.javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * A JPanel that contains a GraphTabbedPane and Apply, OK, Cancel JButtons.

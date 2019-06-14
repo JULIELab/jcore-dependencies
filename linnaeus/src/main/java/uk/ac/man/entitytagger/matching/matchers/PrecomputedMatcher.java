@@ -1,17 +1,13 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.io.File;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.matching.Matcher;
+
+import java.io.File;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.util.*;
 
 public class PrecomputedMatcher extends Matcher {
 

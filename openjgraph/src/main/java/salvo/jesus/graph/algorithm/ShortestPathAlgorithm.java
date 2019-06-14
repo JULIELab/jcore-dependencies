@@ -1,8 +1,9 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
-import java.util.*;
-import java.io.*;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.WeightedGraph;
+
+import java.io.Serializable;
 
 /**
  * Abstract class for implementing the shortest path algorithm.

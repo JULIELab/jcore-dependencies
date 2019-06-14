@@ -18,8 +18,8 @@
 
 package de.julielab.gnu.trove;
 
-import java.io.ObjectOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
 
 /**
  * Implementation of the variously typed procedure interfaces that supports

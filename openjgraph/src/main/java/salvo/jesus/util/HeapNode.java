@@ -1,6 +1,6 @@
 package salvo.jesus.util;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * A node in a <tt>Heap</tt>, encapsulating the actual object represented by

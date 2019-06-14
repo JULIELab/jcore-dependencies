@@ -1,12 +1,17 @@
 package dragon.ir.summarize;
 
-import dragon.ir.clustering.*;
-import dragon.ir.index.*;
+import dragon.ir.clustering.DocCluster;
+import dragon.ir.clustering.DocClusterSet;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 import dragon.matrix.vector.DoubleVector;
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexComparator;
+import dragon.nlp.compare.WeightComparator;
 import dragon.onlinedb.Article;
 import dragon.util.SortedArray;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>The class implement basic function of building summary given a sentence set. </p>

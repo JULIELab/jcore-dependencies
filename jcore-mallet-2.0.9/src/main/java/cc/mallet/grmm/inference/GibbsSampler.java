@@ -9,12 +9,12 @@ package cc.mallet.grmm.inference;
 //import edu.umass.cs.mallet.users.casutton.util.Timing;
 
 
-import java.util.List;
-import java.util.Iterator;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.util.Randoms;
 import cc.mallet.util.Timing;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created: Mar 28, 2005

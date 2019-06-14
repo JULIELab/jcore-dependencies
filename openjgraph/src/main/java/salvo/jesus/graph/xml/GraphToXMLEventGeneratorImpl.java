@@ -1,10 +1,13 @@
 package salvo.jesus.graph.xml;
 
-import salvo.jesus.graph.*;
+import salvo.jesus.graph.Edge;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
 import salvo.jesus.graph.visual.VisualGraph;
+
 import java.util.ArrayList;
-import java.util.TreeSet;
 import java.util.Iterator;
+import java.util.TreeSet;
 
 /**
  * @author  Jesus M. Salvo Jr.

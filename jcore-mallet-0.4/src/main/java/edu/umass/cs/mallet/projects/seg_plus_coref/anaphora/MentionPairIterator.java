@@ -25,28 +25,22 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import org.jdom.input.*;
-
-import org.xml.sax.*;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
+import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import org.jdom.Attribute;
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.JDOMException;
-import org.jdom.*;
-import org.jdom.output.XMLOutputter;
+import org.jdom.input.SAXBuilder;
 
-import java.util.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 import java.io.File;
-import java.io.*;
+import java.io.IOException;
 import java.net.URI;
-
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 public class MentionPairIterator extends AbstractPipeInputIterator

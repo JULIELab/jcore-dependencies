@@ -3,11 +3,10 @@
 /* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas; 
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.jcas.cas.TOP_Type;
-
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** a section is a part of the text that often has a heading, an id, a section type, figures, tables, citations and footnotes that occur in this section

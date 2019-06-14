@@ -1,6 +1,8 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.util.*;
+import dragon.util.MathUtil;
+import dragon.util.SortedArray;
+
 import java.io.*;
 import java.util.StringTokenizer;
 

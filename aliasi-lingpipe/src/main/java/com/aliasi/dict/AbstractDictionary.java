@@ -21,7 +21,6 @@ import com.aliasi.util.Iterators;
 
 import java.io.IOException;
 import java.io.ObjectOutput;
-
 import java.util.AbstractSet;
 import java.util.ArrayList;
 import java.util.Iterator;

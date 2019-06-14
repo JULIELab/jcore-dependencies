@@ -7,15 +7,15 @@
 package cc.mallet.extract;
 
 
-import java.io.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.pipe.Noop;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.SerialPipes;
 import cc.mallet.types.*;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created: Oct 12, 2004

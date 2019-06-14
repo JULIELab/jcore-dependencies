@@ -1,31 +1,20 @@
 package uk.ac.man.entitytagger.entities.species;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.StringReader;
+import martin.common.*;
+import martin.common.xml.XPath;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import uk.ac.man.entitytagger.generate.DictionaryEntry;
+import uk.ac.man.entitytagger.generate.GenerateMatchers;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Node;
-import org.xml.sax.InputSource;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.Misc;
-import martin.common.Pair;
-import martin.common.StreamIterator;
-import martin.common.xml.XPath;
-import uk.ac.man.entitytagger.generate.DictionaryEntry;
-import uk.ac.man.entitytagger.generate.GenerateMatchers;
 
 public class GenerateDictionary {
 

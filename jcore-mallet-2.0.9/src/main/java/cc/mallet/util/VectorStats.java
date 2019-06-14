@@ -14,11 +14,13 @@ package cc.mallet.util;
  *  @author Jerod Weinman <A HREF="mailto:weinman@cs.umass.edu">weinman@cs.umass.edu</A>
  */
 
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.SparseVector;
+import gnu.trove.TIntHashSet;
+
 import java.util.Arrays;
 import java.util.Iterator;
-
-import cc.mallet.types.*;
-import gnu.trove.TIntHashSet;
 
 public class VectorStats {
 

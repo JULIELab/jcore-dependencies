@@ -1,6 +1,6 @@
 package dragon.config;
 
-import dragon.nlp.*;
+import dragon.nlp.DocumentParser;
 import dragon.nlp.extract.EngDocumentParser;
 
 /**

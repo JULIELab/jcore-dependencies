@@ -1,7 +1,10 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.Token;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * A string, with an associated bag of tokens.  Each token has an

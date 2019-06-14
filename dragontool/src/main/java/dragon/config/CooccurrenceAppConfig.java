@@ -1,6 +1,7 @@
 package dragon.config;
 
-import dragon.ir.index.*;
+import dragon.ir.index.BasicIRTermIndexList;
+import dragon.ir.index.IRTermIndexList;
 import dragon.ir.kngbase.CooccurrenceGenerator;
 import dragon.matrix.IntSparseMatrix;
 

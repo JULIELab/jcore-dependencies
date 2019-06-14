@@ -1,6 +1,7 @@
 package dragon.config;
 
-import dragon.nlp.tool.*;
+import dragon.nlp.tool.Annie;
+import dragon.nlp.tool.NER;
 
 /**
  * <p>NER configuration</p>

@@ -7,13 +7,13 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.Iterator;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.UndirectedGrid;
 import cc.mallet.grmm.types.Variable;
 import cc.mallet.util.ArrayUtils;
+
+import java.util.Iterator;
 
 /**
  * Created: May 31, 2005

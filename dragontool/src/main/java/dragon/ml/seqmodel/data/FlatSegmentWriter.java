@@ -1,7 +1,8 @@
 package dragon.ml.seqmodel.data;
 
 import dragon.util.FileUtil;
-import java.io.*;
+
+import java.io.PrintWriter;
 
 /**
  * <p>Storing segment information in a flat manner</p>

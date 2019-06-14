@@ -1,12 +1,18 @@
 package dragon.ir.search.evaluate;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 import dragon.ir.query.IRQuery;
 import dragon.nlp.compare.IndexComparator;
-import dragon.util.*;
+import dragon.util.FileUtil;
+import dragon.util.FormatUtil;
+import dragon.util.SortedArray;
+
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 /**
  * <p>Trec IR Peformance Evaluation Program</p>

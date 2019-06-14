@@ -14,20 +14,15 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
-import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.Dirichlet;
-import edu.umass.cs.mallet.base.types.Multinomial;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.Random;
+
 import java.net.URI;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 public class RandomTokenSequenceIterator extends AbstractPipeInputIterator
 {

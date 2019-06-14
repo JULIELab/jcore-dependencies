@@ -1,10 +1,15 @@
 package dragon.ir.search;
 
-import dragon.ir.index.*;
-import dragon.ir.query.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.ir.query.IRQuery;
+import dragon.ir.query.SimpleTermPredicate;
 import dragon.ir.search.smooth.Smoother;
 import dragon.nlp.compare.WeightComparator;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Bool rank searcher </p>

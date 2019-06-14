@@ -1,7 +1,12 @@
 package salvo.jesus.graph.java.awt.geom;
 
-import java.awt.geom.*;
-import java.io.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * An implementation of PathIterator that is also Serializable

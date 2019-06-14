@@ -8,7 +8,10 @@ package cc.mallet.grmm.util;
 
 import gnu.trove.THashMap;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Version of THashMap where every key is mapped to a list of objects.

@@ -1,7 +1,9 @@
 package dragon.nlp.ontology;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Word;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
 
 /**
  * <p>The class can be called directly to support vocabulary operations </p>

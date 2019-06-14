@@ -6,8 +6,8 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract;
 
-import gnu.trove.THashMap;
 import edu.umass.cs.mallet.base.types.Label;
+import gnu.trove.THashMap;
 
 import java.util.Iterator;
 

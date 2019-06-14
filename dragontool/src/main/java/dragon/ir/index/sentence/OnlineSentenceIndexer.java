@@ -1,9 +1,16 @@
 package dragon.ir.index.sentence;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRCollection;
+import dragon.ir.index.IRDocIndexList;
+import dragon.ir.index.IRRelationIndexList;
+import dragon.ir.index.IRTermIndexList;
 import dragon.matrix.IntSparseMatrix;
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.SimplePairList;
+import dragon.nlp.extract.ConceptExtractor;
+import dragon.nlp.extract.TripleExtractor;
+
 import java.util.ArrayList;
 
 /**

@@ -1,6 +1,6 @@
 package dragon.matrix;
 
-import dragon.util.*;
+import dragon.util.FileUtil;
 /**
  * <p>Giant sparse matrix handles extreme large double sparse matrix</p>
  * <p></p>

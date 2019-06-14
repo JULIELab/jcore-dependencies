@@ -15,7 +15,8 @@
 package edu.umass.cs.mallet.base.fst;
 
 import edu.umass.cs.mallet.base.types.InstanceList;
-import java.io.*;
+
+import java.io.PrintStream;
 
 public abstract class TransducerEvaluator
 {

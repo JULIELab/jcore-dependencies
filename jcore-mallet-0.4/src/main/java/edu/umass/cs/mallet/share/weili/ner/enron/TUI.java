@@ -14,20 +14,25 @@
 
 package edu.umass.cs.mallet.share.weili.ner.enron;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.minimize.*;
-import edu.umass.cs.mallet.base.minimize.tests.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.share.upenn.ner.*;
-import junit.framework.*;
-import java.util.Iterator;
+import edu.umass.cs.mallet.base.fst.CRF3;
+import edu.umass.cs.mallet.base.fst.MultiSegmentationEvaluator;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.PrintTokenSequenceFeatures;
+import edu.umass.cs.mallet.base.pipe.SerialPipes;
+import edu.umass.cs.mallet.base.pipe.TokenSequence2FeatureVectorSequence;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.pipe.tsf.LexiconMembership;
+import edu.umass.cs.mallet.base.pipe.tsf.OffsetConjunctions;
+import edu.umass.cs.mallet.base.pipe.tsf.RegexMatches;
+import edu.umass.cs.mallet.base.pipe.tsf.TrieLexiconMembership;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.share.upenn.ner.NEPipes;
+
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
-import java.util.regex.*;
-import java.io.*;
+import java.util.regex.Pattern;
 
 public class TUI
 {

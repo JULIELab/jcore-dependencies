@@ -25,10 +25,10 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
+import edu.umass.cs.mallet.base.types.Instance;
 
 public class MentionPair2FeatureVector extends Pipe
 {

@@ -7,16 +7,17 @@
 
 package edu.umass.cs.mallet.base.pipe.tests;
 
-import junit.framework.Test;
+import edu.umass.cs.mallet.base.fst.tests.TestCRF;
+import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
+import edu.umass.cs.mallet.base.pipe.tsf.OffsetConjunctions;
+import edu.umass.cs.mallet.base.pipe.tsf.TokenText;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import java.io.*;
-import edu.umass.cs.mallet.base.fst.tests.TestCRF;
-import edu.umass.cs.mallet.base.types.InstanceList;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 /**
  *  Unit Test for class TestSpacePipe.java

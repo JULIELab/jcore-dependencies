@@ -3,8 +3,6 @@ package de.julielab.xml;
 import com.google.common.collect.Sets;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;

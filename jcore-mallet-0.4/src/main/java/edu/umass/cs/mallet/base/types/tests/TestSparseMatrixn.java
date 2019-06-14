@@ -6,18 +6,15 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.types.tests;
 
-import edu.umass.cs.mallet.base.types.Matrixn;
-import edu.umass.cs.mallet.base.types.MatrixOps;
 import edu.umass.cs.mallet.base.types.SparseMatrixn;
+import gnu.trove.TDoubleArrayList;
+import gnu.trove.TIntArrayList;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.Arrays;
 import java.io.IOException;
-
-import gnu.trove.TIntArrayList;
-import gnu.trove.TDoubleArrayList;
+import java.util.Arrays;
 
 /**
  * Created: Aug 30, 2004

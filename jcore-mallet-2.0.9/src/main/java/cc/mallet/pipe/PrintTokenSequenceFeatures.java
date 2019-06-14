@@ -11,10 +11,15 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.TokenSequence;
+import cc.mallet.util.PropertyList;
 
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Print properties of the token sequence in the data field and the corresponding value

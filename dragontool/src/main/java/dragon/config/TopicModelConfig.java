@@ -1,7 +1,11 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.topicmodel.*;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.ir.topicmodel.AspectModel;
+import dragon.ir.topicmodel.GibbsLDA;
+import dragon.ir.topicmodel.SimpleMixtureModel;
+import dragon.ir.topicmodel.TopicModel;
 import dragon.matrix.vector.DoubleVector;
 
 /**

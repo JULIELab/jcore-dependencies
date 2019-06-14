@@ -11,10 +11,7 @@
 
 package edu.umass.cs.mallet.base.cluster;
 
-import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.InstanceList;
-
-import java.lang.IllegalArgumentException;
 
 public class Clustering {
 

@@ -16,18 +16,11 @@
 
 package com.aliasi.classify;
 
-import java.io.PrintWriter;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-
 import com.aliasi.util.Scored;
 import com.aliasi.util.ScoredObject;
+
+import java.io.PrintWriter;
+import java.util.*;
 
 /**
  * A <code>ScoredPrecisionRecallEvaluation</code> provides an

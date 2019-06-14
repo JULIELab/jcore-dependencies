@@ -20,16 +20,13 @@ import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
 import com.aliasi.util.Strings;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.HashSet;
-import java.util.Set;
-
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * A <code>SymbolTableCompiler</code> collects symbols represented as

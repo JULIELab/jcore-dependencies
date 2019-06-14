@@ -1,11 +1,15 @@
 package salvo.jesus.graph.visual;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.event.*;
-import javax.swing.*;
-import salvo.jesus.graph.*;
+import salvo.jesus.graph.Edge;
 import salvo.jesus.graph.javax.swing.*;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
+import java.awt.geom.RoundRectangle2D;
 
 /**
  * A subclass of JTabbedPane so that an initial JTabPanel

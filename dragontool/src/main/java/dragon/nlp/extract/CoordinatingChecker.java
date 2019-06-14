@@ -1,7 +1,11 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
+import dragon.nlp.tool.MedPostTagger;
+import dragon.nlp.tool.Tagger;
+
 import java.util.ArrayList;
 
 /**

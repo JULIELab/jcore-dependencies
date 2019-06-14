@@ -13,14 +13,8 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.classify.Winnow;
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Labeling;
+import cc.mallet.types.*;
 
 /**
  * An implementation of the training methods of a 

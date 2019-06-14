@@ -1,7 +1,5 @@
 package salvo.jesus.graph;
 
-import java.util.*;
-
 /**
  * A interface for a Graph where all edges have a specified weight.
  *

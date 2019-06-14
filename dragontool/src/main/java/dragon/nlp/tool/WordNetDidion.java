@@ -1,11 +1,14 @@
 package dragon.nlp.tool;
 
-import dragon.util.*;
-import java.io.FileInputStream;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
 import net.didion.jwnl.JWNL;
 import net.didion.jwnl.JWNLException;
-import net.didion.jwnl.data.*;
+import net.didion.jwnl.data.IndexWord;
+import net.didion.jwnl.data.POS;
 import net.didion.jwnl.dictionary.Dictionary;
+
+import java.io.FileInputStream;
 
 /**
  * <p>A Java-implementation of WordNet provided by Didion</p>

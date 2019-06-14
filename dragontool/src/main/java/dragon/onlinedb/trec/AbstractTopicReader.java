@@ -1,6 +1,10 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.BasicArticleParser;
+import dragon.onlinedb.CollectionReader;
+
 import java.util.ArrayList;
 /**
  * <p>Abstract class for TREC topic reading</p>

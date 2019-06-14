@@ -1,6 +1,9 @@
 package dragon.config;
 
-import dragon.nlp.extract.*;
+import dragon.nlp.extract.BasicTripleExtractor;
+import dragon.nlp.extract.ConceptFilter;
+import dragon.nlp.extract.TermExtractor;
+import dragon.nlp.extract.TripleExtractor;
 
 /**
  * <p>Triple extraction configuration</p>

@@ -10,8 +10,8 @@ package edu.umass.cs.mallet.base.topics;
 import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.Random;
 
-import java.util.Arrays;
 import java.io.*;
+import java.util.Arrays;
 
 /**
  * Like Latent Dirichlet Allocation, but with integrated phrase discovery.

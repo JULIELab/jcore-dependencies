@@ -1,7 +1,10 @@
 package salvo.jesus.graph.adaptor;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import java.util.*;
+
+import salvo.jesus.graph.DirectedEdge;
+import salvo.jesus.graph.DirectedGraph;
+import salvo.jesus.graph.Vertex;
+
+import java.util.List;
 
 /**
  * DirectedGraphDelegator is a utility base for creating adaptors which need to

@@ -14,8 +14,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.Label;
-
 /** A distribution over possible labels for an instance. */
 
 public interface Labeling extends AlphabetCarrying

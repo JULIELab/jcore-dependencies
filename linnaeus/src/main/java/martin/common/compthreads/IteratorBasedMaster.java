@@ -1,14 +1,9 @@
 package martin.common.compthreads;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.concurrent.*;
-
 import martin.common.ArrayIterator;
+
+import java.util.*;
+import java.util.concurrent.Semaphore;
 
 /**
  * Class for facilitating parallelized computations. 

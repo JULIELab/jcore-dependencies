@@ -1,9 +1,12 @@
 package dragon.ir.index;
 
 import dragon.matrix.*;
-import dragon.nlp.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.Token;
 import dragon.util.FileUtil;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**

@@ -1,8 +1,10 @@
 package salvo.jesus.graph.visual.layout;
 
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualVertex;
+
 import java.awt.*;
-import java.io.*;
-import salvo.jesus.graph.visual.*;
+import java.io.Serializable;
 
 /**
  * The layout manager interface responsible for visually laying out

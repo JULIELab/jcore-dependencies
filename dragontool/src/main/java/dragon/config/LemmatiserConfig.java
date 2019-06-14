@@ -1,7 +1,9 @@
 package dragon.config;
 
-import dragon.nlp.tool.*;
-import dragon.nlp.tool.lemmatiser.*;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.PorterStemmer;
+import dragon.nlp.tool.WordNetDidion;
+import dragon.nlp.tool.lemmatiser.EngLemmatiser;
 
 /**
  * <p>Lemmatiser configuration </p>

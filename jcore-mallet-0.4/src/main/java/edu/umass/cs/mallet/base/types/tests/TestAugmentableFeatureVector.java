@@ -6,11 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.types.tests;
 
-import junit.framework.*;
-import edu.umass.cs.mallet.base.types.SparseVector;
-import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
 import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
 import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.SparseVector;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created: Dec 30, 2004

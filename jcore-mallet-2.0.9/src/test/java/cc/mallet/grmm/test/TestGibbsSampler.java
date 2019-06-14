@@ -13,7 +13,8 @@ import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.TableFactor;
 import cc.mallet.grmm.types.Variable;
 import cc.mallet.util.Randoms;
-import junit.framework.*;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * $Id: TestGibbsSampler.java,v 1.1 2007/10/22 21:37:41 mccallum Exp $

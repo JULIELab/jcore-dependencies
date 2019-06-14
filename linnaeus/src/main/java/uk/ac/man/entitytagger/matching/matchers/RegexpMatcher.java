@@ -1,14 +1,14 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
 
 public class RegexpMatcher extends Matcher {
 	private Map<String,Pattern> hashmap;

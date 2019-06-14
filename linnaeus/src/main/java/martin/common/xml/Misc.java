@@ -1,8 +1,8 @@
 package martin.common.xml;
 
-import java.util.ArrayList;
-
 import martin.common.Pair;
+
+import java.util.ArrayList;
 
 public class Misc {
 	public static ArrayList<Pair<Integer>> getSectionCoordinates(String data, String validXPathSections, int start, int end) {

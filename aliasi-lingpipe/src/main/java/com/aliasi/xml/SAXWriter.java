@@ -18,16 +18,9 @@ package com.aliasi.xml;
 
 import org.xml.sax.Attributes;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-
+import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetEncoder;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;

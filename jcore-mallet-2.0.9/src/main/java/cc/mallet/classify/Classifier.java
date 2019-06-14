@@ -14,19 +14,13 @@
 
 package cc.mallet.classify;
 
-import java.util.ArrayList;
-import java.util.logging.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
+
 import java.io.PrintWriter;
 import java.io.Serializable;
-
-import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AlphabetCarrying;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.Labeling;
-import cc.mallet.types.FeatureSelection;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Abstract parent of all Classifiers.

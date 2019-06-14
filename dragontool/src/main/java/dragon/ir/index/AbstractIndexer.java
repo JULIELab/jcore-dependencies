@@ -1,9 +1,11 @@
 package dragon.ir.index;
 
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.onlinedb.Article;
+import dragon.util.FileUtil;
+
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>AbstractIndexer implements basic functions of interface Indexer

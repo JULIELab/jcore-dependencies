@@ -11,12 +11,10 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.FeatureSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.FeatureSequence;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 /**
  * Convert the token sequence in the data field each instance to a feature sequence.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

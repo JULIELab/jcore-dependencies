@@ -17,17 +17,13 @@
 package com.aliasi.test.unit.io;
 
 import com.aliasi.io.FileExtensionFilter;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-
-
-import com.aliasi.util.Files;
 
 import java.io.File;
 import java.io.FileFilter;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 public class FileExtensionFilterTest  {
 

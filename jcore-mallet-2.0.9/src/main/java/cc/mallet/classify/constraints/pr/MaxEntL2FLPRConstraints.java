@@ -7,8 +7,8 @@
 
 package cc.mallet.classify.constraints.pr;
 
-import gnu.trove.TIntIntHashMap;
 import cc.mallet.types.FeatureVector;
+import gnu.trove.TIntIntHashMap;
 
 /**
  * Expectation constraint for use with Posterior Regularization (PR).

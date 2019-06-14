@@ -25,14 +25,18 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.pipe.SerialPipes;
+import edu.umass.cs.mallet.base.pipe.Target2Label;
 import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.Matrix2;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
+
+import java.io.File;
+import java.io.FileFilter;
 import java.util.*;
 
 public class TUI

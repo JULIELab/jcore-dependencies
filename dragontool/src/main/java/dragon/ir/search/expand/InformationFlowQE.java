@@ -1,12 +1,19 @@
 package dragon.ir.search.expand;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
 import dragon.ir.kngbase.HALSpace;
-import dragon.ir.query.*;
-import dragon.nlp.*;
-import dragon.nlp.compare.*;
-import dragon.matrix.*;
-import java.util.*;
+import dragon.ir.query.IRQuery;
+import dragon.ir.query.RelSimpleQuery;
+import dragon.ir.query.SimpleTermPredicate;
+import dragon.matrix.DoubleRow;
+import dragon.matrix.DoubleSparseMatrix;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.Token;
+import dragon.nlp.compare.WeightComparator;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Query Expansion based on Information Flow</p>

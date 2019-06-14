@@ -1,7 +1,7 @@
 package salvo.jesus.graph;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.util.EventListener;
 
 /**
  * GraphListener is the listener interface for receiving notifications when a

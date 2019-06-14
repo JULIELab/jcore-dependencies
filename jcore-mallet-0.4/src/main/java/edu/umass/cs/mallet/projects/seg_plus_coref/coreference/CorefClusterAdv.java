@@ -12,18 +12,18 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.VertexImpl;
+import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.MaxEnt;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
+import edu.umass.cs.mallet.base.classify.Trial;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
-import java.lang.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.ClusterEvaluate;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.PairEvaluate;
+import salvo.jesus.graph.*;
+
 import java.io.*;
+import java.util.*;
 
 
 /*

@@ -1,7 +1,9 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
-import dragon.ml.seqmodel.model.*;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.model.Edge;
+import dragon.ml.seqmodel.model.EdgeIterator;
+import dragon.ml.seqmodel.model.ModelGraph;
 
 
 /**

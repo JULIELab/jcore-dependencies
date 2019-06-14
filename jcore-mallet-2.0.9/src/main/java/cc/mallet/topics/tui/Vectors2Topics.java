@@ -7,12 +7,15 @@
 
 package cc.mallet.topics.tui;
 
+import cc.mallet.pipe.iterator.DBInstanceIterator;
+import cc.mallet.topics.PAM4L;
+import cc.mallet.topics.ParallelTopicModel;
+import cc.mallet.topics.PolylingualTopicModel;
+import cc.mallet.topics.TopicalNGrams;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.Randoms;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.topics.*;
-import cc.mallet.pipe.iterator.DBInstanceIterator;
 
 import java.io.*;
 

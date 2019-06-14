@@ -1,10 +1,9 @@
 package cc.mallet.fst;
 
-import java.util.List;
-
+import cc.mallet.fst.Transducer.State;
 import cc.mallet.types.Sequence;
 
-import cc.mallet.fst.Transducer.State;
+import java.util.List;
 
 /** The interface to classes implementing the Viterbi algorithm, 
  * finding the best sequence of states for a given input sequence. */

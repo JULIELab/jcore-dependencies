@@ -8,17 +8,12 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.logging.Logger;
-
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.Maths;
+
+import java.awt.geom.Point2D;
+import java.util.*;
+import java.util.logging.Logger;
 
 
 /**

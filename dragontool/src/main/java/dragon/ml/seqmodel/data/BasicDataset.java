@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.data;
 
-import java.util.*;
+import java.util.Vector;
 
 /**
  * <p>Basic data structure of a set of sequence data</p>

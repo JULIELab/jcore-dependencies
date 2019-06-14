@@ -1,12 +1,12 @@
 package cc.mallet.cluster.neighbor_evaluator;
 
 
+import cc.mallet.util.Randoms;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import cc.mallet.util.Randoms;
 
 /**
  * Randomly scores {@link Neighbor}s.

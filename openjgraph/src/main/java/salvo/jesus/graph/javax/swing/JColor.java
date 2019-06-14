@@ -1,9 +1,10 @@
 package salvo.jesus.graph.javax.swing;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.io.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * Encapsulates a Color object so that the Color can be changed without

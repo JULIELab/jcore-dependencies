@@ -7,15 +7,16 @@
 
 package cc.mallet.topics.tui;
 
+import cc.mallet.pipe.iterator.DBInstanceIterator;
+import cc.mallet.topics.ParallelTopicModel;
+import cc.mallet.topics.TopicModelDiagnostics;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.topics.*;
-import cc.mallet.pipe.iterator.DBInstanceIterator;
 
-import java.util.logging.*;
 import java.io.*;
+import java.util.logging.Logger;
 
 /** Create a simple LDA topic model, with some reporting options.
  */

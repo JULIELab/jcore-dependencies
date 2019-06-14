@@ -1,6 +1,8 @@
 package dragon.util;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutput;
+import java.io.IOException;
 
 /**
  * <p>Writing byte array</p>

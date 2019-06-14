@@ -7,14 +7,14 @@
 
 package cc.mallet.fst.semi_supervised;
 
-import java.util.ArrayList;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.Transducer;
 import cc.mallet.fst.semi_supervised.constraints.GEConstraint;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.FeatureVectorSequence;
 import cc.mallet.types.LogNumber;
+
+import java.util.ArrayList;
 
 /**
  * Runs the dynamic programming algorithm of [Mann and McCallum 08] for

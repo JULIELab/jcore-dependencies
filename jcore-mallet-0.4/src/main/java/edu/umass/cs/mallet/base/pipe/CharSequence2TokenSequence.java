@@ -14,16 +14,13 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.util.Lexer;
-import edu.umass.cs.mallet.base.util.CharSequenceLexer;
-import edu.umass.cs.mallet.base.extract.StringTokenization;
 import edu.umass.cs.mallet.base.extract.StringSpan;
+import edu.umass.cs.mallet.base.extract.StringTokenization;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+import edu.umass.cs.mallet.base.util.CharSequenceLexer;
 
 import java.io.*;
-import java.net.URI;
 import java.util.regex.Pattern;
 
 /**

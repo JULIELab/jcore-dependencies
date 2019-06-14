@@ -1,9 +1,15 @@
 package dragon.ir.search;
 
-import dragon.ir.index.*;
-import dragon.ir.query.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.ir.query.IRQuery;
+import dragon.ir.query.Predicate;
+import dragon.ir.query.RelSimpleQuery;
+import dragon.ir.query.SimpleTermPredicate;
 import dragon.ir.search.smooth.Smoother;
-import java.util.*;
+
+import java.util.ArrayList;
 
 /**
  * <p>Abstract class of Searcher</p>

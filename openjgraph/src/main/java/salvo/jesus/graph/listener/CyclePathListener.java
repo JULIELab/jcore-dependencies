@@ -1,7 +1,8 @@
 package salvo.jesus.graph.listener;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import java.util.*;
+
+import salvo.jesus.graph.CyclePath;
+import salvo.jesus.graph.GraphAddEdgeEvent;
+import salvo.jesus.graph.Vertex;
 
 /**
  * CyclePathListener extends SimplePathListener to allow a cycle to be

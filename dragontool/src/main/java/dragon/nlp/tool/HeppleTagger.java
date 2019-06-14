@@ -1,15 +1,15 @@
 package dragon.nlp.tool;
 
-import java.io.File;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-
 import dragon.nlp.Sentence;
 import dragon.nlp.Word;
 import dragon.util.EnvVariable;
 import dragon.util.FileUtil;
 import hepple.postag.POSTagger;
+
+import java.io.File;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * <p>

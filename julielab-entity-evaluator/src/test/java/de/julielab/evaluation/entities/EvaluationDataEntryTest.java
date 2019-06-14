@@ -1,11 +1,10 @@
 package de.julielab.evaluation.entities;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
-
 import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
 import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
+import org.junit.Test;
+
+import static org.junit.Assert.*;
 
 public class EvaluationDataEntryTest {
 	@Test

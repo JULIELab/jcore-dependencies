@@ -1,8 +1,5 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import java.awt.*;
-
 /**
  * An interface for drawing a <tt>VisualEdge</tt> that encapsulates a
  * <tt>WeightedEdge</tt>. Implementations of this interface are responsible

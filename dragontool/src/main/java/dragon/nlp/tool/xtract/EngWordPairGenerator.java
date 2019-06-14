@@ -1,7 +1,8 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Word;
+import dragon.nlp.tool.Tagger;
 import dragon.util.SortedArray;
 
 /**

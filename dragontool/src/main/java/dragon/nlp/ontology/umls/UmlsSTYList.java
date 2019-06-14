@@ -1,10 +1,14 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.util.SortedArray;
 import dragon.util.FileUtil;
-import java.sql.*;
-import java.util.*;
-import java.io.*;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>List for storing UMLS semantic semantic types</p>

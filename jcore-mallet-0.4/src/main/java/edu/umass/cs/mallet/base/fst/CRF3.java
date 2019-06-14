@@ -14,21 +14,19 @@
 
 package edu.umass.cs.mallet.base.fst;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.minimize.LimitedMemoryBFGS;
+import edu.umass.cs.mallet.base.minimize.Minimizable;
+import edu.umass.cs.mallet.base.minimize.Minimizer;
 import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.minimize.*;
-import edu.umass.cs.mallet.base.util.Maths;
+import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Vector;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Random;
-import java.util.regex.*;
-import java.util.logging.*;
+import edu.umass.cs.mallet.base.util.Maths;
+
 import java.io.*;
-import java.lang.reflect.Constructor;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 /* There are several different kinds of numeric values:

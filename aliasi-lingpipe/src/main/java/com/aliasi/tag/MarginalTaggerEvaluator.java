@@ -18,11 +18,7 @@ package com.aliasi.tag;
 
 import com.aliasi.classify.ConditionalClassification;
 import com.aliasi.classify.ConditionalClassifierEvaluator;
-
 import com.aliasi.corpus.ObjectHandler;
-
-import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.util.ObjectToDoubleMap;
 import com.aliasi.util.Strings;
 

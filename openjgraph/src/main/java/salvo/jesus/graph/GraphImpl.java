@@ -1,9 +1,12 @@
 package salvo.jesus.graph;
 
+import salvo.jesus.graph.algorithm.DepthFirstGraphTraversal;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+import salvo.jesus.graph.listener.ConnectedSetListener;
+import salvo.jesus.graph.listener.NullGraphListener;
+
+import java.io.Serializable;
 import java.util.*;
-import java.io.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.graph.listener.*;
 
 /**
  * An implementation of the Graph interface. GraphImpl

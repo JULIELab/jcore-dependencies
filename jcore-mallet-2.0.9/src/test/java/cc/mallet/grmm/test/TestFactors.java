@@ -7,7 +7,9 @@
 package cc.mallet.grmm.test;
 
 import cc.mallet.grmm.types.*;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created: Mar 28, 2005

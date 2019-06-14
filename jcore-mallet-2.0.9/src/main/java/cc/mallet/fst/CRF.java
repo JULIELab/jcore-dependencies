@@ -14,45 +14,18 @@
 
 package cc.mallet.fst;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
-import java.text.DecimalFormat;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureInducer;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.IndexedSparseVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.MatrixOps;
-import cc.mallet.types.RankedFeatureVector;
-import cc.mallet.types.Sequence;
-import cc.mallet.types.SparseVector;
-
 import cc.mallet.pipe.Noop;
 import cc.mallet.pipe.Pipe;
-
+import cc.mallet.types.*;
 import cc.mallet.util.ArrayUtils;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.io.*;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 /* There are several different kinds of numeric values:

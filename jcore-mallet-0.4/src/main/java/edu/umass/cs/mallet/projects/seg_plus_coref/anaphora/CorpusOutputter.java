@@ -24,16 +24,19 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
-import java.io.*;
-import java.util.*;
-import org.xml.sax.*;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
+
+import org.jdom.Attribute;
 import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.*;
+import org.jdom.Element;
 import org.jdom.output.XMLOutputter;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Vector;
 
 
 public class CorpusOutputter

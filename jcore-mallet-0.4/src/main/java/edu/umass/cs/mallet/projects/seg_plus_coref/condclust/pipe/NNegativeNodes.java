@@ -7,13 +7,17 @@
 
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import java.util.*;
+
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Labeling;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.NodeClusterPair;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.Citation;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.NodePair;
+
+import java.util.Collection;
+import java.util.Iterator;
 
 /** Feature is true if there exist at least N nodes in Cluster that
  * have a negative edge weight with Node*/

@@ -1,7 +1,7 @@
 package dragon.ir.search.feedback;
 
-import dragon.ir.query.*;
-import dragon.ir.search.*;
+import dragon.ir.query.IRQuery;
+import dragon.ir.search.Searcher;
 
 /**
  * <p>Interface of pseudo-relevance feedback method</p>

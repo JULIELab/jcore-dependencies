@@ -1,10 +1,12 @@
 package dragon.ir.clustering.clustermodel;
 
-import dragon.ir.clustering.*;
-import dragon.ir.clustering.featurefilter.*;
-import dragon.ir.index.*;
-import dragon.ir.kngbase.*;
-import dragon.matrix.*;
+import dragon.ir.clustering.DocCluster;
+import dragon.ir.clustering.featurefilter.FeatureFilter;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.ir.kngbase.KnowledgeBase;
+import dragon.matrix.DoubleSparseMatrix;
 import dragon.util.MathUtil;
 
 /**

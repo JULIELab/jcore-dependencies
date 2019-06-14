@@ -1,6 +1,7 @@
 package dragon.ir.summarize;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IndexReader;
+
 import java.util.ArrayList;
 /**
  * <p>Interface of structural summarizer </p>

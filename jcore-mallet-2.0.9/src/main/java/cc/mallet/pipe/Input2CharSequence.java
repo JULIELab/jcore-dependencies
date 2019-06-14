@@ -14,10 +14,10 @@
 
 package cc.mallet.pipe;
 
+import cc.mallet.types.Instance;
+
 import java.io.*;
 import java.net.URI;
-
-import cc.mallet.types.Instance;
 
 /**
  *  Pipe that can read from various kinds of text sources

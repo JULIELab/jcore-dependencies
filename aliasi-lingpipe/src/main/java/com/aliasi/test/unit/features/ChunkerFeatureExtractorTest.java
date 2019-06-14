@@ -1,31 +1,17 @@
 package com.aliasi.test.unit.features;
 
-import com.aliasi.chunk.Chunk;
-import com.aliasi.chunk.ChunkFactory;
-import com.aliasi.chunk.Chunker;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.chunk.ChunkingImpl;
-
+import com.aliasi.chunk.*;
 import com.aliasi.features.ChunkerFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToDoubleMap;
-
-import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.io.NotSerializableException;
-
 import java.util.Map;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class ChunkerFeatureExtractorTest {
 

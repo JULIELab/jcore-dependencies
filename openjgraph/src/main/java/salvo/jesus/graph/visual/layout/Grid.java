@@ -1,9 +1,11 @@
 package salvo.jesus.graph.visual.layout;
 
-import java.util.*;
-import java.io.*;
-import salvo.jesus.graph.visual.*;
 import org.apache.log4j.Category;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * The Grid class represents a matrix of hypothetical vertical and horizontal grid lines,

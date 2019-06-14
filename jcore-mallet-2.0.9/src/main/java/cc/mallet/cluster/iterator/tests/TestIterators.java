@@ -8,12 +8,16 @@
 package cc.mallet.cluster.iterator.tests;
 
 import cc.mallet.cluster.Clustering;
-import cc.mallet.cluster.iterator.*;
+import cc.mallet.cluster.iterator.AllPairsIterator;
+import cc.mallet.cluster.iterator.ClusterSampleIterator;
+import cc.mallet.cluster.iterator.NeighborIterator;
+import cc.mallet.cluster.iterator.PairSampleIterator;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.Randoms;
-
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  *

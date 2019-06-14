@@ -15,9 +15,9 @@
 
 package edu.umass.cs.mallet.base.maximize;
 
-import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.types.MatrixOps;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 public class AGIS implements Maximizer.ByGISUpdate
 {

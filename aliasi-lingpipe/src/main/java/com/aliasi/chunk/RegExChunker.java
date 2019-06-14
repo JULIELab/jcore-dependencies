@@ -16,9 +16,6 @@
 
 package com.aliasi.chunk;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
 
@@ -26,6 +23,8 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * A <code>RegExChunker</code> finds chunks that matches regular

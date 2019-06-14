@@ -1,9 +1,15 @@
 package salvo.jesus.graph.xml;
 
-import java.io.*;
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-import salvo.jesus.graph.*;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
+import salvo.jesus.graph.Graph;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
 
 /**
  * This class is responsible for parsing an XGMML input using SAX2 and

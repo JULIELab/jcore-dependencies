@@ -6,9 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract;
 
-import edu.umass.cs.mallet.base.types.*;
-import org.jdom.Element;
+import edu.umass.cs.mallet.base.types.Label;
+import edu.umass.cs.mallet.base.types.LabelAlphabet;
+import edu.umass.cs.mallet.base.types.LabelSequence;
+import edu.umass.cs.mallet.base.types.Sequence;
+import gnu.trove.THashMap;
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.Text;
 import org.jdom.output.XMLOutputter;
@@ -17,8 +21,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-
-import gnu.trove.THashMap;
 
 /**
  * Created: Oct 12, 2004

@@ -1,12 +1,11 @@
 package cc.mallet.optimize;
 
-import java.util.Arrays;
-import java.util.logging.Logger;
-import java.text.DecimalFormat;
-
-import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 
 /**

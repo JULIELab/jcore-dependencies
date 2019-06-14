@@ -20,17 +20,11 @@
 package cc.mallet.fst;
 
 
-import java.io.Serializable;
-
-import java.text.DecimalFormat;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Sequence;
-
 import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
+
+import java.io.Serializable;
+import java.text.DecimalFormat;
 
 /**
  * A Maximum Entropy Markov Model.

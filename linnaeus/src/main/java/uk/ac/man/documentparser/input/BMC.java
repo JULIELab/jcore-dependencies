@@ -1,19 +1,19 @@
 package uk.ac.man.documentparser.input;
 
-import java.io.StringReader;
-import java.util.Iterator;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import martin.common.xml.EntityResolver;
+import martin.common.xml.XPath;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import uk.ac.man.documentparser.dataholders.Author;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.dataholders.Section;
 
-import uk.ac.man.documentparser.dataholders.*;
-import martin.common.xml.EntityResolver;
-import martin.common.xml.XPath;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.StringReader;
+import java.util.Iterator;
 
 public class BMC implements DocumentIterator{
 	private org.w3c.dom.Document doc;

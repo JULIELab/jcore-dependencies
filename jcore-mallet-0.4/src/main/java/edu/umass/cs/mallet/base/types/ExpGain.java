@@ -22,8 +22,11 @@ package edu.umass.cs.mallet.base.types;
 
 import edu.umass.cs.mallet.base.classify.Classification;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.logging.Logger;
 
 public class ExpGain extends RankedFeatureVector
 {

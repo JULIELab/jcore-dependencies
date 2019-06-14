@@ -1,29 +1,18 @@
 package com.aliasi.test.unit.classify;
 
-import com.aliasi.classify.Classification;
-import com.aliasi.classify.Classified;
-import com.aliasi.classify.ConditionalClassification;
-import com.aliasi.classify.ConditionalClassifier;
-import com.aliasi.classify.JointClassifier;
-import com.aliasi.classify.TradNaiveBayesClassifier;
-
+import com.aliasi.classify.*;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
 
 import java.io.IOException;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Test;
 import static com.aliasi.test.unit.Asserts.succeed;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.fail;
+import static junit.framework.Assert.*;
 
 public class TradNaiveBayesClassifierTest {
 

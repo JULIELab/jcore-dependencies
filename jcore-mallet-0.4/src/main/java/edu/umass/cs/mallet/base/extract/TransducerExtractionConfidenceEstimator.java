@@ -14,13 +14,14 @@
 
 package edu.umass.cs.mallet.base.extract;
 
-import edu.umass.cs.mallet.base.fst.confidence.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.fst.confidence.TransducerConfidenceEstimator;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Sequence;
 
-import java.io.*;
-import java.util.*;
+import java.io.Serializable;
 
 /**
  * Estimates the confidence in the labeling of a LabeledSpan using a

@@ -1,7 +1,12 @@
 package salvo.jesus.graph.listener;
+
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import java.util.*;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * PathListener imposes a path structure on a Graph.

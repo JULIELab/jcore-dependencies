@@ -1,8 +1,11 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.kngbase.*;
-import dragon.matrix.*;
+import dragon.ir.index.BasicIRTermIndexList;
+import dragon.ir.index.IRSignatureIndexList;
+import dragon.ir.kngbase.TopicSignatureModel;
+import dragon.matrix.IntGiantSparseMatrix;
+import dragon.matrix.IntSparseMatrix;
+import dragon.matrix.IntSuperSparseMatrix;
 
 /**
  * <p>Translation probability application configuration </p>

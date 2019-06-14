@@ -1,7 +1,6 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.Sgml;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

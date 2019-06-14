@@ -1,5 +1,6 @@
 package salvo.jesus.graph;
-import salvo.jesus.graph.listener.*;
+
+import salvo.jesus.graph.listener.SimplePathListener;
 
 /**
  * Implementation of <tt>SimplePath</tt> interface guaranteeing that the

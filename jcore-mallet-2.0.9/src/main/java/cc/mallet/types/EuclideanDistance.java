@@ -11,8 +11,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.SparseVector;
-
 public class EuclideanDistance implements Metric {
 
 	public double distance(SparseVector a, SparseVector b)    {

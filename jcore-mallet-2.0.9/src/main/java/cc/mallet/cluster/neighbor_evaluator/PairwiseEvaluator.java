@@ -1,16 +1,16 @@
 package cc.mallet.cluster.neighbor_evaluator;
 
 
+import cc.mallet.classify.Classifier;
+import cc.mallet.cluster.Clustering;
+import cc.mallet.cluster.util.PairwiseMatrix;
+import cc.mallet.types.MatrixOps;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-
-import cc.mallet.classify.Classifier;
-import cc.mallet.cluster.Clustering;
-import cc.mallet.cluster.util.PairwiseMatrix;
-import cc.mallet.types.MatrixOps;
 
 /**
  * Uses a {@link Classifier} over pairs of {@link Instances} to score

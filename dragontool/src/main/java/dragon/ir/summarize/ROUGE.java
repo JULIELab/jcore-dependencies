@@ -1,12 +1,20 @@
 package dragon.ir.summarize;
 
 import dragon.nlp.*;
-import dragon.nlp.compare.*;
-import dragon.nlp.extract.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
-import java.util.*;
+import dragon.nlp.compare.IndexComparator;
+import dragon.nlp.extract.BasicConceptFilter;
+import dragon.nlp.extract.BasicTokenExtractor;
+import dragon.nlp.extract.TokenExtractor;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.PorterStemmer;
+import dragon.util.EnvVariable;
+import dragon.util.MathUtil;
+import dragon.util.SortedArray;
+
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * <p>A Program for Summarizaiton Evaluation</p>

@@ -15,11 +15,6 @@
  */
 package com.aliasi.classify;
 
-import com.aliasi.util.Scored;
-
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A {@code JointClassifierEvaluator} provides an evaluation harness
  * for joint probability-based n-best classifiers.  It extends the

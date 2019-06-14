@@ -16,7 +16,6 @@
 package com.aliasi.chunk;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.tag.StringTagging;
 import com.aliasi.tag.Tagging;
 

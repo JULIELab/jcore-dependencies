@@ -1,9 +1,9 @@
 package dragon.nlp.tool;
 
-import dragon.nlp.*;
+import dragon.nlp.Sentence;
+import dragon.util.EnvVariable;
+
 //import gov.nih.nlm.nls.mps.POSTagger;
-import dragon.util.*;
-import java.util.*;
 
 /**
  * <p>MedPost tagger adopted from gov.nih.nlm.nls.mps.POSTagger </p>

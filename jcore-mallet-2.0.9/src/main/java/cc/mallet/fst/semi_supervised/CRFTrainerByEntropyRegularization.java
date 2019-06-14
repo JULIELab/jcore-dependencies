@@ -7,18 +7,14 @@
 
 package cc.mallet.fst.semi_supervised;
 
-import java.util.logging.Logger;
-
-import cc.mallet.fst.CRF;
-import cc.mallet.fst.CRFOptimizableByGradientValues;
-import cc.mallet.fst.CRFOptimizableByLabelLikelihood;
-import cc.mallet.fst.Transducer;
-import cc.mallet.fst.TransducerTrainer;
+import cc.mallet.fst.*;
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 /**
  * A CRF trainer that maximizes the log-likelihood plus

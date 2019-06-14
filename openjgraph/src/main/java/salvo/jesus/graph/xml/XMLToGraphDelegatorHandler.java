@@ -1,9 +1,13 @@
 package salvo.jesus.graph.xml;
 
-import org.xml.sax.*;
-import org.xml.sax.helpers.*;
-import java.lang.reflect.*;
 import org.apache.log4j.Category;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.DefaultHandler;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 
 /**
  * @author  Jesus M. Salvo Jr.

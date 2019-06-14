@@ -1,12 +1,21 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.clustering.*;
-import dragon.nlp.*;
-import dragon.nlp.compare.*;
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.ir.clustering.Clustering;
+import dragon.ir.clustering.ClusteringEva;
+import dragon.ir.clustering.DocClusterSet;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.compare.IndexComparator;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * <p>Clustering evaluation configuration </p>

@@ -11,28 +11,20 @@
 
 package cc.mallet.pipe.tests;
 
-import static org.junit.Assert.assertTrue;
-
-import java.io.IOException;
-import java.util.regex.Pattern;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
-import cc.mallet.pipe.CharSequence2TokenSequence;
-import cc.mallet.pipe.FeatureSequence2FeatureVector;
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.PrintInput;
-import cc.mallet.pipe.SerialPipes;
-import cc.mallet.pipe.TokenSequence2FeatureSequence;
-import cc.mallet.pipe.TokenSequence2TokenInstances;
-import cc.mallet.pipe.TokenSequenceLowercase;
+import cc.mallet.pipe.*;
 import cc.mallet.pipe.iterator.ArrayIterator;
 import cc.mallet.pipe.iterator.StringArrayIterator;
 import cc.mallet.pipe.tsf.RegexMatches;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.tests.TestSerializable;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.regex.Pattern;
+
+import static org.junit.Assert.assertTrue;
 //import junit.framework.Test;
 
 public class TestInstancePipe {

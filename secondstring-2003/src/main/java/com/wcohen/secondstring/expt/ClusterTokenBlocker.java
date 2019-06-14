@@ -1,7 +1,6 @@
 package com.wcohen.secondstring.expt;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.Tokenizer;
 
 /**
  * TokenBlocker for clustering.

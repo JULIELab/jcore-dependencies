@@ -25,19 +25,15 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.VertexImpl;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
-import java.util.logging.*;
-import java.lang.*;
-import java.io.*;
+ import edu.umass.cs.mallet.base.classify.MaxEnt;
+ import edu.umass.cs.mallet.base.pipe.Pipe;
+ import edu.umass.cs.mallet.base.types.InstanceList;
+ import edu.umass.cs.mallet.base.util.MalletLogger;
+ import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.PairEvaluate;
+ import salvo.jesus.graph.*;
+
+ import java.util.*;
+ import java.util.logging.Logger;
 
 /** Clusters multiple objects simultaneously (e.g. Authors, venues,
  * and papers). Trains a separate MaxEnt classifier to weight edges

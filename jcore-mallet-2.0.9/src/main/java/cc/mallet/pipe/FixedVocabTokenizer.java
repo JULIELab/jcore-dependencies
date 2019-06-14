@@ -1,8 +1,10 @@
 package cc.mallet.pipe;
 
-import cc.mallet.types.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
 
-import java.io.*;
+import java.io.Serializable;
 
 /** 
  *  A simple unicode tokenizer that accepts sequences of letters 

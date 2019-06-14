@@ -6,9 +6,9 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.inference.gbp;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
-import java.util.ArrayList;
 
 /**
  * Created: May 30, 2005

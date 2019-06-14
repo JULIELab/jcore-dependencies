@@ -11,14 +11,15 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.types.FeatureVectorSequence;
-import edu.umass.cs.mallet.base.types.Token;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * Convert the token sequence in the data field of each instance to a feature vector sequence.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

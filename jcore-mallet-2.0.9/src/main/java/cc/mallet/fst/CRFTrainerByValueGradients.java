@@ -1,23 +1,20 @@
 package cc.mallet.fst;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
-import java.util.BitSet;
-import java.util.Random;
-import java.util.logging.Logger;
-
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.MatrixOps;
-
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.optimize.OptimizationException;
 import cc.mallet.optimize.Optimizer;
-
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.BitSet;
+import java.util.Random;
+import java.util.logging.Logger;
 
 
 /**

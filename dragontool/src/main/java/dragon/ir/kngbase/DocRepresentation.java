@@ -1,9 +1,12 @@
 package dragon.ir.kngbase;
 
-import dragon.ir.index.*;
-import dragon.matrix.*;
-import dragon.nlp.*;
-import dragon.util.*;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.DoubleFlatSparseMatrix;
+import dragon.matrix.DoubleSparseMatrix;
+import dragon.matrix.DoubleSuperSparseMatrix;
+import dragon.nlp.Token;
+import dragon.util.MathUtil;
+
 import java.io.File;
 import java.util.ArrayList;
 

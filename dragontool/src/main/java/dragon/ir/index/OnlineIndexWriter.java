@@ -1,6 +1,7 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
+import dragon.matrix.IntFlatSparseMatrix;
+import dragon.matrix.IntSparseMatrix;
 
 /**
  * <p>The class is the same as BasicIndexWriter except that it does not store information to disk.</p>

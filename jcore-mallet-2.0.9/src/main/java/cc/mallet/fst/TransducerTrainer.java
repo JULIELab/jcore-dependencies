@@ -1,11 +1,11 @@
 package cc.mallet.fst;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * An abstract class to train and evaluate a transducer model.

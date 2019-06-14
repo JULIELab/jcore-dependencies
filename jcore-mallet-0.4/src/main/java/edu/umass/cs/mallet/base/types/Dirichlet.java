@@ -14,9 +14,8 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Multinomial;
-import edu.umass.cs.mallet.base.util.Maths;
 import edu.umass.cs.mallet.base.util.Random;
+
 import java.util.ArrayList;
 
 // xxx Make this a subclass of DenseFeatureVector?

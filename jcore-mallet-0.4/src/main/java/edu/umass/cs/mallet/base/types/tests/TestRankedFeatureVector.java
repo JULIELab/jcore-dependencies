@@ -14,8 +14,11 @@
 
 package edu.umass.cs.mallet.base.types.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import junit.framework.*;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.RankedFeatureVector;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestRankedFeatureVector extends TestCase
 {

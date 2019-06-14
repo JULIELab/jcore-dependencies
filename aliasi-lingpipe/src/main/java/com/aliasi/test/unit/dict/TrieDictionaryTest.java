@@ -2,21 +2,17 @@ package com.aliasi.test.unit.dict;
 
 import com.aliasi.dict.DictionaryEntry;
 import com.aliasi.dict.TrieDictionary;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-
-
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import java.io.IOException;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 
 public class TrieDictionaryTest  {
 

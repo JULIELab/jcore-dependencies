@@ -14,10 +14,12 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.util.CharSequenceLexer;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
-import java.net.URI;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  *  Pipe that can adds special text between lines to explicitly

@@ -1,8 +1,10 @@
 package dragon.nlp.tool.lemmatiser;
 
-import dragon.util.*;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
 import java.io.BufferedReader;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * <p>Exception operation class </p>

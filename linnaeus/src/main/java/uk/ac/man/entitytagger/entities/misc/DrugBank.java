@@ -1,18 +1,13 @@
 package uk.ac.man.entitytagger.entities.misc;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import uk.ac.man.entitytagger.generate.GenerateMatchers;
+
+import java.io.*;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import uk.ac.man.entitytagger.generate.GenerateMatchers;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
 
 /**
  * This class will, given a DrugBank data file, parse its contents and output a tab-delimited

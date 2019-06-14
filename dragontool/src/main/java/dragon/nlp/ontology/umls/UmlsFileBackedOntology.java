@@ -1,8 +1,13 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
+import dragon.nlp.ontology.BasicTerm;
+import dragon.nlp.ontology.BasicTermList;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.ontology.SemanticNet;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
+
 import java.io.File;
 
 /**

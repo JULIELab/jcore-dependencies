@@ -1,12 +1,12 @@
 package cc.mallet.pipe;
 
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
-
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
 
 
 public class FilterEmptyFeatureVectors extends Pipe {

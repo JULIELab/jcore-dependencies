@@ -1,6 +1,7 @@
 package dragon.ir.summarize;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexSortable;
+import dragon.nlp.compare.WeightSortable;
 /**
  * <p>Data structure for text unit</p>
  * <p> </p>

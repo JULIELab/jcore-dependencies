@@ -14,9 +14,10 @@
 
 package cc.mallet.types;
 
-import java.io.*;
-
-import cc.mallet.types.Alphabet;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class Label implements Labeling, Serializable, AlphabetCarrying
 {

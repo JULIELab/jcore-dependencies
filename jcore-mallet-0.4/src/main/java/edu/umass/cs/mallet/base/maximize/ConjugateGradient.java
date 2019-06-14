@@ -14,12 +14,10 @@
 
 package edu.umass.cs.mallet.base.maximize;
 
-import edu.umass.cs.mallet.base.maximize.LineMaximizer;
-import edu.umass.cs.mallet.base.maximize.Maximizable;
-import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.types.MatrixOps;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 // Conjugate Gradient, Polak and Ribiere version
 // from "Numeric Recipes in C", Section 10.6.

@@ -11,10 +11,15 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.logging.*;
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import cc.mallet.fst.MaxLatticeDefault;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Sequence;
+import cc.mallet.types.SequencePairAlignment;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 /**
 	 Estimates the confidence of an entire sequence by the probability

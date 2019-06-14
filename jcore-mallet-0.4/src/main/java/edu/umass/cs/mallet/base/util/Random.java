@@ -31,7 +31,9 @@ package edu.umass.cs.mallet.base.util;
   * * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
   * * GNU General Public License for more details at http://www.gnu.org * * */
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /*
  * Reference.

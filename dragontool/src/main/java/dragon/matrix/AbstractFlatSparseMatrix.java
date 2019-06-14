@@ -1,8 +1,14 @@
 package dragon.matrix;
 
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Abstract flat sparse matrix handles sparse matrix smaller than super sparse matrix while adding options for read and store

@@ -16,12 +16,6 @@
 
 package com.aliasi.util;
 
-import java.io.DataInput;
-import java.io.DataOutput;
-import java.io.IOException;
-
-import java.text.DecimalFormat;
-
 /**
  * Static utility methods for processing strings, characters and
  * string buffers.

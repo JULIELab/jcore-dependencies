@@ -1,8 +1,9 @@
 package dragon.onlinedb.bibtex;
 
 import dragon.onlinedb.Article;
-import java.util.TreeMap;
+
 import java.util.Date;
+import java.util.TreeMap;
 
 /**
  * <p>BibTex Article</p>

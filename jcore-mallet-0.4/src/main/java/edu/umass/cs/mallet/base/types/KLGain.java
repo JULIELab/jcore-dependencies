@@ -27,7 +27,8 @@ package edu.umass.cs.mallet.base.types;
 
 import edu.umass.cs.mallet.base.classify.Classification;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 public class KLGain extends RankedFeatureVector
 {

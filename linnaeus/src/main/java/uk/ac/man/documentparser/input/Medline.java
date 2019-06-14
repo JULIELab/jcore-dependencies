@@ -1,20 +1,20 @@
 package uk.ac.man.documentparser.input;
 
-import java.io.File;
-import java.io.StringReader;
-import java.util.Iterator;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import martin.common.xml.XPath;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
-
-import martin.common.xml.*;
-
-import uk.ac.man.documentparser.dataholders.*;
+import uk.ac.man.documentparser.dataholders.Author;
+import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.dataholders.Document.Type;
+import uk.ac.man.documentparser.dataholders.ExternalID;
+import uk.ac.man.documentparser.dataholders.Journal;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.File;
+import java.io.StringReader;
+import java.util.Iterator;
 
 public class Medline implements DocumentIterator {
 

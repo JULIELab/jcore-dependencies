@@ -15,8 +15,8 @@
 package edu.umass.cs.mallet.base.pipe;
 
 import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
+import edu.umass.cs.mallet.base.types.Instance;
 
 /** Given an AugmentableFeatureVector, set those values greater than
 		or equal to 1 to log(value)+1.  This is useful when multiple

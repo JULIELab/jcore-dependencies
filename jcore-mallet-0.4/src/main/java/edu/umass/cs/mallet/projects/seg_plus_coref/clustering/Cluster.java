@@ -24,7 +24,9 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
-import java.util.*;
+
+import java.util.Collection;
+import java.util.LinkedHashSet;
 
 
 public class Cluster extends LinkedHashSet implements Collection 

@@ -1,9 +1,10 @@
 package edu.umass.cs.mallet.share.upenn.ner;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  * Matches a regular expression which spans several tokens.

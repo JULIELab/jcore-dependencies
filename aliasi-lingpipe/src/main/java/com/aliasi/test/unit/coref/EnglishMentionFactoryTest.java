@@ -18,17 +18,14 @@ package com.aliasi.test.unit.coref;
 
 import com.aliasi.coref.EnglishMentionFactory;
 import com.aliasi.coref.Mention;
-import com.aliasi.coref.MentionFactory;
 import com.aliasi.coref.MentionChain;
+import com.aliasi.coref.MentionFactory;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertArrayEquals;
-
-
 import java.util.HashSet;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class EnglishMentionFactoryTest  {
 

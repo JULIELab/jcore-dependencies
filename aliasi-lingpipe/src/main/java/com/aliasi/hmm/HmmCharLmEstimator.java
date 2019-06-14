@@ -1,9 +1,7 @@
 package com.aliasi.hmm;
 
 import com.aliasi.lm.NGramBoundaryLM;
-
 import com.aliasi.symbol.MapSymbolTable;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Exceptions;
 import com.aliasi.util.ObjectToCounterMap;
@@ -12,7 +10,6 @@ import com.aliasi.util.Tuple;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;

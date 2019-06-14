@@ -1,9 +1,12 @@
 package dragon.ir.summarize;
 
-import dragon.ir.clustering.docdistance.*;
-import dragon.ir.index.*;
-import dragon.ir.index.sentence.*;
-import dragon.ir.kngbase.*;
+import dragon.ir.clustering.docdistance.KLDivDocDistance;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.ir.index.sentence.OnlineSentenceIndexReader;
+import dragon.ir.index.sentence.OnlineSentenceIndexer;
+import dragon.ir.kngbase.DocRepresentation;
+import dragon.ir.kngbase.KnowledgeBase;
 import dragon.matrix.DoubleSparseMatrix;
 import dragon.nlp.SimpleElementList;
 

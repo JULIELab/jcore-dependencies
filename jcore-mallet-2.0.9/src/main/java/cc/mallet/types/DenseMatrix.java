@@ -14,9 +14,12 @@
 
 package cc.mallet.types;
 
-import java.io.*;
-
 import cc.mallet.util.Maths;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public abstract class DenseMatrix implements Matrix, Serializable
 {

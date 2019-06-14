@@ -1,9 +1,10 @@
 package salvo.jesus.graph.visual;
 
-import salvo.jesus.graph.*;
-import java.awt.event.*;
-import java.awt.*;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
 
 /**
  * State object that represents the normal mode in a GraphPanel.

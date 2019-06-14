@@ -2,16 +2,14 @@ package com.aliasi.test.unit.tokenizer;
 
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import org.junit.Test;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
 import static org.junit.Assert.assertArrayEquals;
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class ConstantTokenizerTest  {
 

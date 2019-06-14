@@ -16,8 +16,8 @@
 package com.aliasi.stats;
 
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.util.AbstractExternalizable;
+
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;

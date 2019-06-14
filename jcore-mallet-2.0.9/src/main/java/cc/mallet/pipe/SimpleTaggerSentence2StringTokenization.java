@@ -13,13 +13,16 @@ information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.pipe;
 
 
+import cc.mallet.extract.StringSpan;
+import cc.mallet.extract.StringTokenization;
+import cc.mallet.types.Instance;
+import cc.mallet.types.LabelAlphabet;
+import cc.mallet.types.LabelSequence;
+import cc.mallet.types.Token;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import cc.mallet.extract.StringSpan;
-import cc.mallet.extract.StringTokenization;
-import cc.mallet.types.*;
 
 /**
  * This extends {@link SimpleTaggerSentence2TokenSequence} to use

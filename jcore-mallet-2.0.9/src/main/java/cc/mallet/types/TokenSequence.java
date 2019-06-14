@@ -15,14 +15,14 @@
 package cc.mallet.types;
 
 
+import cc.mallet.util.PropertyList;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-
-import cc.mallet.util.PropertyList;
 
 /**
  * A representation of a piece of text, usually a single word, to which we can attach properties.

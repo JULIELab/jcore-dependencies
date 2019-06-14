@@ -1,10 +1,13 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import salvo.jesus.graph.visual.VisualGraphComponent;
+import salvo.jesus.graph.visual.VisualVertex;
+
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Rectangle2D;
+import java.util.StringTokenizer;
 
 /**
  * An implementation of <tt>VisualVertexPainter</tt> that draws

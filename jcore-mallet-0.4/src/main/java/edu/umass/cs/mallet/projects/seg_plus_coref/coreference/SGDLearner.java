@@ -12,18 +12,13 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.VertexImpl;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.ClusterEvaluate;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /*
 	Yet another stochastic gradient decent algorithm.  Earlier code is so

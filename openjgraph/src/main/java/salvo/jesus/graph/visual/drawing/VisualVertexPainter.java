@@ -1,9 +1,9 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import salvo.jesus.graph.visual.VisualGraphComponent;
+import salvo.jesus.graph.visual.VisualVertex;
+
 import java.awt.*;
-import java.awt.geom.*;
 
 /**
  * An interface for drawing a <tt>VisualVertex</tt>.

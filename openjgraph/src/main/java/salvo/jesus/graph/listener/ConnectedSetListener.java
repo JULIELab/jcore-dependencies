@@ -1,6 +1,9 @@
 package salvo.jesus.graph.listener;
+
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
+import salvo.jesus.graph.algorithm.DepthFirstGraphTraversal;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+
 import java.util.*;
 
 /**

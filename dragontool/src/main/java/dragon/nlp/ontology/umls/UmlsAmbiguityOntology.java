@@ -1,12 +1,21 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
+import dragon.matrix.DoubleSuperSparseMatrix;
+import dragon.matrix.SparseMatrix;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Token;
+import dragon.nlp.Word;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.ontology.SemanticNet;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
 /**
  * <p>UMLS ontology with sense disambiguation  </p>
  * <p></p>

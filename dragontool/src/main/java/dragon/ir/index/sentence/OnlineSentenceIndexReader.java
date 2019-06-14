@@ -1,8 +1,11 @@
 package dragon.ir.index.sentence;
 
-import dragon.ir.index.*;
+import dragon.ir.index.AbstractIndexReader;
+import dragon.ir.index.Indexer;
 import dragon.matrix.IntSparseMatrix;
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
+import dragon.onlinedb.CollectionReader;
 /**
  * <p>Index reader for reading sentence index information on line</p>
  * <p> </p>

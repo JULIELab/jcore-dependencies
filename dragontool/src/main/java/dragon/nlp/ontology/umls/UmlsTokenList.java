@@ -1,9 +1,15 @@
 package dragon.nlp.ontology.umls;
 
 import dragon.nlp.Token;
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>List for storing UMLS tokens</p>

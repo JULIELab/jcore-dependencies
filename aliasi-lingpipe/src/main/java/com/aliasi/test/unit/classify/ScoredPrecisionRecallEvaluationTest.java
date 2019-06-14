@@ -1,16 +1,11 @@
 package com.aliasi.test.unit.classify;
 
+import com.aliasi.classify.ScoredPrecisionRecallEvaluation;
+import org.junit.Test;
+
 import static com.aliasi.test.unit.Asserts.assertEqualsArray;
 import static com.aliasi.test.unit.Asserts.assertEqualsArray2D;
 import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
-import java.io.CharArrayWriter;
-import java.io.PrintWriter;
-
-import org.junit.Test;
-
-import com.aliasi.classify.ScoredPrecisionRecallEvaluation;
 
 public class ScoredPrecisionRecallEvaluationTest  {
 

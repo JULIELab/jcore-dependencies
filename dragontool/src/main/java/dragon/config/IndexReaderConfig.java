@@ -1,10 +1,14 @@
 package dragon.config;
 
 import dragon.ir.index.*;
-import dragon.ir.index.sentence.*;
-import dragon.ir.index.sequence.*;
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
+import dragon.ir.index.sentence.BasicSentenceIndexReader;
+import dragon.ir.index.sentence.OnlineSentenceIndexReader;
+import dragon.ir.index.sentence.OnlineSentenceIndexer;
+import dragon.ir.index.sequence.BasicSequenceIndexReader;
+import dragon.ir.index.sequence.OnlineSequenceIndexReader;
+import dragon.ir.index.sequence.OnlineSequenceIndexer;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.extract.ConceptExtractor;
 import dragon.onlinedb.CollectionReader;
 
 /**

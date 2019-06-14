@@ -11,9 +11,8 @@
 
 package edu.umass.cs.mallet.base.cluster;
 
-import edu.umass.cs.mallet.base.cluster.Clustering;
-import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.InstanceList;
 
 
 public abstract class Clusterer {

@@ -18,9 +18,9 @@
 
 package gnu.trove.benchmark;
 
-import java.util.*;
-
 import de.julielab.gnu.trove.*;
+
+import java.util.*;
 
 /**
  *

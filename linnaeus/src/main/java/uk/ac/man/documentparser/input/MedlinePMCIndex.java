@@ -1,13 +1,13 @@
 package uk.ac.man.documentparser.input;
 
+import uk.ac.man.documentparser.dataholders.Document;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Iterator;
 import java.util.Set;
-
-import uk.ac.man.documentparser.dataholders.Document;
 
 public class MedlinePMCIndex implements DocumentIterator {
 	private File medlineBaseDir;

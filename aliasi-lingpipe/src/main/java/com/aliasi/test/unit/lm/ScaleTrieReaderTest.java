@@ -1,21 +1,20 @@
 package com.aliasi.test.unit.lm;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
-
 import com.aliasi.io.BitInput;
 import com.aliasi.io.BitOutput;
-
 import com.aliasi.lm.BitTrieReader;
 import com.aliasi.lm.BitTrieWriter;
 import com.aliasi.lm.ScaleTrieReader;
 import com.aliasi.lm.TrieCharSeqCounter;
+import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class ScaleTrieReaderTest  {
 

@@ -7,14 +7,13 @@
 
 package edu.umass.cs.mallet.base.classify.tui;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.logging.*;
-import java.util.Random;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+
 import java.io.*;
+import java.util.Random;
+import java.util.logging.Logger;
 /**
 	 A command-line tool for manipulating InstanceLists.  For example,
 	 reducing the feature space by information gain.

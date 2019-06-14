@@ -1,13 +1,16 @@
 package dragon.ir.search.feedback;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
 import dragon.ir.kngbase.HALSpace;
-import dragon.ir.query.*;
-import dragon.ir.search.*;
-import dragon.ir.search.expand.*;
-import dragon.nlp.*;
+import dragon.ir.query.IRQuery;
+import dragon.ir.search.Searcher;
+import dragon.ir.search.expand.InformationFlowQE;
+import dragon.nlp.SimpleElement;
+import dragon.nlp.SimpleElementList;
 import dragon.nlp.extract.TokenExtractor;
-import java.util.*;
+
+import java.util.ArrayList;
 
 /**
  * <p>Feedback based on information flow</p>

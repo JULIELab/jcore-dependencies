@@ -16,24 +16,14 @@
 
 package com.aliasi.test.unit.coref;
 
-import com.aliasi.coref.CachedMention;
-import com.aliasi.coref.Killer;
-import com.aliasi.coref.Matcher;
-import com.aliasi.coref.Mention;
-import com.aliasi.coref.MentionChainImpl;
+import com.aliasi.coref.*;
 import com.aliasi.coref.matchers.*;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertNotNull;
-
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static junit.framework.Assert.*;
 
 public class MentionChainImplTest  {
 

@@ -1,7 +1,9 @@
 package dragon.onlinedb;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.EnvVariable;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 
 /**
  * <p>Writing collection to disk </p>

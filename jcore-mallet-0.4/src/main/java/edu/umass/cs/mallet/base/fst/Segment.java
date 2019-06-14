@@ -11,10 +11,10 @@
 
 package edu.umass.cs.mallet.base.fst;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.extract.*;
+import edu.umass.cs.mallet.base.types.ArraySequence;
+import edu.umass.cs.mallet.base.types.Sequence;
 
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * Represents a labelled chunk of a {@link Sequence} segmented by a

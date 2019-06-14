@@ -1,27 +1,13 @@
 package uk.ac.man.entitytagger;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-
 import martin.common.ComparableTuple;
 import martin.common.Misc;
 import martin.common.SQL;
-import martin.common.Tuple;
+
+import java.io.*;
+import java.sql.PreparedStatement;
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Class for representing a text match, containing the matched text, document coordinates and normalized IDs. 

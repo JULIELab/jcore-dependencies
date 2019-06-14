@@ -3,11 +3,10 @@
 /* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
 package de.julielab.jcore.types.pubmed;
 
-import org.apache.uima.jcas.JCas; 
+import de.julielab.jcore.types.Annotation;
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
-
-import de.julielab.jcore.types.Annotation;
 
 
 /** PubMed/Medline abstracts sometimes have other IDs besided their PMID from different sources. This type discloses the respective ID and source. For details see https://www.nlm.nih.gov/bsd/mms/medlineelements.html#oid

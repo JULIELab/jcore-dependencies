@@ -25,13 +25,13 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import java.util.*;
-import java.util.regex.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.PropertyList;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 
 

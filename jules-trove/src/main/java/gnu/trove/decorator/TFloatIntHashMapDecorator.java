@@ -18,17 +18,10 @@
 
 package gnu.trove.decorator;
 
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
 import de.julielab.gnu.trove.TFloatIntHashMap;
 import de.julielab.gnu.trove.TFloatIntIterator;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Wrapper class to make a TFloatIntHashMap conform to the <tt>java.util.Map</tt> API.

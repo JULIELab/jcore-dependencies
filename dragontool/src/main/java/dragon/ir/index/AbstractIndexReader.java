@@ -1,8 +1,10 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
-import dragon.onlinedb.*;
+import dragon.matrix.IntCell;
+import dragon.matrix.IntSparseMatrix;
+import dragon.nlp.SimpleElementList;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
 
 /**
  * <p>AbstractIndexReader implements functions defined in interface IndexReader such as getting

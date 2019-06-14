@@ -1,8 +1,12 @@
 package dragon.matrix;
 
-import dragon.util.*;
-import java.io.*;
-import java.util.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FileUtil;
+
+import java.io.File;
+import java.io.RandomAccessFile;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Abstract super sparse matrix is designed for large sparse matrix which first caches data and then processes data

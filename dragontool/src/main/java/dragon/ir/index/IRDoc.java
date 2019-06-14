@@ -1,6 +1,7 @@
 package dragon.ir.index;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexSortable;
+import dragon.nlp.compare.WeightSortable;
 /**
  * <p>IRDoc is data structure for IR document indexing which can be sorted and thus compared by weight and index </p>
  * <p>Description: </p>

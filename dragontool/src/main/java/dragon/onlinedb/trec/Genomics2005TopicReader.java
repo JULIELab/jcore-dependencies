@@ -1,7 +1,8 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.BasicArticle;
 import dragon.util.FileUtil;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 

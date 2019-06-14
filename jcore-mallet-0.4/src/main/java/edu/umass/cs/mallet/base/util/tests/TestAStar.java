@@ -1,7 +1,12 @@
 package edu.umass.cs.mallet.base.util.tests;
 
-import junit.framework.*;
-import edu.umass.cs.mallet.base.util.search.*;
+import edu.umass.cs.mallet.base.util.search.AStar;
+import edu.umass.cs.mallet.base.util.search.AStarState;
+import edu.umass.cs.mallet.base.util.search.SearchNode;
+import edu.umass.cs.mallet.base.util.search.SearchState;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created by IntelliJ IDEA.

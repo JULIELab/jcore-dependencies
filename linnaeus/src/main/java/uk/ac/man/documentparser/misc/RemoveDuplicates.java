@@ -1,16 +1,16 @@
 package uk.ac.man.documentparser.misc;
 
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import martin.common.Misc;
+import martin.common.SQL;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.Misc;
-import martin.common.SQL;
 
 public class RemoveDuplicates {
 	public static void main(String[] args){

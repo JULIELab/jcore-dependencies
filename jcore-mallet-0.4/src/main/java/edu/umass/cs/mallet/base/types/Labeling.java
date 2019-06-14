@@ -14,8 +14,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Label;
-
 /** A distribution over possible labels for an instance. */
 
 public interface Labeling

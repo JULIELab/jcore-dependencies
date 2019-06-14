@@ -14,13 +14,19 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.ie;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.ie.IEInterface3;
+import edu.umass.cs.mallet.base.fst.CRF;
+import edu.umass.cs.mallet.base.fst.CRF3;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.fst.TransducerEvaluator;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import java.io.*;
-import java.util.logging.*;
-import java.util.regex.*;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class IEEvaluator extends TransducerEvaluator
 {

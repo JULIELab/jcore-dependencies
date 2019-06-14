@@ -7,20 +7,20 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.HashVarSet;
 import cc.mallet.grmm.types.VarSet;
 import cc.mallet.grmm.types.Variable;
 import cc.mallet.util.MalletLogger;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * An implementation of Hugin-style propagation for junction trees.

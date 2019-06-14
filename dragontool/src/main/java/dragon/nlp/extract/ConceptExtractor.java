@@ -1,8 +1,11 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.Document;
+import dragon.nlp.DocumentParser;
+import dragon.nlp.Sentence;
+import dragon.nlp.tool.Lemmatiser;
 import dragon.util.SortedArray;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 

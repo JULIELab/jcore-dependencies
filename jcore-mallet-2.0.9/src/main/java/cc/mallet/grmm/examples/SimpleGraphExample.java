@@ -7,11 +7,14 @@
 package cc.mallet.grmm.examples;
 
 
-import java.util.Random;
-
 import cc.mallet.grmm.inference.Inferencer;
 import cc.mallet.grmm.inference.JunctionTreeInferencer;
-import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.types.AssignmentIterator;
+import cc.mallet.grmm.types.Factor;
+import cc.mallet.grmm.types.FactorGraph;
+import cc.mallet.grmm.types.Variable;
+
+import java.util.Random;
 
 /**
  * Created: Aug 13, 2004

@@ -15,18 +15,14 @@
 
 package de.julielab.xml;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.zip.GZIPInputStream;
-
 import com.ximpleware.ParseException;
 import com.ximpleware.extended.IByteBuffer;
 import com.ximpleware.extended.ParseExceptionHuge;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Copied from the original XMLBuffer in VTD XML version 2.10. Added the

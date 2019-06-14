@@ -2,16 +2,13 @@ package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.BernoulliDistribution;
 import com.aliasi.stats.BernoulliEstimator;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-
-import com.aliasi.util.AbstractExternalizable;
-
-import java.io.*;
 
 public class BernoulliEstimatorTest  {
 

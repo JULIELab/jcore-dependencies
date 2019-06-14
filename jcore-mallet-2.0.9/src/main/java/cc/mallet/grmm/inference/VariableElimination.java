@@ -8,18 +8,18 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.Iterator;
-import java.util.Collection;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.TableFactor;
 import cc.mallet.grmm.types.Variable;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 

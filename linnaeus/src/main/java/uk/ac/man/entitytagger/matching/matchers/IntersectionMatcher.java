@@ -1,12 +1,12 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.doc.TaggedDocument;
 import uk.ac.man.entitytagger.matching.Matcher;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class IntersectionMatcher extends Matcher{
 	private List<Matcher> matchers;

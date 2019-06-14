@@ -1,7 +1,10 @@
 package dragon.onlinedb.amazon;
 
-import dragon.onlinedb.*;
-import dragon.util.*;
+import dragon.onlinedb.AbstractQuery;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
+import dragon.util.Conversion;
+import dragon.util.HttpUtil;
 
 
 /**

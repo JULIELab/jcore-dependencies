@@ -12,8 +12,7 @@
    information, see the "LICENSE" file included in this distribution.
    **************************************************************** */
 package abner;
-import java.lang.*;
-import java.io.*;
+
 /**
    <p>ABNER's Scanner class implements the finite state machine used
    in tokenization.

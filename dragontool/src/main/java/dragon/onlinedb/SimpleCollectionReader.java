@@ -1,6 +1,7 @@
 package dragon.onlinedb;
 
-import dragon.util.*;
+import dragon.util.FileUtil;
+
 import java.io.File;
 
 /**

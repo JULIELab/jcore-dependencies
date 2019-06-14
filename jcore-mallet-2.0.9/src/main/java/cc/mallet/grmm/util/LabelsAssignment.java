@@ -7,21 +7,15 @@
 package cc.mallet.grmm.util;
 
 
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-
 import cc.mallet.grmm.types.Assignment;
 import cc.mallet.grmm.types.Variable;
-import cc.mallet.types.Label;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.Labels;
-import cc.mallet.types.LabelsSequence;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AlphabetCarrying;
-
+import cc.mallet.types.*;
 import gnu.trove.THashMap;
 import gnu.trove.TIntArrayList;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A special kind of assignment for Variables that

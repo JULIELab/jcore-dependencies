@@ -17,7 +17,6 @@
 package com.aliasi.chunk;
 
 import com.aliasi.classify.PrecisionRecallEvaluation;
-
 import com.aliasi.util.Strings;
 
 import java.util.Collections;

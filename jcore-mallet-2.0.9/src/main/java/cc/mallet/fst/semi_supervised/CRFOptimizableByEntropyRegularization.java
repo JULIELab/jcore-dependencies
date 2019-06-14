@@ -7,16 +7,17 @@
 
 package cc.mallet.fst.semi_supervised;
 
-import java.io.Serializable;
-import java.util.logging.Logger;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.InstanceList;
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.SumLattice;
 import cc.mallet.fst.SumLatticeDefault;
 import cc.mallet.fst.Transducer;
 import cc.mallet.optimize.Optimizable;
+import cc.mallet.types.FeatureVectorSequence;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
  * A CRF objective function that is the entropy of the CRF's

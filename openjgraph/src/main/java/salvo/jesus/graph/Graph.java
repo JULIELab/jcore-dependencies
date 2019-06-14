@@ -1,8 +1,12 @@
 package salvo.jesus.graph;
 
-import java.util.*;
-import java.io.*;
-import salvo.jesus.graph.algorithm.*;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+
+import java.io.Serializable;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * An interface for Graphs.

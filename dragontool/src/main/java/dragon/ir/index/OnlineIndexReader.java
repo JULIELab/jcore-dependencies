@@ -1,7 +1,8 @@
 package dragon.ir.index;
 
 import dragon.matrix.IntSparseMatrix;
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
 
 /**
  * <p>The class is used to read indexing information from memory </p>

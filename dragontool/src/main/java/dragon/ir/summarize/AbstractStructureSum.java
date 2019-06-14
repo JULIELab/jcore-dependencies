@@ -1,6 +1,7 @@
 package dragon.ir.summarize;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IndexReader;
+
 import java.util.ArrayList;
 /**
  * <p>Abstract class of structure summarization given a document set </p>

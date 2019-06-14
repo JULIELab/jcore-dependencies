@@ -1,6 +1,8 @@
 package dragon.onlinedb.citeulike;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.AbstractQuery;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.ArticleParser;
 import dragon.util.HttpUtil;
 /**
  * <p>CiteULike Tag Query</p>

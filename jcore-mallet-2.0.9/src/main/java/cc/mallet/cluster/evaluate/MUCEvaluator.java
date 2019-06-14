@@ -1,9 +1,9 @@
 package cc.mallet.cluster.evaluate;
 
 
-import java.util.HashSet;
-
 import cc.mallet.cluster.Clustering;
+
+import java.util.HashSet;
 
 /**
  * Evaluate a Clustering using the MUC evaluation metric. See Marc

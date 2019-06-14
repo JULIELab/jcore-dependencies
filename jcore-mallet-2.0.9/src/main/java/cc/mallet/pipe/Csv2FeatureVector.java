@@ -8,12 +8,12 @@
 package cc.mallet.pipe;
 
 
-import java.util.logging.*;
-import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Instance;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 
 /**

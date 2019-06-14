@@ -11,10 +11,14 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.io.*;
-import java.util.Iterator;
+import cc.mallet.types.Instance;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.net.URI;
-import cc.mallet.types.*;
+import java.util.Iterator;
 
 public class SimpleFileLineIterator implements Iterator<Instance> {
 

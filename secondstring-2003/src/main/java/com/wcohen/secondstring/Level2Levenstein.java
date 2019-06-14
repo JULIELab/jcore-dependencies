@@ -1,7 +1,6 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.SimpleTokenizer;
 
 /**
  * "Level 2" recursive field matching algorithm using Levenstein

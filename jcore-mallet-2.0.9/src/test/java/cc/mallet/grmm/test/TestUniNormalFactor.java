@@ -6,12 +6,15 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.types.Assignment;
+import cc.mallet.grmm.types.Factor;
+import cc.mallet.grmm.types.UniNormalFactor;
+import cc.mallet.grmm.types.Variable;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.Randoms;
+import gnu.trove.TDoubleArrayList;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-import gnu.trove.TDoubleArrayList;
 
 /**
  * $Id: TestUniNormalFactor.java,v 1.1 2007/10/22 21:37:41 mccallum Exp $

@@ -1,7 +1,6 @@
 package salvo.jesus.graph;
 
-import salvo.jesus.graph.*;
-import java.util.*;
+import java.util.List;
 
 /**
  * The superinterface of all <tt>Tree</tt>s. This interface

@@ -2,19 +2,11 @@ package com.aliasi.test.unit.lm;
 
 import com.aliasi.lm.LanguageModel;
 import com.aliasi.lm.UniformBoundaryLM;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import java.io.*;
 
-
-import java.io.ByteArrayOutputStream;
-import java.io.ByteArrayInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
+import static junit.framework.Assert.*;
 
 
 public class UniformBoundaryLMTest  {

@@ -1,10 +1,13 @@
 package cc.mallet.pipe;
 
-import cc.mallet.types.*;
+import cc.mallet.types.Instance;
 
-import java.util.HashSet;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.io.*;
+import java.util.HashSet;
 
 /** 
  *  A simple unicode tokenizer that accepts sequences of letters 

@@ -2,18 +2,16 @@ package com.aliasi.test.unit.chunk;
 
 import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.ChunkFactory;
-
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.TreeSet;
 
-import static com.aliasi.test.unit.Asserts.assertNotEquals;
 import static com.aliasi.test.unit.Asserts.assertFullEquals;
-
+import static com.aliasi.test.unit.Asserts.assertNotEquals;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-import org.junit.Test;
 
 
 public class ChunkFactoryTest {

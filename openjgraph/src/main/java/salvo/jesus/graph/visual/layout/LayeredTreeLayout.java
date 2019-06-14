@@ -1,14 +1,20 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.algorithm.*;
-import java.awt.Graphics2D;
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.awt.geom.*;
-import java.util.*;
 import org.apache.log4j.Category;
+import salvo.jesus.graph.GraphException;
+import salvo.jesus.graph.Tree;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.Visitor;
+import salvo.jesus.graph.algorithm.DepthFirstGraphTraversal;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author  Jesus M. Salvo Jr.

@@ -1,10 +1,12 @@
 package dragon.util;
 
-import java.io.*;
-import java.net.URL;
-import org.apache.commons.httpclient.*;
-import org.apache.commons.httpclient.methods.GetMethod;
+import org.apache.commons.httpclient.HostConfiguration;
+import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.cookie.CookiePolicy;
+import org.apache.commons.httpclient.methods.GetMethod;
+
+import java.io.InputStream;
+import java.net.URL;
 
 /**
  * <p>HTTP related utilities</p>

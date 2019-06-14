@@ -1,12 +1,11 @@
 package uk.ac.man.entitytagger.generate;
 
+import martin.common.Tuple;
+import martin.common.compthreads.Problem;
+
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Set;
-
-import martin.common.Misc;
-import martin.common.Tuple;
-import martin.common.compthreads.Problem;
 
 public class ConvertToVariantsProblemIterator implements Iterator<Problem<Tuple<DictionaryEntry,Set<String>>>> {
 	private Iterator<DictionaryEntry> iterator;

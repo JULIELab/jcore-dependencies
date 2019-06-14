@@ -7,11 +7,11 @@
 package cc.mallet.grmm.inference;
 
 
+import cc.mallet.grmm.types.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import cc.mallet.grmm.types.*;
 
 /**
  * Approximate inferencer for graphical models using sampling.

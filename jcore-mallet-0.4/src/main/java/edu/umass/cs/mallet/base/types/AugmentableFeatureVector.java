@@ -14,12 +14,12 @@
 
 package edu.umass.cs.mallet.base.types;
 
+import edu.umass.cs.mallet.base.util.PropertyList;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import edu.umass.cs.mallet.base.util.PropertyList;
 
 public class AugmentableFeatureVector extends FeatureVector implements Serializable
 {

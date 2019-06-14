@@ -1,8 +1,10 @@
 package dragon.config;
 
-import dragon.ir.query.*;
-import dragon.onlinedb.*;
+import dragon.ir.query.QueryGenerator;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
 import dragon.util.FileUtil;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 

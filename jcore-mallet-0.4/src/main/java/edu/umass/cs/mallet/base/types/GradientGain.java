@@ -17,7 +17,10 @@
 package edu.umass.cs.mallet.base.types;
 
 import edu.umass.cs.mallet.base.classify.Classification;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class GradientGain extends RankedFeatureVector
 {

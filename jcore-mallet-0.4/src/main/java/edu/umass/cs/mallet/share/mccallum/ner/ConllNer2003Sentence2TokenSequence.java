@@ -23,9 +23,10 @@
 
 package edu.umass.cs.mallet.share.mccallum.ner;
 
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import java.util.regex.*;
+
+import java.util.regex.Pattern;
 
 public class ConllNer2003Sentence2TokenSequence extends Pipe
 {

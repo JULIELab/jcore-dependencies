@@ -3,8 +3,6 @@
  */
 package is2.util;
 
-import is2.data.PipeGen;
-
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;

@@ -1,10 +1,10 @@
 package cc.mallet.topics.tui;
 
-import cc.mallet.util.*;
-import cc.mallet.types.*;
-import cc.mallet.topics.*;
+import cc.mallet.topics.TopicInferencer;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CommandOption;
 
-import java.io.*;
+import java.io.File;
 
 public class InferTopics {
 

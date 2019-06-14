@@ -1,18 +1,10 @@
 package relations;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
 import parser.Parser;
 import utils.DBUtils;
 import utils.SentenceSplitter.BioSemSentence;
+
+import java.util.*;
 
 /**
  * 

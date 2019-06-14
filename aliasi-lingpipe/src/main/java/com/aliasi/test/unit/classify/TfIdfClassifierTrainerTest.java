@@ -1,16 +1,9 @@
 package com.aliasi.test.unit.classify;
 
-import com.aliasi.classify.TfIdfClassifierTrainer;
-import com.aliasi.classify.Classification;
-import com.aliasi.classify.Classified;
-import com.aliasi.classify.ScoredClassification;
-import com.aliasi.classify.ScoredClassifier;
-
+import com.aliasi.classify.*;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -1,6 +1,7 @@
 package dragon.onlinedb.pubmed;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.AbstractQuery;
+import dragon.onlinedb.Article;
 import dragon.util.HttpUtil;
 /**
  * <p>PubMed article query </p>

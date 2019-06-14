@@ -11,7 +11,7 @@
 
 package edu.umass.cs.mallet.base.extract;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Sequence;
 
 public interface Tokenization extends Sequence //??
 {

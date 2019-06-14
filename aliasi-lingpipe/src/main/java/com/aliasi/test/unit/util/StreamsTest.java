@@ -16,34 +16,15 @@
 
 package com.aliasi.test.unit.util;
 
-import com.aliasi.util.Files;
 import com.aliasi.util.Streams;
 import com.aliasi.util.Strings;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertArrayEquals;
-
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.CharArrayReader;
-import java.io.CharArrayWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
-import java.io.StringReader;
-import java.io.Writer;
-
 import org.xml.sax.InputSource;
+
+import java.io.*;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class StreamsTest  {
 

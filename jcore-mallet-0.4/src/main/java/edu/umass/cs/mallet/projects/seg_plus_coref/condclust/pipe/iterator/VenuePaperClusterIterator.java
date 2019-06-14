@@ -11,14 +11,16 @@ information, see the file `LICENSE' included with this distribution. */
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
+
+import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.NodeClusterPair;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.VenuePaperCluster;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.Citation;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.PaperCitation;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.VenueCitation;
+
 import java.util.*;
-import java.io.*;
 
 /** Iterates over PaperVenueClusters. Each instance consists of a
  * Paper, its potential Cluster, and a Venue and its potential

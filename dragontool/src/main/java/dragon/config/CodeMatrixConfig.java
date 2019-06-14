@@ -1,6 +1,8 @@
 package dragon.config;
 
-import dragon.ir.classification.multiclass.*;
+import dragon.ir.classification.multiclass.AllPairCodeMatrix;
+import dragon.ir.classification.multiclass.CodeMatrix;
+import dragon.ir.classification.multiclass.OVACodeMatrix;
 /**
  * <p>Code Matrix Configuration</p>
  * <p></p>

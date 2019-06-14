@@ -3,11 +3,10 @@
 /* First created by JCasGen Wed Aug 08 13:36:49 CEST 2018 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas; 
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.jcas.cas.TOP_Type;
-
 import org.apache.uima.jcas.cas.StringArray;
+import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** This type refers to the likelihood aspect of epistemic modality. The annotation marks epistemic modal expressions used to linguistically modify the likelihood of an event or of a relation that an entity might be in. The employed likelihood scale also includes negation (0% likelihood) and assertion (100% likelihood), the latter being the default case where no explicit likelihood modifier is present in the text.

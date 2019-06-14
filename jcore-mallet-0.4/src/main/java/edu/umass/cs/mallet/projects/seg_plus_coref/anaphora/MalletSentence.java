@@ -25,26 +25,7 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import org.jdom.input.*;
-import org.xml.sax.*;
-import org.xml.sax.ext.LexicalHandler;
-import org.xml.sax.helpers.DefaultHandler;
-import org.xml.sax.helpers.XMLReaderFactory;
-import org.jdom.Document;
-import org.jdom.JDOMException;
-import org.jdom.*;
-import org.jdom.output.XMLOutputter;
-
-import java.util.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.io.File;
-import java.io.*;
-import java.net.URI;
-
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
+import org.jdom.Element;
 
 public class MalletSentence extends MalletDocumentElement
 {

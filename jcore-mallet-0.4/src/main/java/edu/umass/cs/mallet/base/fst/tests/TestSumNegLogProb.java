@@ -14,7 +14,9 @@
 
 package edu.umass.cs.mallet.base.fst.tests;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestSumNegLogProb extends TestCase
 {

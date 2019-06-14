@@ -1,10 +1,6 @@
 package de.julielab.evaluation.entities.format;
 
-import static de.julielab.evaluation.entities.format.EvaluationDataColumn.CONFIDENCE;
-import static de.julielab.evaluation.entities.format.EvaluationDataColumn.DOC_ID;
-import static de.julielab.evaluation.entities.format.EvaluationDataColumn.ENTITY_ID;
-import static de.julielab.evaluation.entities.format.EvaluationDataColumn.ENTITY_STRING;
-import static de.julielab.evaluation.entities.format.EvaluationDataColumn.TAGGER;
+import static de.julielab.evaluation.entities.format.EvaluationDataColumn.*;
 
 public class GeneNormalizationNoOffsetsFormat extends EvaluationDataFormat {
 	public GeneNormalizationNoOffsetsFormat() {

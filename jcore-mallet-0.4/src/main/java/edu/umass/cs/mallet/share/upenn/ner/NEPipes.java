@@ -1,15 +1,12 @@
 package edu.umass.cs.mallet.share.upenn.ner;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.SerialPipes;
+import edu.umass.cs.mallet.base.pipe.tsf.RegexMatches;
+import edu.umass.cs.mallet.base.pipe.tsf.TokenText;
 
-import edu.umass.cs.mallet.share.weili.ner.enron.*;
-
-import java.io.*;
-
-import java.util.*;
-import java.util.regex.*;
+import java.io.File;
+import java.util.regex.Pattern;
 
 public class NEPipes extends SerialPipes {
 

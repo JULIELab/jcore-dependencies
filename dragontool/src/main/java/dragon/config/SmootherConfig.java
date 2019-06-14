@@ -1,8 +1,10 @@
 package dragon.config;
 
-import dragon.ir.index.*;
+import dragon.ir.index.BasicIndexReader;
+import dragon.ir.index.IRCollection;
+import dragon.ir.index.IndexReader;
 import dragon.ir.search.smooth.*;
-import dragon.matrix.*;
+import dragon.matrix.DoubleSparseMatrix;
 
 /**
  * <p>Semantic smoothing configuration </p>

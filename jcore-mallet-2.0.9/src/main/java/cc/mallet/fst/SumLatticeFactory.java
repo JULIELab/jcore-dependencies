@@ -1,9 +1,9 @@
 package cc.mallet.fst;
 
-import java.io.Serializable;
-
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.Sequence;
+
+import java.io.Serializable;
 
 /**
  * Provides factory methods to create inference engine for training a transducer.

@@ -1,6 +1,8 @@
 package salvo.jesus.graph.algorithm;
+
 import salvo.jesus.graph.*;
-import java.util.*;
+
+import java.util.Iterator;
 
 /**
  * An implementation of CycleDetectionAlgorithm via DFS.  Although

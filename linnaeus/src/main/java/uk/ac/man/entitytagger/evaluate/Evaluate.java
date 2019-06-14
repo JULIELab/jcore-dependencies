@@ -1,29 +1,18 @@
 package uk.ac.man.entitytagger.evaluate;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import martin.common.ArgParser;
+import martin.common.compthreads.IteratorBasedMaster;
+import martin.common.r.RGraphics;
 import uk.ac.man.documentparser.DocumentParser;
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.DocumentIterator;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.matching.matchers.ACIDMatcher;
 
-import martin.common.ArgParser;
-import martin.common.compthreads.IteratorBasedMaster;
-import martin.common.r.RGraphics;
+import java.io.*;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Evaluate {
 

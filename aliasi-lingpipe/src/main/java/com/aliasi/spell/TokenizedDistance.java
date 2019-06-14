@@ -18,12 +18,10 @@ package com.aliasi.spell;
 
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.Distance;
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Proximity;
 import com.aliasi.util.Strings;
-
 
 import java.util.HashSet;
 import java.util.Set;

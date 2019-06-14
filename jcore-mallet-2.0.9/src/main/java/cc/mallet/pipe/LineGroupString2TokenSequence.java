@@ -30,11 +30,14 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.TokenSequence;
 import cc.mallet.util.CharSequenceLexer;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class LineGroupString2TokenSequence extends Pipe implements Serializable
 {

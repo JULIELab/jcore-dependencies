@@ -24,12 +24,19 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.cluster;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator.*;
+
+import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.ClassifierTrainer;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.classify.*;
-import java.util.*;  
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator.NodeClusterPairIterator;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Random;
 
 /** Trains the conditional clusterer to predict "yes" or "no" for a
  * NodeClusterPair; i.e. does this nodes belong in this cluster?*/

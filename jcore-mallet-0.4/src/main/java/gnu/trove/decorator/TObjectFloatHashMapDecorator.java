@@ -20,13 +20,8 @@ package gnu.trove.decorator;
 
 import gnu.trove.TObjectFloatHashMap;
 import gnu.trove.TObjectFloatIterator;
-import java.util.AbstractMap;
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Map.Entry;
-import java.util.Map;
-import java.util.Set;
+
+import java.util.*;
 
 /**
  * Wrapper class to make a TObjectFloatHashMap conform to the <tt>java.util.Map</tt> API.

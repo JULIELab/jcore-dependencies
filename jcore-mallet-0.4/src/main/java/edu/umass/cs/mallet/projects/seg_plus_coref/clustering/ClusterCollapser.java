@@ -25,8 +25,6 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import java.io.*;
-
 public class ClusterCollapser {
 
 	public ClusterCollapser () {

@@ -1,8 +1,10 @@
 package salvo.jesus.graph;
 
-import java.util.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.util.*;
+import salvo.jesus.graph.algorithm.MinimumSpanningTreeAlgorithm;
+import salvo.jesus.graph.algorithm.MinimumSpanningTreeKruskalAlgorithm;
+import salvo.jesus.graph.algorithm.ShortestPathAlgorithm;
+import salvo.jesus.graph.algorithm.ShortestPathDijkstraAlgorithm;
+import salvo.jesus.util.HeapNodeComparator;
 
 /**
  * An implementation of the WeightedGraph interface where all

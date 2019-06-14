@@ -1,13 +1,17 @@
 package salvo.jesus.graph.visual;
 
-import java.util.*;
-import java.awt.*;
-import java.awt.geom.*;
-import java.io.*;
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.listener.*;
-import salvo.jesus.graph.visual.layout.*;
+import salvo.jesus.graph.listener.NullGraphListener;
 import salvo.jesus.graph.visual.drawing.*;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+
+import java.awt.*;
+import java.awt.geom.Line2D;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * The VisualGraph encapsulates a Graph object with the necessary

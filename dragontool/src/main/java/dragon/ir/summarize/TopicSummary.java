@@ -1,6 +1,7 @@
 package dragon.ir.summarize;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexComparator;
+import dragon.nlp.compare.WeightComparator;
 import dragon.util.SortedArray;
 
 /**

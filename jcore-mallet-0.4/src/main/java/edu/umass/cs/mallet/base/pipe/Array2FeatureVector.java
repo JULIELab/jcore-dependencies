@@ -10,15 +10,14 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.FeatureVector;
 import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Labeling;
+import edu.umass.cs.mallet.base.types.FeatureVector;
 import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Labeling;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 
-import java.util.logging.*;
 import java.lang.reflect.Array;
+import java.util.logging.Logger;
 
 /** Converts a Java array of numerical types to a FeatureVector, where the
     Alphabet is the data array index wrapped in an Integer object.

@@ -1,10 +1,8 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.geom.*;
+import salvo.jesus.graph.visual.VisualGraphComponent;
+
 import java.awt.*;
-import java.awt.geom.*;
 
 /**
  * A weak implementation of the VisualWeightedEdgePainter interface.

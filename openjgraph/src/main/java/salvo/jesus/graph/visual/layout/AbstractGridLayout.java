@@ -1,14 +1,16 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import java.awt.Point;
-import java.awt.geom.*;
-import java.awt.event.*;
-import java.util.*;
-import java.lang.reflect.*;
-import java.io.*;
 import org.apache.log4j.Category;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.awt.*;
+import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.*;
+import java.util.List;
 
 /**
  * An abstract implementation of the GraphLayoutManager interface.

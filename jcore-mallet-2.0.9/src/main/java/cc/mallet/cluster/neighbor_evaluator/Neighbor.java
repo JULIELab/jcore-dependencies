@@ -1,12 +1,12 @@
 package cc.mallet.cluster.neighbor_evaluator;
 
+import cc.mallet.cluster.Clustering;
+import cc.mallet.types.Alphabet;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import cc.mallet.cluster.Clustering;
-import cc.mallet.types.Alphabet;
 
 /**
  * A Clustering and a modified version of that Clustering.

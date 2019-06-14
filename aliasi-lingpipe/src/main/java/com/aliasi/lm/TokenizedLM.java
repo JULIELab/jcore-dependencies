@@ -18,34 +18,21 @@
 package com.aliasi.lm;
 
 import com.aliasi.corpus.ObjectHandler;
-
-import com.aliasi.symbol.SymbolTable;
-import com.aliasi.symbol.MapSymbolTable;
-
 import com.aliasi.stats.BinomialDistribution;
 import com.aliasi.stats.Statistics;
-
+import com.aliasi.symbol.MapSymbolTable;
+import com.aliasi.symbol.SymbolTable;
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
+import com.aliasi.util.*;
 
-import com.aliasi.util.AbstractExternalizable;
-// import com.aliasi.util.Arrays;
-import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Exceptions;
-import com.aliasi.util.ScoredObject;
-import com.aliasi.util.Strings;
-
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.SortedSet;
+// import com.aliasi.util.Arrays;
 
 /**
  * A <code>TokenizedLM</code> provides a dynamic sequence language

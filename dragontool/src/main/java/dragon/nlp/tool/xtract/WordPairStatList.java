@@ -1,8 +1,11 @@
 package dragon.nlp.tool.xtract;
 
 import dragon.nlp.compare.IndexComparator;
-import dragon.util.*;
-import java.io.*;
+import dragon.util.ByteArrayConvert;
+import dragon.util.FastBinaryReader;
+import dragon.util.SortedArray;
+
+import java.io.RandomAccessFile;
 
 /**
  * <p>List of word pairs with statistical information </p>

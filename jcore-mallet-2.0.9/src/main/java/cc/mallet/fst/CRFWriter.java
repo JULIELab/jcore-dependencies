@@ -1,15 +1,13 @@
 package cc.mallet.fst;
 
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.MalletLogger;
+
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-
 import java.util.logging.Logger;
-
-import cc.mallet.types.InstanceList;
-
-import cc.mallet.util.MalletLogger;
 
 /**
  * Saves a trained model to specified filename. <p>

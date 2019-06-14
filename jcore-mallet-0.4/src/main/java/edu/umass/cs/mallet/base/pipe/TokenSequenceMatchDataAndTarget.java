@@ -10,14 +10,18 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.regex.Pattern;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Logger;
 import java.util.regex.Matcher;
-import java.util.logging.*;
-import java.io.*;
+import java.util.regex.Pattern;
 /**
 	 Run a regular expression over the text of each token; replace the
 	 text with the substring matching one regex group; create a target

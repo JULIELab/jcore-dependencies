@@ -3,10 +3,14 @@ package dragon.ir.query;
 import dragon.ir.kngbase.KnowledgeBase;
 import dragon.matrix.DoubleSparseMatrix;
 import dragon.nlp.*;
-import dragon.nlp.compare.*;
-import dragon.nlp.extract.*;
+import dragon.nlp.compare.IndexComparator;
+import dragon.nlp.compare.WeightComparator;
+import dragon.nlp.extract.PhraseExtractor;
+import dragon.nlp.extract.TokenExtractor;
 import dragon.onlinedb.Article;
-import dragon.util.*;
+import dragon.util.FormatUtil;
+import dragon.util.SortedArray;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 

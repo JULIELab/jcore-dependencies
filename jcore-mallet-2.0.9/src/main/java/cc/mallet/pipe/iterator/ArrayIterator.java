@@ -15,11 +15,11 @@
 package cc.mallet.pipe.iterator;
 
 
+import cc.mallet.types.Instance;
+
 import java.net.URI;
 import java.util.Iterator;
 import java.util.List;
-
-import cc.mallet.types.Instance;
 
 public class ArrayIterator implements Iterator<Instance>
 {

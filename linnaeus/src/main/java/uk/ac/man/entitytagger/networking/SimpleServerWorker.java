@@ -1,5 +1,10 @@
 package uk.ac.man.entitytagger.networking;
 
+import martin.common.compthreads.Problem;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ObjectInputStream;
@@ -9,11 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
-import martin.common.compthreads.Problem;
 
 public class SimpleServerWorker implements Problem<Object> {
 

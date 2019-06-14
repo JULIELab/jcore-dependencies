@@ -8,11 +8,11 @@
 package cc.mallet.topics;
 
 
-import java.util.Arrays;
-import java.io.*;
-
 import cc.mallet.types.*;
 import cc.mallet.util.Randoms;
+
+import java.io.*;
+import java.util.Arrays;
 
 /**
  * Like Latent Dirichlet Allocation, but with integrated phrase discovery.

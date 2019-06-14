@@ -1,9 +1,9 @@
 package uk.ac.man.entitytagger.doc;
 
-import java.util.ArrayList;
-
 import uk.ac.man.documentparser.dataholders.Section;
 import uk.ac.man.entitytagger.Mention;
+
+import java.util.ArrayList;
 
 public class TaggedSection {
 	private Section original;

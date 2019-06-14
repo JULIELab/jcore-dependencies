@@ -1,8 +1,12 @@
 package dragon.ir.index;
 
-import dragon.nlp.*;
+import dragon.nlp.Concept;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.SimplePairList;
+import dragon.nlp.Triple;
 import dragon.nlp.compare.IndexComparator;
 import dragon.util.SortedArray;
+
 import java.util.ArrayList;
 /**
  * <p>AbstractIndexWriteController implements basics functions including generating IRTermList, IRRelationList for the useage of later processing.</p>

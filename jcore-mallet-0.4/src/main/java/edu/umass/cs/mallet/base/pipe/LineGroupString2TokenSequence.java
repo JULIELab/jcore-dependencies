@@ -30,12 +30,14 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.util.Lexer;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class LineGroupString2TokenSequence extends Pipe implements Serializable
 {

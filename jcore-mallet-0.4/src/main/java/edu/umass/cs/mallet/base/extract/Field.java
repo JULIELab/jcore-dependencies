@@ -9,8 +9,8 @@ package edu.umass.cs.mallet.base.extract;
 import edu.umass.cs.mallet.base.types.Label;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Iterator;
+import java.util.List;
 import java.util.ListIterator;
 
 /**

@@ -1,8 +1,10 @@
 package dragon.config;
 
-import dragon.ir.index.sentence.*;
-import dragon.ir.kngbase.*;
-import dragon.ir.summarize.*;
+import dragon.ir.index.sentence.OnlineSentenceIndexer;
+import dragon.ir.kngbase.KnowledgeBase;
+import dragon.ir.summarize.GenericMultiDocSummarizer;
+import dragon.ir.summarize.LexRankSummarizer;
+import dragon.ir.summarize.SemanticRankSummarizer;
 
 /**
  * <p>Summarizer configuration</p>

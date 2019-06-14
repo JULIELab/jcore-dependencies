@@ -3,13 +3,10 @@ package com.aliasi.test.unit.matrix;
 import com.aliasi.matrix.AbstractVector;
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.Vector;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.fail;
 import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 public class AbstractVectorTest  {
 

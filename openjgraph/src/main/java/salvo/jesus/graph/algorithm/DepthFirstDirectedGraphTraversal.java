@@ -1,7 +1,9 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
-import java.util.*;
+import salvo.jesus.graph.DirectedGraph;
+import salvo.jesus.graph.Vertex;
+
+import java.util.List;
 
 /**
  * A concrete subclass of GraphTraversal that uses depth-first search in

@@ -1,7 +1,10 @@
 package dragon.ir.index.sequence;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 
 /**
  * <p>The file writer for writing sequencial data to file </p>

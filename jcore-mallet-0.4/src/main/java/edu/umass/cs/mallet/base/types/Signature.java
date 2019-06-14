@@ -25,10 +25,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.io.*;
-
 public class Signature
 {
 	/*

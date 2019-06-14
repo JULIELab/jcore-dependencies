@@ -1,28 +1,20 @@
 package de.julielab.evaluation.entities;
 
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import de.julielab.evaluation.entities.format.EvaluationDataColumn;
+import de.julielab.evaluation.entities.format.EvaluationDataFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
+import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
-import de.julielab.evaluation.entities.format.EvaluationDataColumn;
-import de.julielab.evaluation.entities.format.EvaluationDataFormat;
-import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
 
 public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 

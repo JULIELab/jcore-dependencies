@@ -14,10 +14,10 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
 import java.util.Arrays;
+import java.util.logging.Logger;
 
 public final class Matrix2 extends DenseMatrix
 {

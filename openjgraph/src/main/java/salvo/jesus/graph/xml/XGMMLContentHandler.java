@@ -1,18 +1,17 @@
 package salvo.jesus.graph.xml;
 
-import org.xml.sax.helpers.*;
-import org.xml.sax.*;
-import java.util.*;
-import java.lang.reflect.Constructor;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.geom.GeneralPath;
-import java.awt.geom.Rectangle2D;
+import org.xml.sax.Attributes;
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
 import salvo.jesus.graph.visual.drawing.Painter;
-import salvo.jesus.graph.algorithm.*;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.lang.reflect.Constructor;
 
 
 /**

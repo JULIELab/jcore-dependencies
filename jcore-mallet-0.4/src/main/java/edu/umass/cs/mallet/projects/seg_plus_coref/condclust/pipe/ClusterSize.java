@@ -7,11 +7,12 @@
 
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import java.util.*;
+
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.NodeClusterPair;
+
+import java.util.Collection;
 
 /** Feature is size of cluster...to penalize large clusters.*/
 public class ClusterSize extends Pipe

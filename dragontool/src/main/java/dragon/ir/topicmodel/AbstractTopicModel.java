@@ -1,6 +1,6 @@
 package dragon.ir.topicmodel;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IndexReader;
 
 /**
  * <p>Abstract class of topic model</p>

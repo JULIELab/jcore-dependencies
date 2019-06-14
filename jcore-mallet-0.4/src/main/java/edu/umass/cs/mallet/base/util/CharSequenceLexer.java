@@ -14,13 +14,9 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import edu.umass.cs.mallet.base.util.Lexer;
 import java.io.*;
-import java.lang.CharSequence;
-import java.util.Iterator;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import java.io.*;
+import java.util.regex.Pattern;
 
 public class CharSequenceLexer implements Lexer, Serializable
 {

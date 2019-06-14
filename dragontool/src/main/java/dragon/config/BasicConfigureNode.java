@@ -1,8 +1,11 @@
 package dragon.config;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
-import javax.xml.parsers.*;
-import org.w3c.dom.*;
 
 /**
  * <p>Basic data structure for XML configure node </p>

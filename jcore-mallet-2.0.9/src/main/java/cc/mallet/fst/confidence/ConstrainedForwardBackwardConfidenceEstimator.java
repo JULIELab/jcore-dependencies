@@ -11,8 +11,11 @@
 
 package cc.mallet.fst.confidence;
 
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.SumLatticeConstrained;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.Sequence;
 
 /**
  * Estimates the confidence of a {@link Segment} extracted by a {@link

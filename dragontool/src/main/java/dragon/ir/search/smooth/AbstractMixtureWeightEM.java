@@ -1,8 +1,13 @@
 package dragon.ir.search.smooth;
 
-import dragon.ir.index.*;
-import dragon.ir.query.*;
-import java.io.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.ir.query.Predicate;
+import dragon.ir.query.RelSimpleQuery;
+import dragon.ir.query.SimpleTermPredicate;
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**

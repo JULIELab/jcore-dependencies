@@ -1,6 +1,6 @@
 package salvo.jesus.graph.xml;
 
-import java.util.*;
+import java.util.Comparator;
 
 /**
  * Comparator used internally by XGMMLDOMSerializer as a parameter

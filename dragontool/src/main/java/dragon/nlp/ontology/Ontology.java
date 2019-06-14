@@ -1,6 +1,8 @@
 package dragon.nlp.ontology;
 
-import dragon.nlp.*;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
+
 import java.util.ArrayList;
 /**
  * <p>Interface of Ontology</p>

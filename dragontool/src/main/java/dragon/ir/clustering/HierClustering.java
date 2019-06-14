@@ -1,7 +1,8 @@
 package dragon.ir.clustering;
 
-import dragon.ir.index.*;
-import dragon.ir.clustering.docdistance.*;
+import dragon.ir.clustering.docdistance.DocDistance;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 
 /**
  * <p>Hierarchical clustering with options of single, complete, and average linkage </p>

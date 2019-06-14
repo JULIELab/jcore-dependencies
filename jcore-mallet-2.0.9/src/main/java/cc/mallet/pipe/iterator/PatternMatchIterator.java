@@ -11,10 +11,11 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.util.Iterator;
-import java.util.regex.*;
+import cc.mallet.types.Instance;
 
-import cc.mallet.types.*;
+import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /** Iterates over matching regular expresions. E.g. 
  *   regexp = Pattern.compile ("<p>(.+?)</p>")  will 

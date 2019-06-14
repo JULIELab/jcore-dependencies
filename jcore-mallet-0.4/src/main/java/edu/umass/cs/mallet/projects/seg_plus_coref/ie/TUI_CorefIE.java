@@ -22,6 +22,7 @@ import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.projects.seg_plus_coref.BaseTUICRF;
 import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.LineGroupIterator2;
 import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.SGML2FieldsPipe;
+import gnu.trove.TIntArrayList;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -30,9 +31,6 @@ import java.io.Reader;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-
-import gnu.trove.TIntArrayList;
 
 
 /**

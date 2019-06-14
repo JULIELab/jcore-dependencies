@@ -1,7 +1,9 @@
 package dragon.onlinedb.trec;
 
 import dragon.onlinedb.*;
-import java.io.*;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 
 /**
  * <p>TREC collection reader</p>

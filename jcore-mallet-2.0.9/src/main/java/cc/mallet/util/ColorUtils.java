@@ -7,8 +7,9 @@
 package cc.mallet.util;
 
 
-import java.awt.*;
 import cc.mallet.types.MatrixOps;
+
+import java.awt.*;
 
 /**
  * Utilities for dealing with RGB-style colors.

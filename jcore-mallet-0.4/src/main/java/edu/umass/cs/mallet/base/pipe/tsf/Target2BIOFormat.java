@@ -14,9 +14,13 @@
 
 package edu.umass.cs.mallet.base.pipe.tsf;
 
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
 	 Creates a {@link LabelSequence} out of a {@link TokenSequence} that

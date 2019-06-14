@@ -14,24 +14,21 @@
 
 package cc.mallet.fst;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.logging.Logger;
-
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Sequence;
 import cc.mallet.types.SequencePairAlignment;
-
-import cc.mallet.pipe.Pipe;
-
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Sequences;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * A base class for all sequence models, analogous to {@link classify.Classifier}.

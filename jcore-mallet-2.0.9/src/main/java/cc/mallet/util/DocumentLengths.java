@@ -1,8 +1,11 @@
 package cc.mallet.util;
 
-import cc.mallet.types.*;
-import java.util.logging.*;
-import java.io.*;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+
+import java.io.File;
+import java.util.logging.Logger;
 
 public class DocumentLengths {
 

@@ -6,12 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import junit.framework.*;
-
-import java.io.IOException;
-
 import cc.mallet.grmm.util.MIntInt2ObjectMap;
 import cc.mallet.types.tests.TestSerializable;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.IOException;
 
 /**
  * Created: Dec 14, 2005

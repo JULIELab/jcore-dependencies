@@ -1,13 +1,12 @@
 package com.aliasi.test.unit.dict;
 
 import com.aliasi.dict.DictionaryEntry;
-
 import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
 
-import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 
 public class DictionaryEntryTest  {

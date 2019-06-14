@@ -1,8 +1,17 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.util.*;
-import java.util.*;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.WeightedEdge;
+import salvo.jesus.graph.WeightedGraph;
+import salvo.jesus.graph.WeightedGraphImpl;
+import salvo.jesus.util.Heap;
+import salvo.jesus.util.HeapNode;
+import salvo.jesus.util.HeapNodeComparator;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * A concrete implementation of ShortestPathAlgorithm using Dijkstra's method.

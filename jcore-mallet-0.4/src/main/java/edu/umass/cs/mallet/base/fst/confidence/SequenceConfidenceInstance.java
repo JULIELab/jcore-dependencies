@@ -11,11 +11,9 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Sequence;
 import edu.umass.cs.mallet.base.util.PropertyList;
-
-import java.util.*;
 
 /**
 	 Stores a {@link Sequence} and a PropertyList, used when extracting

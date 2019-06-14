@@ -1,9 +1,9 @@
 package salvo.jesus.graph.visual;
 
-import salvo.jesus.graph.*;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+
 import javax.swing.*;
-import java.awt.*;
-import salvo.jesus.graph.visual.layout.*;
 
 /**
  * GraphScrollPane encapsulates GraphPanelSizeable so that the

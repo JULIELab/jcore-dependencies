@@ -1,6 +1,6 @@
 package dragon.matrix;
 
-import dragon.util.*;
+import dragon.util.FileUtil;
 /**
  * <p>Super sparse matrix for double data type </p>
  * <p></p>

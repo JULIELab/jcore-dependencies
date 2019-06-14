@@ -11,18 +11,15 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.PropertyList;
-import java.lang.reflect.Method;
-import java.net.URI;
-import java.lang.reflect.InvocationTargetException;
-import java.util.logging.*;
-import java.util.HashMap;
+
 import java.io.*;
 import java.rmi.dgc.VMID;
+import java.util.HashMap;
+import java.util.logging.Logger;
 /**
 	The abstract superclass of all Pipes, which transform one data type to another.
 	Pipes are most often used for feature extraction.

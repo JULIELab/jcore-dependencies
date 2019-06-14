@@ -1,7 +1,8 @@
 package dragon.util;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.Properties;
 
 /**
  * <p>Getting windows environmental variable </p>

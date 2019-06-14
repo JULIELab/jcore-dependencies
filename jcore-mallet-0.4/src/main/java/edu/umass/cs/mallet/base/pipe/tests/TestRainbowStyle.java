@@ -14,14 +14,16 @@
 
 package edu.umass.cs.mallet.base.pipe.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import junit.framework.*;
-import java.net.URI;
-import java.net.URL;
-import java.io.File;
-import java.util.regex.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
 import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.File;
+import java.util.regex.Pattern;
 
 public class TestRainbowStyle extends TestCase
 {

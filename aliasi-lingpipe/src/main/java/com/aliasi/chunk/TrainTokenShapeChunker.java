@@ -16,21 +16,18 @@
 
 package com.aliasi.chunk;
 
+import com.aliasi.corpus.ObjectHandler;
 import com.aliasi.tokenizer.TokenCategorizer;
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Strings;
 
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

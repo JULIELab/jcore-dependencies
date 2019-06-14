@@ -1,7 +1,8 @@
 package dragon.config;
 
-import dragon.nlp.tool.*;
-import dragon.nlp.ontology.*;
+import dragon.nlp.ontology.BasicVocabulary;
+import dragon.nlp.ontology.Vocabulary;
+import dragon.nlp.tool.Lemmatiser;
 /**
  * <p>Vocabulary configuration</p>
  * <p></p>

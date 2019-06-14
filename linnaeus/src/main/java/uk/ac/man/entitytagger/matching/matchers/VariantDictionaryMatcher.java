@@ -1,5 +1,10 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
+import martin.common.*;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -7,27 +12,9 @@ import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
-
-import martin.common.CacheMap;
-import martin.common.Function;
-import martin.common.Misc;
-import martin.common.Pair;
-import martin.common.Sizeable;
-import martin.common.StreamIterator;
 
 /**
  * Class for performing NER dictionary matching against text. The dictionaries should

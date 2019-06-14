@@ -15,9 +15,8 @@
 package edu.umass.cs.mallet.base.minimize.tests;
 
 import edu.umass.cs.mallet.base.minimize.Minimizable;
-import edu.umass.cs.mallet.base.minimize.LineMinimizer;
-import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.types.DenseVector;
+import edu.umass.cs.mallet.base.types.Matrix;
 
 public class Quadratic implements Minimizable.ByGradient
 {

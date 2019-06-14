@@ -1,7 +1,6 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import salvo.jesus.graph.visual.VisualGraphComponent;
 
 /**
  * An implmentation of <tt>PainterFactory</tt> interface

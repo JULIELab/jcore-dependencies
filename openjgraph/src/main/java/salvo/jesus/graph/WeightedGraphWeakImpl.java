@@ -1,8 +1,11 @@
 package salvo.jesus.graph;
 
-import java.util.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.graph.adaptor.*;
+import salvo.jesus.graph.adaptor.GraphDelegator;
+import salvo.jesus.graph.algorithm.MinimumSpanningTreeAlgorithm;
+import salvo.jesus.graph.algorithm.ShortestPathAlgorithm;
+
+import java.util.Comparator;
+import java.util.TreeSet;
 
 /**
  * A weak implementation of the WeighedGraph interface. This is used internally

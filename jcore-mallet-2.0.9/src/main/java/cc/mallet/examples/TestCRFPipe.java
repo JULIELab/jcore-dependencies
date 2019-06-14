@@ -1,14 +1,17 @@
 package cc.mallet.examples;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.util.zip.*;
-
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
+import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
+import cc.mallet.pipe.iterator.LineGroupIterator;
 import cc.mallet.pipe.tsf.*;
-import cc.mallet.types.*;
+import cc.mallet.types.InstanceList;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 public class TestCRFPipe {
 	

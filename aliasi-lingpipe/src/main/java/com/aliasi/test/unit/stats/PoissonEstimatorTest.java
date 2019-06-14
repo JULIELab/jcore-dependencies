@@ -2,7 +2,6 @@ package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.PoissonConstant;
 import com.aliasi.stats.PoissonEstimator;
-
 import org.junit.Test;
 
 import java.io.*;

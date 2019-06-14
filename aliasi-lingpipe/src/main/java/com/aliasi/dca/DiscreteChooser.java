@@ -16,23 +16,19 @@
 
 package com.aliasi.dca;
 
+import com.aliasi.io.Reporter;
+import com.aliasi.io.Reporters;
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.Matrices;
 import com.aliasi.matrix.Vector;
-
-import com.aliasi.io.Reporter;
-import com.aliasi.io.Reporters;
-
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
 import com.aliasi.util.AbstractExternalizable;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
 import java.util.Formatter;
 import java.util.IllegalFormatException;
 import java.util.Locale;

@@ -1,5 +1,7 @@
 package salvo.jesus.graph;
-import salvo.jesus.graph.listener.*;
+
+import salvo.jesus.graph.listener.CyclePathListener;
+import salvo.jesus.graph.listener.ImmutableGraphListener;
 
 /**
  * Implementation of <tt>CyclePath</tt> that ensures that the first

@@ -18,22 +18,17 @@ package com.aliasi.test.unit.sentences;
 
 import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.ChunkFactory;
-
 import com.aliasi.sentences.IndoEuropeanSentenceModel;
 import com.aliasi.sentences.SentenceChunker;
 import com.aliasi.sentences.SentenceModel;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
 
 import java.io.IOException;
-
-import java.util.Set;
 import java.util.LinkedHashSet;
-
-import org.junit.Test;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 

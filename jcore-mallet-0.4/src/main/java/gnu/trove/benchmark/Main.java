@@ -19,6 +19,7 @@
 package gnu.trove.benchmark;
 
 import gnu.trove.*;
+
 import java.util.*;
 
 /**

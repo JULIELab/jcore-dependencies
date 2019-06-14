@@ -1,12 +1,11 @@
 package uk.ac.man.documentparser.input;
 
+import martin.common.StreamIterator;
+import uk.ac.man.documentparser.dataholders.Document;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import martin.common.StreamIterator;
-
-import uk.ac.man.documentparser.dataholders.Document;
 
 public class IDIterator implements DocumentIterator {
 

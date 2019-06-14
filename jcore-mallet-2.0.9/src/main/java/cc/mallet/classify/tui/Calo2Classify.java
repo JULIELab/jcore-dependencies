@@ -12,17 +12,29 @@
 package cc.mallet.classify.tui;
 
 
+import cc.mallet.classify.Classifier;
+import cc.mallet.classify.ClassifierTrainer;
+import cc.mallet.classify.NaiveBayesTrainer;
+import cc.mallet.classify.Trial;
+import cc.mallet.classify.evaluate.ConfusionMatrix;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.Labeling;
+import cc.mallet.types.MatrixOps;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.MalletProgressMessageLogger;
+import cc.mallet.util.ProgressMessageLogFormatter;
 
 import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import java.lang.reflect.*;
-
-import cc.mallet.classify.*;
-import cc.mallet.classify.evaluate.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.BitSet;
 import java.util.Random;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 /**
  * Classify documents, run trials, print statistics from a vector file.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

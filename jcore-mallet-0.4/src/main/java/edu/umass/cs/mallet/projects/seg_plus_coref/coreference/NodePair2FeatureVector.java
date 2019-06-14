@@ -8,16 +8,11 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import salvo.jesus.graph.*;
-
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
+import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.Instance;
 
 
 public class NodePair2FeatureVector extends Pipe

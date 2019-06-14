@@ -1,7 +1,10 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.SimpleTokenizer;
+import com.wcohen.secondstring.tokens.Token;
+import com.wcohen.secondstring.tokens.Tokenizer;
+
+import java.util.Iterator;
 
 /**
  * Jaccard distance implementation.  The Jaccard distance between two

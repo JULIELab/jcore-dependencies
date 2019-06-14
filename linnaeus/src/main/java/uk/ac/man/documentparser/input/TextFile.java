@@ -1,15 +1,15 @@
 package uk.ac.man.documentparser.input;
 
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
+import uk.ac.man.documentparser.dataholders.ExternalID;
+import uk.ac.man.documentparser.dataholders.ExternalID.Source;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.util.Iterator;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.dataholders.ExternalID;
-import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
-import uk.ac.man.documentparser.dataholders.ExternalID.Source;
 
 public class TextFile implements DocumentIterator{
 

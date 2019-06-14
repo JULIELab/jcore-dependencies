@@ -11,15 +11,18 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.util.Lexer;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
-import java.io.*;
-import java.net.URI;
-import java.util.regex.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
 	 Similar to {@link SGML2TokenSequence}, except that only the tags
 	 listed in <code>allowedTags</code> are converted to {@link Label}s.

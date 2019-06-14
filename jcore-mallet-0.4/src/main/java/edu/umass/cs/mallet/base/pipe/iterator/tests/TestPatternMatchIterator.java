@@ -14,11 +14,14 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import junit.framework.*;
+import edu.umass.cs.mallet.base.pipe.iterator.PatternMatchIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import java.util.Iterator;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 public class TestPatternMatchIterator extends TestCase
 {

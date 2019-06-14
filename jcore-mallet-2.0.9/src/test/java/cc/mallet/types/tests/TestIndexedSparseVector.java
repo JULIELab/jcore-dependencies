@@ -14,14 +14,14 @@
 
 package cc.mallet.types.tests;
 
-import junit.framework.*;
+import cc.mallet.types.IndexedSparseVector;
+import cc.mallet.types.SparseVector;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.IOException;
 import java.util.Arrays;
-
-import cc.mallet.types.DenseVector;
-import cc.mallet.types.IndexedSparseVector;
-import cc.mallet.types.SparseVector;
 
 public class TestIndexedSparseVector extends TestCase
 {

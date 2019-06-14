@@ -3,11 +3,10 @@ package com.aliasi.test.unit.matrix;
 import com.aliasi.matrix.DenseMatrix;
 import com.aliasi.matrix.Matrices;
 import com.aliasi.matrix.Matrix;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 
 public class MatricesTest  {

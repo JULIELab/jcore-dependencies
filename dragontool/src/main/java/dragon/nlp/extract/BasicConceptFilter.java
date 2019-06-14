@@ -1,8 +1,12 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.Concept;
+import dragon.nlp.Term;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
 
 /**
  * <p>Basic Concept Filter</p>

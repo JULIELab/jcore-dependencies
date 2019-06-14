@@ -1,6 +1,7 @@
 package dragon.matrix.factorize;
 
-import dragon.matrix.*;
+import dragon.matrix.DoubleDenseMatrix;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Interface of matrix factorization</p>

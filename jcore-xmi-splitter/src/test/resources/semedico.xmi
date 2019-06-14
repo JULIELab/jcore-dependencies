@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xmi:XMI xmlns:cas="http:///uima/cas.ecore" xmlns:xmi="http://www.omg.org/XMI"
-	xmlns:pubmed="http:///de/julielab/jcore/types/pubmed.ecore" xmlns:tcas="http:///uima/tcas.ecore"
-	xmlns:stemnet="http:///de/julielab/jcore/types/stemnet.ecore"
-	xmlns:types="http:///de/julielab/jcore/types.ecore" xmi:version="2.0">
+         xmlns:pubmed="http:///de/julielab/jcore/types/pubmed.ecore" xmlns:tcas="http:///uima/tcas.ecore"
+         xmlns:types="http:///de/julielab/jcore/types.ecore" xmi:version="2.0">
 	<cas:NULL xmi:id="0" />
 	<cas:Sofa xmi:id="1" sofaNum="1" sofaID="_InitialView"
 		mimeType="text"

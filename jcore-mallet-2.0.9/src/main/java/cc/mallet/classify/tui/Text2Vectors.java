@@ -7,16 +7,20 @@
 
 package cc.mallet.classify.tui;
 
-import java.util.ArrayList;
-import java.util.logging.*;
-import java.util.regex.*;
+import cc.mallet.pipe.*;
+import cc.mallet.pipe.iterator.FileIterator;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CharSequenceLexer;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Strings;
+
 import java.io.*;
 import java.nio.charset.Charset;
-
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Convert document files into vectors (a persistent instance list).

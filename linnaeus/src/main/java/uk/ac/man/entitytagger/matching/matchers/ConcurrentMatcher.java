@@ -1,14 +1,13 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.util.Iterator;
-
+import martin.common.compthreads.Problem;
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.DocumentIterator;
 import uk.ac.man.entitytagger.doc.TaggedDocument;
 import uk.ac.man.entitytagger.matching.MatchOperations;
 import uk.ac.man.entitytagger.matching.Matcher;
 
-import martin.common.compthreads.Problem;
+import java.util.Iterator;
 
 /**
  * Class for facilitating concurrent text matching. 

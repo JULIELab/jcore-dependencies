@@ -1,6 +1,6 @@
 package dragon.ir.classification;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
 /**
  * <p>The basic data structure for a set of classes for documents</p>
  * <p> </p>

@@ -10,10 +10,10 @@ import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.types.Sequence;
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Created: Nov 12, 2004

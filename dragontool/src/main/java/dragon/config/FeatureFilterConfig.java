@@ -1,6 +1,8 @@
 package dragon.config;
 
-import dragon.ir.clustering.featurefilter.*;
+import dragon.ir.clustering.featurefilter.DocFrequencyFilter;
+import dragon.ir.clustering.featurefilter.FeatureFilter;
+import dragon.ir.clustering.featurefilter.NullFeatureFilter;
 
 /**
  * <p>Feature filter configuration</p>

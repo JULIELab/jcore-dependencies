@@ -11,20 +11,13 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.base.classify;
 
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.DenseVector;
-import edu.umass.cs.mallet.base.types.FeatureSelection;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.LabelAlphabet;
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.MatrixOps;
 /**
  * Maximum Entropy classifier.
  @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

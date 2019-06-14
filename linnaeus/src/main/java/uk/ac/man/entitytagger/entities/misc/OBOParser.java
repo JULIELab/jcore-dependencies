@@ -1,26 +1,16 @@
 package uk.ac.man.entitytagger.entities.misc;
 
+import martin.common.*;
+import uk.ac.man.entitytagger.generate.DictionaryEntry;
+import uk.ac.man.entitytagger.generate.GenerateMatchers;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
-
-import martin.common.ArgParser;
-import martin.common.SQL;
-import martin.common.StreamIterator;
-import martin.common.Loggers;
-import martin.common.Misc;
-
-import uk.ac.man.entitytagger.generate.DictionaryEntry;
-import uk.ac.man.entitytagger.generate.GenerateMatchers;
 
 public class OBOParser {
 

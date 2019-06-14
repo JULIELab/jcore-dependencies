@@ -16,26 +16,20 @@ package edu.umass.cs.mallet.base.fst;
 
 // Analogous to base.types.classify.Classifier
 
-import java.util.logging.*;
-import java.util.*;
-import java.io.*;
-
 import edu.umass.cs.mallet.base.pipe.Pipe;
-//import edu.umass.cs.mallet.base.pipe.SerialPipe;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.Sequence;
-import edu.umass.cs.mallet.base.types.ArraySequence;
-import edu.umass.cs.mallet.base.types.SequencePair;
-import edu.umass.cs.mallet.base.types.SequencePairAlignment;
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.LabelAlphabet;
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.DenseVector;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.MatrixOps;
+import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.util.search.*;
+import edu.umass.cs.mallet.base.util.search.AStar;
+import edu.umass.cs.mallet.base.util.search.AStarState;
+import edu.umass.cs.mallet.base.util.search.SearchNode;
+import edu.umass.cs.mallet.base.util.search.SearchState;
+
+import java.io.*;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+//import edu.umass.cs.mallet.base.pipe.SerialPipe;
 
 // Variable name key:
 // "ip" = "input position"

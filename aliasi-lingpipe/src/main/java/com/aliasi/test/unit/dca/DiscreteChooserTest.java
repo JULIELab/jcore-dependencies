@@ -1,30 +1,21 @@
 package com.aliasi.test.unit.dca;
 
 import com.aliasi.dca.DiscreteChooser;
-
-import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
-import com.aliasi.io.Reporters;
-
-import com.aliasi.matrix.Vector;
 import com.aliasi.matrix.DenseVector;
-
+import com.aliasi.matrix.Vector;
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
 import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Random;
 
 import static com.aliasi.test.unit.Asserts.assertEqualsArray;
 import static com.aliasi.test.unit.Asserts.succeed;
-
-import org.junit.Test;
-
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-
-import java.io.IOException;
-
-import java.util.Random;
 
 public class DiscreteChooserTest {
 

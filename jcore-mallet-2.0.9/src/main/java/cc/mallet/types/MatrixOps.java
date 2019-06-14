@@ -7,9 +7,9 @@ information, see the file `LICENSE' included with this distribution. */
 
 package cc.mallet.types;
 
-import java.util.Random;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
+import java.util.Random;
 
 /** 
  *  A class of static utility functions for manipulating arrays of

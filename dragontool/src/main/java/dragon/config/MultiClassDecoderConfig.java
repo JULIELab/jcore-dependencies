@@ -1,6 +1,7 @@
 package dragon.config;
 
-import dragon.ir.classification.multiclass.*;
+import dragon.ir.classification.multiclass.LossMultiClassDecoder;
+import dragon.ir.classification.multiclass.MultiClassDecoder;
 /**
  * <p>Multi-class Decoder Configuration</p>
  * <p></p>

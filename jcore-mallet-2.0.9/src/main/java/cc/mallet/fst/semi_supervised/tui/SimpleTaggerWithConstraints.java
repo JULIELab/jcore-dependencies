@@ -7,28 +7,8 @@
 
 package cc.mallet.fst.semi_supervised.tui;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Random;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
-import cc.mallet.fst.CRF;
-import cc.mallet.fst.MaxLatticeDefault;
-import cc.mallet.fst.MultiSegmentationEvaluator;
-import cc.mallet.fst.NoopTransducerTrainer;
+import cc.mallet.fst.*;
 import cc.mallet.fst.SimpleTagger.SimpleTaggerSentence2FeatureVectorSequence;
-import cc.mallet.fst.TokenAccuracyEvaluator;
-import cc.mallet.fst.Transducer;
-import cc.mallet.fst.TransducerEvaluator;
-import cc.mallet.fst.TransducerTrainer;
 import cc.mallet.fst.semi_supervised.CRFTrainerByGE;
 import cc.mallet.fst.semi_supervised.FSTConstraintUtil;
 import cc.mallet.fst.semi_supervised.constraints.GEConstraint;
@@ -46,6 +26,13 @@ import cc.mallet.types.Sequence;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Random;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Version of SimpleTagger that trains CRFs with expectation constraints

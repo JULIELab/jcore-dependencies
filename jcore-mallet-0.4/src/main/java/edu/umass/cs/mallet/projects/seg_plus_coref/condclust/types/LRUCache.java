@@ -24,8 +24,9 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
+
+import java.util.HashMap;
+import java.util.LinkedList;
 
 /** Stores objects in a hashmap. Uses Least-recently used list to keep
  * size of cache reasonable.  */

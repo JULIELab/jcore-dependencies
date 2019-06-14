@@ -6,12 +6,12 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract;
 
-import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.types.Label;
+import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.types.Sequence;
 
-import java.util.regex.Pattern;
 import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Tokenization filter that will create nested spans based on a hierarchical labeling of the data.

@@ -7,10 +7,10 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.Iterator;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.LogTableFactor;
+
+import java.util.Iterator;
 
 /**
  * Created: May 29, 2005

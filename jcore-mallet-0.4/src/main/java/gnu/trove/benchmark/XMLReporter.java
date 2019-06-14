@@ -18,7 +18,8 @@
 
 package gnu.trove.benchmark;
 
-import java.io.*;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 /**
  *

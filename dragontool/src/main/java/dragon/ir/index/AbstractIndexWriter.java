@@ -1,6 +1,6 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
+import dragon.matrix.IntSparseMatrix;
 
 /**
  * <p>The class implements two methods writing termdoc and docterm matrix to disk with options of term based, relation based or both </p>

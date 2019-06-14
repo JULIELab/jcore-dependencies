@@ -2,8 +2,6 @@ package dragon.util;
 
 import java.io.*;
 
-import org.apache.commons.io.FileUtils;
-
 /**
  * <p>
  * A convenient class for basic file utility operations

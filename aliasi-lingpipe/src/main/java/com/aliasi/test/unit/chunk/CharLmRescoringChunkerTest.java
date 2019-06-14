@@ -1,18 +1,16 @@
 package com.aliasi.test.unit.chunk;
 
+import com.aliasi.chunk.CharLmRescoringChunker;
 import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.ChunkFactory;
 import com.aliasi.chunk.ChunkingImpl;
-import com.aliasi.chunk.CharLmRescoringChunker;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
+import org.junit.Test;
 
 import java.io.IOException;
 
 import static com.aliasi.test.unit.chunk.CharLmHmmChunkerTest.assertChunkingCompile;
-
-import org.junit.Test;
 
 public class CharLmRescoringChunkerTest {
 

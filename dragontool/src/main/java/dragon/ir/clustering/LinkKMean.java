@@ -1,9 +1,12 @@
 package dragon.ir.clustering;
 
-import dragon.ir.clustering.clustermodel.*;
-import dragon.ir.index.*;
-import dragon.matrix.*;
-import dragon.matrix.vector.*;
+import dragon.ir.clustering.clustermodel.ClusterModel;
+import dragon.ir.clustering.clustermodel.MultinomialClusterModel;
+import dragon.ir.index.IRDoc;
+import dragon.matrix.DoubleDenseMatrix;
+import dragon.matrix.DoubleFlatDenseMatrix;
+import dragon.matrix.SparseMatrix;
+import dragon.matrix.vector.DoubleVector;
 import dragon.util.MathUtil;
 
 /**

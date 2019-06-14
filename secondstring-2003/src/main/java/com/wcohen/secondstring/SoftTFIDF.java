@@ -1,7 +1,9 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.Token;
+import com.wcohen.secondstring.tokens.Tokenizer;
+
+import java.util.Iterator;
 
 /**
  * TFIDF-based distance metric, extended to use "soft" token-matching.

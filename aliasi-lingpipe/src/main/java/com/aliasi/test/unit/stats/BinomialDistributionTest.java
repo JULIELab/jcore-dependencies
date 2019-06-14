@@ -1,14 +1,12 @@
 package com.aliasi.test.unit.stats;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
-
 import com.aliasi.stats.BernoulliConstant;
 import com.aliasi.stats.BinomialDistribution;
+import org.junit.Test;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class BinomialDistributionTest  {
 

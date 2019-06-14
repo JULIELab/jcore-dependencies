@@ -1,8 +1,11 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
 import dragon.nlp.tool.Tagger;
-import dragon.util.*;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
 import java.io.BufferedReader;
 import java.util.ArrayList;
 

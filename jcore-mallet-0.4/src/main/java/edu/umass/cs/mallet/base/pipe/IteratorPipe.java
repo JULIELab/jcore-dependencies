@@ -11,7 +11,8 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.pipe.iterator.*;
+import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
+import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
 import edu.umass.cs.mallet.base.types.Instance;
 /**
  * Unimplemented.

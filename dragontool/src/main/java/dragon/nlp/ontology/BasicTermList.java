@@ -1,9 +1,11 @@
 package dragon.nlp.ontology;
 
-import dragon.util.SortedArray;
 import dragon.util.FileUtil;
-import java.util.*;
-import java.io.*;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>List of basic terms in ontology</p>

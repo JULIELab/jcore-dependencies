@@ -3,6 +3,7 @@ package dragon.ir.clustering;
 import dragon.ir.index.IRDoc;
 import dragon.nlp.compare.IndexComparator;
 import dragon.util.SortedArray;
+
 import java.util.ArrayList;
 
 /**

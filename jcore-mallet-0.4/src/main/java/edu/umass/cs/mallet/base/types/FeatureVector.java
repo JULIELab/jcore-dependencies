@@ -14,17 +14,12 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Vector;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.FeatureSequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.PropertyList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Arrays;
-import java.util.logging.*;
+
 import java.io.*;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
  *  A subset of an {@link edu.umass.cs.mallet.base.types.Alphabet} in which each element of the subset has an associated value.

@@ -1,8 +1,15 @@
 package cc.mallet.topics;
 
-import java.io.*;
-import java.util.*;
-import cc.mallet.types.*;
+import cc.mallet.types.IDSorter;
+import cc.mallet.types.InstanceList;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Formatter;
+import java.util.Iterator;
+import java.util.TreeSet;
 
 public class JSONTopicReports extends AbstractTopicReports implements TopicReports {
 	

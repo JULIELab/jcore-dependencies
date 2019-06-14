@@ -1,15 +1,20 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
+import edu.umass.cs.mallet.base.classify.Trial;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.pipe.SerialPipes;
+import edu.umass.cs.mallet.base.pipe.Target2Label;
 import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.LabelVector;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.LinkedHashSet;
 
 public class TUImuc
 {

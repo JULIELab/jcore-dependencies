@@ -1,17 +1,12 @@
 package com.aliasi.test.unit.util;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-
-
 import com.aliasi.util.BoundedPriorityQueue;
+import org.junit.Test;
 
 import java.util.Comparator;
 import java.util.Iterator;
+
+import static junit.framework.Assert.*;
 
 public class BoundedPriorityQueueTest  {
 

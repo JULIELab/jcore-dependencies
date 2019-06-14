@@ -11,9 +11,11 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.*;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.Transducer;
 
-import cc.mallet.fst.*;
+import java.util.Random;
 
 /** Randomly assigns values between 0-1 to the confidence of a {@link
  * Segment}. Used as baseline to compare with other methods.

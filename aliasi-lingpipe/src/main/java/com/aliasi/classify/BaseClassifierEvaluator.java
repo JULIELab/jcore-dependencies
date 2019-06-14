@@ -17,11 +17,7 @@ package com.aliasi.classify;
 
 import com.aliasi.corpus.ObjectHandler;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A <code>BaseClassifierEvaluator</code> provides an evaluation harness

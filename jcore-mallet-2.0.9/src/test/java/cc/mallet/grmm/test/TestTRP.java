@@ -7,15 +7,15 @@
 
 package cc.mallet.grmm.test;
 
-import junit.framework.*;
-
-import java.util.Iterator;
-import java.util.Random;
-
 import cc.mallet.grmm.inference.RandomGraphs;
 import cc.mallet.grmm.inference.TRP;
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * $Id: TestTRP.java,v 1.1 2007/10/22 21:37:40 mccallum Exp $

@@ -7,22 +7,10 @@
 
 package cc.mallet.grmm.learning;
 
-import java.util.logging.Logger;
-
-
-
-import java.io.*;
-
-import java.util.*;
-import java.util.regex.Pattern;
-
-import gnu.trove.*;
-import org.jdom.Document;
-import org.jdom.Element;
-import org.jdom.JDOMException;
-import org.jdom.input.SAXBuilder;
-
-import cc.mallet.grmm.inference.*;
+import cc.mallet.grmm.inference.AbstractBeliefPropagation;
+import cc.mallet.grmm.inference.Inferencer;
+import cc.mallet.grmm.inference.JunctionTreeInferencer;
+import cc.mallet.grmm.inference.TRP;
 import cc.mallet.grmm.types.*;
 import cc.mallet.grmm.util.LabelsAssignment;
 import cc.mallet.grmm.util.Models;
@@ -31,6 +19,19 @@ import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
 import cc.mallet.util.ArrayUtils;
 import cc.mallet.util.MalletLogger;
+import gnu.trove.TDoubleArrayList;
+import gnu.trove.THashMap;
+import gnu.trove.TIntArrayList;
+import gnu.trove.TObjectIntHashMap;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.JDOMException;
+import org.jdom.input.SAXBuilder;
+
+import java.io.*;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 /**

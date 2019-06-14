@@ -19,12 +19,7 @@ package com.aliasi.chunk;
 import com.aliasi.util.Iterators;
 import com.aliasi.util.Strings;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A <code>ChunkingImpl</code> provides a mutable, set-based

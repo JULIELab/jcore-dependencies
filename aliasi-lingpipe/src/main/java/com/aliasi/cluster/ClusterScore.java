@@ -17,7 +17,6 @@
 package com.aliasi.cluster;
 
 import com.aliasi.classify.PrecisionRecallEvaluation;
-
 import com.aliasi.util.Distance;
 import com.aliasi.util.Tuple;
 

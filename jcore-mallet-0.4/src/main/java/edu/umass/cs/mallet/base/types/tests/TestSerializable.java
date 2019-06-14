@@ -6,7 +6,9 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.types.tests;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.*;
 

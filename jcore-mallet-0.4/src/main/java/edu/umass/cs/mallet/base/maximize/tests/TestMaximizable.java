@@ -15,19 +15,15 @@
 package edu.umass.cs.mallet.base.maximize.tests;
 
 import edu.umass.cs.mallet.base.maximize.Maximizable;
-import edu.umass.cs.mallet.base.maximize.LineMaximizer;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
 import edu.umass.cs.mallet.base.types.MatrixOps;
-import edu.umass.cs.mallet.base.types.Vector;
-import junit.framework.*;
-import java.util.logging.*;
-import java.io.*;
-import edu.umass.cs.mallet.base.maximize.Maximizable;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+import edu.umass.cs.mallet.base.util.Maths;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  *  Contains static methods for testing subclasses of

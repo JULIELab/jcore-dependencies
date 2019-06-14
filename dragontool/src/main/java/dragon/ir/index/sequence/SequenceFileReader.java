@@ -1,6 +1,7 @@
 package dragon.ir.index.sequence;
 
-import dragon.util.*;
+import dragon.util.FastBinaryReader;
+
 import java.io.RandomAccessFile;
 
 /**

@@ -1,11 +1,14 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.visual.layout.*;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraphComponent;
+import salvo.jesus.graph.visual.VisualVertex;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+
 import java.awt.*;
-import java.awt.geom.*;
-import java.util.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 
 /**
  * An implementation of <tt>VisualEdgePainter</tt> that draws

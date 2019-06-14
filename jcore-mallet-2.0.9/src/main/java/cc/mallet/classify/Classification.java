@@ -14,15 +14,14 @@
 
 package cc.mallet.classify;
 
-import java.io.FileNotFoundException;
-import java.io.PrintWriter;
-import java.io.Serializable;
-
-import cc.mallet.classify.Classifier;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Instance;
 import cc.mallet.types.LabelVector;
 import cc.mallet.types.Labeling;
+
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.io.Serializable;
 
 /**
  * The result of classifying a single instance.

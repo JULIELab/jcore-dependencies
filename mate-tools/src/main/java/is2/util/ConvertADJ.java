@@ -4,11 +4,8 @@
 package is2.util;
 
 import is2.data.SentenceData09;
-import is2.io.CONLLReader04;
-import is2.io.CONLLReader06;
 import is2.io.CONLLReader09;
 import is2.io.CONLLWriter06;
-import is2.io.CONLLWriter09;
 
 /**
  * @author Dr. Bernd Bohnet, 01.03.2010

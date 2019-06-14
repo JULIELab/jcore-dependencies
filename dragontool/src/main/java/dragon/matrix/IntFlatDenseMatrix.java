@@ -1,7 +1,12 @@
 package dragon.matrix;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+import dragon.util.FileUtil;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
+import java.io.Serializable;
 
 /**
  * <p>Flat dense matrix for integer data </p>

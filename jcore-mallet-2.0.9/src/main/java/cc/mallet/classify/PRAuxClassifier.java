@@ -7,14 +7,14 @@
 
 package cc.mallet.classify;
 
-import java.util.ArrayList;
-
 import cc.mallet.classify.constraints.pr.MaxEntPRConstraint;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Instance;
 import cc.mallet.types.LabelVector;
 import cc.mallet.types.MatrixOps;
+
+import java.util.ArrayList;
 
 
 /**

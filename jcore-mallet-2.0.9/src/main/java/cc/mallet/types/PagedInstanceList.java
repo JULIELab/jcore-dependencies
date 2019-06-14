@@ -10,22 +10,12 @@ information, see the file `LICENSE' included with this distribution. */
 
 package cc.mallet.types;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.rmi.dgc.VMID;
-import java.util.BitSet;
 import cc.mallet.pipe.Noop;
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Label;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.MatrixOps;
+
+import java.io.*;
+import java.rmi.dgc.VMID;
+import java.util.BitSet;
 
 /**
       An InstanceList which avoids OutOfMemoryErrors by saving Instances

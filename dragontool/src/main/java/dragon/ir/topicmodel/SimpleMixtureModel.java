@@ -2,7 +2,8 @@ package dragon.ir.topicmodel;
 
 import dragon.ir.index.IndexReader;
 import dragon.matrix.vector.DoubleVector;
-import java.util.*;
+
+import java.util.Random;
 
 /**
  * <p>Simple mixture model</p>

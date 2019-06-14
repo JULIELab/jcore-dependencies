@@ -1,7 +1,9 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
+import dragon.matrix.IntFlatSparseMatrix;
+import dragon.matrix.SparseMatrixFactory;
+import dragon.nlp.Sentence;
+import dragon.nlp.Word;
 /**
  * <p>Sentence base class provides functions of adding and saving sententce to matrix</p>
  * <p> </p>

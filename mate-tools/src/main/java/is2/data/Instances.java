@@ -2,9 +2,6 @@ package is2.data;
 
 import java.util.BitSet;
 
-import is2.io.CONLLReader09;
-import is2.util.DB;
-
 
 
 public class Instances  {

@@ -14,8 +14,8 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.util.CharSequenceLexer;
 import edu.umass.cs.mallet.base.types.Instance;
+
 import java.io.*;
 import java.net.URI;
 

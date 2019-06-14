@@ -1,12 +1,14 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.visual.*;
 import salvo.jesus.graph.java.awt.geom.Point2DDouble;
-import java.awt.Point;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
-import java.awt.geom.*;
-import java.util.*;
+import salvo.jesus.graph.visual.*;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A concrete implementation of GraphLayoutManager, extending AbstractGraphLayout,

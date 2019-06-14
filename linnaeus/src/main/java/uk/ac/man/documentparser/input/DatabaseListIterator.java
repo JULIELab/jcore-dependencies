@@ -1,24 +1,20 @@
 package uk.ac.man.documentparser.input;
 
+import martin.common.MyConnection;
+import uk.ac.man.documentparser.dataholders.Author;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
+import uk.ac.man.documentparser.dataholders.Document.Type;
+import uk.ac.man.documentparser.dataholders.ExternalID;
+import uk.ac.man.documentparser.dataholders.ExternalID.Source;
+import uk.ac.man.documentparser.dataholders.Journal;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Set;
-
-import martin.common.MyConnection;
-
-import uk.ac.man.documentparser.dataholders.Author;
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.dataholders.ExternalID;
-import uk.ac.man.documentparser.dataholders.Journal;
-import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
-import uk.ac.man.documentparser.dataholders.Document.Type;
-import uk.ac.man.documentparser.dataholders.ExternalID.Source;
 
 public class DatabaseListIterator implements DocumentIterator {
 

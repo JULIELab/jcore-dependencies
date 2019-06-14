@@ -11,11 +11,14 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import java.io.*;
-import java.util.Iterator;
-import java.util.ArrayList;
-import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.Iterator;
 /**
  * Convert the token sequence in the data field of each instance to a token iterator
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

@@ -11,11 +11,15 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.*;
-import java.io.*;
+import cc.mallet.fst.MaxLatticeDefault;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.Sequence;
 
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import java.io.PrintStream;
+import java.util.ArrayList;
 
 /**
 	 Calculates the effectiveness of "constrained viterbi" in

@@ -1,8 +1,8 @@
 package de.julielab.evaluation.entities.format;
 
-import java.util.function.Consumer;
-
 import de.julielab.evaluation.entities.EvaluationDataEntry;
+
+import java.util.function.Consumer;
 
 public enum EvaluationDataColumn {
 	DOC_ID {

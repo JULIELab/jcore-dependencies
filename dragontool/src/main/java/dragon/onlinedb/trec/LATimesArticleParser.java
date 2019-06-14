@@ -1,6 +1,7 @@
 package dragon.onlinedb.trec;
 
 import dragon.util.Conversion;
+
 import java.util.Date;
 
 /**

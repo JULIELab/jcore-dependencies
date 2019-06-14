@@ -1,6 +1,6 @@
 package dragon.ir.index;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * <p>The class is used to read according files storing indexing information.</p>

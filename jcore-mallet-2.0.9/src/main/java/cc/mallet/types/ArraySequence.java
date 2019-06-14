@@ -16,8 +16,6 @@ package cc.mallet.types;
 
 import java.util.ArrayList;
 
-import cc.mallet.types.Sequence;
-
 public class ArraySequence<E> implements Sequence<E>
 {
 	E[] data;

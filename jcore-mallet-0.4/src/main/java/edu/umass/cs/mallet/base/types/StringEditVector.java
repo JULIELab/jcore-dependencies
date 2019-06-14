@@ -15,10 +15,13 @@ information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.types;
 
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.StringTokenizer;
-import java.util.Vector;
-import java.io.*;
+import java.util.logging.Logger;
 
 public class StringEditVector implements Serializable
 {

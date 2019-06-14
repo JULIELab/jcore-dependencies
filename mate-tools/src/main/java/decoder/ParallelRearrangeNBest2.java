@@ -1,5 +1,6 @@
 package decoder;
 
+import extractors.Extractor;
 import is2.data.DataF;
 import is2.data.Edges;
 import is2.data.Parse;
@@ -7,10 +8,6 @@ import is2.data.ParseNBest;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
-
-import decoder.ParallelRearrangeNBest.PA;
-
-import extractors.Extractor;
 
 /**
  * @author Dr. Bernd Bohnet, 30.08.2009

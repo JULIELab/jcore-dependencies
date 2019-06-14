@@ -6,15 +6,15 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.pipe.tsf.tests;
 
-import junit.framework.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.tsf.SequencePrintingPipe;
+import cc.mallet.types.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.SerialPipes;
-import cc.mallet.pipe.tsf.SequencePrintingPipe;
-import cc.mallet.types.*;
 
 /**
  * Created: Jul 8, 2005

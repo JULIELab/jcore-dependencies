@@ -1,6 +1,7 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
 
 /**
  * <p>A coarse parser for sgm-styled news articles </p>

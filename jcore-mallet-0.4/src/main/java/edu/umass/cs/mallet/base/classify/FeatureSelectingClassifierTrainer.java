@@ -12,14 +12,8 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.types.FeatureSelector;
-import edu.umass.cs.mallet.base.classify.Classifier;
-import edu.umass.cs.mallet.base.util.CommandOption;
-import edu.umass.cs.mallet.base.util.BshInterpreter;
-import java.io.*;
-import java.util.*;
+import edu.umass.cs.mallet.base.types.InstanceList;
 /**
  * Adaptor for adding feature selection to a classifier trainer.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

@@ -1,6 +1,11 @@
 package salvo.jesus.graph.listener;
+
 import salvo.jesus.graph.*;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * DirectedAcyclicGraphListener enforces the DAG property of a graph.  It can

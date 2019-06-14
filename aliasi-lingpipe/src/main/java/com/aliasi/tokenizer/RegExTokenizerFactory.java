@@ -17,15 +17,12 @@
 package com.aliasi.tokenizer;
 
 import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Compilable;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
 import java.nio.CharBuffer;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

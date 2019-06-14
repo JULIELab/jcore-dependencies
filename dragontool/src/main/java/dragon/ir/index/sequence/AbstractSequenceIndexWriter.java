@@ -1,9 +1,9 @@
 package dragon.ir.index.sequence;
 
 import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.nlp.compare.*;
-import dragon.util.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.compare.IndexComparator;
+import dragon.util.SortedArray;
 
 /**
  * <p>The abstract index writer for sequencial data </p>

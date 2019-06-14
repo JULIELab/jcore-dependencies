@@ -8,7 +8,9 @@ package cc.mallet.util.tests;
 
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.Maths;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created: Oct 31, 2004

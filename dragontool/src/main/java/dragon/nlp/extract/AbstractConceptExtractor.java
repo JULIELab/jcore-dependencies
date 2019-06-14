@@ -1,10 +1,13 @@
 package dragon.nlp.extract;
 
 import dragon.nlp.*;
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.ConceptEntryIDComparator;
+import dragon.nlp.compare.ConceptNameComparator;
 import dragon.util.SortedArray;
+
 import java.io.PrintWriter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 /**
  * <p>Abstract class for concept extraction which is the super class of AbstractPhraseExtractor,

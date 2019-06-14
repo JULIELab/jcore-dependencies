@@ -14,14 +14,15 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.evaluate.*;
-import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.classify.evaluate.ConfusionMatrix;
 import edu.umass.cs.mallet.base.pipe.Classification2ConfidencePredictingFeatureVector;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.FeatureSelection;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.PerLabelInfoGain;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.util.PropertyList;
-import java.util.ArrayList;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 public class ConfidencePredictingClassifierTrainer extends ClassifierTrainer implements Boostable
 {

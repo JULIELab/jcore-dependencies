@@ -18,11 +18,11 @@ import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.types.Multinomial;
 import edu.umass.cs.mallet.base.types.Sequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Arrays;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 public class FeatureTransducer extends Transducer
 {

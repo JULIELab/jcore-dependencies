@@ -1,9 +1,9 @@
 package de.julielab.evaluation.entities;
 
-import java.util.Comparator;
-
 import org.apache.commons.lang3.Range;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.Comparator;
 
 public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 

@@ -1,7 +1,5 @@
 package salvo.jesus.graph;
 
-import java.io.*;
-
 /**
  * A vertex in a graph.
  *

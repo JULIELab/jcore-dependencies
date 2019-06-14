@@ -1,7 +1,9 @@
 package cc.mallet.util;
 
-import cc.mallet.types.*;
-import java.io.*;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+
+import java.io.File;
 
 public class InstanceListPrinter {
 

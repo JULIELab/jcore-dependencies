@@ -1,11 +1,6 @@
 package martin.common;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.NoSuchElementException;
-import java.util.Set;
+import java.util.*;
 import java.util.logging.Logger;
 
 public class CacheMap <K,V extends Sizeable> implements Iterable<K>{

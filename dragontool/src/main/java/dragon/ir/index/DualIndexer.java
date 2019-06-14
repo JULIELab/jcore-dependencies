@@ -1,9 +1,10 @@
 package dragon.ir.index;
 
-import dragon.nlp.extract.*;
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.extract.DualConceptExtractor;
+import dragon.onlinedb.Article;
+import dragon.util.FileUtil;
+
+import java.io.PrintWriter;
 
 /**
  * <p>The class handles two dimensional document language model indexing </p>

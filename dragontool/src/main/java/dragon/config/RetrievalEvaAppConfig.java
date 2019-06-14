@@ -1,14 +1,22 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.query.*;
-import dragon.ir.search.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.ir.query.IRQuery;
+import dragon.ir.query.RelSimpleQuery;
+import dragon.ir.search.Searcher;
 import dragon.ir.search.evaluate.TrecEva;
-import dragon.nlp.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.SimpleElement;
+import dragon.util.FileUtil;
+import dragon.util.FormatUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 /**
  * <p>Retrieval evaluation configuration</p>

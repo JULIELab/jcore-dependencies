@@ -14,11 +14,14 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
 import cc.mallet.types.FeatureSequence;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Instance;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 // This class does not insist on getting its own Alphabet because it can rely on getting
 // it from the FeatureSequence input.

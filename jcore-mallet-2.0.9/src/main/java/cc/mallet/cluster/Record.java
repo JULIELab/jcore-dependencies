@@ -1,12 +1,11 @@
 package cc.mallet.cluster;
 
-import gnu.trove.TIntObjectHashMap;
-
-import java.io.Serializable;
-
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.AugmentableFeatureVector;
 import cc.mallet.types.FeatureVector;
+import gnu.trove.TIntObjectHashMap;
+
+import java.io.Serializable;
 
 public class Record implements Serializable {
 

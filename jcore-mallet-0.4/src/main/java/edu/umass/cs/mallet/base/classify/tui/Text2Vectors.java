@@ -8,13 +8,16 @@
 
 package edu.umass.cs.mallet.base.classify.tui;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.logging.*;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.util.CharSequenceLexer;
+import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+import edu.umass.cs.mallet.base.util.Strings;
+
 import java.io.*;
+import java.util.logging.Logger;
 /**
  * Convert document files into vectors (a persistent instance list).
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

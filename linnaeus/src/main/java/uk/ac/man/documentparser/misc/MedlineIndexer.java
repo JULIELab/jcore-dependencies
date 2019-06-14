@@ -1,16 +1,15 @@
 package uk.ac.man.documentparser.misc;
 
-import java.io.File;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-import java.io.BufferedReader;
-import java.io.FileReader;
-
+import martin.common.ArgParser;
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.Medline;
 
-import martin.common.ArgParser;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 public class MedlineIndexer {
 	public static void compute(File file, String filename, Set<String> completedIDs) {

@@ -12,7 +12,6 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.classify.Classifier;
 import cc.mallet.types.FeatureSelector;
 import cc.mallet.types.InstanceList;
 /**

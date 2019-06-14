@@ -2,12 +2,12 @@
 /* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 
 /** a section is a part of the text that often has a heading, an id, a section type, figures, tables, citations and footnotes that occur in this section
  * Updated by JCasGen Wed Aug 08 13:36:50 CEST 2018

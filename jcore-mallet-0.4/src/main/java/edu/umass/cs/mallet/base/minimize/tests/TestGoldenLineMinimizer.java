@@ -15,11 +15,11 @@
 package edu.umass.cs.mallet.base.minimize.tests;
 
 import edu.umass.cs.mallet.base.minimize.GoldenLineMinimizer;
-import edu.umass.cs.mallet.base.minimize.Minimizable;
 import edu.umass.cs.mallet.base.minimize.LineMinimizer;
-import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.types.DenseVector;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 
 public class TestGoldenLineMinimizer extends TestCase

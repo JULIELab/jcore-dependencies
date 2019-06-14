@@ -17,7 +17,6 @@
 package com.aliasi.corpus;
 
 import com.aliasi.util.Strings;
-
 import org.xml.sax.InputSource;
 
 import java.io.CharArrayReader;

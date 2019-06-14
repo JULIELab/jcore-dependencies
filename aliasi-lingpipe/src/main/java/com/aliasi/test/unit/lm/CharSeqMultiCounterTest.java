@@ -3,7 +3,6 @@ package com.aliasi.test.unit.lm;
 import com.aliasi.lm.CharSeqCounter;
 import com.aliasi.lm.CharSeqMultiCounter;
 import com.aliasi.lm.TrieCharSeqCounter;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -11,12 +11,17 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.logging.*;
-import java.util.*;
-
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import cc.mallet.fst.MaxLatticeDefault;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.Sequence;
 import cc.mallet.util.MalletLogger;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 /**
  * Abstract class that estimates the confidence of a {@link Sequence}

@@ -1,6 +1,6 @@
 package dragon.nlp;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.SortedElement;
 
 /**
  * <p>Data structure for phrase</p>

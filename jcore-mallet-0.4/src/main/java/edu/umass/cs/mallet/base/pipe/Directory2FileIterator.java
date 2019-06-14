@@ -11,15 +11,15 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import java.io.*;
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.util.RegexFileFilter;
+
+import java.io.File;
+import java.io.FileFilter;
 import java.net.URI;
 import java.util.Iterator;
-import java.util.ArrayList;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.RegexFileFilter;
-import edu.umass.cs.mallet.base.types.Instance;
+import java.util.regex.Pattern;
 /**
  * Convert a File object representing a directory into a FileIterator which
  * iterates over files in the directory matching a pattern and which extracts

@@ -1,9 +1,14 @@
 package salvo.jesus.graph.visual;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.awt.geom.*;
-import java.io.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.io.Serializable;
 
 /**
  * The interface for all 'components' in a VisualGraph. Note that

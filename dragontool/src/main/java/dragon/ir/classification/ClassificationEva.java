@@ -1,7 +1,9 @@
 package dragon.ir.classification;
 
 import dragon.ir.index.IRDoc;
-import dragon.util.*;
+import dragon.util.FormatUtil;
+import dragon.util.MathUtil;
+
 import java.io.PrintWriter;
 import java.text.DecimalFormat;
 

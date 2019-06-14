@@ -1,22 +1,18 @@
 package uk.ac.man.entitytagger.networking;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.TextFile;
+import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.doc.TaggedDocument;
 import uk.ac.man.entitytagger.doc.TaggedDocument.Format;
 import uk.ac.man.entitytagger.matching.MatchOperations;
 import uk.ac.man.entitytagger.matching.Matcher;
-import uk.ac.man.entitytagger.Mention;
+
+import java.io.*;
+import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class AlibabaWorker implements Runnable {
 	private Socket s;

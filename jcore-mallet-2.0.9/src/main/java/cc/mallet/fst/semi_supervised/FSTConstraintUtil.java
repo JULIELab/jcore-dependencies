@@ -7,12 +7,12 @@
 
 package cc.mallet.fst.semi_supervised;
 
+import cc.mallet.types.InstanceList;
+
 import java.io.BufferedReader;
 import java.io.Reader;
 import java.util.Arrays;
 import java.util.HashMap;
-
-import cc.mallet.types.InstanceList;
 
 /**
  * Expectation constraint utilities for fst package.

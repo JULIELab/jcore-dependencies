@@ -1,8 +1,5 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
-
 /**
  * Soft TFIDF-based distance metric, extended to use "soft" token-matching
  * with the SLIM distance metric.

@@ -16,33 +16,20 @@
 
 package com.aliasi.chunk;
 
-import com.aliasi.tag.StringTagging;
-import com.aliasi.tag.Tagging;
-import com.aliasi.tag.TagLattice;
-
 import com.aliasi.symbol.SymbolTable;
-
+import com.aliasi.tag.StringTagging;
+import com.aliasi.tag.TagLattice;
+import com.aliasi.tag.Tagging;
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Iterators;
-import com.aliasi.util.Scored;
-import com.aliasi.util.ScoredObject;
-import com.aliasi.util.Strings;
+import com.aliasi.util.*;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
-import java.util.ArrayList;
+import java.util.*;
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
 
 
 /**

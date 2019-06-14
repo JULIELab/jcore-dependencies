@@ -1,7 +1,8 @@
 package dragon.ir.topicmodel;
 
-import dragon.ir.index.*;
-import dragon.ir.index.sequence.*;
+import dragon.ir.index.IndexReader;
+import dragon.ir.index.sequence.SequenceIndexReader;
+
 import java.util.Random;
 
 /**

@@ -10,10 +10,10 @@ import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.types.MatrixOps;
 
-import java.io.PrintStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.Iterator;
 

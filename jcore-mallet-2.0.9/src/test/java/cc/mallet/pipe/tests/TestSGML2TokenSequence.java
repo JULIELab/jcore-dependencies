@@ -14,14 +14,16 @@
 
 package cc.mallet.pipe.tests;
 
-import junit.framework.*;
-import java.util.ArrayList;
-import java.util.regex.*;
-
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.pipe.tsf.*;
-import cc.mallet.types.*;
+import cc.mallet.pipe.Input2CharSequence;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SGML2TokenSequence;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.iterator.ArrayIterator;
+import cc.mallet.types.Instance;
+import cc.mallet.types.TokenSequence;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestSGML2TokenSequence extends TestCase
 {

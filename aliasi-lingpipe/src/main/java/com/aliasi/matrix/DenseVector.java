@@ -16,14 +16,13 @@
 
 package com.aliasi.matrix;
 
-import java.util.Arrays;
-
 import com.aliasi.util.AbstractExternalizable;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * A <code>DenseVector</code> is a vector implementation suitable for

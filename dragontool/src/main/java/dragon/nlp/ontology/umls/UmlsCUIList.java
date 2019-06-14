@@ -2,9 +2,12 @@ package dragon.nlp.ontology.umls;
 
 import dragon.nlp.compare.IndexComparator;
 import dragon.util.*;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>UMLS concept ID lists</p>

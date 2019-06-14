@@ -25,11 +25,14 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import java.util.*;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.VertexImpl;
+import salvo.jesus.graph.WeightedGraph;
+import salvo.jesus.graph.WeightedGraphImpl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 // This class wraps a WeightedGraph and maintains an index from actual objects
 // to integer objects

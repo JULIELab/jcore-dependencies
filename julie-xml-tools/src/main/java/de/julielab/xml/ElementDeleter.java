@@ -23,9 +23,6 @@ import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
 import com.ximpleware.XMLModifier;
 
-import java.io.*;
-import java.util.*;
-
 /**
  * Simple program that deletes a single XPath from an XML document.
  * 

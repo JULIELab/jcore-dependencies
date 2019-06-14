@@ -14,11 +14,11 @@
 
 package edu.umass.cs.mallet.base.minimize;
 
-import edu.umass.cs.mallet.base.minimize.LineMinimizer;
-import edu.umass.cs.mallet.base.minimize.Minimizable;
 import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 // Brents method using derivative information
 // p405, "Numeric Recipes in C"

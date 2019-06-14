@@ -6,21 +6,20 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.types.tests;
 
-import junit.framework.*;
+import cc.mallet.classify.Classifier;
+import cc.mallet.classify.ClassifierTrainer;
+import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.classify.Trial;
+import cc.mallet.pipe.*;
+import cc.mallet.pipe.iterator.RandomTokenSequenceIterator;
+import cc.mallet.types.*;
+import cc.mallet.util.Randoms;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.File;
 import java.util.Iterator;
-
-import cc.mallet.classify.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.PipeInputIterator;
-import cc.mallet.pipe.iterator.RandomTokenSequenceIterator;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.Dirichlet;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Instance;
-import cc.mallet.types.PagedInstanceList;
-import cc.mallet.util.Randoms;
 
 /**
  * Created: Apr 19, 2005

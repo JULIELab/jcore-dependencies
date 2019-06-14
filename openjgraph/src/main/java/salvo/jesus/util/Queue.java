@@ -1,7 +1,8 @@
 package salvo.jesus.util;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A Queue represents a first-in-first-out (FIFO) data structure.

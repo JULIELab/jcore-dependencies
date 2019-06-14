@@ -1,11 +1,13 @@
 package cc.mallet.regression;
 
-import java.io.*;
-import java.text.NumberFormat;
-
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.MVNormal;
 import cc.mallet.util.StatFunctions;
+
+import java.io.File;
+import java.text.NumberFormat;
 
 public class LeastSquares {
 

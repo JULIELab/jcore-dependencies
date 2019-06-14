@@ -25,8 +25,9 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import salvo.jesus.graph.*;
-import java.util.*;
+import salvo.jesus.graph.WeightedGraph;
+
+import java.util.LinkedHashSet;
 
 public class CorefClusters
 {

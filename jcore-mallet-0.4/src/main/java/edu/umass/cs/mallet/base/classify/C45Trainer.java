@@ -10,16 +10,12 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import java.util.logging.Logger;
-
-import edu.umass.cs.mallet.base.classify.Boostable;
-import edu.umass.cs.mallet.base.classify.Classifier;
-import edu.umass.cs.mallet.base.classify.ClassifierEvaluating;
-import edu.umass.cs.mallet.base.classify.ClassifierTrainer;
 import edu.umass.cs.mallet.base.types.FeatureSelection;
 import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.Maths;
+
+import java.util.logging.Logger;
 
 /**
  * A C4.5 decision tree learner, approximtely.  Currently treats all 

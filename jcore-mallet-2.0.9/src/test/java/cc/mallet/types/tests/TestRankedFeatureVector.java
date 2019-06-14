@@ -14,8 +14,11 @@
 
 package cc.mallet.types.tests;
 
-import cc.mallet.types.*;
-import junit.framework.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.RankedFeatureVector;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestRankedFeatureVector extends TestCase
 {

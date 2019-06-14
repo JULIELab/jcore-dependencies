@@ -1,15 +1,5 @@
 package uk.ac.man.entitytagger.matching;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Logger;
-
 import martin.common.Function;
 import martin.common.Misc;
 import martin.common.Pair;
@@ -20,6 +10,16 @@ import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.doc.TaggedDocument;
 import uk.ac.man.entitytagger.doc.TaggedDocument.Format;
 import uk.ac.man.entitytagger.matching.matchers.ConcurrentMatcher;
+
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class MatchOperations {
 

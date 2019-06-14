@@ -1,14 +1,23 @@
 package cc.mallet.examples;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.util.zip.*;
+import cc.mallet.fst.HMM;
+import cc.mallet.fst.HMMTrainerByLikelihood;
+import cc.mallet.fst.PerClassAccuracyEvaluator;
+import cc.mallet.fst.TransducerEvaluator;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
+import cc.mallet.pipe.TokenSequence2FeatureSequence;
+import cc.mallet.pipe.iterator.LineGroupIterator;
+import cc.mallet.types.InstanceList;
 
-import cc.mallet.fst.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 public class TrainHMM {
 	

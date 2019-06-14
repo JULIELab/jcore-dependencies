@@ -1,6 +1,7 @@
 package dragon.config;
 
-import java.lang.reflect.*;
+import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 /**
  * <p>Utility class for configuration which can parse XML document that contains application information </p>
  * <p></p>

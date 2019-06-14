@@ -1,6 +1,6 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.nlp.*;
+import dragon.nlp.Sentence;
 /**
  * <p>Title: </p>
  * <p>Description: </p>

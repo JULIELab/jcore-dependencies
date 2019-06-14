@@ -8,16 +8,16 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.FeatureVector;
 import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.LabelVector;
 import edu.umass.cs.mallet.base.types.MatrixOps;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /** 
  * Classification methods of BalancedWinnow algorithm.

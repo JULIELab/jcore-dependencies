@@ -1,10 +1,14 @@
 package dragon.ir.classification.featureselection;
 
-import dragon.ir.classification.*;
-import dragon.ir.index.*;
-import dragon.matrix.*;
+import dragon.ir.classification.DocClass;
+import dragon.ir.classification.DocClassSet;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.IntDenseMatrix;
+import dragon.matrix.IntFlatDenseMatrix;
+import dragon.matrix.SparseMatrix;
 import dragon.matrix.vector.DoubleVector;
-import dragon.util.*;
+import dragon.util.MathUtil;
 
 /**
  * <p>Abstract function class for feature selection</p>

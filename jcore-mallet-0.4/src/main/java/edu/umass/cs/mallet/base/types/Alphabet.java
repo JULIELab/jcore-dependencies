@@ -14,11 +14,11 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import java.util.ArrayList;
 import java.io.*;
-import java.util.Iterator;
-import java.util.HashMap;
 import java.rmi.dgc.VMID;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 
 /**
  *  A mapping between integers and objects where the mapping in each

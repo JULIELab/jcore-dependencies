@@ -1,17 +1,12 @@
 package com.aliasi.test.unit.tag;
 
-import com.aliasi.tag.Tagging;
 import com.aliasi.tag.StringTagging;
+import org.junit.Test;
 
 import java.util.Arrays;
 
-import org.junit.Test;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
-
-import static com.aliasi.test.unit.Asserts.succeed;
 
 public class StringTaggingTest {
 

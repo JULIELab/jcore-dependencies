@@ -1,9 +1,12 @@
 package salvo.jesus.graph.xml;
 
-import org.xml.sax.*;
-import java.net.URL;
-import java.io.*;
 import org.apache.log4j.Category;
+import org.xml.sax.EntityResolver;
+import org.xml.sax.InputSource;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.URL;
 
 /**
  * Resolver for DTD so that the XGMML DTD need not be retrieved via HTTP.

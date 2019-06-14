@@ -14,13 +14,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Matrix;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.util.PropertyList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.HashMap;
-
 // Could also be called by convention "Matrix1"
 
 public interface Vector extends ConstantMatrix

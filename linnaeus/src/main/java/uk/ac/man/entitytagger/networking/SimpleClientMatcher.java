@@ -1,5 +1,9 @@
 package uk.ac.man.entitytagger.networking;
 
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.ObjectInputStream;
@@ -7,10 +11,6 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.List;
 import java.util.Random;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
 
 public class SimpleClientMatcher extends Matcher {
 

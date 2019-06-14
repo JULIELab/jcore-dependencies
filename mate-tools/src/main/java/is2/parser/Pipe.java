@@ -1,16 +1,7 @@
 package is2.parser;
 
-import is2.data.Cluster;
-import is2.data.DataF;
-import is2.data.DataFES;
-import is2.data.F2SF;
-import is2.data.Instances;
-
-import is2.data.Parse;
-import is2.data.PipeGen;
-import is2.data.SentenceData09;
+import is2.data.*;
 import is2.io.CONLLReader09;
-
 import is2.util.OptionsSuper;
 
 import java.io.IOException;

@@ -7,16 +7,6 @@
 
 package cc.mallet.fst.semi_supervised.pr;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.logging.Logger;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.Transducer;
 import cc.mallet.optimize.Optimizable.ByGradientValue;
@@ -25,6 +15,12 @@ import cc.mallet.types.InstanceList;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.types.Sequence;
 import cc.mallet.util.MalletLogger;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.*;
+import java.util.logging.Logger;
 
 /**
  * M-step/M-projection for PR.

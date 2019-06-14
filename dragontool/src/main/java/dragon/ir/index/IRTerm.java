@@ -1,6 +1,7 @@
 package dragon.ir.index;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.FrequencySortable;
+import dragon.nlp.compare.IndexSortable;
 
 /**
  * <p>This is basic indexing unit which can be sorted and compared by index and frequency </p>

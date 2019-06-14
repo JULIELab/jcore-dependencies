@@ -16,9 +16,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.RankedFeatureVector;
-
-
 public class PartiallyRankedFeatureVector extends RankedFeatureVector
 {
 

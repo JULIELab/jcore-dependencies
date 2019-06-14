@@ -1,8 +1,10 @@
 package dragon.ir.search;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 import dragon.ir.query.IRQuery;
 import dragon.ir.search.smooth.Smoother;
+
 import java.util.ArrayList;
 
 /**

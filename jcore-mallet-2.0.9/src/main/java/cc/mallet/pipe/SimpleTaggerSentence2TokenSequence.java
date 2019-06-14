@@ -13,11 +13,11 @@ information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.pipe;
 
 
+import cc.mallet.types.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import cc.mallet.types.*;
 
 /**
  * Converts an external encoding of a sequence of elements with binary

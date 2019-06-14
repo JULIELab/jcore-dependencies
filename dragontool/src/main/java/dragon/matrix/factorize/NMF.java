@@ -1,6 +1,8 @@
 package dragon.matrix.factorize;
 
-import dragon.matrix.*;
+import dragon.matrix.DoubleDenseMatrix;
+import dragon.matrix.DoubleFlatDenseMatrix;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>None negative matrix factorization </p>

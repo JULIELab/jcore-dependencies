@@ -14,19 +14,21 @@
 
 package edu.umass.cs.mallet.share.mccallum.ner;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.minimize.*;
-import edu.umass.cs.mallet.base.minimize.tests.*;
+import edu.umass.cs.mallet.base.fst.CRF3;
+import edu.umass.cs.mallet.base.fst.MultiSegmentationEvaluator;
+import edu.umass.cs.mallet.base.fst.Transducer;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
+import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
 import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.util.*;
-import junit.framework.*;
-import java.util.Iterator;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.util.CommandOption;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.util.Random;
-import java.util.regex.*;
-import java.io.*;
+import java.util.regex.Pattern;
 
 public class TUI
 {

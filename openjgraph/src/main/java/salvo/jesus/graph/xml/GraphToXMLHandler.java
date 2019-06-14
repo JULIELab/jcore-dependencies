@@ -1,8 +1,8 @@
 package salvo.jesus.graph.xml;
 
-import salvo.jesus.graph.Vertex;
 import salvo.jesus.graph.Edge;
 import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
 import salvo.jesus.graph.visual.VisualGraph;
 
 /**

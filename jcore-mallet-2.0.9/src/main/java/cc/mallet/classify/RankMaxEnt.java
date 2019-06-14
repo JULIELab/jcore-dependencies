@@ -13,20 +13,13 @@ package cc.mallet.classify;
 //package edu.umass.cs.mallet.users.culotta.cluster.classify;
 
 //import edu.umass.cs.mallet.base.classify.*;
+
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelVector;
-import cc.mallet.types.MatrixOps;
 
 
 /**

@@ -1,6 +1,10 @@
 package salvo.jesus.graph.algorithm;
-import salvo.jesus.graph.*;
-import java.util.*;
+
+import salvo.jesus.graph.Edge;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
+
+import java.util.Iterator;
 
 /**
  * GraphUnionAlgorithm is an algorithm class for managing the operation

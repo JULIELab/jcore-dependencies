@@ -1,6 +1,8 @@
 package salvo.jesus.graph.algorithm;
-import salvo.jesus.graph.*;
-import java.util.*;
+
+import salvo.jesus.graph.Edge;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
 
 /**
  * Abstract class for any algorithm implementing cycle detection on a

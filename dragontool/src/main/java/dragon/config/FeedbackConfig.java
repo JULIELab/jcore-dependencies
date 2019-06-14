@@ -1,10 +1,10 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.search.*;
+import dragon.ir.index.IndexReader;
+import dragon.ir.search.Searcher;
 import dragon.ir.search.feedback.*;
-import dragon.matrix.*;
-import dragon.nlp.extract.*;
+import dragon.matrix.DoubleSparseMatrix;
+import dragon.nlp.extract.TokenExtractor;
 
 /**
  * <p>Feedback configuration </p>

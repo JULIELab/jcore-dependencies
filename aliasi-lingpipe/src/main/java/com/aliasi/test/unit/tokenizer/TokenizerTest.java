@@ -18,20 +18,15 @@ package com.aliasi.test.unit.tokenizer;
 
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Strings;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class TokenizerTest  {
 

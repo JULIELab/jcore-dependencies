@@ -1,9 +1,8 @@
 package salvo.jesus.graph.visual;
 
-import salvo.jesus.graph.*;
-import java.awt.event.*;
-import java.awt.geom.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Line2D;
 
 /**
  * State object that represents the edge mode in a GraphPanel.

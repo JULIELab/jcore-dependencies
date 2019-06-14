@@ -7,11 +7,12 @@
 
 package edu.umass.cs.mallet.base.maximize.tests;
 
-import junit.framework.Test;
+import edu.umass.cs.mallet.base.maximize.GradientAscent;
+import edu.umass.cs.mallet.base.maximize.LimitedMemoryBFGS;
+import edu.umass.cs.mallet.base.maximize.Maximizable;
+import edu.umass.cs.mallet.base.maximize.Maximizer;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
-
-import edu.umass.cs.mallet.base.maximize.*;
 
 /**
  *  Unit Test for class TestMaximizer.java

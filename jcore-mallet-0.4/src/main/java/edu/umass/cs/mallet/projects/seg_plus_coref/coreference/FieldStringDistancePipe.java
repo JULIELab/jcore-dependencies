@@ -1,11 +1,9 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import com.wcohen.secondstring.StringDistance;
 import com.wcohen.secondstring.NeedlemanWunsch;
+import com.wcohen.secondstring.StringDistance;
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.Citation;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.NodePair;
 
 /**
  * FieldStringDistancePipe

@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.model;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
 
 /**
  * <p>Abstract class for model graph </p>

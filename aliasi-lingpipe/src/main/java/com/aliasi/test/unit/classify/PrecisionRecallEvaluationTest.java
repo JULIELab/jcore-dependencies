@@ -1,7 +1,6 @@
 package com.aliasi.test.unit.classify;
 
 import com.aliasi.classify.PrecisionRecallEvaluation;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -6,8 +6,8 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.fst;
 
-import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.types.Sequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 

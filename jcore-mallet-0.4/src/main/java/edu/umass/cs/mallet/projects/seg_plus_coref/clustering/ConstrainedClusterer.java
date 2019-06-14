@@ -24,10 +24,12 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import edu.umass.cs.mallet.base.util.*;
+
+import edu.umass.cs.mallet.base.util.MalletLogger;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.Citation;
+
 import java.util.*;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 /** Given two clusterings of related object, constrain one based on
  * the clustering of another. E.g., given a clustering of papers and a

@@ -1,10 +1,7 @@
 package is2.parser;
 
 
-import is2.data.IEncoder;
 import is2.data.IEncoderPlus;
-import is2.data.IFV;
-import is2.data.Long2IntInterface;
 import is2.util.DB;
 
 import java.io.DataInputStream;

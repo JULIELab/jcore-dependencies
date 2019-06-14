@@ -1,22 +1,18 @@
 package uk.ac.man.entitytagger.generate;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.EntityTagger;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
+import java.io.*;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.EntityTagger;
-import uk.ac.man.entitytagger.matching.Matcher;
 
 public class AcronymAnalysis {
 

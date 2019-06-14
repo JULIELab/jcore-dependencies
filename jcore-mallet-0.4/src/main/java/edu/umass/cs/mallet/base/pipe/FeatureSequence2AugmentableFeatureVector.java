@@ -17,7 +17,6 @@ package edu.umass.cs.mallet.base.pipe;
 import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
 import edu.umass.cs.mallet.base.types.FeatureSequence;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
 
 // This class does not insist on gettings its own Alphabet because it can rely on getting
 // it from the FeatureSequence input.

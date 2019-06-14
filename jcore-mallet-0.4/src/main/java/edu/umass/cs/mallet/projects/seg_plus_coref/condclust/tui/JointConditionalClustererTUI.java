@@ -24,25 +24,39 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.tui;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.cluster.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.ie.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
 
-import com.wcohen.secondstring.*;
+import com.wcohen.secondstring.AbstractStatisticalTokenDistance;
+import com.wcohen.secondstring.TFIDF;
 import com.wcohen.secondstring.tokens.NGramTokenizer;
 import com.wcohen.secondstring.tokens.SimpleTokenizer;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.MaxEnt;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
+import edu.umass.cs.mallet.base.classify.Trial;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.PrintInputAndTarget;
+import edu.umass.cs.mallet.base.pipe.SerialPipes;
+import edu.umass.cs.mallet.base.pipe.Target2Label;
+import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+import edu.umass.cs.mallet.base.util.RegexFileFilter;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.cluster.ConditionalClusterer;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.cluster.ConditionalClustererTrainer;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator.NodeClusterPairIterator;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator.VenuePaperClusterIterator;
+import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.ie.IEInterface;
 
-import java.util.logging.*;
-import java.util.*;
-import java.util.regex.*;
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /** Interface to train and test a ConditionalClusterer to cluster
  * Papers and Venues simultaneously. Uses Citeseer data. */

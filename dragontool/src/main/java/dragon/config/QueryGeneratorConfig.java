@@ -1,8 +1,11 @@
 package dragon.config;
 
 import dragon.ir.kngbase.KnowledgeBase;
-import dragon.ir.query.*;
-import dragon.nlp.extract.*;
+import dragon.ir.query.BasicQueryGenerator;
+import dragon.ir.query.PhraseQEGenerator;
+import dragon.ir.query.QueryGenerator;
+import dragon.nlp.extract.PhraseExtractor;
+import dragon.nlp.extract.TokenExtractor;
 
 /**
  * <p>Query generator configuration</p>

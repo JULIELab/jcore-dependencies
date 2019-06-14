@@ -1,8 +1,11 @@
 package dragon.ml.seqmodel.feature;
 
 import dragon.util.MathUtil;
+
 import java.io.*;
-import java.util.*;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 
 /**

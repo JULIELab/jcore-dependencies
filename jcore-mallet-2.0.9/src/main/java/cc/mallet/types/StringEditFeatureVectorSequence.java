@@ -14,11 +14,16 @@
 
 package cc.mallet.types;
 
-import java.io.*;
-import java.util.regex.*;
-import java.util.HashMap;
 import gnu.trove.TObjectIntHashMap;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.HashMap;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // xxx A not very space-efficient version.  I'll compress it later.
 

@@ -1,8 +1,7 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+import java.io.File;
+import java.util.ArrayList;
 
 
 public abstract class AttributeExtraction

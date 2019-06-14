@@ -16,11 +16,14 @@
 
 package cc.mallet.pipe.tsf;
 
-import java.io.*;
-import java.util.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Token;
+import cc.mallet.types.TokenSequence;
 
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import java.io.*;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 public class TrieLexiconMembership extends Pipe implements Serializable {
 	// Perhaps give it your own tokenizer?

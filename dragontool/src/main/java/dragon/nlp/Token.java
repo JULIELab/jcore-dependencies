@@ -1,6 +1,6 @@
 package dragon.nlp;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.SortedElement;
 /**
  * <p>Token is a cute unit data structure for handling nlp task or other operations</p>
  * <p></p>

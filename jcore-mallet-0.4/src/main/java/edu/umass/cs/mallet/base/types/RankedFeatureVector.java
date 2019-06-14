@@ -17,13 +17,9 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
-import java.io.PrintStream;
-import java.io.OutputStream;
 
 public class RankedFeatureVector extends FeatureVector
 {

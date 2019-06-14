@@ -11,37 +11,20 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.classify.Classifier;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.MatrixOps;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.LabelAlphabet;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.RankedFeatureVector;
-import edu.umass.cs.mallet.base.types.Labeling;
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.Vector;
-import edu.umass.cs.mallet.base.types.FeatureSelection;
-import edu.umass.cs.mallet.base.types.FeatureInducer;
-import edu.umass.cs.mallet.base.types.ExpGain;
-import edu.umass.cs.mallet.base.types.GradientGain;
-import edu.umass.cs.mallet.base.types.InfoGain;
-import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.util.Maths;
+import edu.umass.cs.mallet.base.maximize.LimitedMemoryBFGS;
 import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.maximize.Maximizer;
-import edu.umass.cs.mallet.base.maximize.tests.*;
-import edu.umass.cs.mallet.base.maximize.LimitedMemoryBFGS;
-import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.MalletProgressMessageLogger;
+import edu.umass.cs.mallet.base.util.Maths;
 
-import java.util.logging.*;
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Logger;
 
 // Does not currently handle instances that are labeled with distributions
 // instead of a single label.

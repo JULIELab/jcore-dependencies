@@ -12,25 +12,19 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import com.wcohen.secondstring.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
+import com.wcohen.secondstring.StringWrapper;
+import edu.umass.cs.mallet.base.fst.CRF;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Sequence;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.projects.seg_plus_coref.ie.IEInterface;
+
+import java.util.*;
+
 //import edu.umass.cs.mallet.users.hay.canopy.Util;
 //import edu.umass.cs.mallet.users.hay.canopy.NGramAnalyzer;
 //import edu.umass.cs.mallet.users.hay.canopy.DateAnalyzer;
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.base.fst.CRF;
-import edu.umass.cs.mallet.base.fst.Transducer;
-import java.util.*;
-import java.util.Arrays;
-import java.lang.*;
-import java.io.*;
 
 /**
  Objects of this class represent citations (in the citation

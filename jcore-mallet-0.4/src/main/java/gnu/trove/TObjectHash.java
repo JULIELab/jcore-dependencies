@@ -19,9 +19,6 @@
 package gnu.trove;
 
 import java.io.Serializable;
-import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * An open addressed hashing implementation for Object types.

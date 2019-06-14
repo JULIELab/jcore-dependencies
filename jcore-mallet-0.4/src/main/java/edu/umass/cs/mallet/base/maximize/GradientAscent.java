@@ -14,10 +14,10 @@
 
 package edu.umass.cs.mallet.base.maximize;
 
-import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.types.MatrixOps;
+import edu.umass.cs.mallet.base.util.MalletLogger;
 
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 // Gradient Ascent
 

@@ -1,6 +1,8 @@
 package dragon.nlp.tool;
 
-import dragon.nlp.*;
+import dragon.nlp.Document;
+import dragon.nlp.Sentence;
+
 import java.util.ArrayList;
 
 /**

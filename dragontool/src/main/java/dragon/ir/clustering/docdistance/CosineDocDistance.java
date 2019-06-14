@@ -1,7 +1,7 @@
 package dragon.ir.clustering.docdistance;
 
-import dragon.matrix.*;
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Cosine document similarity/distance measure </p>

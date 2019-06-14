@@ -1,15 +1,14 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.io.File;
-import java.util.List;
-import java.util.Map;
-
 import martin.common.Misc;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.matching.Matcher;
 import uk.ac.man.entitytagger.matching.Postprocessor;
+
+import java.io.File;
+import java.util.List;
+import java.util.Map;
 
 public class MatchPostProcessor extends Matcher {
 

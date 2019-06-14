@@ -14,16 +14,14 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.Alphabet;
 import edu.umass.cs.mallet.base.util.Strings;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.net.URI;
-import java.util.regex.*;
-import java.io.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An iterator that generates instances for a pipe from a list of filenames.

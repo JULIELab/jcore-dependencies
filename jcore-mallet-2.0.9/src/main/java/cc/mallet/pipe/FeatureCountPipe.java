@@ -2,7 +2,9 @@ package cc.mallet.pipe;
 
 import cc.mallet.types.*;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 /** 
  *  Pruning low-count features can be a good way to save memory and computation.

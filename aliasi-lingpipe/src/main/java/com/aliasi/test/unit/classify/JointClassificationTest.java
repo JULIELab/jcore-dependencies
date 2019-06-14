@@ -1,11 +1,9 @@
 package com.aliasi.test.unit.classify;
 
+import com.aliasi.classify.JointClassification;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-
-
-import com.aliasi.classify.JointClassification;
 
 
 public class JointClassificationTest  {

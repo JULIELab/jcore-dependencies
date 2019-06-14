@@ -1,13 +1,10 @@
 package salvo.jesus.graph.visual;
 
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.*;
-import java.net.*;
-
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.layout.*;
-import org.apache.log4j.Category;
 
 /**
  * GraphEditor encapsulates GraphScrollPane so that a toolbar is provided

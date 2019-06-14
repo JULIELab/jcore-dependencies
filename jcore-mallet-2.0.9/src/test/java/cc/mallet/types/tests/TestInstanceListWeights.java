@@ -1,12 +1,11 @@
 package cc.mallet.types.tests;
 
-import org.junit.Before; 
-import org.junit.Ignore; 
-import org.junit.Test; 
-import static org.junit.Assert.*;
+import cc.mallet.pipe.Noop;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import org.junit.Test;
 
-import cc.mallet.types.*;
-import cc.mallet.pipe.*;
+import static org.junit.Assert.assertEquals;
 
 public class TestInstanceListWeights {
 	

@@ -1,8 +1,10 @@
 package dragon.ir.search.smooth;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRRelation;
+import dragon.ir.index.IndexReader;
 import dragon.ir.query.SimpleTermPredicate;
-import dragon.matrix.*;
+import dragon.matrix.DoubleSparseMatrix;
 
 /**
  * <p>A Smoother using relation-term translations</p>

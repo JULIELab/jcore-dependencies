@@ -7,12 +7,10 @@
 package cc.mallet.grmm.learning;
 
 
-import java.util.List;
-import java.util.Iterator;
-
-import cc.mallet.grmm.learning.ACRF;
-import cc.mallet.grmm.learning.ACRFEvaluator;
 import cc.mallet.types.InstanceList;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created: Aug 24, 2005

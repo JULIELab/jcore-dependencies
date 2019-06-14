@@ -11,11 +11,12 @@
 
 package cc.mallet.classify.tui;
 
-import java.util.logging.*;
-import java.io.*;
+import cc.mallet.classify.Classifier;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
 
-import cc.mallet.classify.*;
-import cc.mallet.util.*;
+import java.io.*;
+import java.util.logging.Logger;
 /**
  * Diagnostic facilities for a classifier.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

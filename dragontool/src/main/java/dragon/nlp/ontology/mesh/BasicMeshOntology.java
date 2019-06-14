@@ -1,8 +1,10 @@
 package dragon.nlp.ontology.mesh;
 
-import dragon.nlp.ontology.*;
+import dragon.nlp.ontology.BasicOntology;
+import dragon.nlp.ontology.SimilarityMetric;
 import dragon.nlp.tool.Lemmatiser;
-import dragon.util.*;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
 
 /**
  * <p>Ontology data structure for MeSH ontology</p>

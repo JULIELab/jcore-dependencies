@@ -14,12 +14,15 @@
 
 package edu.umass.cs.mallet.base.fst.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import junit.framework.*;
-import java.net.URI;
+import edu.umass.cs.mallet.base.fst.FeatureTransducer;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.ArrayListSequence;
+import edu.umass.cs.mallet.base.types.Multinomial;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import java.util.Iterator;
 
 public class TestFeatureTransducer extends TestCase

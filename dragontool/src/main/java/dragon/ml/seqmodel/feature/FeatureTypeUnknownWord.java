@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
 
 /**
  * <p>Feature type for unknown world </p>

@@ -1,26 +1,18 @@
 package cc.mallet.fst;
 
+import cc.mallet.optimize.Optimizable;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
-
 import java.util.logging.Logger;
-
-import cc.mallet.optimize.Optimizable;
-
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.MatrixOps;
-
-import cc.mallet.util.MalletLogger;
 
 
 /**

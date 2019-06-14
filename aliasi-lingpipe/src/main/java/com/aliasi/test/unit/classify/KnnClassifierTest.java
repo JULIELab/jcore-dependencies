@@ -1,24 +1,20 @@
 package com.aliasi.test.unit.classify;
 
-import com.aliasi.classify.KnnClassifier;
 import com.aliasi.classify.Classification;
 import com.aliasi.classify.Classified;
+import com.aliasi.classify.KnnClassifier;
 import com.aliasi.classify.ScoredClassification;
-
 import com.aliasi.matrix.EuclideanDistance;
 import com.aliasi.matrix.Vector;
-
-import com.aliasi.util.Distance;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Proximity;
-import com.aliasi.tokenizer.TokenFeatureExtractor;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import com.aliasi.tokenizer.TokenFeatureExtractor;
+import com.aliasi.util.AbstractExternalizable;
+import com.aliasi.util.Distance;
+import com.aliasi.util.Proximity;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 

@@ -16,11 +16,16 @@
 
 package cc.mallet.pipe.tsf;
 
-import java.io.*;
-import java.util.regex.Pattern;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Token;
+import cc.mallet.types.TokenSequence;
 
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.regex.Pattern;
 
 public class TokenText extends Pipe implements Serializable
 {

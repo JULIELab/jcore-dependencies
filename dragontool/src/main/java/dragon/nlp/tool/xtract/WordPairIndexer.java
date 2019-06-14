@@ -1,7 +1,8 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.nlp.*;
-import dragon.onlinedb.*;
+import dragon.nlp.DocumentParser;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
 
 /**
  * <p>Title: </p>

@@ -7,15 +7,16 @@
 
 package cc.mallet.topics;
 
-import java.util.*;
-import java.util.logging.*;
-import java.util.zip.*;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Randoms;
 
 import java.io.*;
 import java.text.NumberFormat;
-
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Logger;
+import java.util.zip.GZIPOutputStream;
 
 
 /**

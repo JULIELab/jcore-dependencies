@@ -11,9 +11,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.SparseVector;
-
-
 public interface Metric {
 
     public double distance( SparseVector a, SparseVector b);

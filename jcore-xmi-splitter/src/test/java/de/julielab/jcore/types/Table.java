@@ -3,11 +3,10 @@
 /* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas; 
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.jcas.cas.TOP_Type;
-
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** An annotation for CAS elements that belong to a table, e.g. table title, table caption etc.

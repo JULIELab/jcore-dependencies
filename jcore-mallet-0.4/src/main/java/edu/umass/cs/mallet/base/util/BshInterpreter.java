@@ -8,8 +8,6 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import java.io.*;
-import java.util.*;
 import bsh.Interpreter;
 
 public class BshInterpreter extends bsh.Interpreter

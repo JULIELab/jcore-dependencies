@@ -2,15 +2,12 @@ package com.aliasi.test.unit.spell;
 
 import com.aliasi.spell.FixedWeightEditDistance;
 import com.aliasi.spell.WeightedEditDistance;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
-import com.aliasi.util.AbstractExternalizable;
-
 import java.io.IOException;
+
+import static junit.framework.Assert.assertEquals;
 
 
 public class FixedWeightEditDistanceTest  {

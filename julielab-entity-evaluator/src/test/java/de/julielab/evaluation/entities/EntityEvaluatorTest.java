@@ -1,19 +1,18 @@
 package de.julielab.evaluation.entities;
 
-import static org.junit.Assert.*;
+import com.google.common.collect.Lists;
+import org.assertj.core.data.Offset;
+import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.assertj.core.data.Offset;
-import org.junit.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.google.common.collect.Lists;
-
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertEquals;
 public class EntityEvaluatorTest {
 
     public static Logger log = LoggerFactory.getLogger(EntityEvaluatorTest.class);

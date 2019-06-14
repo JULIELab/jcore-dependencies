@@ -1,13 +1,16 @@
 package dragon.ir.kngbase;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRRelation;
 import dragon.matrix.*;
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
-import dragon.onlinedb.*;
-import dragon.util.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.Token;
+import dragon.nlp.extract.TokenExtractor;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
+import dragon.util.SortedArray;
+
 import java.io.File;
-import java.util.*;
+import java.util.ArrayList;
 
 /**
  * <p>Hyper Analogue to Language Space</p>

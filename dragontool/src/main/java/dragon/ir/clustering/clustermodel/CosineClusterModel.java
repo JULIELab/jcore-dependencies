@@ -1,8 +1,8 @@
 package dragon.ir.clustering.clustermodel;
 
-import dragon.matrix.*;
-import dragon.ir.clustering.*;
-import dragon.ir.index.*;
+import dragon.ir.clustering.DocCluster;
+import dragon.ir.index.IRDoc;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Cluster model which uses vector cosine to compute the distance between a document and a cluster</p>

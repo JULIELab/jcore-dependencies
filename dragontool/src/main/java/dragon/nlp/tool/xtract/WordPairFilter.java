@@ -1,7 +1,8 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.FileUtil;
+
+import java.io.BufferedReader;
 import java.util.ArrayList;
 
 /**

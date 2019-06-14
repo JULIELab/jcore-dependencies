@@ -1,6 +1,6 @@
 package dragon.ir.query;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.BasicArticle;
 
 /**
  * <p>Abstract class of query generator which implements function "generate". </p>

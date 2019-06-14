@@ -1,20 +1,13 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.List;
-
 import dk.brics.automaton.CustomRunAutomaton;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.matching.Matcher;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class for matching using an automaton

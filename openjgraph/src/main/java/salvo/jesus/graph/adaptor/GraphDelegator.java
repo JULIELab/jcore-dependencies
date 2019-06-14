@@ -1,7 +1,12 @@
 package salvo.jesus.graph.adaptor;
+
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import java.util.*;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 /**
  * GraphDelegator is a utility base for creating adaptors which need to

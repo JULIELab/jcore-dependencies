@@ -1,5 +1,10 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
+import martin.common.Tuple;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,12 +12,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Pattern;
-
-import martin.common.Tuple;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
 
 public class ACIDMatcher extends Matcher {
 

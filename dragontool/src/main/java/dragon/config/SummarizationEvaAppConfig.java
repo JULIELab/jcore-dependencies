@@ -1,10 +1,16 @@
 package dragon.config;
 
-import dragon.ir.summarize.*;
+import dragon.ir.summarize.GenericMultiDocSummarizer;
+import dragon.ir.summarize.ROUGE;
 import dragon.matrix.vector.DoubleVector;
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.SimpleCollectionReader;
+import dragon.util.FileUtil;
+import dragon.util.FormatUtil;
+import dragon.util.WildCardFilter;
+
+import java.io.File;
+import java.io.PrintWriter;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 

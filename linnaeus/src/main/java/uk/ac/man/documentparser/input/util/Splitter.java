@@ -1,14 +1,13 @@
 package uk.ac.man.documentparser.input.util;
 
+import martin.common.Pair;
+import martin.common.SentenceSplitter;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.input.DocumentIterator;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.NoSuchElementException;
-
-import martin.common.Pair;
-import martin.common.SentenceSplitter;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.input.DocumentIterator;
 
 /**
  * Adaptor Class for splitting documents on x number of sentences

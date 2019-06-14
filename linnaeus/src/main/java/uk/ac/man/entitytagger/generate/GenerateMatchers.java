@@ -1,20 +1,16 @@
 package uk.ac.man.entitytagger.generate;
 
-import martin.common.ArgParser;
-import martin.common.Misc;
-import martin.common.StreamIterator;
-import martin.common.Loggers;
-import martin.common.Pair;
-import martin.common.Tuple;
+import dk.brics.automaton.Automaton;
+import martin.common.*;
 import martin.common.compthreads.IteratorBasedMaster;
 
+import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Set;
 import java.util.logging.Logger;
-import java.io.*;
-
-import dk.brics.automaton.Automaton;
 
 /**
  * Main class for loading a species name dictionary and custom synonyms, and then calling other classes to generate regular expressions for species entries and convert them into automatons for efficient text matching.  

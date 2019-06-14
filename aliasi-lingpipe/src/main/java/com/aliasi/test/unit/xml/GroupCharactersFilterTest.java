@@ -16,17 +16,14 @@
 
 package com.aliasi.test.unit.xml;
 
+import com.aliasi.test.unit.MockObjectHelper;
+import com.aliasi.xml.GroupCharactersFilter;
+import com.aliasi.xml.SimpleElementHandler;
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-
-import com.aliasi.test.unit.MockObjectHelper;
-
-import com.aliasi.xml.GroupCharactersFilter;
-import com.aliasi.xml.SimpleElementHandler;
-
-import org.xml.sax.SAXException;
 
 public class GroupCharactersFilterTest  {
 

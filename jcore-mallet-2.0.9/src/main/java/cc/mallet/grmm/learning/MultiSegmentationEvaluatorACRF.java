@@ -17,13 +17,12 @@
 
 package cc.mallet.grmm.learning; // Generated package name
 
-import java.util.logging.*;
-import java.text.DecimalFormat;
-
-import java.util.List;
-
 import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
+
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.logging.Logger;
 
 public class MultiSegmentationEvaluatorACRF extends ACRFEvaluator
 {

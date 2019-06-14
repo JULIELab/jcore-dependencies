@@ -1,9 +1,12 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
-import java.io.*;
+import dragon.ml.seqmodel.data.DataSequence;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.StringTokenizer;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  * This FeatureType can not be used independently because the label is not set.

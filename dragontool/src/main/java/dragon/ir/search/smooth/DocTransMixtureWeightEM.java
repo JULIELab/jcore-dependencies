@@ -1,8 +1,11 @@
 package dragon.ir.search.smooth;
 
-import dragon.ir.index.*;
-import dragon.ir.query.*;
-import dragon.ir.search.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.ir.query.RelSimpleQuery;
+import dragon.ir.query.SimpleTermPredicate;
+import dragon.ir.search.FullRankSearcher;
+import dragon.ir.search.Searcher;
 
 /**
  * <p>Computes the Mixture Weights for Models using translations</p>

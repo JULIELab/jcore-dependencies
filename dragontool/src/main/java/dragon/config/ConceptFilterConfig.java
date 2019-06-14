@@ -1,6 +1,7 @@
 package dragon.config;
 
-import dragon.nlp.extract.*;
+import dragon.nlp.extract.BasicConceptFilter;
+import dragon.nlp.extract.ConceptFilter;
 
 /**
  * <p>Concept filter configuration</p>

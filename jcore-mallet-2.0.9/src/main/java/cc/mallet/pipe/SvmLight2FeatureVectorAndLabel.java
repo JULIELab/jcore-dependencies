@@ -7,14 +7,9 @@
 
 package cc.mallet.pipe;
 
-import java.util.ArrayList;
+import cc.mallet.types.*;
 
-import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.Label;
-import cc.mallet.types.LabelAlphabet;
+import java.util.ArrayList;
 
 /**
  * This Pipe converts a line in SVMLight format to 

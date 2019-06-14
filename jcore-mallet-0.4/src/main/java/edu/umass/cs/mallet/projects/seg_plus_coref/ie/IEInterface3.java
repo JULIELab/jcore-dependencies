@@ -18,20 +18,18 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.ie;
 
+import edu.umass.cs.mallet.base.fst.CRF3;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.pipe.SerialPipes;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.util.*;
 
-import junit.framework.*;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.regex.*;
 import java.io.*;
-import java.util.logging.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 public class IEInterface3{

@@ -24,13 +24,15 @@
  */
 package edu.umass.cs.mallet.projects.seg_plus_coref.graphs;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.applet.*;
-import javax.swing.*;
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.visual.layout.*;
+import salvo.jesus.graph.visual.GraphEditor;
+import salvo.jesus.graph.visual.layout.OrthogonalLineLayout;
+import salvo.jesus.graph.visual.layout.StraightLineLayout;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class Test1 extends JFrame
 {

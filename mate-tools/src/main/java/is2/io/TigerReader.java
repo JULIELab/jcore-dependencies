@@ -4,12 +4,10 @@
 package is2.io;
 
 import is2.data.PSTree;
-import is2.util.DB;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Stack;

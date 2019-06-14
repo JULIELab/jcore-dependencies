@@ -1,14 +1,12 @@
 package com.aliasi.test.unit.matrix;
 
 import com.aliasi.matrix.SvdMatrix;
-
 import org.junit.Test;
+
+import java.util.Random;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-
-import java.util.Random;
 
 public class SvdMatrixTest  {
 

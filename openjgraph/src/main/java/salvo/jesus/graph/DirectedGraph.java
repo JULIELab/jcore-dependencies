@@ -1,6 +1,6 @@
 package salvo.jesus.graph;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * A directed Graph where edges have a specified direction. Edges in this

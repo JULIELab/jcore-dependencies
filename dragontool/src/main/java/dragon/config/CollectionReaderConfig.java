@@ -1,7 +1,13 @@
 package dragon.config;
 
-import dragon.onlinedb.*;
-import dragon.onlinedb.trec.*;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.BasicCollectionReader;
+import dragon.onlinedb.CollectionReader;
+import dragon.onlinedb.SimpleCollectionReader;
+import dragon.onlinedb.trec.EarlyTrecTopicReader;
+import dragon.onlinedb.trec.Genomics2004TopicReader;
+import dragon.onlinedb.trec.Genomics2005TopicReader;
+import dragon.onlinedb.trec.TrecCollectionReader;
 
 /**
  * <p>Collection reader configuration </p>

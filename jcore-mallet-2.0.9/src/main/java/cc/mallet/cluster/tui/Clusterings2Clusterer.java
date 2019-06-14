@@ -1,45 +1,21 @@
 package cc.mallet.cluster.tui;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import cc.mallet.classify.Classifier;
 import cc.mallet.classify.MaxEntTrainer;
 import cc.mallet.classify.Trial;
-import cc.mallet.cluster.Clusterer;
-import cc.mallet.cluster.Clustering;
-import cc.mallet.cluster.Clusterings;
-import cc.mallet.cluster.GreedyAgglomerativeByDensity;
-import cc.mallet.cluster.Record;
-import cc.mallet.cluster.evaluate.AccuracyEvaluator;
-import cc.mallet.cluster.evaluate.BCubedEvaluator;
-import cc.mallet.cluster.evaluate.ClusteringEvaluator;
-import cc.mallet.cluster.evaluate.ClusteringEvaluators;
-import cc.mallet.cluster.evaluate.MUCEvaluator;
-import cc.mallet.cluster.evaluate.PairF1Evaluator;
+import cc.mallet.cluster.*;
+import cc.mallet.cluster.evaluate.*;
 import cc.mallet.cluster.iterator.PairSampleIterator;
 import cc.mallet.cluster.neighbor_evaluator.AgglomerativeNeighbor;
 import cc.mallet.cluster.neighbor_evaluator.NeighborEvaluator;
 import cc.mallet.cluster.neighbor_evaluator.PairwiseEvaluator;
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.InfoGain;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.util.CommandOption;
-import cc.mallet.util.MalletLogger;
-import cc.mallet.util.PropertyList;
-import cc.mallet.util.Randoms;
-import cc.mallet.util.Strings;
+import cc.mallet.types.*;
+import cc.mallet.util.*;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 //In progress
 public class Clusterings2Clusterer {

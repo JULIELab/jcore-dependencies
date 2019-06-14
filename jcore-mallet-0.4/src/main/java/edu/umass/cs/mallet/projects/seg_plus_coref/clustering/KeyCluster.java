@@ -24,8 +24,6 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
-import java.util.*;
-
 
 public class KeyCluster extends Cluster
 {

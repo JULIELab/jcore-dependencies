@@ -1,16 +1,7 @@
 package extractors;
 
 
-import is2.data.Cluster;
-import is2.data.D4;
-import is2.data.DataF;
-import is2.data.Edges;
-import is2.data.FV;
-import is2.data.IFV;
-import is2.data.Instances;
-import is2.data.Long2IntInterface;
-import is2.data.MFB;
-import is2.util.DB;
+import is2.data.*;
 
 
 

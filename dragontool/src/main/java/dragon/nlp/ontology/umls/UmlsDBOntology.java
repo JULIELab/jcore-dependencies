@@ -1,9 +1,12 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.ontology.SemanticNet;
+import dragon.nlp.tool.Lemmatiser;
 import dragon.util.DBUtil;
-import java.sql.*;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 /**
  * <p>UMLS Ontology has functions of reading ontology from database</p>

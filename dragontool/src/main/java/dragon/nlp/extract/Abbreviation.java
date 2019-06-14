@@ -1,8 +1,10 @@
 package dragon.nlp.extract;
 
 
-import dragon.nlp.*;
-import java.lang.Character;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
+
 import java.util.TreeMap;
 
 /**

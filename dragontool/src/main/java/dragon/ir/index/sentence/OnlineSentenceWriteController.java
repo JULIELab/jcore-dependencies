@@ -1,6 +1,6 @@
 package dragon.ir.index.sentence;
 
-import dragon.ir.index.*;
+import dragon.ir.index.OnlineIndexWriteController;
 import dragon.nlp.Sentence;
 /**
  * <p>Write controller for storing sentence index to disk </p>

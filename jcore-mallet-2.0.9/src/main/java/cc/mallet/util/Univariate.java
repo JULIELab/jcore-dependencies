@@ -14,9 +14,7 @@
 
 package cc.mallet.util;
 
-import java.util.logging.*;
-
-import cc.mallet.util.MalletLogger;
+import java.util.logging.Logger;
 
 // Obtained from http://www.stat.vt.edu/~sundar/java/code/Univariate.html
 // August 2002

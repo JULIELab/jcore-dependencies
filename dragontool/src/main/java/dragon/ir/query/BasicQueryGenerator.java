@@ -1,9 +1,12 @@
 package dragon.ir.query;
 
 import dragon.ir.index.IRSection;
-import dragon.nlp.extract.*;
-import dragon.onlinedb.*;
-import java.util.*;
+import dragon.nlp.extract.ConceptExtractor;
+import dragon.nlp.extract.TripleExtractor;
+import dragon.onlinedb.Article;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Basic Query Generator</p>

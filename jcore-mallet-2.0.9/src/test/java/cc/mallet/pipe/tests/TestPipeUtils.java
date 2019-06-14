@@ -13,7 +13,9 @@ import cc.mallet.pipe.SerialPipes;
 import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.Instance;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created: Aug 28, 2005

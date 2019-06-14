@@ -11,13 +11,14 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.classify.evaluate.*;
+import edu.umass.cs.mallet.base.classify.evaluate.ConfusionMatrix;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.MatrixOps;
+import edu.umass.cs.mallet.base.util.CommandOption;
+
+import java.io.File;
 /**
  * Text User Interface for classification (unsupported).
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

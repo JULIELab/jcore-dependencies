@@ -1,7 +1,9 @@
 package dragon.ir.index;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+
+import java.io.File;
 
 /**
  * <p>IRCollection is the data structure for a document collection</p>

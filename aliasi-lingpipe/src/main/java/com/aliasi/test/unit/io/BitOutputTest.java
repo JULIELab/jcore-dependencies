@@ -1,11 +1,11 @@
 package com.aliasi.test.unit.io;
 
 import com.aliasi.io.BitOutput;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
 import java.util.Random;
+
+import static junit.framework.Assert.assertEquals;
 
 public class BitOutputTest  {
 

@@ -11,8 +11,9 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.Sequence;
 
 /**
  * Estimates the confidence of a {@link Segment} extracted by a {@link

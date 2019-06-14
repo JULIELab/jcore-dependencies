@@ -1,6 +1,6 @@
 package dragon.ir.clustering;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
 /**
  * <p>Data structure for a set of document clusters. </p>
  * <p> </p>

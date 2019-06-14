@@ -11,10 +11,14 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import java.util.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.Sequence;
+
+import java.io.PrintStream;
+import java.util.ArrayList;
 
 /**
 	 Calculates the effectiveness of "constrained viterbi" in

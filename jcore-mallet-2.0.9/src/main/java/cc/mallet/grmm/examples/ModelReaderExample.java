@@ -6,11 +6,16 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.examples;
 
-import cc.mallet.grmm.types.*;
-import cc.mallet.grmm.inference.*;
+import cc.mallet.grmm.inference.Inferencer;
+import cc.mallet.grmm.inference.JunctionTreeInferencer;
+import cc.mallet.grmm.types.FactorGraph;
+import cc.mallet.grmm.types.Variable;
 import cc.mallet.grmm.util.ModelReader;
 import cc.mallet.grmm.util.ModelWriter;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.OutputStreamWriter;
+import java.io.StringReader;
 
 // A simple example of the (probably too simple) ModelReader class
 

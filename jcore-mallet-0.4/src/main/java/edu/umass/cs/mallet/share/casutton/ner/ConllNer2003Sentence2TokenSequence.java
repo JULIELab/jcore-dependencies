@@ -23,12 +23,12 @@
 
 package edu.umass.cs.mallet.share.casutton.ner; // Generated package name
 
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.extract.StringTokenization;
 import edu.umass.cs.mallet.base.extract.StringSpan;
+import edu.umass.cs.mallet.base.extract.StringTokenization;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.*;
 
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 /**
  * Reads a data file in CoNLL 2003 format, and makes some simple

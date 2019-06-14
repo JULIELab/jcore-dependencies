@@ -1,7 +1,5 @@
 package salvo.jesus.graph;
 
-import java.io.*;
-
 /**
  * A vertex in a graph. This class encapsulates an object that the vertex will represent.
  * Hence, a Vertex can represent any object that extends java.lang.Object by simply

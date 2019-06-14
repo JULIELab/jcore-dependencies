@@ -1,8 +1,12 @@
 package dragon.ir.query;
 
-import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.util.*;
+import dragon.ir.index.IRSection;
+import dragon.nlp.Concept;
+import dragon.nlp.Token;
+import dragon.nlp.Triple;
+import dragon.util.FormatUtil;
+import dragon.util.SortedArray;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 

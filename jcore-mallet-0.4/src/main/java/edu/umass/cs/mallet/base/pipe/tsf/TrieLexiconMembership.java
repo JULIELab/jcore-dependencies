@@ -16,10 +16,14 @@
 
 package edu.umass.cs.mallet.base.pipe.tsf;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
 import java.io.*;
-import java.util.*;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 public class TrieLexiconMembership extends Pipe implements Serializable {
 	// Perhaps give it your own tokenizer?

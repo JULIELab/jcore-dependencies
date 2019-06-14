@@ -7,16 +7,15 @@
 
 package cc.mallet.topics;
 
-import cc.mallet.types.*;
+import cc.mallet.types.IDSorter;
 import cc.mallet.util.Randoms;
-
-import java.util.Arrays;
-import java.util.zip.*;
+import gnu.trove.TIntIntHashMap;
+import gnu.trove.TIntObjectHashMap;
 
 import java.io.*;
 import java.text.NumberFormat;
-
-import gnu.trove.*;
+import java.util.Arrays;
+import java.util.zip.GZIPInputStream;
 
 /**
  * Latent Dirichlet Allocation.

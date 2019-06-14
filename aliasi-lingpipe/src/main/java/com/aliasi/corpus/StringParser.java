@@ -17,10 +17,9 @@
 package com.aliasi.corpus;
 
 import com.aliasi.util.Streams;
+import org.xml.sax.InputSource;
 
 import java.io.IOException;
-
-import org.xml.sax.InputSource;
 
 /**
  * A <code>StringParser</code> is an abstract parser based on an

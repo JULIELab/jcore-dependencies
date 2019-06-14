@@ -1,10 +1,13 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.matrix.*;
+import dragon.matrix.IntSuperSparseMatrix;
 import dragon.nlp.*;
 import dragon.nlp.extract.EngDocumentParser;
-import dragon.nlp.tool.*;
-import dragon.onlinedb.*;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
+
 import java.io.File;
 
 /**

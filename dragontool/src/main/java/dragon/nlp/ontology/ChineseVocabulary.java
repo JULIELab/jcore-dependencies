@@ -1,9 +1,12 @@
 package dragon.nlp.ontology;
 
-import dragon.nlp.*;
-import dragon.util.*;
+import dragon.nlp.Word;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
 import java.io.BufferedReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * <p>Chinese Vocabulary</p>

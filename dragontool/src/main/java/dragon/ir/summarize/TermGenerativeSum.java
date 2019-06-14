@@ -1,9 +1,11 @@
 package dragon.ir.summarize;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 import dragon.nlp.Token;
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexComparator;
 import dragon.util.SortedArray;
+
 import java.util.ArrayList;
 /**
  * <p>Generative term based summarization</p>

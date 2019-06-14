@@ -1,7 +1,11 @@
 package dragon.ir.index;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.ByteArrayConvert;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+
+import java.io.File;
+import java.io.RandomAccessFile;
 import java.util.ArrayList;
 /**
  * <p>The class is used to write or load the relation indexing information for a given IR term or term set  </p>

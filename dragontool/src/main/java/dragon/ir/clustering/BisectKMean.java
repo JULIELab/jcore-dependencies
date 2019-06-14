@@ -1,7 +1,8 @@
 package dragon.ir.clustering;
 
-import dragon.ir.clustering.clustermodel.*;
-import dragon.ir.index.*;
+import dragon.ir.clustering.clustermodel.ClusterModel;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 
 /**
  * <p>BisectKMean clustering</p>

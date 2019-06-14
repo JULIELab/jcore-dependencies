@@ -17,18 +17,13 @@
 package com.aliasi.dca;
 
 import com.aliasi.features.Features;
-
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
 import com.aliasi.symbol.MapSymbolTable;
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
 import com.aliasi.util.ObjectToCounterMap;
@@ -37,7 +32,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
 import java.util.List;
 import java.util.Map;
 

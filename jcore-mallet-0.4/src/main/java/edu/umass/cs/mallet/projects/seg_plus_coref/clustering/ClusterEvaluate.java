@@ -25,15 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.*;
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
-import java.io.*;
-import java.util.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.Mention;
+
+import java.io.PrintStream;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 public class ClusterEvaluate
 {

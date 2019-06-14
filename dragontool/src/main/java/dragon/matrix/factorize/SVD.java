@@ -1,6 +1,9 @@
 package dragon.matrix.factorize;
 
-import dragon.matrix.*;
+import dragon.matrix.DoubleDenseMatrix;
+import dragon.matrix.DoubleFlatDenseMatrix;
+import dragon.matrix.IntSuperSparseMatrix;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Singular Value Decompositin</p>

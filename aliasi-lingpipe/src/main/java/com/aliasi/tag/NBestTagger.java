@@ -16,8 +16,6 @@
 
 package com.aliasi.tag;
 
-import com.aliasi.util.ScoredObject;
-
 import java.util.Iterator;
 import java.util.List;
 

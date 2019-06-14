@@ -1,5 +1,19 @@
 package uk.ac.man.documentparser.input;
 
+import martin.common.Misc;
+import martin.common.xml.EntityResolver;
+import martin.common.xml.MyNodeList;
+import martin.common.xml.XPath;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+import uk.ac.man.documentparser.dataholders.*;
+import uk.ac.man.documentparser.dataholders.Document.Type;
+import uk.ac.man.documentparser.dataholders.ExternalID.Source;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -7,23 +21,6 @@ import java.io.StringReader;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.regex.Pattern;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import uk.ac.man.documentparser.dataholders.*;
-import uk.ac.man.documentparser.dataholders.Document.Text_raw_type;
-import uk.ac.man.documentparser.dataholders.Document.Type;
-import uk.ac.man.documentparser.dataholders.ExternalID.Source;
-import martin.common.Misc;
-import martin.common.xml.EntityResolver;
-import martin.common.xml.MyNodeList;
-import martin.common.xml.XPath;
 
 public class PMC2 implements DocumentIterator{
 	private org.w3c.dom.Document doc = null;

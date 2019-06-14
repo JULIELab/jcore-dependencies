@@ -14,11 +14,7 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.util.Iterator;
 
 public abstract class AbstractPipeInputIterator implements PipeInputIterator
 {

@@ -1,6 +1,7 @@
 package dragon.matrix.vector;
 
-import dragon.matrix.*;
+import dragon.matrix.DenseMatrix;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Power Method</p>

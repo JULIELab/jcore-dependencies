@@ -1,11 +1,16 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
-import dragon.nlp.tool.*;
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.Token;
+import dragon.nlp.extract.EngDocumentParser;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.onlinedb.CollectionReader;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 /**

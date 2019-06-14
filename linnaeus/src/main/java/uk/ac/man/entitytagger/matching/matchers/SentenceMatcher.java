@@ -1,14 +1,13 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.util.LinkedList;
-import java.util.List;
-
 import martin.common.Pair;
 import martin.common.SentenceSplitter;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.matching.Matcher;
+
+import java.util.LinkedList;
+import java.util.List;
 
 public class SentenceMatcher extends Matcher {
 

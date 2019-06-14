@@ -1,11 +1,15 @@
 package dragon.config;
 
 import dragon.nlp.extract.EngDocumentParser;
-import dragon.nlp.tool.*;
-import dragon.nlp.tool.xtract.*;
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.nlp.tool.xtract.SimpleXtract;
+import dragon.onlinedb.CollectionReader;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.util.ArrayList;
 
 /**

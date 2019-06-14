@@ -18,11 +18,14 @@
 
 package edu.umass.cs.mallet.base.classify.examples;
 
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.ClassifierTrainer;
+import edu.umass.cs.mallet.base.classify.NaiveBayesTrainer;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
+
+import java.io.File;
 
 public class DocumentClassifier
 {

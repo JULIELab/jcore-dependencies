@@ -16,25 +16,18 @@
 package com.aliasi.stats;
 
 import com.aliasi.corpus.ObjectHandler;
-
-import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.Matrices;
-import com.aliasi.matrix.SparseFloatVector;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.PrintWriter;
 import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.Formatter;
 import java.util.IllegalFormatException;

@@ -25,15 +25,17 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import java.util.List;
-import java.util.Iterator;
-import java.util.HashMap;
-import java.io.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import org.jdom.Element;
+import org.jdom.Text;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.PropertyList;
-import org.jdom.*;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 
 public class GenderMentionPair extends Pipe
 {

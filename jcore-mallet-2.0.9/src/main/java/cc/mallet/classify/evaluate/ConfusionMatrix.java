@@ -26,16 +26,13 @@
 package cc.mallet.classify.evaluate;
 
 
-import java.util.ArrayList;
-import java.util.logging.*;
 import cc.mallet.classify.Classification;
 import cc.mallet.classify.Trial;
-import cc.mallet.types.Instance;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelVector;
-import cc.mallet.types.Labeling;
-import cc.mallet.types.MatrixOps;
+import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Calculates and prints confusion matrix, accuracy,

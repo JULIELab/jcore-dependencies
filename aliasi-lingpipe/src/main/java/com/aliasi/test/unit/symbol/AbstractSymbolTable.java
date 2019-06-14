@@ -18,9 +18,7 @@ package com.aliasi.test.unit.symbol;
 
 import com.aliasi.symbol.SymbolTable;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.*;
 
 
 public abstract class AbstractSymbolTable  {

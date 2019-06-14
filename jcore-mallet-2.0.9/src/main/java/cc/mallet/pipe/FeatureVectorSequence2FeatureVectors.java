@@ -1,13 +1,13 @@
 package cc.mallet.pipe;
 
+import cc.mallet.types.FeatureVectorSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.LabelSequence;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
-
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.LabelSequence;
 
 /** Given instances with a FeatureVectorSequence in the data field, break up the sequence into 
  * the individual FeatureVectors, producing one FeatureVector per Instance. */

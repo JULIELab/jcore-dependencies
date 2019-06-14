@@ -11,8 +11,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.SparseVector;
-
 /**
 	 Stores a hash for each object being compared for efficient
 	 computation.

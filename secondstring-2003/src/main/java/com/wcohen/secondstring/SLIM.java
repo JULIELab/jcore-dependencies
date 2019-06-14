@@ -1,5 +1,6 @@
 package com.wcohen.secondstring;
-import java.util.*;
+
+import java.util.Random;
 
 /**
  * The same-letter index mixture distance.

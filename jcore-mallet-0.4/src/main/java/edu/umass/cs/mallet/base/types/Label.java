@@ -14,10 +14,10 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Alphabet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class Label implements Labeling, Serializable
 {

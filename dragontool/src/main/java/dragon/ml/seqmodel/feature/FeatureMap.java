@@ -1,7 +1,11 @@
 package dragon.ml.seqmodel.feature;
 
-import java.io.*;
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.StringTokenizer;
 
 /**
  * <p>Feature map</p>

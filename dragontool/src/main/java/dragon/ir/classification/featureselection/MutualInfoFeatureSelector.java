@@ -1,11 +1,13 @@
 package dragon.ir.classification.featureselection;
 
 import dragon.ir.classification.DocClassSet;
-import dragon.ir.index.*;
-import dragon.matrix.*;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.IntDenseMatrix;
+import dragon.matrix.SparseMatrix;
 import dragon.matrix.vector.DoubleVector;
 import dragon.nlp.Token;
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexComparator;
+import dragon.nlp.compare.WeightComparator;
 import dragon.util.SortedArray;
 
 /**

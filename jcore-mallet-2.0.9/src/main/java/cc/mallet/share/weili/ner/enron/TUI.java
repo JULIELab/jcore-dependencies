@@ -14,16 +14,24 @@
 
 package cc.mallet.share.weili.ner.enron;
 
-import java.util.Random;
-import java.util.regex.*;
-import java.io.*;
-
 import cc.mallet.fst.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.pipe.tsf.*;
-import cc.mallet.share.upenn.ner.*;
-import cc.mallet.types.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.PrintTokenSequenceFeatures;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
+import cc.mallet.pipe.iterator.FileIterator;
+import cc.mallet.pipe.tsf.LexiconMembership;
+import cc.mallet.pipe.tsf.OffsetConjunctions;
+import cc.mallet.pipe.tsf.RegexMatches;
+import cc.mallet.pipe.tsf.TrieLexiconMembership;
+import cc.mallet.share.upenn.ner.NEPipes;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.InstanceList;
+
+import java.io.File;
+import java.io.IOException;
+import java.util.Random;
+import java.util.regex.Pattern;
 
 public class TUI
 {

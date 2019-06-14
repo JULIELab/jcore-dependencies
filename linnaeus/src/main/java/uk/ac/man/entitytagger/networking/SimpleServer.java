@@ -1,5 +1,9 @@
 package uk.ac.man.entitytagger.networking;
 
+import martin.common.compthreads.Problem;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -8,11 +12,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.Semaphore;
-
-import martin.common.compthreads.Problem;
-
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
 
 public class SimpleServer implements Iterator<Problem<Object>> {
 	private ServerSocket socket;

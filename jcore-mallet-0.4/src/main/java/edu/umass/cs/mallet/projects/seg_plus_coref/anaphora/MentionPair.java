@@ -27,10 +27,6 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
 import edu.umass.cs.mallet.base.util.PropertyList;
-import org.jdom.Document;
-import org.jdom.*;
-import org.jdom.input.SAXBuilder;
-import org.jdom.input.DOMBuilder;
 
 public class MentionPair
 {

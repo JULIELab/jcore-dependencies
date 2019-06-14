@@ -14,9 +14,9 @@ package edu.umass.cs.mallet.base.extract;
 import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
 
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class StringTokenization extends TokenSequence implements Tokenization
 {

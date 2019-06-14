@@ -6,8 +6,6 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import com.google.common.collect.Sets.SetView;
-
 public class EntityEvaluationResult {
 	private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentMentionWise;
 	private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentDocWise;

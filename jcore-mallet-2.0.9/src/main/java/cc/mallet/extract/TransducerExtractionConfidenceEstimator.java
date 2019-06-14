@@ -15,11 +15,14 @@
 package cc.mallet.extract;
 
 
-import java.io.*;
-import cc.mallet.fst.*;
-import cc.mallet.fst.confidence.*;
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.confidence.TransducerConfidenceEstimator;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Sequence;
+
+import java.io.Serializable;
 
 /**
  * Estimates the confidence in the labeling of a LabeledSpan using a

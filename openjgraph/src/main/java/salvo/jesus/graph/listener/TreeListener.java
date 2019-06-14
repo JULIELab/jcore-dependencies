@@ -1,7 +1,12 @@
 package salvo.jesus.graph.listener;
+
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import java.util.*;
+import salvo.jesus.graph.algorithm.DepthFirstGraphTraversal;
+import salvo.jesus.graph.algorithm.GraphTraversal;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * TreeListener imposes a tree structure on a Graph.  It can be

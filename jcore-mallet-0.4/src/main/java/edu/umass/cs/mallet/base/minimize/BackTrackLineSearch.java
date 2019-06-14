@@ -12,11 +12,10 @@
 
 package edu.umass.cs.mallet.base.minimize;
 
-import edu.umass.cs.mallet.base.minimize.LineMinimizer;
-import edu.umass.cs.mallet.base.minimize.Minimizable;
-import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.types.Matrix;
-import java.util.logging.*;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 // "Line Searches and Backtracking", p385, "Numeric Recipes in C"
 

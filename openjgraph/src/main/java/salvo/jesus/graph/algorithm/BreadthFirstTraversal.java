@@ -1,9 +1,13 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
-import java.util.*;
-import salvo.jesus.util.*;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.NullVisitor;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.Visitor;
+import salvo.jesus.util.EmptyQueueException;
 import salvo.jesus.util.Queue;
+
+import java.util.*;
 
 /**
  * A concrete subclass of GraphTraversal that uses breadth-first search

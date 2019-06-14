@@ -1,7 +1,7 @@
 package salvo.jesus.graph.javax.swing;
 
-import java.io.*;
-import javax.swing.JPanel;
+import javax.swing.*;
+import java.io.Serializable;
 
 /**
  * Abstract class for components to act as a tabpage in a GraphTabbedPane,

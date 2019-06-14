@@ -17,34 +17,19 @@
 package com.aliasi.cluster;
 
 import com.aliasi.corpus.ObjectHandler;
-
+import com.aliasi.stats.Statistics;
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import com.aliasi.stats.Statistics;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.FeatureExtractor;
+import com.aliasi.util.*;
 import com.aliasi.util.Math;
-import com.aliasi.util.Iterators;
-import com.aliasi.util.ObjectToCounterMap;
-import com.aliasi.util.ObjectToDoubleMap;
-import com.aliasi.util.Strings;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
+import java.util.*;
 import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 
 /**
  * A <code>LatentDirichletAllocation</code> object represents a latent

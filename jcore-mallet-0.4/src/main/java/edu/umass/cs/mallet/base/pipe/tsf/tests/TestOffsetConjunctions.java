@@ -14,11 +14,17 @@
 
 package edu.umass.cs.mallet.base.pipe.tsf.tests;
 
-import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import junit.framework.*;
-import java.util.regex.*;
+import edu.umass.cs.mallet.base.pipe.tsf.OffsetConjunctions;
+import edu.umass.cs.mallet.base.pipe.tsf.RegexMatches;
+import edu.umass.cs.mallet.base.pipe.tsf.TokenText;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.regex.Pattern;
 
 
 public class TestOffsetConjunctions extends TestCase

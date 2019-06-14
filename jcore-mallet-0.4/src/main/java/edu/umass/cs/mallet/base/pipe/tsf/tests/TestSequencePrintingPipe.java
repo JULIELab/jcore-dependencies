@@ -6,11 +6,12 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.pipe.tsf.tests;
 
-import junit.framework.*;
-import edu.umass.cs.mallet.base.pipe.SerialPipes;
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.pipe.tsf.SequencePrintingPipe;
 import edu.umass.cs.mallet.base.types.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

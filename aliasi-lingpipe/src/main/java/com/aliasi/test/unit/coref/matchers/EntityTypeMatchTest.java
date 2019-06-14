@@ -20,15 +20,13 @@ import com.aliasi.coref.CachedMention;
 import com.aliasi.coref.Matcher;
 import com.aliasi.coref.Mention;
 import com.aliasi.coref.MentionChainImpl;
-import com.aliasi.coref.matchers.*;
-
+import com.aliasi.coref.matchers.EntityTypeMatch;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static junit.framework.Assert.assertEquals;
 
 public class EntityTypeMatchTest  {
 

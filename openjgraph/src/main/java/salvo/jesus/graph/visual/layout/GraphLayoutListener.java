@@ -1,6 +1,6 @@
 package salvo.jesus.graph.visual.layout;
 
-import java.util.*;
+import java.util.EventListener;
 
 /**
  * The listener interface for receiving notification of graph layout events.

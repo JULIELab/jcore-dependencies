@@ -2,10 +2,10 @@
 /* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
 package de.julielab.jcore.types;
 
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
-import org.apache.uima.cas.Type;
 
 /** 
  * Updated by JCasGen Wed Aug 08 13:36:50 CEST 2018

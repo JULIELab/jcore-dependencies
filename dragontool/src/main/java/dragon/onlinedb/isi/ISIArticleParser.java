@@ -1,6 +1,8 @@
 package dragon.onlinedb.isi;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.BasicArticle;
 
 /**
  * <p>Journal of ISI article parser</p>

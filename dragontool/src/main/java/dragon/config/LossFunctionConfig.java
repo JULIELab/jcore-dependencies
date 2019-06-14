@@ -1,6 +1,8 @@
 package dragon.config;
 
-import dragon.ir.classification.multiclass.*;
+import dragon.ir.classification.multiclass.HingeLoss;
+import dragon.ir.classification.multiclass.LinearLoss;
+import dragon.ir.classification.multiclass.LossFunction;
 /**
  * <p>Loss Function Configuration</p>
  * <p></p>

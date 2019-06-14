@@ -11,10 +11,8 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Alphabet;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.io.*;
 /**
 		A mapping from arbitrary objects (usually String's) to integers
 		(and corresponding Label objects) and back.

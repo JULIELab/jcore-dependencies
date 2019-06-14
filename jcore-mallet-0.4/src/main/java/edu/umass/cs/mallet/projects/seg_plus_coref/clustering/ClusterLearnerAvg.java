@@ -25,17 +25,16 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.classify.MaxEnt;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.SerialPipes;
-import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
-import java.io.*;
-import java.util.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.Mention;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.MentionPair;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.TUIGraph;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.Set;
 
 public class ClusterLearnerAvg extends ClusterLearner
 {

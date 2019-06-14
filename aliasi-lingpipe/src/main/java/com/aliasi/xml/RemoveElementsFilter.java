@@ -16,13 +16,12 @@
 
 package com.aliasi.xml;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.HashSet;
+import java.util.Set;
 
 /** A <code>RemoveElementsFilter</code> filters out specified elements
  * from a stream of SAX events.  The elements to remove are specified

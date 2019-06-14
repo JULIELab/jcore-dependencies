@@ -1,23 +1,14 @@
 package com.aliasi.test.unit.tokenizer;
 
-import com.aliasi.tokenizer.PorterStemmerTokenizerFactory;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-import com.aliasi.tokenizer.TokenizerFactory;
+import com.aliasi.tokenizer.PorterStemmerTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
-
-import com.aliasi.util.AbstractExternalizable;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
-
+import com.aliasi.tokenizer.TokenizerFactory;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
-
 
 import static com.aliasi.test.unit.Asserts.assertNotSerializable;
 import static com.aliasi.test.unit.tokenizer.TokenizerTest.assertFactory;
+import static junit.framework.Assert.assertEquals;
 
 public class PorterStemmerTokenizerFactoryTest {
 

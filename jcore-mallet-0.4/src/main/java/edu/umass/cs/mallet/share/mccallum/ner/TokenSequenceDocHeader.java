@@ -17,11 +17,15 @@
 
 package edu.umass.cs.mallet.share.mccallum.ner;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.pipe.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 public class TokenSequenceDocHeader extends Pipe implements Serializable
 {

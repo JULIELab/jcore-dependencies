@@ -7,16 +7,15 @@
 
 package edu.umass.cs.mallet.base.pipe.tests;
 
-import java.io.*;
-
-import junit.framework.Test;
+import edu.umass.cs.mallet.base.pipe.Noop;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.iterator.ParenGroupIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.pipe.Noop;
-import edu.umass.cs.mallet.base.pipe.Pipe;
+import java.io.Reader;
+import java.io.StringReader;
 
 /**
  *  Unit Test for PipeInputIterators

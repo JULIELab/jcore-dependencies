@@ -1,8 +1,9 @@
 package dragon.ir.index.sequence;
 
 import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.onlinedb.*;
+import dragon.nlp.SimpleElementList;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
 
 /**
  * <p>The abstract index reader for sequencial data </p>

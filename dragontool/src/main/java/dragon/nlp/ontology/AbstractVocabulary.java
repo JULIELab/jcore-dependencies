@@ -1,9 +1,12 @@
 package dragon.nlp.ontology;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.Word;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.util.FileUtil;
+
+import java.io.BufferedReader;
 
 /**
  * <p>The class implements all the basic functions related with vocabulary </p>

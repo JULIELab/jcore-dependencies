@@ -6,7 +6,9 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.types.tests;
 
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.*;
 

@@ -7,11 +7,14 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.*;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.types.Dirichlet;
 import cc.mallet.types.Multinomial;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Utility class for generating many useful kinds of random graphical

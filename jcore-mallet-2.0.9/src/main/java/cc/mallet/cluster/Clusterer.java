@@ -8,13 +8,13 @@
 package cc.mallet.cluster;
 
 
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.InstanceList;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import cc.mallet.pipe.Pipe;
-import cc.mallet.types.InstanceList;
 
 /**
  * An abstract class for clustering a set of points.

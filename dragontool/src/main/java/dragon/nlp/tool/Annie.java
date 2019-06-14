@@ -1,11 +1,15 @@
 package dragon.nlp.tool;
 
 import dragon.nlp.*;
-import dragon.util.*;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
 import gate.*;
-import gate.creole.*;
-import gate.corpora.*;
-import java.io.*;
+import gate.corpora.DocumentImpl;
+import gate.creole.ANNIEConstants;
+import gate.creole.SerialAnalyserController;
+
+import java.io.File;
 import java.util.*;
 
 /**

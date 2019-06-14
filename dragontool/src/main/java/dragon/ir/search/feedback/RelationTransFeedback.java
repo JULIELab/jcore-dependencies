@@ -1,12 +1,17 @@
 package dragon.ir.search.feedback;
 
-import dragon.ir.index.*;
-import dragon.ir.query.*;
-import dragon.ir.search.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRRelation;
+import dragon.ir.index.IndexReader;
+import dragon.ir.query.IRQuery;
+import dragon.ir.query.SimpleTermPredicate;
+import dragon.ir.search.Searcher;
 import dragon.matrix.DoubleSparseMatrix;
-import dragon.nlp.compare.*;
 import dragon.nlp.Token;
+import dragon.nlp.compare.IndexComparator;
+import dragon.nlp.compare.WeightComparator;
 import dragon.util.SortedArray;
+
 import java.util.ArrayList;
 
 /**

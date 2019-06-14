@@ -1,11 +1,15 @@
 package dragon.nlp.tool.xtract;
 
-import dragon.nlp.*;
-import dragon.util.*;
-import dragon.nlp.tool.*;
-import dragon.matrix.*;
-import dragon.nlp.compare.*;
-import java.util.*;
+import dragon.matrix.IntGiantSparseMatrix;
+import dragon.matrix.IntSparseMatrix;
+import dragon.matrix.IntSuperSparseMatrix;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.Token;
+import dragon.nlp.compare.FrequencyComparator;
+import dragon.nlp.tool.Tagger;
+import dragon.util.SortedArray;
+
+import java.util.ArrayList;
 
 /**
  * <p>Expanding word pair (not necessary consecutive) to noun phrase</p>

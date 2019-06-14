@@ -16,8 +16,6 @@
 
 package com.aliasi.util;
 
-import java.util.Comparator;
-
 /**
  * The <code>Scored</code> interface should be implemented by objects
  * that return a double-valued score.  There is a simple score

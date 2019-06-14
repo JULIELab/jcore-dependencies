@@ -1,9 +1,15 @@
 package com.wcohen.secondstring.expt;
 
-import com.wcohen.secondstring.*;
+import com.wcohen.secondstring.DistanceFactory;
+import com.wcohen.secondstring.PrintfFormat;
+import com.wcohen.secondstring.StringDistance;
+
 import java.io.*;
-import java.util.*;
-import java.lang.reflect.*;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 /**
  * Perform a series of match experiments, specified by a script in an input file.

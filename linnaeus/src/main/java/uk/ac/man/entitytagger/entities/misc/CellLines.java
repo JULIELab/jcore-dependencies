@@ -1,5 +1,20 @@
 package uk.ac.man.entitytagger.entities.misc;
 
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import martin.common.SQL;
+import martin.common.xml.EntityResolver;
+import martin.common.xml.MyNodeList;
+import martin.common.xml.XPath;
+import org.w3c.dom.Node;
+import uk.ac.man.entitytagger.EntityTagger;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.generate.DictionaryEntry;
+import uk.ac.man.entitytagger.generate.GenerateMatchers;
+import uk.ac.man.entitytagger.matching.Matcher;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -9,24 +24,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Node;
-
-import uk.ac.man.entitytagger.EntityTagger;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.generate.DictionaryEntry;
-import uk.ac.man.entitytagger.generate.GenerateMatchers;
-import uk.ac.man.entitytagger.matching.Matcher;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.SQL;
-import martin.common.xml.EntityResolver;
-import martin.common.xml.MyNodeList;
-import martin.common.xml.XPath;
 
 /**
  * This class will, given a CLKB CellLine database .owl file, parse its contents and output a tab-delimited

@@ -14,11 +14,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.SparseVector;
-
-import java.lang.Math;
-
-
 public class Minkowski implements Metric {
 
     double q;

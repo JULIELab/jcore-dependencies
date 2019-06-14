@@ -8,12 +8,7 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.ie;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import edu.umass.cs.mallet.base.util.*;
+import edu.umass.cs.mallet.base.fst.CRF;
 
 import java.io.*;
 

@@ -11,9 +11,12 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.*;
-import java.util.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
+import edu.umass.cs.mallet.base.types.FeatureConjunction;
+import edu.umass.cs.mallet.base.types.Instance;
+
+import java.io.Serializable;
 /**
  * Add specified conjunctions to each instance.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

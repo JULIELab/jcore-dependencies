@@ -4,7 +4,6 @@
 package is2.parser;
 
 import is2.data.DX;
-
 import is2.data.IFV;
 import is2.data.Long2IntInterface;
 

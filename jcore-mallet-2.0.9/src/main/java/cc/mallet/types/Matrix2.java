@@ -14,10 +14,10 @@
 
 package cc.mallet.types;
 
-import java.util.logging.*;
-import java.util.Arrays;
-
 import cc.mallet.util.MalletLogger;
+
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 @Deprecated // This class is very sparsely used, and I think we can get rid of it. -akm 1/2008
 // TODO Remove this class

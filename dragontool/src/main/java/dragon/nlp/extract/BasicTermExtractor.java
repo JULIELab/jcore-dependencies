@@ -1,9 +1,13 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
-import java.util.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+
+import java.util.ArrayList;
 
 /**
  * <p>Ontological term extraction</p>

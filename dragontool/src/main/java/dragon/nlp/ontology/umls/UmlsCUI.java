@@ -1,6 +1,6 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.nlp.compare.*;
+import dragon.nlp.compare.IndexSortable;
 /**
  * <p>Data structure for UMLS concept ID(CUI) </p>
  * <p></p>

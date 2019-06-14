@@ -3,7 +3,6 @@ package examples;
 import is2.data.SentenceData09;
 import is2.io.CONLLWriter09;
 import is2.lemmatizer.Lemmatizer;
-
 import is2.parser.Parser;
 import is2.tag.Tagger;
 import is2.tools.Tool;

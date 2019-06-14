@@ -25,12 +25,8 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import java.util.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
+import java.util.Iterator;
+import java.util.Set;
 
 public class PairWiseEvaluator
 {

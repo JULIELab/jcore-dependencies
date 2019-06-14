@@ -11,10 +11,16 @@
 
 package cc.mallet.fst.confidence;
 
-import cc.mallet.classify.*;
-import cc.mallet.fst.*;
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import cc.mallet.classify.Classification;
+import cc.mallet.classify.MaxEnt;
+import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.Transducer;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.InfoGain;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 
 /**
  * Estimates the confidence of a {@link Segment} extracted by a {@link

@@ -10,24 +10,15 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import edu.umass.cs.mallet.base.types.Labeling;
 import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.pipe.PipeOutputAccumulator;
-import edu.umass.cs.mallet.base.pipe.SerialPipes;
-import edu.umass.cs.mallet.base.pipe.TokenSequence2FeatureSequence;
-import edu.umass.cs.mallet.base.pipe.FeatureSequence2FeatureVector;
-import edu.umass.cs.mallet.base.pipe.Target2Label;
-import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
-import edu.umass.cs.mallet.base.pipe.iterator.RandomTokenSequenceIterator;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.PropertyList;
-import edu.umass.cs.mallet.base.util.Random;
-import edu.umass.cs.mallet.base.util.DoubleList;
-import java.util.logging.*;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 /**
 	 A machine learning "example" to be used in training, testing or

@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
 
 /**
  * These return one feature per state.  The value of the feature is the

@@ -2,8 +2,8 @@ package dragon.util;
 
 import java.io.File;
 import java.io.FilenameFilter;
-import java.util.Vector;
 import java.util.StringTokenizer;
+import java.util.Vector;
 
 /**
  * <p>The file filter which supports wild characters<p>

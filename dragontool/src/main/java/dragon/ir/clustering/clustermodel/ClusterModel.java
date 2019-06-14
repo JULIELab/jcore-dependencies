@@ -1,8 +1,9 @@
 package dragon.ir.clustering.clustermodel;
 
-import dragon.ir.clustering.*;
+import dragon.ir.clustering.DocCluster;
+import dragon.ir.clustering.DocClusterSet;
 import dragon.ir.clustering.featurefilter.FeatureFilter;
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
 
 /**
  * <p>Interface of cluster model which compute the distance between a document and a document cluster</p>

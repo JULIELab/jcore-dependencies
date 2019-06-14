@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
 
 /**
  * This FeatureType can not be used independently because the label is not set.

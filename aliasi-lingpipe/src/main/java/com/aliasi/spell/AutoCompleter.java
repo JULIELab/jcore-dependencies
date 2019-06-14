@@ -21,18 +21,11 @@ import com.aliasi.util.BoundedPriorityQueue;
 import com.aliasi.util.Scored;
 import com.aliasi.util.ScoredObject;
 
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
 import java.io.Serializable;
-
-import java.util.AbstractSet;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.SortedSet;
+import java.util.*;
 
 /**
  * An {@code AutoCompleter} maintains a dictionary of phrases with

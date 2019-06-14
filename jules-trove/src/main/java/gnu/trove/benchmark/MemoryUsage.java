@@ -18,9 +18,12 @@
 
 package gnu.trove.benchmark;
 
-import java.util.*;
-
 import de.julielab.gnu.trove.*;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
 
 public class MemoryUsage {
     public static long sizeOf(Creator c) {

@@ -1,7 +1,9 @@
 package dragon.ir.index;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
+import dragon.matrix.IntSparseMatrix;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.SimplePairList;
+
 import java.util.ArrayList;
 
 /**

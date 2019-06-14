@@ -3,22 +3,15 @@ package com.aliasi.test.unit.cluster;
 import com.aliasi.cluster.Dendrogram;
 import com.aliasi.cluster.LeafDendrogram;
 import com.aliasi.cluster.LinkDendrogram;
-
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertNotNull;
-
-import static com.aliasi.test.unit.Asserts.assertNotEquals;
-
-import static com.aliasi.util.CollectionUtils.asSet;
 import com.aliasi.util.SmallSet;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.aliasi.test.unit.Asserts.assertNotEquals;
+import static com.aliasi.util.CollectionUtils.asSet;
+import static junit.framework.Assert.*;
 
 public class DendrogramTest  {
 

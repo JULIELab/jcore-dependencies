@@ -2,12 +2,12 @@
 /* First created by JCasGen Wed Aug 08 13:36:49 CEST 2018 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 
 /** This encodes a complex noun phrase (CNP) which is usually an extension of a ChunkNP (see, e.g., jcore-cnp-extractor-ae). A CNP is currently defined to be the top-modes noun phrase of a constituency parse tree (excluding some special phrases such as appositions and SBARs).
  * Updated by JCasGen Wed Aug 08 13:36:49 CEST 2018

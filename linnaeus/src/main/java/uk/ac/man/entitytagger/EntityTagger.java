@@ -1,19 +1,9 @@
 package uk.ac.man.entitytagger;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.InputStream;
-
-import java.sql.Connection;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
+import martin.common.ArgParser;
+import martin.common.Loggers;
+import martin.common.SQL;
+import martin.common.compthreads.IteratorBasedMaster;
 import uk.ac.man.documentparser.DocumentParser;
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.DocumentIterator;
@@ -21,23 +11,23 @@ import uk.ac.man.entitytagger.doc.TaggedDocument.Format;
 import uk.ac.man.entitytagger.entities.misc.CellLinePostprocessor;
 import uk.ac.man.entitytagger.matching.MatchOperations;
 import uk.ac.man.entitytagger.matching.Matcher;
-import uk.ac.man.entitytagger.matching.Postprocessor;
 import uk.ac.man.entitytagger.matching.Matcher.Disambiguation;
-import uk.ac.man.entitytagger.matching.matchers.ACIDMatcher;
-import uk.ac.man.entitytagger.matching.matchers.DuplicationMatcher;
-import uk.ac.man.entitytagger.matching.matchers.MatchPostProcessor;
-import uk.ac.man.entitytagger.matching.matchers.UnionMatcher;
-import uk.ac.man.entitytagger.matching.matchers.PrecomputedMatcher;
-import uk.ac.man.entitytagger.matching.matchers.RegexpMatcher;
-import uk.ac.man.entitytagger.matching.matchers.SentenceMatcher;
-import uk.ac.man.entitytagger.matching.matchers.TaxonGrabMatcher;
-import uk.ac.man.entitytagger.matching.matchers.VariantDictionaryMatcher;
-import uk.ac.man.entitytagger.networking.SimpleServer;
+import uk.ac.man.entitytagger.matching.Postprocessor;
+import uk.ac.man.entitytagger.matching.matchers.*;
 import uk.ac.man.entitytagger.networking.SimpleClientMatcher;
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.SQL;
-import martin.common.compthreads.IteratorBasedMaster;
+import uk.ac.man.entitytagger.networking.SimpleServer;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Main species recognition class

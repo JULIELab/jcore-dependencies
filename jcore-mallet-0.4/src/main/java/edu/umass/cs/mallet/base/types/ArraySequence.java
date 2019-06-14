@@ -14,7 +14,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Sequence;
 import java.util.ArrayList;
 
 public class ArraySequence implements Sequence

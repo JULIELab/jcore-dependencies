@@ -18,15 +18,15 @@
  */
 package de.julielab.xml;
 
+import com.ximpleware.extended.IByteBuffer;
+import com.ximpleware.extended.ParseExceptionHuge;
+
 import java.io.File;
 import java.io.RandomAccessFile;
 import java.nio.MappedByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.channels.Pipe;
 import java.nio.channels.Pipe.SinkChannel;
-
-import com.ximpleware.extended.IByteBuffer;
-import com.ximpleware.extended.ParseExceptionHuge;
 
 /**
  * Copied from

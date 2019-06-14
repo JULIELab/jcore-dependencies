@@ -1,6 +1,6 @@
 package dragon.config;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IndexReader;
 import dragon.ir.kngbase.DocRepresentation;
 import dragon.matrix.DoubleSparseMatrix;
 

@@ -1,7 +1,9 @@
 package salvo.jesus.util;
 
-import java.util.*;
-import java.io.*;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
  * The Heap class implements a heap data structure, also called a priority queue.

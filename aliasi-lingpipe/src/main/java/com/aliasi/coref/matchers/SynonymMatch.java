@@ -19,7 +19,6 @@ package com.aliasi.coref.matchers;
 import com.aliasi.coref.BooleanMatcherAdapter;
 import com.aliasi.coref.Mention;
 import com.aliasi.coref.MentionChain;
-
 import com.aliasi.util.ObjectToSet;
 
 import java.util.Set;

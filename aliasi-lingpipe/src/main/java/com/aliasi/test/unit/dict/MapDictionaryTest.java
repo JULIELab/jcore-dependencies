@@ -2,16 +2,12 @@ package com.aliasi.test.unit.dict;
 
 import com.aliasi.dict.DictionaryEntry;
 import com.aliasi.dict.MapDictionary;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
-import com.aliasi.util.AbstractExternalizable;
-
 import java.util.HashSet;
-import java.util.Arrays;
+
+import static junit.framework.Assert.assertEquals;
 
 public class MapDictionaryTest  {
 

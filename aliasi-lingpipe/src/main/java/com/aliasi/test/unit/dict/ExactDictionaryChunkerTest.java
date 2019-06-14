@@ -1,19 +1,17 @@
 package com.aliasi.test.unit.dict;
 
-import com.aliasi.dict.DictionaryEntry;
-import com.aliasi.dict.ExactDictionaryChunker;
-import com.aliasi.dict.MapDictionary;
-import com.aliasi.dict.TrieDictionary;
-
-import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-import com.aliasi.tokenizer.LowerCaseTokenizerFactory;
-import com.aliasi.tokenizer.RegExTokenizerFactory;
-import com.aliasi.tokenizer.TokenizerFactory;
 import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.ChunkFactory;
 import com.aliasi.chunk.Chunking;
 import com.aliasi.chunk.ChunkingImpl;
-
+import com.aliasi.dict.DictionaryEntry;
+import com.aliasi.dict.ExactDictionaryChunker;
+import com.aliasi.dict.MapDictionary;
+import com.aliasi.dict.TrieDictionary;
+import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import com.aliasi.tokenizer.LowerCaseTokenizerFactory;
+import com.aliasi.tokenizer.RegExTokenizerFactory;
+import com.aliasi.tokenizer.TokenizerFactory;
 import org.junit.Test;
 
 import java.util.Set;

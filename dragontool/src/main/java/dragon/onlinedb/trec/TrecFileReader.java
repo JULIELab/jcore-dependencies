@@ -1,8 +1,12 @@
 package dragon.onlinedb.trec;
 
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.ArticleParser;
+import dragon.onlinedb.CollectionReader;
+import dragon.util.FileUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
 /**
  * <p>TREC data file reader</p>
  * <p> </p>

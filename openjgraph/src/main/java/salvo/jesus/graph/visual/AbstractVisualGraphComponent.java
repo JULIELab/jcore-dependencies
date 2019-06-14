@@ -1,13 +1,22 @@
 package salvo.jesus.graph.visual;
 
+import salvo.jesus.graph.LabeledGraphComponent;
+import salvo.jesus.graph.java.awt.geom.SerializablePathIterator;
+import salvo.jesus.graph.visual.drawing.Painter;
+
 import java.awt.*;
-import java.awt.event.*;
-import java.util.*;
-import java.awt.geom.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.drawing.*;
-import salvo.jesus.graph.java.awt.geom.*;
-import java.io.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Rectangle2D;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 
 /**
  * This abstract class is meant to encapsulate a <tt>GraphComponent</tt>, either

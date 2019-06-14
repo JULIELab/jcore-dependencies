@@ -24,15 +24,19 @@
  */
 package edu.umass.cs.mallet.projects.seg_plus_coref.graphs;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import java.util.*;
-import java.io.*;
-import java.text.*;
-import java.lang.reflect.Array;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.Mention;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.Cluster;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.ClusterEvaluate;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.Clustering;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.MappedGraph;
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.graph.visual.layout.*;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class MinimizeDisagreementsClustering
 {

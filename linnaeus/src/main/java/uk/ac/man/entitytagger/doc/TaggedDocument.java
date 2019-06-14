@@ -1,15 +1,14 @@
 package uk.ac.man.entitytagger.doc;
 
+import martin.common.Function;
+import martin.common.Pair;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.entitytagger.Mention;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
-
-import martin.common.Function;
-import martin.common.Pair;
-
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.Mention;
 
 /**
  * Class representing a tagged document. Contains the original document, and the tags found in that document by a matcher.

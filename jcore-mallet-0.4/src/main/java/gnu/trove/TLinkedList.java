@@ -21,7 +21,6 @@ package gnu.trove;
 
 import java.io.Serializable;
 import java.util.AbstractSequentialList;
-import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 

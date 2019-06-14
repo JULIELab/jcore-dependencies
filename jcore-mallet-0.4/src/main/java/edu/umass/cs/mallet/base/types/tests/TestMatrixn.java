@@ -7,13 +7,12 @@
 package edu.umass.cs.mallet.base.types.tests;
 
 import edu.umass.cs.mallet.base.types.Matrixn;
-import edu.umass.cs.mallet.base.types.MatrixOps;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.Arrays;
 import java.io.IOException;
+import java.util.Arrays;
 
 /**
  * Created: Aug 30, 2004

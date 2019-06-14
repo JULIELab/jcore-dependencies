@@ -11,7 +11,7 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.InstanceList;
 /**
 	 Bagging Trainer.
 

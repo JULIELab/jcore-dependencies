@@ -18,9 +18,8 @@
 
 package abner;
 
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import java.util.regex.*;
 
 /**
    <p>Input2TokenSequence is a text processing Pipe for the MALLET

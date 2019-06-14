@@ -25,10 +25,10 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import org.jdom.*;
-import java.util.*;
+import org.jdom.Element;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 
 public class MalletPhrase extends MalletDocumentElement
 {

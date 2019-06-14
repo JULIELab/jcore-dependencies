@@ -1,24 +1,20 @@
 package cc.mallet.grmm.test;
 
-import static org.junit.Assert.*;
+import cc.mallet.extract.StringTokenization;
+import cc.mallet.grmm.learning.GenericAcrfData2TokenSequence;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.iterator.LineGroupIterator;
+import cc.mallet.types.*;
+import cc.mallet.types.tests.TestSerializable;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.StringReader;
 import java.util.regex.Pattern;
 
-import org.junit.Ignore;
-import org.junit.Test;
-
-import cc.mallet.extract.StringTokenization;
-import cc.mallet.grmm.learning.GenericAcrfData2TokenSequence;
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.iterator.LineGroupIterator;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelsSequence;
-import cc.mallet.types.TokenSequence;
-import cc.mallet.types.tests.TestSerializable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created: Sep 15, 2005

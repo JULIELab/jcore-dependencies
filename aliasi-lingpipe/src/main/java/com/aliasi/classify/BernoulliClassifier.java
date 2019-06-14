@@ -17,28 +17,14 @@
 package com.aliasi.classify;
 
 import com.aliasi.corpus.ObjectHandler;
-
-
 import com.aliasi.stats.MultivariateEstimator;
+import com.aliasi.util.*;
 
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Counter;
-import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToCounterMap;
-import com.aliasi.util.ObjectToDoubleMap;
-import com.aliasi.util.ScoredObject;
-import com.aliasi.util.Strings;
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
 import java.io.Serializable;
+import java.util.*;
 
 /**
  * A <code>BernoulliClassifier</code> provides a feature-based

@@ -1,9 +1,18 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.index.sentence.*;
-import dragon.ir.index.sequence.*;
-import dragon.nlp.extract.*;
+import dragon.ir.index.BasicIndexer;
+import dragon.ir.index.DualIndexer;
+import dragon.ir.index.Indexer;
+import dragon.ir.index.OnlineIndexer;
+import dragon.ir.index.sentence.BasicSentenceIndexer;
+import dragon.ir.index.sentence.DualSentenceIndexer;
+import dragon.ir.index.sentence.OnlineSentenceIndexer;
+import dragon.ir.index.sequence.BasicSequenceIndexer;
+import dragon.ir.index.sequence.OnlineSequenceIndexer;
+import dragon.nlp.extract.ConceptExtractor;
+import dragon.nlp.extract.DualConceptExtractor;
+import dragon.nlp.extract.TokenExtractor;
+import dragon.nlp.extract.TripleExtractor;
 
 /**
  * <p>Indexer configuration </p>

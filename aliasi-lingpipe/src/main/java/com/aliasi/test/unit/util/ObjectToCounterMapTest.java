@@ -2,17 +2,12 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.ObjectToCounterMap;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNotNull;
-
 
 import java.util.Arrays;
 import java.util.List;
+
+import static junit.framework.Assert.*;
 
 public class ObjectToCounterMapTest  {
 

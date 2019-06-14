@@ -1,31 +1,22 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
-import java.io.*;
-import java.util.*;
-import java.util.logging.*;
-import java.util.regex.*;
-import java.lang.reflect.Array;
-import java.util.logging.*;
-
-import com.wcohen.secondstring.*;
+import com.wcohen.secondstring.StringDistance;
+import com.wcohen.secondstring.TFIDF;
 import com.wcohen.secondstring.tokens.NGramTokenizer;
 import com.wcohen.secondstring.tokens.SimpleTokenizer;
-
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.ExactFieldMatchPipe;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.PageMatchPipe;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.YearsWithinFivePipe;
-import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.FieldStringDistancePipe;
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.pipe.iterator.LineGroupIterator;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.ClusterEvaluate;
+import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.PairEvaluate;
 import edu.umass.cs.mallet.projects.seg_plus_coref.ie.IEInterface;
-import edu.umass.cs.mallet.projects.seg_plus_coref.ie.IEEvaluator;
-import edu.umass.cs.mallet.projects.seg_plus_coref.ie.CRFIO;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.Reader;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 public class CitationUtils {

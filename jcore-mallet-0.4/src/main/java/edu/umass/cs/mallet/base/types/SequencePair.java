@@ -13,9 +13,8 @@
  */
 
 package edu.umass.cs.mallet.base.types;
-import edu.umass.cs.mallet.base.fst.Segment;
 
-public class SequencePair 
+public class SequencePair
 {
 	protected Sequence input;
 	protected Sequence output;

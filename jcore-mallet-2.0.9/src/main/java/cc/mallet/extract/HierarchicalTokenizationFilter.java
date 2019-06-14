@@ -7,12 +7,12 @@
 package cc.mallet.extract;
 
 
-import java.util.regex.Pattern;
-import java.util.*;
-
 import cc.mallet.types.Label;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.Sequence;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Tokenization filter that will create nested spans based on a hierarchical labeling of the data.

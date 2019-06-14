@@ -1,6 +1,8 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Word;
+
 import java.util.ArrayList;
 
 /**

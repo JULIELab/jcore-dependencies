@@ -14,14 +14,15 @@ information, see the file `LICENSE' included with this distribution. */
 
 package cc.mallet.pipe.iterator;
 
+import cc.mallet.types.Instance;
+import cc.mallet.util.Strings;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.*;
-import java.io.*;
-
-import cc.mallet.types.Instance;
-import cc.mallet.util.Strings;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * An iterator that generates instances for a pipe from a list of filenames.

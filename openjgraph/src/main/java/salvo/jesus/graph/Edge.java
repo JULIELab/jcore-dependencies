@@ -1,7 +1,5 @@
 package salvo.jesus.graph;
 
-import java.io.*;
-
 /**
  * An interface for edges in a Graph.
  *

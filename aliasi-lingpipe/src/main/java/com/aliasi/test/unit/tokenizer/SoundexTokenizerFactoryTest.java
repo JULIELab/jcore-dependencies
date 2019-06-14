@@ -3,21 +3,11 @@ package com.aliasi.test.unit.tokenizer;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.SoundexTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
-
 import org.junit.Test;
 
-import com.aliasi.util.AbstractExternalizable;
-
 import static com.aliasi.test.unit.Asserts.assertNotSerializable;
-
 import static com.aliasi.test.unit.tokenizer.TokenizerTest.assertFactory;
-
 import static junit.framework.Assert.assertEquals;
-
-import static org.junit.Assert.assertArrayEquals;
 
 public class SoundexTokenizerFactoryTest {
 

@@ -15,7 +15,9 @@ package edu.umass.cs.mallet.base.util;
 */
 
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.SparseVector;
 import gnu.trove.TIntHashSet;
 
 public class VectorStats 

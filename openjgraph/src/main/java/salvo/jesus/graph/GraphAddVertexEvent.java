@@ -1,6 +1,6 @@
 package salvo.jesus.graph;
 
-import java.util.*;
+import java.util.EventObject;
 
 /**
  * This event is used to notify interested parties that a Vertex object

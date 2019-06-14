@@ -20,8 +20,8 @@ package gnu.trove.decorator;
 
 import gnu.trove.TLongHashSet;
 import gnu.trove.TLongIterator;
+
 import java.util.AbstractSet;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Set;
 

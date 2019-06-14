@@ -1,9 +1,13 @@
 package dragon.config;
 
-import dragon.nlp.*;
+import dragon.nlp.DocumentParser;
+import dragon.nlp.Phrase;
+import dragon.nlp.Term;
 import dragon.nlp.extract.*;
-import dragon.nlp.tool.*;
-import dragon.nlp.ontology.*;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.ontology.Vocabulary;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
 
 
 /**

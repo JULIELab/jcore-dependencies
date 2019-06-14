@@ -20,11 +20,9 @@ import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
 
 import java.io.IOException;
-import java.io.NotSerializableException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
 import java.util.HashMap;
 import java.util.Map;
 

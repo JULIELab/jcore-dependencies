@@ -1,7 +1,11 @@
 package dragon.matrix;
 
-import dragon.util.*;
-import java.io.*;
+import dragon.util.FastBinaryReader;
+import dragon.util.FastBinaryWriter;
+import dragon.util.FileUtil;
+
+import java.io.BufferedReader;
+import java.io.PrintWriter;
 
 /**
  * <p>Double flat dense matrix which provides options of storing data to disk in binary manner or text manner </p>

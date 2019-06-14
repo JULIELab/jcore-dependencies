@@ -12,14 +12,14 @@
 package cc.mallet.pipe;
 
 
-import java.util.HashSet;
-import java.util.ArrayList;
-import java.io.*;
-
 import cc.mallet.types.FeatureSequenceWithBigrams;
 import cc.mallet.types.Instance;
 import cc.mallet.types.Token;
 import cc.mallet.types.TokenSequence;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashSet;
 /**
  * Remove tokens from the token sequence in the data field whose text is in the stopword list.
  @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

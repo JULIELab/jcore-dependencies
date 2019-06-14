@@ -1,8 +1,10 @@
 package dragon.onlinedb.searchengine;
 
-import dragon.onlinedb.*;
-import dragon.util.HttpUtil;
+import dragon.onlinedb.AbstractQuery;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
 import dragon.util.HttpContent;
+import dragon.util.HttpUtil;
 
 /**
  * <p>Abstract Search Engine Query</p>

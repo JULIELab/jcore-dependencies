@@ -1,7 +1,11 @@
 package edu.umass.cs.mallet.base.util.tests;
 
-import junit.framework.*;
-import edu.umass.cs.mallet.base.util.search.*;
+import edu.umass.cs.mallet.base.util.search.MinHeap;
+import edu.umass.cs.mallet.base.util.search.PriorityQueue;
+import edu.umass.cs.mallet.base.util.search.QueueElement;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created by IntelliJ IDEA.

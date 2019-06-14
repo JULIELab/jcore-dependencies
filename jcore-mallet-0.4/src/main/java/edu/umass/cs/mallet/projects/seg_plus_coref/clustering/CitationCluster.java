@@ -1,10 +1,10 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.util.*;
+import edu.umass.cs.mallet.base.types.Instance;
 
-import java.util.*;
-import java.io.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 public class CitationCluster extends LinkedList //LinkedHashSet
 {

@@ -1,6 +1,7 @@
 package dragon.ir.clustering.featurefilter;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 import dragon.util.MathUtil;
 
 /**

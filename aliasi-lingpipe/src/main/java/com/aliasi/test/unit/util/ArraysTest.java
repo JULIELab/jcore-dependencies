@@ -17,17 +17,13 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.Arrays;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertArrayEquals;
-
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class ArraysTest  {
 

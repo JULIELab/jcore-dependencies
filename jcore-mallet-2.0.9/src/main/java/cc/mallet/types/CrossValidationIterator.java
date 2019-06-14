@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-import cc.mallet.types.InstanceList;
-
 /**
  * An iterator which splits an {@link InstanceList} into n-folds and iterates
  * over the folds for use in n-fold cross-validation. For each iteration,

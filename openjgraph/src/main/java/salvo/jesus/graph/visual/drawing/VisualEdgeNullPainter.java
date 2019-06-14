@@ -1,8 +1,8 @@
 package salvo.jesus.graph.visual.drawing;
 
+import salvo.jesus.graph.visual.VisualGraphComponent;
+
 import java.awt.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
 
 /**
  * A <tt>VisualEdgePainter</tt> that does nothing. It therefore does not paint

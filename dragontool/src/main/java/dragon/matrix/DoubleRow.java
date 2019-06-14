@@ -1,6 +1,8 @@
 package dragon.matrix;
 
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
+import java.io.Serializable;
 /**
  * <p>Row of matrix for data type of double </p>
  * <p> </p>

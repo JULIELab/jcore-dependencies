@@ -1,8 +1,8 @@
 package cc.mallet.fst;
 
-import java.io.Serializable;
-
 import cc.mallet.types.Sequence;
+
+import java.io.Serializable;
 
 public abstract class MaxLatticeFactory implements Serializable {
 	

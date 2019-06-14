@@ -1,9 +1,8 @@
 package salvo.jesus.graph.javax.swing;
 
 import javax.swing.*;
+import javax.swing.colorchooser.ColorSelectionModel;
 import java.awt.*;
-import java.awt.event.*;
-import javax.swing.colorchooser.*;
 
 /**
  * A subclass of JColorChooser that has no preview panel.

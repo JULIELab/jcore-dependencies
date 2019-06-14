@@ -8,13 +8,13 @@
 package cc.mallet.grmm.types;
 
 
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.util.PropertyList;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 
 /**

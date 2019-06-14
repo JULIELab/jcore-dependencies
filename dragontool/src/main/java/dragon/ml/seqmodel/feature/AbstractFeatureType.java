@@ -1,6 +1,7 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.data.Dataset;
 
 /**
  * <p>Abstract class for feature type </p>

@@ -14,7 +14,8 @@
 
 package cc.mallet.util;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileFilter;
 
 public class DirectoryFilter implements FileFilter
 {

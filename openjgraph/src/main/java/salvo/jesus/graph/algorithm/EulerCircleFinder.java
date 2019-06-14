@@ -1,9 +1,8 @@
 package salvo.jesus.graph.algorithm;
 
 import salvo.jesus.graph.*;
-import javax.swing.*;
+
 import java.util.*;
-import salvo.jesus.graph.visual.*;
 
 
 /**

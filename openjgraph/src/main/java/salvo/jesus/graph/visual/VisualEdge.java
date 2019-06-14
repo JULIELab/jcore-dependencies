@@ -1,13 +1,14 @@
 package salvo.jesus.graph.visual;
 
-import java.awt.*;
-import java.awt.geom.*;
-import java.awt.geom.Point2D.*;
+import salvo.jesus.graph.Edge;
 import salvo.jesus.graph.java.awt.geom.Point2DDouble;
-import salvo.jesus.geom.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.layout.*;
-import salvo.jesus.graph.visual.drawing.*;
+import salvo.jesus.graph.visual.layout.GraphLayoutManager;
+
+import java.awt.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.PathIterator;
+import java.awt.geom.Point2D;
 
 /**
  * The VisualEdge class encapsulates an <tt>Edge</tt> with attributes

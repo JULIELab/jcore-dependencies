@@ -11,12 +11,12 @@ information, see the file `LICENSE' included with this distribution. */
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.condclust.pipe.iterator;
-import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
+
+import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.projects.seg_plus_coref.condclust.types.NodeClusterPair;
+
 import java.util.*;
-import java.io.*;
 
 /** Generates instances of NodeClusterPairs by one of two ways: (1)
  * randomly clustering the data following the Chinese-restaurant style

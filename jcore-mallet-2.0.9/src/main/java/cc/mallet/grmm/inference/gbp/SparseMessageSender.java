@@ -7,9 +7,9 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.Iterator;
-
 import cc.mallet.grmm.types.*;
+
+import java.util.Iterator;
 
 /**
  * Created: Jun 1, 2005

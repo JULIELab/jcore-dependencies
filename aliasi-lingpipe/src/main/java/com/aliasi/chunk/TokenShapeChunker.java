@@ -18,7 +18,6 @@ package com.aliasi.chunk;
 
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.Strings;
 
 import java.util.ArrayList;

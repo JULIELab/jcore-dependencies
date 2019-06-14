@@ -12,15 +12,7 @@ information, see the file `LICENSE' included with this distribution. */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
-import java.lang.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.util.PropertyList;
 
 
 /*	This is just a general structure for now

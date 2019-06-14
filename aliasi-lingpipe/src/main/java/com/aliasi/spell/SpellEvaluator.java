@@ -17,17 +17,13 @@
 package com.aliasi.spell;
 
 import com.aliasi.classify.ConfusionMatrix;
-
 import com.aliasi.lm.LanguageModel;
-
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Strings;
 
 import java.text.DecimalFormat;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;

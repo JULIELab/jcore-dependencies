@@ -11,15 +11,12 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.FeatureSequence;
-import edu.umass.cs.mallet.base.types.FeatureVector;
 import edu.umass.cs.mallet.base.util.Random;
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A probability distribution over a set of features represented as a {@link edu.umass.cs.mallet.base.types.FeatureVector}.

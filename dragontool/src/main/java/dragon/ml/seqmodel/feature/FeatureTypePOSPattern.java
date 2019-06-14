@@ -1,6 +1,7 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.data.POSToken;
 /**
  * <p>This feature type will create features about part of speech patterns for segments
  * This feature type should be wrapped by FeatureTypeStateLoop. </p>

@@ -2,15 +2,13 @@
 package com.aliasi.test.unit.chunk;
 
 
-
 import com.aliasi.chunk.*;
-import com.aliasi.tokenizer.*;
-
+import com.aliasi.tokenizer.IndoEuropeanTokenCategorizer;
+import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
 
 import static com.aliasi.test.unit.chunk.CharLmHmmChunkerTest.assertChunking;
-
-import org.junit.Test;
 
 
 

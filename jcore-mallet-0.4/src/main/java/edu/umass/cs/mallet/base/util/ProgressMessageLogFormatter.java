@@ -1,6 +1,8 @@
 package edu.umass.cs.mallet.base.util;
-import java.util.logging.*;
+
 import java.util.Arrays;
+import java.util.logging.LogRecord;
+import java.util.logging.SimpleFormatter;
 /**
  * Format ProgressMessages destined for screen.
  * Progress messages are repetitive messages, of which only

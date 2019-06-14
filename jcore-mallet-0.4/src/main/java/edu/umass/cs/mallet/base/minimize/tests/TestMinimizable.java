@@ -14,14 +14,14 @@
 
 package edu.umass.cs.mallet.base.minimize.tests;
 
-import edu.umass.cs.mallet.base.minimize.GoldenLineMinimizer;
 import edu.umass.cs.mallet.base.minimize.Minimizable;
-import edu.umass.cs.mallet.base.minimize.LineMinimizer;
 import edu.umass.cs.mallet.base.types.Matrix;
-import edu.umass.cs.mallet.base.types.Vector;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import junit.framework.*;
-import java.util.logging.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.logging.Logger;
 
 public class TestMinimizable extends TestCase
 {

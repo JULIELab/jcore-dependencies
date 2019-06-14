@@ -14,13 +14,16 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.regex.*;
-import java.io.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class FeatureConjunction implements Serializable
 {

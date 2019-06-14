@@ -1,6 +1,7 @@
 package dragon.ir.search.smooth;
 
-import dragon.ir.index.*;
+import dragon.ir.index.IRCollection;
+import dragon.ir.index.IRDoc;
 import dragon.ir.query.SimpleTermPredicate;
 
 /**

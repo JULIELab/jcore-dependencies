@@ -11,12 +11,11 @@
 package cc.mallet.classify;
 
 
-import java.util.logging.*;
-
-import cc.mallet.classify.Classifier;
 import cc.mallet.types.FeatureSelection;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 /**
 	 A decision tree learner, roughly ID3, but only to a fixed given depth in all branches.
 

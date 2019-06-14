@@ -7,19 +7,14 @@
 
 package cc.mallet.classify;
 
-import java.util.logging.*;
-import java.io.*;
-
-import cc.mallet.optimize.ConjugateGradient;
-import cc.mallet.optimize.InvalidOptimizableException;
-import cc.mallet.optimize.LimitedMemoryBFGS;
-import cc.mallet.optimize.Optimizable;
-import cc.mallet.optimize.OptimizationException;
-import cc.mallet.optimize.Optimizer;
+import cc.mallet.optimize.*;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.MalletProgressMessageLogger;
+
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 //Does not currently handle instances that are labeled with distributions
 //instead of a single label.

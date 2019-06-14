@@ -1,9 +1,9 @@
 package uk.ac.man.documentparser.input.util;
 
-import java.util.Iterator;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.DocumentIterator;
+
+import java.util.Iterator;
 
 public class CleanUnicode implements DocumentIterator {
 

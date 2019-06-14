@@ -1,8 +1,10 @@
 package com.wcohen.secondstring;
 
-import junit.framework.*;
-import java.io.*;
-import java.util.*;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestPackage extends TestSuite 
 {

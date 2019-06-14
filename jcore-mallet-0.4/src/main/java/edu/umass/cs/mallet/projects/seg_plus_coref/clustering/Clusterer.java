@@ -24,10 +24,9 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.clustering.*;
-import java.util.*;
+
+import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.MinimizeDisagreementsClustering;
+import salvo.jesus.graph.WeightedGraph;
 
 public class Clusterer 
 {

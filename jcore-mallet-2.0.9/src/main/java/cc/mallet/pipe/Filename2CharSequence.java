@@ -11,9 +11,9 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
 import cc.mallet.types.Instance;
+
+import java.io.*;
 /**
  * Given a filename contained in a string, read in contents of file into a CharSequence.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

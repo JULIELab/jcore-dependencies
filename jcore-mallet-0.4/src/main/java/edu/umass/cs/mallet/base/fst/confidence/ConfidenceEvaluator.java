@@ -7,11 +7,13 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.types.*;
-import java.util.Vector;
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.Sequence;
+
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Vector;
 
 public class ConfidenceEvaluator
 {

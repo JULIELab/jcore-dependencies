@@ -14,8 +14,6 @@
 
 package edu.umass.cs.mallet.base.maximize;
 
-import edu.umass.cs.mallet.base.types.*;
-
 public interface Maximizable
 {
 	public int getNumParameters ();

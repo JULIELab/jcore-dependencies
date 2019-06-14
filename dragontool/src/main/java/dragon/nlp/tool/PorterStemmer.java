@@ -1,6 +1,8 @@
 package dragon.nlp.tool;
 
-import java.io.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 /**
  * <p>Porter stemmer</p>
  * <p> </p>

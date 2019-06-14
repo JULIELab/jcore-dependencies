@@ -1,13 +1,12 @@
 package uk.ac.man.entitytagger.matching.matchers;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.entitytagger.Mention;
 import uk.ac.man.entitytagger.doc.TaggedDocument;
 import uk.ac.man.entitytagger.matching.Matcher;
-import uk.ac.man.entitytagger.matching.Postprocessor;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UnionMatcher extends Matcher{
 	private List<Matcher> matchers;

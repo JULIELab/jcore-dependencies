@@ -21,7 +21,6 @@ import com.aliasi.coref.Killer;
 import com.aliasi.coref.Mention;
 import com.aliasi.coref.MentionChain;
 
-
 import java.util.Collections;
 import java.util.Set;
 

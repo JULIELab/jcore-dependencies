@@ -12,11 +12,13 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import java.util.ArrayList;
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.pipe.PipeOutputAccumulator;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
 /**
  * A PipeOutputAccumulator implemented as an ArrayList.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

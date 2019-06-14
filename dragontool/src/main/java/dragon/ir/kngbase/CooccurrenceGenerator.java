@@ -1,9 +1,16 @@
 package dragon.ir.kngbase;
 
-import dragon.matrix.*;
-import dragon.nlp.*;
-import java.util.*;
-import java.io.*;
+import dragon.matrix.IntSparseMatrix;
+import dragon.matrix.IntSuperSparseMatrix;
+import dragon.matrix.SparseMatrixFactory;
+import dragon.nlp.Counter;
+import dragon.nlp.SimplePair;
+
+import java.io.File;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Set;
 /**
  * <p>Generate Cooccurrence Matrix</p>
  * <p></p>

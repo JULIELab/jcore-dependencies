@@ -19,12 +19,10 @@
 package cc.mallet.types;
 
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
-import cc.mallet.types.Label;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /** Usually some distribution over possible labels for an instance. */
 

@@ -6,20 +6,21 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract.test;
 
-import junit.framework.*;
-
-import java.io.IOException;
-import java.io.File;
-
+import edu.umass.cs.mallet.base.extract.CRFExtractor;
+import edu.umass.cs.mallet.base.extract.DocumentViewer;
+import edu.umass.cs.mallet.base.extract.Extraction;
+import edu.umass.cs.mallet.base.fst.CRF4;
+import edu.umass.cs.mallet.base.fst.tests.TestCRF;
+import edu.umass.cs.mallet.base.fst.tests.TestMEMM;
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
-import edu.umass.cs.mallet.base.fst.tests.TestMEMM;
-import edu.umass.cs.mallet.base.fst.tests.TestCRF;
-import edu.umass.cs.mallet.base.fst.CRF4;
 import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.extract.CRFExtractor;
-import edu.umass.cs.mallet.base.extract.Extraction;
-import edu.umass.cs.mallet.base.extract.DocumentViewer;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created: Mar 30, 2005

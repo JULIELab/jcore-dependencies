@@ -14,11 +14,9 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Label;
-import java.io.*;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 public class RegexFileFilter implements FileFilter
 {

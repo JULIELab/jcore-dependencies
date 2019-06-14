@@ -11,11 +11,13 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.fst.Transducer;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
 import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Corrects a subset of the {@link Segment}s produced by a {@link

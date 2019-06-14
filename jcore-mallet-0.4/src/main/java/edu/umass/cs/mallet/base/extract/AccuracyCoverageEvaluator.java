@@ -6,15 +6,10 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.extract;
 
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.LabelAlphabet;
-import edu.umass.cs.mallet.base.types.MatrixOps;
 import edu.umass.cs.mallet.base.fst.confidence.ConfidenceEvaluator;
 
-import java.io.PrintStream;
 import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.text.DecimalFormat;
+import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.Vector;
 

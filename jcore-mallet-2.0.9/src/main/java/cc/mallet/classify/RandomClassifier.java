@@ -6,15 +6,13 @@
 
 package cc.mallet.classify;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
-import cc.mallet.classify.Classification;
-import cc.mallet.classify.Classifier;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
 import cc.mallet.types.Label;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * A Classifier that will return a randomly selected class label.

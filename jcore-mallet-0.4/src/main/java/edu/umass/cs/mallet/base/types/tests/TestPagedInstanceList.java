@@ -6,16 +6,21 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.types.tests;
 
-import junit.framework.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.PagedInstanceList;
-import edu.umass.cs.mallet.base.types.Dirichlet;
-import edu.umass.cs.mallet.base.util.Random;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.ClassifierTrainer;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
+import edu.umass.cs.mallet.base.classify.Trial;
 import edu.umass.cs.mallet.base.pipe.*;
 import edu.umass.cs.mallet.base.pipe.iterator.PipeInputIterator;
 import edu.umass.cs.mallet.base.pipe.iterator.RandomTokenSequenceIterator;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.Dirichlet;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.PagedInstanceList;
+import edu.umass.cs.mallet.base.util.Random;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 import java.io.File;
 

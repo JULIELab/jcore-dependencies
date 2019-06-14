@@ -1,14 +1,14 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.util.List;
-import java.util.Iterator;
-import java.io.*;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.util.MalletLogger;
+
+import java.io.*;
+import java.util.Iterator;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Abstract base class for umplementations of belief propagation for general factor graphs.

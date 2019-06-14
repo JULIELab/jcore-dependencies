@@ -1,17 +1,7 @@
 package is2.parser;
 
 
-import is2.data.Cluster;
-import is2.data.DataF;
-import is2.data.DataFES;
-import is2.data.F2SF;
-import is2.data.FV;
-import is2.data.Instances;
-import is2.data.Long2Int;
-import is2.data.Long2IntInterface;
-import is2.data.Parse;
-import is2.data.PipeGen;
-import is2.data.SentenceData09;
+import is2.data.*;
 import is2.io.CONLLReader09;
 import is2.io.CONLLWriter09;
 import is2.tools.Retrainable;
@@ -20,14 +10,7 @@ import is2.util.DB;
 import is2.util.OptionsSuper;
 import is2.util.ParserEvaluator;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map.Entry;

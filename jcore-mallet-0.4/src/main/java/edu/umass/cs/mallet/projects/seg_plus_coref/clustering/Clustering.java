@@ -25,11 +25,12 @@ Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import salvo.jesus.graph.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import edu.umass.cs.mallet.projects.seg_plus_coref.graphs.*;
-import edu.umass.cs.mallet.base.types.Instance;
-import java.util.*;
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.Mention;
+
+import java.util.Iterator;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Clustering extends LinkedHashSet
 {

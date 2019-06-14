@@ -39,8 +39,7 @@
 package edu.umass.cs.mallet.base.classify.evaluate;
 
 import java.awt.*;
-import java.util.*;
-import edu.umass.cs.mallet.base.classify.evaluate.*;
+import java.util.Vector;
 /**
  * Framework for standard graph. Can hold up to N data series
  */

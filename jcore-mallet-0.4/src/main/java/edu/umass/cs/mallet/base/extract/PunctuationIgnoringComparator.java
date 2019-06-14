@@ -7,7 +7,6 @@
 package edu.umass.cs.mallet.base.extract;
 
 import java.util.regex.Pattern;
-import java.util.regex.Matcher;
 
 /**
  * Created: Nov 23, 2004

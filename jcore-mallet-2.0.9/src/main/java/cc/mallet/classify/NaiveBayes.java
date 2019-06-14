@@ -8,16 +8,15 @@
 package cc.mallet.classify;
 
 
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.io.IOException;
-import java.util.Arrays;
-
-import cc.mallet.classify.Classifier;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
 import cc.mallet.types.Multinomial.Logged;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * A classifier that classifies instances according to the NaiveBayes method.

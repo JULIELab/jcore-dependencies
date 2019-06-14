@@ -14,18 +14,19 @@
 
 package edu.umass.cs.mallet.base.fst.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import edu.umass.cs.mallet.base.minimize.*;
-import edu.umass.cs.mallet.base.minimize.tests.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.pipe.tsf.*;
+import edu.umass.cs.mallet.base.fst.CRF3;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.minimize.Minimizable;
 import edu.umass.cs.mallet.base.minimize.tests.TestMinimizable;
-import junit.framework.*;
+import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
+import edu.umass.cs.mallet.base.pipe.tsf.OffsetConjunctions;
+import edu.umass.cs.mallet.base.pipe.tsf.TokenText;
+import edu.umass.cs.mallet.base.types.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-import java.net.URI;
-import java.util.Iterator;
 import java.io.*;
 
 public class TestCRF3 extends TestCase {

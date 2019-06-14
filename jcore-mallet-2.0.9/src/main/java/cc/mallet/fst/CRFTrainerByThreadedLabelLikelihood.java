@@ -1,12 +1,12 @@
 package cc.mallet.fst;
 
-import java.util.Random;
-import java.util.logging.Logger;
-
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  * @author Gregory Druck gdruck@cs.umass.edu

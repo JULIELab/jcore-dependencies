@@ -1,6 +1,8 @@
 package dragon.config;
 
-import dragon.nlp.tool.*;
+import dragon.nlp.tool.HeppleTagger;
+import dragon.nlp.tool.MedPostTagger;
+import dragon.nlp.tool.Tagger;
 
 /**
  * <p>Tagger configuration </p>

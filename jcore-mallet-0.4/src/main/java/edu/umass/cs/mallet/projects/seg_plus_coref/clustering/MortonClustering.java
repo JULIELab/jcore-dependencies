@@ -25,7 +25,7 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
-import java.util.*;
+import java.util.Iterator;
 
 public class MortonClustering extends Clustering
 {

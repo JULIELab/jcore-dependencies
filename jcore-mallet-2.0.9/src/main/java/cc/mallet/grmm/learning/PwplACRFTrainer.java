@@ -9,13 +9,13 @@ package cc.mallet.grmm.learning;
 
 import cc.mallet.grmm.inference.Inferencer;
 import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.util.CachingOptimizable;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.*;
 import cc.mallet.util.FileUtils;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
 import cc.mallet.util.Timing;
-import cc.mallet.grmm.util.CachingOptimizable;
 
 import java.io.File;
 import java.io.FileOutputStream;

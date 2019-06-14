@@ -1,7 +1,6 @@
 package com.aliasi.test.unit.classify;
 
 import com.aliasi.classify.ConditionalClassification;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

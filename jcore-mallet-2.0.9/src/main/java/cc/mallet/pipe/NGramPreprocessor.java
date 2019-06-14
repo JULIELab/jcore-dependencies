@@ -1,10 +1,11 @@
 package cc.mallet.pipe;
 
-import java.util.*;
-import java.io.*;
+import cc.mallet.types.Instance;
+import cc.mallet.util.Replacement;
 
-import cc.mallet.util.*;
-import cc.mallet.types.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 /** This pipe changes text to lowercase, removes common XML entities (quot, apos, lt, gt), and replaces all punctuation
 	except the - character with whitespace. It then breaks up tokens on whitespace and applies n-gram token replacements

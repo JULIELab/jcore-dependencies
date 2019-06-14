@@ -7,10 +7,10 @@
 
 package cc.mallet.fst.semi_supervised;
 
+import cc.mallet.types.Alphabet;
+
 import java.util.HashMap;
 import java.util.LinkedHashSet;
-
-import cc.mallet.types.Alphabet;
 
 
 /**

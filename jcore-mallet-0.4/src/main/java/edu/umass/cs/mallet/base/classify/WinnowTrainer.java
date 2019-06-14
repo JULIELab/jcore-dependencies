@@ -13,17 +13,8 @@
 
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.classify.Classifier;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.Labeling;
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.FeatureSelection;
-import edu.umass.cs.mallet.base.classify.Winnow;
 import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.*;
 
 /**
  * An implementation of the training methods of a 

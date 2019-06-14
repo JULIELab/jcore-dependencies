@@ -15,10 +15,7 @@ import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.types.Token;
 import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
-//import edu.umass.cs.mallet.users.fuchun.coref.SGMLStringOperation;
-//cas: changed above line to: I hope that doesn't introduce a bug
 import edu.umass.cs.mallet.projects.seg_plus_coref.coreference.SGMLStringOperation;
-
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -26,6 +23,9 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+//import edu.umass.cs.mallet.users.fuchun.coref.SGMLStringOperation;
+//cas: changed above line to: I hope that doesn't introduce a bug
 
 public class SGML2FieldsPipe extends Pipe implements Serializable
 {

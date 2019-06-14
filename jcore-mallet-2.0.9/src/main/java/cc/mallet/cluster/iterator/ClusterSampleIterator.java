@@ -1,14 +1,14 @@
 package cc.mallet.cluster.iterator;
 
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import cc.mallet.cluster.Clustering;
 import cc.mallet.cluster.neighbor_evaluator.AgglomerativeNeighbor;
 import cc.mallet.cluster.util.ClusterUtils;
 import cc.mallet.types.Instance;
 import cc.mallet.util.Randoms;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Sample clusters of Instances.

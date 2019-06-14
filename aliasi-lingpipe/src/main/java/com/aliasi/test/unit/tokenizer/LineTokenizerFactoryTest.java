@@ -2,20 +2,15 @@ package com.aliasi.test.unit.tokenizer;
 
 import com.aliasi.tokenizer.LineTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
-import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
-
-
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-import java.io.IOException;
-
-import java.util.ArrayList;
-import java.util.Arrays;
 
 public class LineTokenizerFactoryTest  {
 

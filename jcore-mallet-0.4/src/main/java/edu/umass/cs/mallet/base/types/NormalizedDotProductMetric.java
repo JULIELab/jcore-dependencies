@@ -11,7 +11,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.SparseVector;
 import java.util.HashMap;
 
 /**

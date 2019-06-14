@@ -19,11 +19,11 @@ package edu.umass.cs.mallet.base.fst;
 
 import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
+
 import java.io.*;
-import java.util.logging.*;
-import java.util.ArrayList;
-import java.util.regex.*;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class MultiSegmentationEvaluator extends TransducerEvaluator
 {

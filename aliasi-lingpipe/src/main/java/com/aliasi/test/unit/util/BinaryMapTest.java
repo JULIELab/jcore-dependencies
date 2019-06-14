@@ -2,26 +2,13 @@ package com.aliasi.test.unit.util;
 
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.BinaryMap;
-
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
 import java.io.IOException;
+import java.util.*;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 public class BinaryMapTest  {
 

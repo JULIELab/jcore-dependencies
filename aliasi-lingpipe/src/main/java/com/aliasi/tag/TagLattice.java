@@ -17,9 +17,7 @@
 package com.aliasi.tag;
 
 import com.aliasi.classify.ConditionalClassification;
-
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.util.Strings;
 
 import java.util.List;

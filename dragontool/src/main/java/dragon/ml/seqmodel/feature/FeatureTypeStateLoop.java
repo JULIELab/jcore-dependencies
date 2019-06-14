@@ -1,6 +1,6 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
 
 /**
  * This can be used as a wrapper around a FeatureType class that wants to

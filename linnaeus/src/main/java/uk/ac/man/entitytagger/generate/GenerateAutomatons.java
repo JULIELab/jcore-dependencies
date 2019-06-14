@@ -1,14 +1,15 @@
 package uk.ac.man.entitytagger.generate;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import dk.brics.automaton.Automaton;
+import dk.brics.automaton.BasicOperations;
+import dk.brics.automaton.CustomRunAutomaton;
+import dk.brics.automaton.RegExp;
+import martin.common.Tuple;
+import martin.common.compthreads.ArrayBasedMaster;
+import martin.common.compthreads.IteratorBasedMaster;
+import martin.common.compthreads.Problem;
+
+import java.io.*;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -16,13 +17,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import martin.common.Tuple;
-import martin.common.compthreads.ArrayBasedMaster;
-import martin.common.compthreads.IteratorBasedMaster;
-import martin.common.compthreads.Problem;
-import uk.ac.man.entitytagger.generate.DictionaryEntry;
-import dk.brics.automaton.*;
 
 /**
  * Class providing functions used to generate automatons for efficient regular expression matching

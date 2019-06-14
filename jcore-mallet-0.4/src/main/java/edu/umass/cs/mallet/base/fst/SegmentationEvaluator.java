@@ -16,9 +16,10 @@ package edu.umass.cs.mallet.base.fst;
 
 import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
+
 import java.io.*;
-import java.util.logging.*;
-import java.util.regex.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class SegmentationEvaluator extends TransducerEvaluator
 {

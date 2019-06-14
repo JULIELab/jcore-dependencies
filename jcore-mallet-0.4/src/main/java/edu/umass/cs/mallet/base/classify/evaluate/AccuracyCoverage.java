@@ -12,23 +12,26 @@
 
 package edu.umass.cs.mallet.base.classify.evaluate;
 
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.classify.Trial;
-import edu.umass.cs.mallet.base.classify.Classifier;
 import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.Classifier;
 import edu.umass.cs.mallet.base.classify.Trial;
-import edu.umass.cs.mallet.base.classify.evaluate.GraphItem;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.LabelVector;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.PrintUtilities;
 
-import java.awt.*;
-import java.awt.event.*;
 import javax.swing.*;
-import java.util.*;
-import java.util.logging.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Vector;
+import java.util.logging.Logger;
 
 /**
  * Methods for calculating and displaying the accuracy v.

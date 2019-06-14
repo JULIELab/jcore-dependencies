@@ -12,12 +12,12 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.clustering;
 
 import edu.umass.cs.mallet.base.pipe.iterator.AbstractPipeInputIterator;
-import edu.umass.cs.mallet.base.pipe.Pipe;
-import edu.umass.cs.mallet.base.types.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.Instance;
+
+import java.io.IOException;
 import java.io.LineNumberReader;
 import java.io.Reader;
-import java.util.regex.*;
+import java.util.regex.Pattern;
 
 
 /** Iterate over groups of lines of text, separated by lines that

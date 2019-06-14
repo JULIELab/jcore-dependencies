@@ -1,10 +1,10 @@
 package uk.ac.man.documentparser.input;
 
+import uk.ac.man.documentparser.dataholders.Document;
+
 import java.io.File;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import uk.ac.man.documentparser.dataholders.Document;
 
 public class BMCXML implements DocumentIterator {
 	private File file;

@@ -16,8 +16,11 @@
 
 package edu.umass.cs.mallet.base.util;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
-import java.io.*;
 
 public class DoubleList implements Serializable
 {

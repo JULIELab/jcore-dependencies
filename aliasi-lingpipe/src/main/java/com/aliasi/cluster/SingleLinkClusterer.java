@@ -19,11 +19,7 @@ package com.aliasi.cluster;
 import com.aliasi.util.Distance;
 import com.aliasi.util.ScoredObject;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A <code>SingleLinkClusterer</code> implements standard single-link

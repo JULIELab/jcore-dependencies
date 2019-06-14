@@ -1,13 +1,17 @@
 package salvo.jesus.graph.xml;
 
-import org.xml.sax.helpers.DefaultHandler;
+import org.apache.log4j.Category;
 import org.xml.sax.Attributes;
 import org.xml.sax.helpers.AttributesImpl;
-import java.util.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import org.xml.sax.helpers.DefaultHandler;
+import salvo.jesus.graph.Edge;
+import salvo.jesus.graph.Graph;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.visual.VisualGraph;
 import salvo.jesus.util.StringComparator;
-import org.apache.log4j.Category;
+
+import java.util.Stack;
+import java.util.TreeMap;
 
 
 /**

@@ -1,8 +1,9 @@
 package salvo.jesus.graph.visual;
 
-import java.awt.event.*;
 import java.awt.*;
-import java.io.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.io.Serializable;
 
 /**
  * Abstract state object of GraphPanel, applying the state design pattern.

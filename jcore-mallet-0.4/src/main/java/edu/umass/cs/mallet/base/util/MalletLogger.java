@@ -14,8 +14,11 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import java.util.logging.*;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 public class MalletLogger extends Logger
 {

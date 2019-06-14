@@ -25,13 +25,15 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.anaphora;
 
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.util.*;
-import java.io.*;
-import org.jdom.*;
-import java.util.regex.Pattern;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.Text;
+
+import java.io.File;
+import java.util.Iterator;
+import java.util.List;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class Mention
 {

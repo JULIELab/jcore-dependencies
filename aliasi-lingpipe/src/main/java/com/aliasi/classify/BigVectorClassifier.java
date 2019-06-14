@@ -16,9 +16,7 @@
 
 package com.aliasi.classify;
 
-import com.aliasi.matrix.SparseFloatVector;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.BoundedPriorityQueue;
 import com.aliasi.util.Scored;

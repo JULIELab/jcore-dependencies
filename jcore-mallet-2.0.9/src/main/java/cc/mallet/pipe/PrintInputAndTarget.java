@@ -11,10 +11,12 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
-import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * Print the data and target fields of each instance.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

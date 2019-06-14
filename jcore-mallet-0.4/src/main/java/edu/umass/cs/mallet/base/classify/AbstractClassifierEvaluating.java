@@ -6,8 +6,6 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.classify;
 
-import edu.umass.cs.mallet.base.classify.ClassifierEvaluating;
-
 /**
  * Created: Apr 13, 2005
  *

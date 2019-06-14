@@ -1,25 +1,12 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.Iterators;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertNotNull;
+import java.util.*;
 
 import static com.aliasi.test.unit.Asserts.assertEqualsIterations;
-
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
+import static junit.framework.Assert.*;
 
 
 

@@ -1,13 +1,13 @@
 package uk.ac.man.entitytagger.networking;
 
+import martin.common.ArgParser;
+import uk.ac.man.entitytagger.EntityTagger;
+import uk.ac.man.entitytagger.matching.Matcher;
+
 import java.io.File;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Logger;
-
-import uk.ac.man.entitytagger.EntityTagger;
-import uk.ac.man.entitytagger.matching.Matcher;
-import martin.common.ArgParser;
 
 public class AlibabaServer {
 

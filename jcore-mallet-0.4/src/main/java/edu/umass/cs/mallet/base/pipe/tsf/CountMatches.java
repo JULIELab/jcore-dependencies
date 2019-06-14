@@ -18,10 +18,13 @@
 
 package edu.umass.cs.mallet.base.pipe.tsf;
 
-import java.util.regex.Pattern;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
 import java.util.regex.Matcher;
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import java.util.regex.Pattern;
 
 public class CountMatches extends Pipe
 {

@@ -1,7 +1,8 @@
 package salvo.jesus.graph.listener;
+
 import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import java.util.*;
+
+import java.util.NoSuchElementException;
 
 /**
  * SimplePathListener imposes a simple path structure on a

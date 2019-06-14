@@ -1,12 +1,12 @@
 package uk.ac.man.entitytagger.evaluate;
 
+import martin.common.compthreads.Problem;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.evaluate.Evaluate.Tag;
+
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.evaluate.Evaluate.Tag;
-import martin.common.compthreads.Problem;
 
 /**
  * Simple class for parallelising evaluations

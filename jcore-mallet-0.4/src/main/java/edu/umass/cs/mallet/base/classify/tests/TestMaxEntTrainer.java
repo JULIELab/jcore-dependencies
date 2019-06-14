@@ -14,15 +14,15 @@
 
 package edu.umass.cs.mallet.base.classify.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
 import edu.umass.cs.mallet.base.maximize.Maximizable;
 import edu.umass.cs.mallet.base.maximize.tests.TestMaximizable;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.*;
-import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
-import junit.framework.*;
-import java.net.URI;
+import edu.umass.cs.mallet.base.types.Alphabet;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.util.Random;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestMaxEntTrainer extends TestCase
 {

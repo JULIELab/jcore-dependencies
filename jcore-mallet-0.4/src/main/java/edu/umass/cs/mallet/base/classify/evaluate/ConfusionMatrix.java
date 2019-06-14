@@ -27,18 +27,11 @@ package edu.umass.cs.mallet.base.classify.evaluate;
 
 import edu.umass.cs.mallet.base.classify.Classification;
 import edu.umass.cs.mallet.base.classify.Trial;
-import edu.umass.cs.mallet.base.types.Labeling;
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.LabelAlphabet;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.MatrixOps;
+import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.*;
-import java.text.*;
+import java.util.logging.Logger;
 
 /**
  * Calculates and prints confusion matrix, accuracy,

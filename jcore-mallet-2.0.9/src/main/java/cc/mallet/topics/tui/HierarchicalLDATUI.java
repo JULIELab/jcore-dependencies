@@ -1,11 +1,12 @@
 package cc.mallet.topics.tui;
 
+import cc.mallet.topics.HierarchicalLDA;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.Randoms;
-import cc.mallet.types.InstanceList;
-import cc.mallet.topics.HierarchicalLDA;
 
-import java.io.*;
+import java.io.File;
+import java.io.PrintWriter;
 
 public class HierarchicalLDATUI {
 	

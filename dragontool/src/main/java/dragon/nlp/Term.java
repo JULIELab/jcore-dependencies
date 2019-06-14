@@ -1,7 +1,9 @@
 package dragon.nlp;
 
+import dragon.nlp.compare.SortedElement;
+import dragon.nlp.compare.TermLemmaComparator;
 import dragon.util.SortedArray;
-import dragon.nlp.compare.*;
+
 import java.util.ArrayList;
 import java.util.Collections;
 

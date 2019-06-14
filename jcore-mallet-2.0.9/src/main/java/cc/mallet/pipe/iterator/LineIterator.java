@@ -11,10 +11,12 @@
 
 package cc.mallet.pipe.iterator;
 
+import cc.mallet.types.Instance;
+
 import java.io.*;
 import java.util.Iterator;
-import java.util.regex.*;
-import cc.mallet.types.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class LineIterator implements Iterator<Instance>
 {

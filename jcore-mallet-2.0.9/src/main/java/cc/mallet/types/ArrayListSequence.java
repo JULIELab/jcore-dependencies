@@ -16,8 +16,6 @@ package cc.mallet.types;
 
 import java.util.ArrayList;
 
-import cc.mallet.types.Sequence;
-
 public class ArrayListSequence<E> extends ArrayList<E> implements Sequence<E>
 {
 	private static final long serialVersionUID = 1;

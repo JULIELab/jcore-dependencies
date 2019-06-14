@@ -1,14 +1,10 @@
 package de.julielab.xml;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang3.StringUtils;
+import java.util.*;
 
 public class JulieXMLToolsCLIRecords {
 

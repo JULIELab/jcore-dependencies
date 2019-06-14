@@ -16,12 +16,11 @@
 
 package com.aliasi.classify;
 
-import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.lm.LanguageModel;
 import com.aliasi.lm.NGramBoundaryLM;
 import com.aliasi.lm.TokenizedLM;
 import com.aliasi.lm.UniformBoundaryLM;
+import com.aliasi.tokenizer.TokenizerFactory;
 
 /**
  * A <code>NaiveBayesClassifier</code> provides a trainable naive Bayes

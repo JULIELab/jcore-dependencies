@@ -17,17 +17,12 @@
 package com.aliasi.hmm;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.tag.Tagging;
-
 import com.aliasi.util.Compilable;
 
 import java.io.IOException;
 import java.io.ObjectOutput;
-
-import java.util.Arrays;
 
 /**
  * An <code>HmmEstimator</code> may be used to train a hidden Markov

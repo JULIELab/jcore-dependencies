@@ -11,8 +11,11 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Instance;
+import cc.mallet.types.LabelVector;
+import cc.mallet.types.Labeling;
+import cc.mallet.types.MatrixOps;
 /**
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>
  */

@@ -11,19 +11,18 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.TokenSequence;
-import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.extract.StringSpan;
+import edu.umass.cs.mallet.base.extract.StringTokenization;
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.util.Lexer;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 import edu.umass.cs.mallet.base.util.CharSequenceLexer;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.extract.StringTokenization;
-import edu.umass.cs.mallet.base.extract.StringSpan;
 
 import java.io.*;
-import java.net.URI;
-import java.util.regex.*;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
 	 Converts a string containing simple SGML tags into a dta TokenSequence of words,
 	 paired with a target TokenSequence containing the SGML tags in effect for each word.

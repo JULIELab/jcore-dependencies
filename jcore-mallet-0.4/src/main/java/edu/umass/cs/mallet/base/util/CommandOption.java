@@ -14,9 +14,8 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import java.util.*;
-import java.io.*;
-import edu.umass.cs.mallet.base.util.BshInterpreter;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public abstract class CommandOption
 {

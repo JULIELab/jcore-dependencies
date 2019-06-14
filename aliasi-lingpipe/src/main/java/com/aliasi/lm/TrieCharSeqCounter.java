@@ -20,14 +20,12 @@ package com.aliasi.lm;
 
 import com.aliasi.io.BitInput;
 import com.aliasi.io.BitOutput;
-
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Strings;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
-
 import java.util.ArrayList;
 import java.util.List;
 

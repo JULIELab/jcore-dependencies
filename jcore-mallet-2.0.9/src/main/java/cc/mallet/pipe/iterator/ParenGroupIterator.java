@@ -7,10 +7,12 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.io.*;
-import java.util.Iterator;
+import cc.mallet.types.Instance;
 
-import cc.mallet.types.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.util.Iterator;
 
 /**
  * Iterator that takes a Reader, breaks up the input into

@@ -16,14 +16,7 @@
 
 package com.aliasi.util;
 
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.Queue;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * A <code>BoundedPriorityQueue</code> implements a priority queue

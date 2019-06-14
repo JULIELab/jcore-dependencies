@@ -2,12 +2,12 @@
 /* First created by JCasGen Thu Jun 29 12:11:09 CEST 2017 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.tcas.Annotation_Type;
 
 /** This type stores required information for the appropiate handling of consistent XMI deserialization in the XMI reader and serialization in the XMI consumer with respect to the separate storage of annotations.

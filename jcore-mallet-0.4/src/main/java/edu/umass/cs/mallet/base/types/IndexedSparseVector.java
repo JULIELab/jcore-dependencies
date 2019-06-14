@@ -17,17 +17,14 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Vector;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.FeatureSequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.util.PropertyList;
-import java.util.HashMap;
-import java.util.Iterator;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.Arrays;
-import java.util.logging.*;
-import java.io.*;
+import java.util.logging.Logger;
 
 public class IndexedSparseVector extends SparseVector implements Serializable 
 {

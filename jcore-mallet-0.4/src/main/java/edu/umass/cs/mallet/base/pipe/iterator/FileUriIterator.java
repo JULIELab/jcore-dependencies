@@ -14,13 +14,11 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.Instance;
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.io.*;
-import java.net.URI;
-import java.util.regex.*;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.regex.Pattern;
 
 public class FileUriIterator extends FileIterator
 {

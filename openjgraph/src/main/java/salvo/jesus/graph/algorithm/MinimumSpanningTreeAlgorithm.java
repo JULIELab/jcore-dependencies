@@ -1,8 +1,8 @@
 package salvo.jesus.graph.algorithm;
 
-import salvo.jesus.graph.*;
-import java.util.*;
-import java.io.*;
+import salvo.jesus.graph.WeightedGraph;
+
+import java.io.Serializable;
 
 /**
  * Abstract class for an algorithm implementing the minimum spanning tree.

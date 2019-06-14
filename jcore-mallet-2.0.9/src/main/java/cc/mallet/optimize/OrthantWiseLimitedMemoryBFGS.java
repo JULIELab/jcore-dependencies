@@ -1,10 +1,10 @@
 package cc.mallet.optimize;
 
-import java.util.LinkedList;
-import java.util.logging.Logger;
-
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.util.LinkedList;
+import java.util.logging.Logger;
 
 /**
  * Implementation of orthant-wise limited memory quasi Newton method for

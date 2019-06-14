@@ -7,22 +7,10 @@ information, see the file `LICENSE' included with this distribution. */
 
 package cc.mallet.classify;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.Serializable;
-import java.io.PrintStream;
-
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelVector;
-import cc.mallet.types.MatrixOps;
-import cc.mallet.types.RankedFeatureVector;
+import cc.mallet.types.*;
+
+import java.io.*;
 
 /**
  * Maximum Entropy (AKA Multivariate Logistic Regression) classifier.

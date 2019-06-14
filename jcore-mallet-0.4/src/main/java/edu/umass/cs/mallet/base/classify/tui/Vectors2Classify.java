@@ -11,18 +11,30 @@
 
 package edu.umass.cs.mallet.base.classify.tui;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.classify.evaluate.*;
-
-import edu.umass.cs.mallet.base.util.*;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.ClassifierTrainer;
+import edu.umass.cs.mallet.base.classify.NaiveBayesTrainer;
+import edu.umass.cs.mallet.base.classify.Trial;
+import edu.umass.cs.mallet.base.classify.evaluate.ConfusionMatrix;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.Labeling;
+import edu.umass.cs.mallet.base.types.MatrixOps;
 import edu.umass.cs.mallet.base.util.CommandOption;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+import edu.umass.cs.mallet.base.util.MalletProgressMessageLogger;
+import edu.umass.cs.mallet.base.util.ProgressMessageLogFormatter;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.Random;
-import java.util.logging.*;
-import java.lang.reflect.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
 /**
  * Classify documents, run trials, print statistics from a vector file.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

@@ -11,12 +11,10 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
-import edu.umass.cs.mallet.base.pipe.iterator.*;
-import edu.umass.cs.mallet.base.fst.*;
-import java.util.*;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.types.Instance;
+
+import java.util.Random;
 
 /**
 	 Estimates the confidence of an entire sequence randomly.

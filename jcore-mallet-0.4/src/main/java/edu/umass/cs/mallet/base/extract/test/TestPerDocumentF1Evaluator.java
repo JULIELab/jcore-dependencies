@@ -19,9 +19,9 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
 
 /**
  * Created: Nov 18, 2004

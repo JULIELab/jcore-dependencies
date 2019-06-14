@@ -1,8 +1,9 @@
 package salvo.jesus.graph.visual;
 
 import java.awt.*;
-import java.awt.geom.*;
-import java.io.*;
+import java.awt.geom.Line2D;
+import java.awt.geom.Point2D;
+import java.io.Serializable;
 
 public class Arrowhead implements Serializable{
   Line2D.Double		stem;

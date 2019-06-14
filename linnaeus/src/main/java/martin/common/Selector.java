@@ -1,6 +1,6 @@
 package martin.common;
 
-import java.util.*;
+import java.util.Random;
 
 public class Selector<E extends Comparable<E>> {
 	private static Random random = new Random();

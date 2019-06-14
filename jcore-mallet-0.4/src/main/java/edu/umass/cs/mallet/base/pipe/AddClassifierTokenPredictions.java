@@ -8,29 +8,16 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
+import edu.umass.cs.mallet.base.classify.*;
+import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.util.MalletLogger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.logging.Logger;
-
-import edu.umass.cs.mallet.base.classify.BalancedWinnowTrainer;
-import edu.umass.cs.mallet.base.classify.Classification;
-import edu.umass.cs.mallet.base.classify.Classifier;
-import edu.umass.cs.mallet.base.classify.ClassifierTrainer;
-import edu.umass.cs.mallet.base.classify.Trial;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.AugmentableFeatureVector;
-import edu.umass.cs.mallet.base.types.FeatureVector;
-import edu.umass.cs.mallet.base.types.FeatureVectorSequence;
-import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.InstanceList;
-import edu.umass.cs.mallet.base.types.Label;
-import edu.umass.cs.mallet.base.types.LabelSequence;
-import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.types.Labeling;
-import edu.umass.cs.mallet.base.util.MalletLogger;
 
 /**
  * This pipe uses a Classifier to label each token (i.e., using 0-th order Markov assumption), 

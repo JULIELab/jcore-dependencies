@@ -15,9 +15,9 @@
 
 package edu.umass.cs.mallet.base.minimize;
 
-import edu.umass.cs.mallet.base.minimize.Minimizable;
 import edu.umass.cs.mallet.base.types.Matrix;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 public class AGIS implements Minimizer.ByGISUpdate
 {

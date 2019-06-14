@@ -1,7 +1,8 @@
 package dragon.ir.topicmodel;
 
-import dragon.matrix.*;
-import java.util.*;
+import dragon.matrix.IntSparseMatrix;
+
+import java.util.Random;
 
 /**
  * <p>Cross mixture topic model </p>

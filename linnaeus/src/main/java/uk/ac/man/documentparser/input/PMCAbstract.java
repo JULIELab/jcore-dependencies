@@ -1,9 +1,9 @@
 package uk.ac.man.documentparser.input;
 
+import uk.ac.man.documentparser.dataholders.Document;
+
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import uk.ac.man.documentparser.dataholders.Document;
 
 public class PMCAbstract implements DocumentIterator {
 	private DocumentIterator pmcDocs;

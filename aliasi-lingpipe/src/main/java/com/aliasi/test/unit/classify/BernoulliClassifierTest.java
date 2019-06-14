@@ -4,18 +4,15 @@ import com.aliasi.classify.BernoulliClassifier;
 import com.aliasi.classify.Classification;
 import com.aliasi.classify.Classified;
 import com.aliasi.classify.JointClassification;
-
-import com.aliasi.tokenizer.TokenFeatureExtractor;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-
+import com.aliasi.tokenizer.TokenFeatureExtractor;
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
 import java.io.IOException;
+
+import static junit.framework.Assert.assertEquals;
 
 public class BernoulliClassifierTest  {
 

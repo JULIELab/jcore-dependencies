@@ -1,5 +1,7 @@
 package uk.ac.man.documentparser.misc;
 
+import martin.common.*;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -8,12 +10,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.logging.Logger;
-
-import martin.common.ArgParser;
-import martin.common.Loggers;
-import martin.common.MyConnection;
-import martin.common.SQL;
-import martin.common.StreamIterator;
 
 public class MedlineFixer {
 	public static void main(String[] args){

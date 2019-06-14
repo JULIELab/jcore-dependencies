@@ -3,23 +3,12 @@
  */
 package is2.util;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Reader;
+import is2.data.SentenceData09;
+import is2.io.*;
+
+import java.io.*;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-
-
-import is2.data.SentenceData09;
-import is2.io.CONLLReader06;
-import is2.io.CONLLReader08;
-import is2.io.CONLLReader09;
-import is2.io.CONLLWriter06;
-import is2.io.CONLLWriter09;
 
 /**
  * @author Dr. Bernd Bohnet, 01.03.2010

@@ -1,9 +1,14 @@
 package cc.mallet.pipe.iterator;
 
+import cc.mallet.pipe.Noop;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+
 import java.sql.*;
-import java.util.*;
-import cc.mallet.types.*;
-import cc.mallet.pipe.*;
+import java.util.Iterator;
 
 public class DBInstanceIterator implements Iterator<Instance> {
 

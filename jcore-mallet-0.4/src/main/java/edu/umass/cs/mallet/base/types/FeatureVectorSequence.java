@@ -14,7 +14,10 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 // xxx A not very space-efficient version.  I'll compress it later.
 

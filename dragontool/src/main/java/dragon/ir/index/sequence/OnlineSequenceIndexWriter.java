@@ -1,7 +1,7 @@
 package dragon.ir.index.sequence;
 
 import dragon.ir.index.*;
-import dragon.nlp.*;
+import dragon.nlp.SimpleElementList;
 import dragon.util.SortedArray;
 
 /**

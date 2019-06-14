@@ -1,6 +1,8 @@
 package dragon.config;
 
-import dragon.ir.kngbase.*;
+import dragon.ir.kngbase.BasicKnowledgeBase;
+import dragon.ir.kngbase.HALSpace;
+import dragon.ir.kngbase.KnowledgeBase;
 import dragon.matrix.DoubleSparseMatrix;
 import dragon.nlp.SimpleElementList;
 import dragon.nlp.extract.TokenExtractor;

@@ -5,7 +5,11 @@ import dragon.ml.seqmodel.data.DataSequence;
 import dragon.ml.seqmodel.feature.Feature;
 import dragon.ml.seqmodel.feature.FeatureGenerator;
 import dragon.ml.seqmodel.model.ModelGraph;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.PrintWriter;
 
 /**
  * <p>Abstract class for conditional random field </p>

@@ -1,7 +1,10 @@
 package dragon.onlinedb;
 
 import dragon.util.FileUtil;
-import java.io.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.RandomAccessFile;
 
 /**
  * <p>Basic collection reader (supporting class for indexing) </p>

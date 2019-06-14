@@ -2,10 +2,10 @@
 /* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
 package de.julielab.jcore.types.pubmed;
 
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
-import org.apache.uima.cas.Type;
 
 /** Internal references with a special feature for PMC related reference types.
  * Updated by JCasGen Wed Aug 08 13:36:50 CEST 2018

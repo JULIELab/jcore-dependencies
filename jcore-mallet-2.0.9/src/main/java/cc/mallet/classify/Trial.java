@@ -10,14 +10,14 @@
 
 package cc.mallet.classify;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.logging.Logger;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Label;
 import cc.mallet.types.Labeling;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.logging.Logger;
 
 /**
  * Stores the results of classifying a collection of Instances,

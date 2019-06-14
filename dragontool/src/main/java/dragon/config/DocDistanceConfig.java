@@ -1,8 +1,11 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.ir.clustering.docdistance.*;
-import dragon.matrix.*;
+import dragon.ir.clustering.docdistance.CosineDocDistance;
+import dragon.ir.clustering.docdistance.DocDistance;
+import dragon.ir.clustering.docdistance.EuclideanDocDistance;
+import dragon.ir.clustering.docdistance.KLDivDocDistance;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.DoubleSparseMatrix;
 
 /**
  * <p>Document distance calculation configuration</p>

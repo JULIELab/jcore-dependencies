@@ -1,9 +1,11 @@
 package edu.umass.cs.mallet.share.upenn.ner;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
 
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * A feature approximating string length.

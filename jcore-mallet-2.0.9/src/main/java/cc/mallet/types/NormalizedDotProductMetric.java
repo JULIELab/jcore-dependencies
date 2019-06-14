@@ -13,8 +13,6 @@ package cc.mallet.types;
 
 import java.util.HashMap;
 
-import cc.mallet.types.SparseVector;
-
 /**
 	 Computes
 	 1 - [<x,y> / sqrt (<x,x>*<y,y>)]

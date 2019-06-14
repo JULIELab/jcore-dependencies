@@ -17,12 +17,10 @@
 	 return a position of higher value.
  */
 package edu.umass.cs.mallet.base.maximize;
-import edu.umass.cs.mallet.base.maximize.LineMaximizer;
-import edu.umass.cs.mallet.base.maximize.Maximizable;
-import edu.umass.cs.mallet.base.types.MatrixOps;
-import edu.umass.cs.mallet.base.fst.CRF4;
 
-import java.util.logging.*;
+import edu.umass.cs.mallet.base.types.MatrixOps;
+
+import java.util.logging.Logger;
 
 // "Line Searches and Backtracking", p385, "Numeric Recipes in C"
 

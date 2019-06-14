@@ -11,17 +11,25 @@
 
 package cc.mallet.share.upenn;
 
-import java.util.regex.*;
+import cc.mallet.classify.Classification;
+import cc.mallet.classify.Classifier;
+import cc.mallet.classify.ClassifierTrainer;
+import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.pipe.*;
+import cc.mallet.pipe.iterator.ArrayDataAndTargetIterator;
+import cc.mallet.pipe.iterator.ArrayIterator;
+import cc.mallet.pipe.iterator.LineIterator;
+import cc.mallet.pipe.iterator.PipeExtendedIterator;
+import cc.mallet.types.*;
+import cc.mallet.util.CharSequenceLexer;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+
 import java.io.*;
 import java.util.Iterator;
 import java.util.List;
-import java.util.logging.*;
-
-import cc.mallet.classify.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Simple wrapper for training a MALLET maxent classifier.

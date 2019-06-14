@@ -7,8 +7,11 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import java.io.*;
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Instance;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
 
 /**
  * Iterator that takes a Reader, breaks up the input into

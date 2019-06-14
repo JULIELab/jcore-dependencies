@@ -17,19 +17,16 @@
 package com.aliasi.stats;
 
 import com.aliasi.util.AbstractExternalizable;
-
 import com.aliasi.util.Strings;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A <code>MultivariateEstimator</code> provides a maximum likelihood

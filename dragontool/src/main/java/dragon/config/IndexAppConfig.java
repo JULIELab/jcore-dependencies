@@ -1,7 +1,8 @@
 package dragon.config;
 
-import dragon.ir.index.*;
-import dragon.onlinedb.*;
+import dragon.ir.index.Indexer;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.CollectionReader;
 
 /**
  * <p>Index application configuration </p>

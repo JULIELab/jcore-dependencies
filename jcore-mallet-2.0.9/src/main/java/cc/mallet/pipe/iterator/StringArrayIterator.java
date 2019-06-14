@@ -11,10 +11,10 @@
 
 package cc.mallet.pipe.iterator;
 
+import cc.mallet.types.Instance;
+
 import java.net.URI;
 import java.util.Iterator;
-
-import cc.mallet.types.Instance;
 
 public class StringArrayIterator implements Iterator<Instance>
 {

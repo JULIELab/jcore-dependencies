@@ -1,18 +1,11 @@
 package uk.ac.man.entitytagger.matching;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.regex.Pattern;
-
 import martin.common.Tuple;
-
-
 import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.entitytagger.*;
+import uk.ac.man.entitytagger.Mention;
+
+import java.util.*;
+import java.util.regex.Pattern;
 
 /**
  * Abstract class describing a matcher, and providing common methods for the available matchers

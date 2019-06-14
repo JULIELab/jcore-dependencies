@@ -1,8 +1,11 @@
 package com.wcohen.secondstring.expt;
 
-import com.wcohen.secondstring.*;
+import com.wcohen.secondstring.DistanceFactory;
+import com.wcohen.secondstring.PrintfFormat;
+import com.wcohen.secondstring.StringDistance;
+
 import java.io.*;
-import java.util.*;
+import java.util.Arrays;
 
 /**
  * Perform a matching experiment using a data file, distance function

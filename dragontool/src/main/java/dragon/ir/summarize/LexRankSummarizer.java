@@ -1,12 +1,18 @@
 package dragon.ir.summarize;
 
-import dragon.ir.clustering.docdistance.*;
-import dragon.ir.index.*;
-import dragon.ir.index.sentence.*;
+import dragon.ir.clustering.docdistance.CosineDocDistance;
+import dragon.ir.clustering.docdistance.DocDistance;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
+import dragon.ir.index.sentence.OnlineSentenceIndexReader;
+import dragon.ir.index.sentence.OnlineSentenceIndexer;
 import dragon.ir.kngbase.DocRepresentation;
-import dragon.matrix.*;
-import dragon.matrix.vector.*;
+import dragon.matrix.DoubleDenseMatrix;
+import dragon.matrix.DoubleFlatDenseMatrix;
+import dragon.matrix.vector.DoubleVector;
+import dragon.matrix.vector.PowerMethod;
 import dragon.onlinedb.CollectionReader;
+
 import java.util.ArrayList;
 
 /**

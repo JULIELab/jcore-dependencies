@@ -1,12 +1,10 @@
 package salvo.jesus.graph.javax.swing;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 import javax.swing.event.ListSelectionEvent;
-import java.awt.Color;
+import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.awt.geom.GeneralPath;
-import java.awt.Dimension;
-import java.awt.BorderLayout;
 
 /**
  * A <tt>JPanel</tt> that contains a <tt>JSplitPane</tt> which in turn

@@ -11,9 +11,15 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.util.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.FeatureSequence;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+import edu.umass.cs.mallet.base.util.PropertyList;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Print properties of the token sequence in the data field and the corresponding value

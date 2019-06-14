@@ -14,10 +14,10 @@
 
 package edu.umass.cs.mallet.base.util;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.net.URI;
 import java.io.File;
+import java.net.URI;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class UriUtils
 {

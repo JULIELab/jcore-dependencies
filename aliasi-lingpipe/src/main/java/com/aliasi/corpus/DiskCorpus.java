@@ -16,19 +16,16 @@
 
 package com.aliasi.corpus;
 
-import com.aliasi.util.Files;
 import com.aliasi.util.Streams;
+import org.xml.sax.InputSource;
 
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-
 import java.util.zip.GZIPInputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import org.xml.sax.InputSource;
 
 
 /**

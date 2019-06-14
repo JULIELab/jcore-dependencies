@@ -3,13 +3,12 @@
 /* First created by JCasGen Thu Mar 22 10:56:02 CET 2018 */
 package de.julielab.jcore.types.test;
 
-import org.apache.uima.jcas.JCas; 
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.jcas.cas.TOP_Type;
-
-import org.apache.uima.jcas.cas.FSArray;
-import de.julielab.jcore.types.POSTag;
 import de.julielab.jcore.types.Annotation;
+import de.julielab.jcore.types.POSTag;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** 

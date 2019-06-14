@@ -29,12 +29,7 @@
 
 package dk.brics.automaton;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InvalidClassException;
-import java.io.ObjectInputStream;
-import java.io.OptionalDataException;
-import java.io.Serializable;
+import java.io.*;
 import java.net.URL;
 import java.util.ArrayList;
 

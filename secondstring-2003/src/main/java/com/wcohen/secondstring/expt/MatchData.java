@@ -1,8 +1,12 @@
 package com.wcohen.secondstring.expt;
 
-import com.wcohen.secondstring.*;
+import com.wcohen.secondstring.StringDistance;
+import com.wcohen.secondstring.StringWrapper;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.*;
-import java.io.*;
 
 /**
  * Holds data for evaluating a distance metric.

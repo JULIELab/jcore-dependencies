@@ -12,10 +12,9 @@
 
 package edu.umass.cs.mallet.share.weili.ner;
 
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
-import java.util.regex.*;
-import java.io.*;
+import edu.umass.cs.mallet.base.types.Token;
+
+import java.util.regex.Pattern;
 
 public class WordTransformation
 {

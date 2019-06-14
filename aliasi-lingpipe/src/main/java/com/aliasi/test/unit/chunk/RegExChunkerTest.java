@@ -1,14 +1,13 @@
 package com.aliasi.test.unit.chunk;
 
-import com.aliasi.chunk.RegExChunker;
 import com.aliasi.chunk.ChunkFactory;
 import com.aliasi.chunk.ChunkingImpl;
+import com.aliasi.chunk.RegExChunker;
+import org.junit.Test;
 
 import java.io.IOException;
 
 import static com.aliasi.test.unit.chunk.CharLmHmmChunkerTest.assertChunkingCompile;
-
-import org.junit.Test;
 
 
 public class RegExChunkerTest {

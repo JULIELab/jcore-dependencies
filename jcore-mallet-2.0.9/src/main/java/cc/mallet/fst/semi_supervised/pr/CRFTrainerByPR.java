@@ -7,9 +7,6 @@
 
 package cc.mallet.fst.semi_supervised.pr;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.Transducer;
 import cc.mallet.fst.TransducerTrainer;
@@ -18,6 +15,9 @@ import cc.mallet.fst.semi_supervised.pr.constraints.PRConstraint;
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.InstanceList;
+
+import java.util.ArrayList;
+import java.util.BitSet;
 
 /**
  * Posterior regularization trainer.

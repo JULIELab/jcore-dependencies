@@ -1,20 +1,15 @@
 package com.aliasi.test.unit.features;
 
 import com.aliasi.features.StringLengthFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToDoubleMap;
-
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
-
-import java.util.Map;
 
 public class StringLengthFeatureExtractorTest {
 

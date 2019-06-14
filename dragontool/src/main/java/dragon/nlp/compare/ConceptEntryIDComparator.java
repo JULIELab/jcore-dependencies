@@ -1,6 +1,7 @@
 package dragon.nlp.compare;
 
 import dragon.nlp.Concept;
+
 import java.util.Comparator;
 
 /**

@@ -1,6 +1,6 @@
 package dragon.nlp;
 
-import dragon.nlp.tool.*;
+import dragon.nlp.tool.Tagger;
 /**
  * <p>This is a supporting class for Term and Phrase class which can contain multi words </p>
  * <p> </p>

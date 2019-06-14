@@ -11,11 +11,15 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
+import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.MaxEnt;
+import edu.umass.cs.mallet.base.classify.MaxEntTrainer;
+import edu.umass.cs.mallet.base.fst.Transducer;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.classify.*;
-import edu.umass.cs.mallet.base.fst.*;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Estimates the confidence of a {@link Sequence} extracted by a {@link

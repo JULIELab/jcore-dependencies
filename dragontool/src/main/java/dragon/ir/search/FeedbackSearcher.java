@@ -1,7 +1,6 @@
 package dragon.ir.search;
 
 import dragon.ir.query.IRQuery;
-import dragon.ir.search.Searcher;
 import dragon.ir.search.feedback.Feedback;
 
 /**

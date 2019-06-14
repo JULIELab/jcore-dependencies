@@ -1,7 +1,10 @@
 package com.wcohen.secondstring;
 
+import com.wcohen.secondstring.tokens.SimpleTokenizer;
+import com.wcohen.secondstring.tokens.Token;
+import com.wcohen.secondstring.tokens.Tokenizer;
+
 import java.util.*;
-import com.wcohen.secondstring.tokens.*;
 
 /**
  * Abstract token distance metric that uses frequency statistics.

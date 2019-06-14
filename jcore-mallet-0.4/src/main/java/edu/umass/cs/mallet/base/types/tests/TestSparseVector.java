@@ -14,10 +14,14 @@
 
 package edu.umass.cs.mallet.base.types.tests;
 
-import edu.umass.cs.mallet.base.types.SparseVector;
-import java.io.*;
-import junit.framework.*;
 import edu.umass.cs.mallet.base.types.DenseVector;
+import edu.umass.cs.mallet.base.types.SparseVector;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class TestSparseVector extends TestCase
 {

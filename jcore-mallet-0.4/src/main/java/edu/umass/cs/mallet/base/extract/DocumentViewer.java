@@ -11,9 +11,9 @@ import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.util.ColorUtils;
 
 import java.io.File;
-import java.io.PrintWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 

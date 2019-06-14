@@ -1,6 +1,7 @@
 package dragon.ir.clustering.docdistance;
-import dragon.ir.index.*;
-import dragon.matrix.*;
+
+import dragon.ir.index.IRDoc;
+import dragon.matrix.SparseMatrix;
 
 /**
  * <p>Document similarity or distance based on Euclidean distance </p>

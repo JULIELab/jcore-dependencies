@@ -1,6 +1,7 @@
 package com.wcohen.secondstring;
 
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.NGramTokenizer;
+import com.wcohen.secondstring.tokens.SimpleTokenizer;
 
 /**
  * Character-based Jaccard distance: the distance between two strings

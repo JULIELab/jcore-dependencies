@@ -1,6 +1,8 @@
 package dragon.util;
 
-import java.io.*;
+import java.io.DataInputStream;
+import java.io.File;
+import java.io.RandomAccessFile;
 
 /**
  * <p>Fast binary data reader</p>

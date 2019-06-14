@@ -1,13 +1,5 @@
 package com.aliasi.test.unit.classify;
 
-import static junit.framework.Assert.*;
-
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
 import com.aliasi.classify.DynamicLMClassifier;
 import com.aliasi.classify.LMClassifier;
 import com.aliasi.stats.MultivariateEstimator;
@@ -16,6 +8,14 @@ import com.aliasi.tokenizer.TokenizerFactory;
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Files;
 import com.aliasi.util.Strings;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class DynamicLMClassifierTest {
 

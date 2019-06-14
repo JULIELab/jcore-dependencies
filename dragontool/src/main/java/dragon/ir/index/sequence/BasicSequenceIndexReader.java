@@ -1,8 +1,11 @@
 package dragon.ir.index.sequence;
 
-import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.onlinedb.*;
+import dragon.ir.index.BasicIRDocIndexList;
+import dragon.ir.index.BasicIRTermIndexList;
+import dragon.ir.index.FileIndex;
+import dragon.ir.index.IRCollection;
+import dragon.nlp.SimpleElementList;
+import dragon.onlinedb.CollectionReader;
 
 /**
  * <p>The basic index reader for sequencial data </p>

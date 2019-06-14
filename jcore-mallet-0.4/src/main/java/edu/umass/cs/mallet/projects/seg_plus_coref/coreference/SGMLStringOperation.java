@@ -1,9 +1,9 @@
 package edu.umass.cs.mallet.projects.seg_plus_coref.coreference;
 
-import java.util.*;
-import java.lang.*;
-import java.io.*;
-import java.util.regex.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 // xxx awc - changed to allow tag attributes
 public class SGMLStringOperation
 {

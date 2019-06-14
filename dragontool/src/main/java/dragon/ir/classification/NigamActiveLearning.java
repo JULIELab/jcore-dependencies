@@ -1,8 +1,14 @@
 package dragon.ir.classification;
 
-import dragon.ir.index.*;
-import dragon.matrix.*;
-import java.util.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.DoubleFlatDenseMatrix;
+import dragon.matrix.IntRow;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * <p>Nigam Active Learning which can utilize unlabeled documents during text classification</p>

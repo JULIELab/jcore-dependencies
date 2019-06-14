@@ -7,12 +7,12 @@
 package cc.mallet.grmm.types;
 
 
-import java.io.ObjectInputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-
 import cc.mallet.util.Maths;
 import cc.mallet.util.Randoms;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * $Id: BetaFactor.java,v 1.1 2007/10/22 21:37:44 mccallum Exp $

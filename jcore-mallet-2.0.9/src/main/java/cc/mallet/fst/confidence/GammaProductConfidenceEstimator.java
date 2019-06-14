@@ -11,10 +11,12 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.HashMap;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.Sequence;
 
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import java.util.HashMap;
 
 /** Calculates the confidence in an extracted segment by taking the
  * product of eP(s_i|o) for each state in the segment. */

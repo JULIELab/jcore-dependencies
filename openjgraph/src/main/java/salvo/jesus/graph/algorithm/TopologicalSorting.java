@@ -1,7 +1,11 @@
 package salvo.jesus.graph.algorithm;
 
+import salvo.jesus.graph.DirectedAcyclicGraph;
+import salvo.jesus.graph.NullVisitor;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.Visitor;
+
 import java.util.*;
-import salvo.jesus.graph.*;
 
 /**
  * A concrete subclass of GraphTraversal that performs a topological sort

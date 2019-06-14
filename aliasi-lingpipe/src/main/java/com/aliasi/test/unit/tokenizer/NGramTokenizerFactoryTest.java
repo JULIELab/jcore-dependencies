@@ -2,12 +2,10 @@ package com.aliasi.test.unit.tokenizer;
 
 import com.aliasi.tokenizer.NGramTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNull;
-
 import static org.junit.Assert.assertArrayEquals;
 
 

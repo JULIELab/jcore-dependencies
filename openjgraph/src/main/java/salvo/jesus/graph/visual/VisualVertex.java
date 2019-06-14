@@ -1,10 +1,13 @@
 package salvo.jesus.graph.visual;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.drawing.*;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.visual.drawing.VisualVertexPainter;
+
 import java.awt.*;
-import java.util.*;
-import java.awt.geom.*;
+import java.awt.geom.AffineTransform;
+import java.awt.geom.GeneralPath;
+import java.util.Random;
+import java.util.StringTokenizer;
 
 /**
  * The VisualVertex class encapsulates a Vertex with attributes

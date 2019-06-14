@@ -15,9 +15,12 @@
 package edu.umass.cs.mallet.base.types;
 
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
-import java.util.BitSet;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 /* Where will the new features get extracted in the Pipe? */
 

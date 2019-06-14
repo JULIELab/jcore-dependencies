@@ -4,11 +4,12 @@
  */
 package relations;
 
+import utils.DBUtils;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
 import java.util.*;
-import utils.DBUtils;
 
 /**
  *

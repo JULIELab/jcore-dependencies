@@ -1,10 +1,15 @@
 package salvo.jesus.graph.visual.drawing;
 
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
-import salvo.jesus.geom.*;
+import salvo.jesus.geom.Intersection;
+import salvo.jesus.graph.visual.Arrowhead;
+import salvo.jesus.graph.visual.VisualEdge;
+import salvo.jesus.graph.visual.VisualGraphComponent;
+import salvo.jesus.graph.visual.VisualVertex;
+
 import java.awt.*;
-import java.awt.geom.*;
+import java.awt.geom.GeneralPath;
+import java.awt.geom.Line2D;
+import java.awt.geom.PathIterator;
 
 /**
  * A weak implementation of the VisualDirectedEdgePainter interface.

@@ -1,6 +1,7 @@
 package dragon.onlinedb.citeulike;
 
-import dragon.onlinedb.*;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticleParser;
 import dragon.onlinedb.bibtex.BibTeXArticle;
 
 /**

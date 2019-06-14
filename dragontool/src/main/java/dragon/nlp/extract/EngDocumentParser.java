@@ -1,6 +1,7 @@
 package dragon.nlp.extract;
 
 import dragon.nlp.*;
+
 import java.util.ArrayList;
 
 /**

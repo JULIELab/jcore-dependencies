@@ -3,27 +3,14 @@
  */
 package cc.mallet.topics;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
+import cc.mallet.types.*;
+import cc.mallet.util.Randoms;
+import gnu.trove.TIntIntHashMap;
+
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.zip.GZIPOutputStream;
-
-import cc.mallet.types.FeatureCounter;
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.IDSorter;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelSequence;
-import cc.mallet.util.Randoms;
-import gnu.trove.TIntIntHashMap;
 
 /**
  * @author Limin Yao, David Mimno

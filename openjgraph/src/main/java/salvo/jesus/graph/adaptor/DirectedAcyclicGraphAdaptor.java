@@ -1,8 +1,15 @@
 package salvo.jesus.graph.adaptor;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.graph.listener.*;
-import java.util.*;
+
+import salvo.jesus.graph.CycleException;
+import salvo.jesus.graph.DirectedAcyclicGraph;
+import salvo.jesus.graph.DirectedGraph;
+import salvo.jesus.graph.Vertex;
+import salvo.jesus.graph.algorithm.CycleDetectionAlgorithm;
+import salvo.jesus.graph.algorithm.CycleDetectionAlgorithmDFS;
+import salvo.jesus.graph.algorithm.TopologicalSorting;
+import salvo.jesus.graph.listener.DirectedAcyclicGraphListener;
+
+import java.util.List;
 
 /**
  * DirectedAcyclicGraphAdaptor allows an underlying DirectedGraph to be viewed

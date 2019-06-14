@@ -15,10 +15,8 @@
 package edu.umass.cs.mallet.base.classify;
 
 import edu.umass.cs.mallet.base.types.Instance;
-import edu.umass.cs.mallet.base.types.Labeling;
-import edu.umass.cs.mallet.base.types.Labeling;
 import edu.umass.cs.mallet.base.types.LabelVector;
-import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.types.Labeling;
 
 /**
  * The result of classifying a single instance.

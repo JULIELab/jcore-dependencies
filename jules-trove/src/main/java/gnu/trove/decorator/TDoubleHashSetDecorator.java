@@ -18,13 +18,12 @@
 
 package gnu.trove.decorator;
 
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Set;
-
 import de.julielab.gnu.trove.TDoubleHashSet;
 import de.julielab.gnu.trove.TDoubleIterator;
+
+import java.util.AbstractSet;
+import java.util.Iterator;
+import java.util.Set;
 
 /**
  * Wrapper class to make a TDoubleHashSet conform to the <tt>java.util.Set</tt> API.

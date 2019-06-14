@@ -1,6 +1,9 @@
 package salvo.jesus.graph;
-import salvo.jesus.graph.listener.*;
-import java.util.*;
+
+import salvo.jesus.graph.listener.AbstractPathListener;
+
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * AbstractPathImpl is a partial implementation and common base

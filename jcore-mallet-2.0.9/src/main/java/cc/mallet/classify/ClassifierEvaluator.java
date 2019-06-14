@@ -1,10 +1,10 @@
 package cc.mallet.classify;
 
-import java.util.logging.Logger;
-
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 public abstract class ClassifierEvaluator 
 {

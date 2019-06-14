@@ -11,8 +11,8 @@
 
 package edu.umass.cs.mallet.base.pipe;
 
-import edu.umass.cs.mallet.base.util.CharSequenceLexer;
 import edu.umass.cs.mallet.base.types.Instance;
+
 import java.io.*;
 /**
  * Given a filename contained in a string, read in contents of file into a CharSequence.

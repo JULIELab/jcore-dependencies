@@ -1,8 +1,13 @@
 package dragon.nlp.ontology;
 
-import dragon.nlp.*;
-import dragon.nlp.tool.*;
-import dragon.util.*;
+import dragon.nlp.Sentence;
+import dragon.nlp.Term;
+import dragon.nlp.Word;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
+import dragon.util.EnvVariable;
+import dragon.util.FileUtil;
+
 import java.util.ArrayList;
 
 /**

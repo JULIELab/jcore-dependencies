@@ -1,7 +1,12 @@
 package dragon.onlinedb.amazon;
 
-import dragon.onlinedb.*;
-import dragon.util.*;
+import dragon.onlinedb.AbstractQuery;
+import dragon.onlinedb.Article;
+import dragon.onlinedb.BasicArticle;
+import dragon.util.FileUtil;
+import dragon.util.HttpUtil;
+import dragon.util.SortedArray;
+
 import java.io.BufferedWriter;
 
 /**

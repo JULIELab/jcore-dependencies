@@ -1,7 +1,8 @@
 package dragon.ml.seqmodel.model;
 
 import dragon.ml.seqmodel.data.DataSequence;
-import java.util.*;
+
+import java.util.StringTokenizer;
 
 /**
  * <p>Generic model graph </p>

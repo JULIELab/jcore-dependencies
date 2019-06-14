@@ -7,9 +7,6 @@
 
 package cc.mallet.fst.semi_supervised.pr;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.SumLattice;
 import cc.mallet.fst.Transducer;
@@ -19,6 +16,9 @@ import cc.mallet.types.LabelVector;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.types.Sequence;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * SumLatticeDefault that caches dot products.

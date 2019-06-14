@@ -1,9 +1,12 @@
 package dragon.ml.seqmodel.feature;
 
-import dragon.ml.seqmodel.data.*;
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import dragon.ml.seqmodel.data.DataSequence;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.StringTokenizer;
+import java.util.regex.Pattern;
 
 /**
  * ConcatRegexFeatures generates features by matching the token with the character patterns.

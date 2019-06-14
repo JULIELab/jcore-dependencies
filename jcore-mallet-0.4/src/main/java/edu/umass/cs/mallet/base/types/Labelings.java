@@ -11,8 +11,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.Label;
-
 /**
 	 A collection of labelings, either for a multi-label problem (all
 	 labels are part of the same label dictionary), or a factorized

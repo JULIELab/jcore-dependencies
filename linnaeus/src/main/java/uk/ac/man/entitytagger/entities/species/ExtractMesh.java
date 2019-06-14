@@ -1,19 +1,15 @@
 package uk.ac.man.entitytagger.entities.species;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-
 import martin.common.ArgParser;
 import uk.ac.man.documentparser.DocumentParser;
 import uk.ac.man.documentparser.dataholders.Document;
 import uk.ac.man.documentparser.input.DocumentIterator;
 import uk.ac.man.entitytagger.Mention;
+
+import java.io.*;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 
 public class ExtractMesh {
 

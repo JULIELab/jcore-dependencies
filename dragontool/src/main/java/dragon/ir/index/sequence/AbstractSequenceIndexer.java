@@ -1,10 +1,13 @@
 package dragon.ir.index.sequence;
 
-import dragon.ir.index.*;
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
-import dragon.onlinedb.*;
-import dragon.util.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.Indexer;
+import dragon.nlp.Token;
+import dragon.nlp.extract.ConceptExtractor;
+import dragon.onlinedb.Article;
+import dragon.util.FileUtil;
+
 import java.io.PrintWriter;
 import java.util.ArrayList;
 

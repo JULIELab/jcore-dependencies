@@ -1,14 +1,14 @@
 package uk.ac.man.entitytagger.entities.species;
 
+import martin.common.ArgParser;
+import martin.common.Misc;
+import martin.common.StreamIterator;
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.HashSet;
 import java.util.Set;
-
-import martin.common.ArgParser;
-import martin.common.Misc;
-import martin.common.StreamIterator;
 
 public class CatalogueOfLife {
 

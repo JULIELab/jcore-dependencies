@@ -1,8 +1,10 @@
 package dragon.config;
 
-import dragon.nlp.tool.*;
-import dragon.nlp.ontology.*;
-import dragon.nlp.ontology.umls.*;
+import dragon.nlp.ontology.BasicOntology;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.ontology.umls.UmlsAmbiguityOntology;
+import dragon.nlp.ontology.umls.UmlsFileBackedOntology;
+import dragon.nlp.tool.Lemmatiser;
 
 /**
  * <p>Ontology application configuration</p>

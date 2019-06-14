@@ -6,8 +6,10 @@
    information, see the file `LICENSE' included with this distribution. */
 package edu.umass.cs.mallet.base.util.tests;
 
-import junit.framework.*;
 import edu.umass.cs.mallet.base.util.Strings;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created: Jan 19, 2005

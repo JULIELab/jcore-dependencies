@@ -1,7 +1,7 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.tool.Tagger;
 
 /**
  * <p>Interface of Ontological Term Extractors</p>

@@ -25,12 +25,11 @@ import edu.umass.cs.mallet.base.maximize.Maximizer;
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import edu.umass.cs.mallet.base.classify.MaxEnt;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.BitSet;
 import java.util.logging.Logger;
-import java.text.DecimalFormat;
 
 public class MEMM extends CRF4 implements Serializable
 {

@@ -9,10 +9,10 @@ import is2.lemmatizer.Lemmatizer;
 import is2.lemmatizer.MFO;
 import is2.parser.Parser;
 import is2.tag.Tagger;
-//import org.apache.log4j.Logger;
 
 import java.io.File;
-import java.util.Arrays;
+
+//import org.apache.log4j.Logger;
 
 /**
  * Dependency parsing

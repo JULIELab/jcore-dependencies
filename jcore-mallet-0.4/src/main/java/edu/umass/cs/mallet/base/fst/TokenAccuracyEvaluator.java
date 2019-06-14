@@ -14,11 +14,14 @@
 
 package edu.umass.cs.mallet.base.fst;
 
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
+import edu.umass.cs.mallet.base.types.MatrixOps;
+import edu.umass.cs.mallet.base.types.Sequence;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 
-import java.util.logging.*;
-import java.io.*;
+import java.io.PrintStream;
+import java.util.logging.Logger;
 
 public class TokenAccuracyEvaluator extends TransducerEvaluator
 {

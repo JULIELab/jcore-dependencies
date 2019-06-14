@@ -1,9 +1,9 @@
 package salvo.jesus.graph.visual.drawing;
 
+import salvo.jesus.graph.visual.VisualGraphComponent;
+
 import java.awt.*;
-import java.io.*;
-import salvo.jesus.graph.*;
-import salvo.jesus.graph.visual.*;
+import java.io.Serializable;
 
 /**
  * An interface representing painters that are responsible for

@@ -1,6 +1,7 @@
 package dragon.ml.seqmodel.evaluate;
 
-import dragon.ml.seqmodel.data.*;
+import dragon.ml.seqmodel.data.DataSequence;
+import dragon.ml.seqmodel.data.Dataset;
 
 /**
  * <p>Token based evaluator</p>

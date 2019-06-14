@@ -1,19 +1,13 @@
 package uk.ac.man.documentparser.dataholders;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.HashMap;
-import java.util.HashSet;
-
 import martin.common.Misc;
 import martin.common.SQL;
+
+import java.io.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.HashMap;
+import java.util.HashSet;
 
 public class Document implements Serializable {
 	public enum Type {RESEARCH, REVIEW, OTHER}

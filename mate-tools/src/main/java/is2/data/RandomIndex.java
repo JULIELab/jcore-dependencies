@@ -3,8 +3,6 @@
  */
 package is2.data;
 
-import java.util.BitSet;
-
 import is2.util.DB;
 
 

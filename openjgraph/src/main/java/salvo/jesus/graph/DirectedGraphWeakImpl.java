@@ -1,9 +1,9 @@
 package salvo.jesus.graph;
 
+import salvo.jesus.graph.adaptor.GraphDelegator;
+
+import java.io.Serializable;
 import java.util.*;
-import java.io.*;
-import salvo.jesus.graph.algorithm.*;
-import salvo.jesus.graph.adaptor.*;
 
 /**
  * A weak implementation of the DirectedGraph interface.

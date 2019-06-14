@@ -7,11 +7,13 @@
 
 package cc.mallet.classify;
 
-import java.util.logging.*;
-
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSelection;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.util.logging.Logger;
 
 /**
  * This version of AdaBoost should be used only for binary classification.

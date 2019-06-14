@@ -24,8 +24,9 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.graphs;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import salvo.jesus.graph.*;
+
+import salvo.jesus.graph.VertexImpl;
+
 import java.util.Comparator;
 
 public class CompareVertices implements Comparator

@@ -11,8 +11,6 @@
 
 package edu.umass.cs.mallet.base.types;
 
-import edu.umass.cs.mallet.base.types.SparseVector;
-
 /**
 	 Stores a hash for each object being compared for efficient
 	 computation.

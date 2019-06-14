@@ -1,7 +1,7 @@
 package salvo.jesus.util;
 
+import java.io.Serializable;
 import java.util.Comparator;
-import java.io.*;
 
 /**
  * A Comparator to compare HeapNodes based on their priority.

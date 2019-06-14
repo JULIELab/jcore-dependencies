@@ -7,26 +7,18 @@
 
 package cc.mallet.classify;
 
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-import java.util.logging.Logger;
-
-import cc.mallet.classify.Classifier;
-import cc.mallet.classify.MaxEnt;
-import cc.mallet.classify.MaxEntOptimizableByLabelDistribution;
 import cc.mallet.classify.constraints.pr.MaxEntL2FLPRConstraints;
 import cc.mallet.classify.constraints.pr.MaxEntPRConstraint;
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizer;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelVector;
-import cc.mallet.types.MatrixOps;
-import cc.mallet.types.NullLabel;
+import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 
 /**

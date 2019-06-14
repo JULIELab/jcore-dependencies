@@ -11,23 +11,16 @@
 
 package cc.mallet.classify;
 
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Maths;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.logging.Logger;
-
-import cc.mallet.classify.Boostable;
-import cc.mallet.classify.Classification;
-import cc.mallet.classify.Classifier;
-import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.GainRatio;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.util.MalletLogger;
-import cc.mallet.util.Maths;
 
 
 /**

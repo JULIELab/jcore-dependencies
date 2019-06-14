@@ -1,9 +1,13 @@
 package salvo.jesus.util;
 
-import java.awt.*;
-import javax.swing.*;
-import java.awt.print.*;
 import org.apache.log4j.Category;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 /**
  * Generic printing utility.

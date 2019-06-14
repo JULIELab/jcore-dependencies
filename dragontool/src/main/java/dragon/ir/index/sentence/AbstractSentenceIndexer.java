@@ -1,9 +1,14 @@
 package dragon.ir.index.sentence;
 
 import dragon.ir.index.Indexer;
-import dragon.nlp.*;
+import dragon.nlp.Document;
+import dragon.nlp.DocumentParser;
+import dragon.nlp.Paragraph;
+import dragon.nlp.Sentence;
 import dragon.onlinedb.Article;
-import dragon.util.*;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
 import java.io.PrintWriter;
 
 /**

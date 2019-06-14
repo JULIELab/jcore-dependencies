@@ -1,33 +1,23 @@
 package uk.ac.man.documentparser.input;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.StringReader;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.util.logging.Logger;
+import martin.common.Misc;
+import martin.common.xml.MyNodeList;
+import martin.common.xml.XPath;
+import org.w3c.dom.Node;
+import org.xml.sax.InputSource;
+import uk.ac.man.documentparser.dataholders.Author;
+import uk.ac.man.documentparser.dataholders.Document;
+import uk.ac.man.documentparser.dataholders.Document.Type;
+import uk.ac.man.documentparser.dataholders.ExternalID;
+import uk.ac.man.documentparser.dataholders.ExternalID.Source;
+import uk.ac.man.documentparser.dataholders.Journal;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
-import martin.common.Misc;
-import martin.common.xml.EntityResolver;
-import martin.common.xml.MyNodeList;
-import martin.common.xml.XPath;
-
-import uk.ac.man.documentparser.dataholders.Author;
-import uk.ac.man.documentparser.dataholders.Document;
-import uk.ac.man.documentparser.dataholders.ExternalID;
-import uk.ac.man.documentparser.dataholders.Journal;
-import uk.ac.man.documentparser.dataholders.Document.Type;
-import uk.ac.man.documentparser.dataholders.ExternalID.Source;
+import java.io.File;
+import java.io.StringReader;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Elsevier implements DocumentIterator {
 	private boolean next=true;

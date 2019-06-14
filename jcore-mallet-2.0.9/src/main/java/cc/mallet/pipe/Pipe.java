@@ -11,19 +11,19 @@
 
 package cc.mallet.pipe;
 
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
-import java.util.logging.*;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.io.*;
-import java.rmi.dgc.VMID;
-
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.AlphabetCarrying;
 import cc.mallet.types.Instance;
 import cc.mallet.types.SingleInstanceIterator;
 import cc.mallet.util.MalletLogger;
+
+import java.io.*;
+import java.rmi.dgc.VMID;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
+import java.util.logging.Logger;
 /**
 	The abstract superclass of all Pipes, which transform one data type to another.
 	Pipes are most often used for feature extraction.

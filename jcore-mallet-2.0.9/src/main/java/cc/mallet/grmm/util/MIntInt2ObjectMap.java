@@ -7,13 +7,13 @@
 package cc.mallet.grmm.util;
 
 import gnu.trove.TIntObjectHashMap;
-import gnu.trove.TObjectProcedure;
 import gnu.trove.TIntObjectIterator;
+import gnu.trove.TObjectProcedure;
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * Hash map that maps integer pairs to objects.

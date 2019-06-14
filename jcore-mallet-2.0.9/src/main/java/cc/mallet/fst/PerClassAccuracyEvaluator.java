@@ -7,11 +7,11 @@
 package cc.mallet.fst;
 
 
-import java.util.logging.Logger;
-import java.text.DecimalFormat;
-
 import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
+
+import java.text.DecimalFormat;
+import java.util.logging.Logger;
 
 /**
  * Determines the precision, recall and F1 on a per-class basis.

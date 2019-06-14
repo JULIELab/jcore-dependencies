@@ -17,10 +17,10 @@ package edu.umass.cs.mallet.base.extract;
 import edu.umass.cs.mallet.base.types.LabelAlphabet;
 import edu.umass.cs.mallet.base.types.Sequence;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.io.PrintWriter;
 
 /**
  * The results of doing information extraction.  This is designed to handle

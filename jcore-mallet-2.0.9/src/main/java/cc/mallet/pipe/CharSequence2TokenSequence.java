@@ -15,15 +15,15 @@
 package cc.mallet.pipe;
 
 
-import java.io.*;
-import java.util.regex.Pattern;
-
 import cc.mallet.extract.StringSpan;
 import cc.mallet.extract.StringTokenization;
 import cc.mallet.types.Instance;
 import cc.mallet.types.SingleInstanceIterator;
 import cc.mallet.types.TokenSequence;
 import cc.mallet.util.CharSequenceLexer;
+
+import java.io.*;
+import java.util.regex.Pattern;
 
 /**
  *  Pipe that tokenizes a character sequence.  Expects a CharSequence

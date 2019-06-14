@@ -39,7 +39,7 @@
 package edu.umass.cs.mallet.base.classify.evaluate;
 
 import java.awt.*;
-import java.util.*;
+import java.util.Vector;
 
 /**
  * Methods for a 2-D graph

@@ -3,18 +3,16 @@ package com.aliasi.test.unit.io;
 import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
 import com.aliasi.util.Files;
-
 import org.junit.Test;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
 
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayWriter;
 import java.io.File;
 import java.io.IOException;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 public class ReportersTest {
 

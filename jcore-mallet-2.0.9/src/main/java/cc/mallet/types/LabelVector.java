@@ -14,9 +14,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.Label;
-import cc.mallet.types.RankedFeatureVector;
-
 public class LabelVector extends RankedFeatureVector implements Labeling
 {
 	public LabelVector (LabelAlphabet dict,

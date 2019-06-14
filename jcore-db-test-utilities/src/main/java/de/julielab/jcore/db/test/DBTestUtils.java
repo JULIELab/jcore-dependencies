@@ -1,10 +1,9 @@
 package de.julielab.jcore.db.test;
 
-import de.julielab.xmlData.Constants;
-import de.julielab.xmlData.dataBase.DataBaseConnector;
+import de.julielab.costosys.Constants;
+import de.julielab.costosys.dbconnection.DataBaseConnector;
 import org.apache.commons.configuration2.XMLConfiguration;
 import org.apache.commons.configuration2.ex.ConfigurationException;
-import org.apache.commons.configuration2.io.FileBased;
 import org.apache.commons.configuration2.io.FileHandler;
 import org.testcontainers.containers.PostgreSQLContainer;
 

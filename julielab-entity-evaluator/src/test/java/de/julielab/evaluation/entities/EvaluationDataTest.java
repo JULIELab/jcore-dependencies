@@ -1,12 +1,11 @@
 package de.julielab.evaluation.entities;
 
-import static org.junit.Assert.*;
+import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
+import org.junit.Test;
 
 import java.io.File;
 
-import org.junit.Test;
-
-import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
+import static org.junit.Assert.*;
 
 public class EvaluationDataTest {
 	@Test

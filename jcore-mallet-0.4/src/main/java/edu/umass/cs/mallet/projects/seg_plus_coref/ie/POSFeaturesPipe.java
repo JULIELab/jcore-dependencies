@@ -12,11 +12,14 @@
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.ie;
 
-import edu.umass.cs.mallet.projects.seg_plus_coref.ie.IEInterface3;
-import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.Sequence;
+import edu.umass.cs.mallet.base.types.Token;
+import edu.umass.cs.mallet.base.types.TokenSequence;
+
 import java.io.*;
-import java.util.logging.*;
+import java.util.logging.Logger;
 
 
 public class POSFeaturesPipe extends Pipe implements Serializable

@@ -8,7 +8,6 @@ package edu.umass.cs.mallet.base.pipe.tsf;
 
 import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.util.PropertyList;
 import edu.umass.cs.mallet.base.util.Maths;
 
 import java.io.PrintWriter;

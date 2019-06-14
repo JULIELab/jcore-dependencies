@@ -1,6 +1,6 @@
 package salvo.jesus.graph;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * A interface for a visitor in the Visitor Pattern.

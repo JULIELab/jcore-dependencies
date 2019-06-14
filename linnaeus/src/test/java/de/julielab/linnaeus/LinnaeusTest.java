@@ -1,16 +1,15 @@
 package de.julielab.linnaeus;
 
-import static org.junit.Assert.*;
+import martin.common.ArgParser;
+import org.junit.Test;
+import uk.ac.man.entitytagger.EntityTagger;
+import uk.ac.man.entitytagger.Mention;
+import uk.ac.man.entitytagger.matching.Matcher;
 
 import java.util.List;
 import java.util.logging.Logger;
 
-import org.junit.Test;
-
-import martin.common.ArgParser;
-import uk.ac.man.entitytagger.EntityTagger;
-import uk.ac.man.entitytagger.Mention;
-import uk.ac.man.entitytagger.matching.Matcher;
+import static org.junit.Assert.assertEquals;
 
 public class LinnaeusTest {
 	@Test

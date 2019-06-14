@@ -2,19 +2,14 @@ package com.aliasi.test.unit.io;
 
 import com.aliasi.io.BitInput;
 import com.aliasi.io.BitOutput;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-
-
-import java.io.IOException;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-
+import java.io.IOException;
 import java.util.Random;
+
+import static junit.framework.Assert.*;
 
 public class BitInputTest  {
 

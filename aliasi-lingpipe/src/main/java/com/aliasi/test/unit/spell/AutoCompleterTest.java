@@ -3,20 +3,14 @@ package com.aliasi.test.unit.spell;
 import com.aliasi.spell.AutoCompleter;
 import com.aliasi.spell.FixedWeightEditDistance;
 import com.aliasi.spell.WeightedEditDistance;
-
 import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Scored;
 import com.aliasi.util.ScoredObject;
-
 import org.junit.Test;
+
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Random;
-import java.util.SortedSet;
 
 public class AutoCompleterTest {
 

@@ -1,8 +1,11 @@
 package dragon.ir.classification.featureselection;
 
 import dragon.ir.classification.DocClassSet;
-import dragon.ir.index.*;
-import dragon.matrix.*;
+import dragon.ir.index.IRTerm;
+import dragon.ir.index.IndexReader;
+import dragon.matrix.IntDenseMatrix;
+import dragon.matrix.SparseMatrix;
+
 import java.util.ArrayList;
 
 /**

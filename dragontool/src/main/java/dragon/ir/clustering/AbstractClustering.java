@@ -1,7 +1,8 @@
 package dragon.ir.clustering;
 
 import dragon.ir.clustering.featurefilter.FeatureFilter;
-import dragon.ir.index.*;
+import dragon.ir.index.IRDoc;
+import dragon.ir.index.IndexReader;
 
 /**
  * <p>Abstract class for document clustering </p>

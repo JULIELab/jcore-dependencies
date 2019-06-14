@@ -1,7 +1,9 @@
 package salvo.jesus.graph.visual.layout;
 
-import salvo.jesus.graph.visual.*;
-import java.util.*;
+import salvo.jesus.graph.visual.VisualGraph;
+import salvo.jesus.graph.visual.VisualVertex;
+
+import java.util.EventObject;
 
 /**
  * This is a general purpose graph layout event that is used to notify

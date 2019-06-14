@@ -1,7 +1,7 @@
 package dragon.util;
 
-import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * <p>Converting character number to digit number</p>

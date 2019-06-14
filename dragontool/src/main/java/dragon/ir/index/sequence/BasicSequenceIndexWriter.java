@@ -1,8 +1,12 @@
 package dragon.ir.index.sequence;
 
-import dragon.ir.index.*;
-import dragon.nlp.*;
+import dragon.ir.index.BasicIRDocIndexList;
+import dragon.ir.index.BasicIRTermIndexList;
+import dragon.ir.index.FileIndex;
+import dragon.ir.index.IRCollection;
+import dragon.nlp.SimpleElementList;
 import dragon.util.SortedArray;
+
 import java.io.File;
 
 /**

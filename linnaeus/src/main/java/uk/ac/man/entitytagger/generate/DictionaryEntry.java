@@ -1,9 +1,10 @@
 package uk.ac.man.entitytagger.generate;
 
+import dk.brics.automaton.RegExp;
+
 import java.sql.PreparedStatement;
 import java.util.Set;
 import java.util.regex.Pattern;
-import dk.brics.automaton.RegExp;
 
 /**
  * A class representing a dictionary entry of some object, consisting of a number of regular expression synonyms and an id.

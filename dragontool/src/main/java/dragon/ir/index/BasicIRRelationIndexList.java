@@ -1,8 +1,12 @@
 package dragon.ir.index;
 
 import dragon.nlp.compare.IndexComparator;
-import dragon.util.*;
-import java.io.*;
+import dragon.util.ByteArrayConvert;
+import dragon.util.FastBinaryReader;
+import dragon.util.FileUtil;
+import dragon.util.SortedArray;
+
+import java.io.RandomAccessFile;
 
 /**
  * <p>The class is used to write or load the relation indexing information for a given IR relation or relation set </p>

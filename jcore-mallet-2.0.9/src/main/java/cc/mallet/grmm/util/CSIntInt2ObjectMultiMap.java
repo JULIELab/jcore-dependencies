@@ -9,8 +9,8 @@ package cc.mallet.grmm.util;
 import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TObjectProcedure;
 
-import java.util.List;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A map that maps (int, int) --> object, where each (int,int) key

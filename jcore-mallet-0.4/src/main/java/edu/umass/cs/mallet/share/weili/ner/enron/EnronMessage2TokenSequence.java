@@ -12,12 +12,13 @@
 
 package edu.umass.cs.mallet.share.weili.ner.enron;
 
-import edu.umass.cs.mallet.base.pipe.*;
+import edu.umass.cs.mallet.base.pipe.Pipe;
 import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.share.weili.ner.*;
-import java.util.regex.*;
-import java.util.*;
+import edu.umass.cs.mallet.share.weili.ner.WordTransformation;
+
 import java.io.*;
+import java.util.HashSet;
+import java.util.StringTokenizer;
 
 public class EnronMessage2TokenSequence extends Pipe implements Serializable
 {

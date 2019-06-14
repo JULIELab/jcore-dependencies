@@ -1,13 +1,13 @@
 package cc.mallet.topics;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.io.*;
-
 import cc.mallet.types.*;
 import cc.mallet.util.Randoms;
+import gnu.trove.TIntIntHashMap;
+import gnu.trove.TObjectDoubleHashMap;
 
-import gnu.trove.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class HierarchicalLDA {
 

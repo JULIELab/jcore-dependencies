@@ -18,16 +18,14 @@ package com.aliasi.test.unit.sentences;
 
 import com.aliasi.sentences.HeuristicSentenceModel;
 import com.aliasi.sentences.SentenceModel;
-
 import org.junit.Test;
+
+import java.util.Arrays;
+import java.util.HashSet;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
 import static org.junit.Assert.assertArrayEquals;
-
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 
 public class HeuristicSentenceModelTest  {

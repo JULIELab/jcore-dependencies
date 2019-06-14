@@ -1,8 +1,9 @@
 package salvo.jesus.graph.visual;
 
-import salvo.jesus.graph.*;
-import java.awt.event.*;
+import salvo.jesus.graph.Vertex;
+
 import java.awt.*;
+import java.awt.event.MouseEvent;
 
 /**
  * State object that represents the vertex mode in a GraphPanel.

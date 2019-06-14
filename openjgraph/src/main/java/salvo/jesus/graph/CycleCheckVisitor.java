@@ -1,6 +1,6 @@
 package salvo.jesus.graph;
 
-import java.io.*;
+import java.io.Serializable;
 
 /**
  * This is a non-public class the extends salvo.jesus.graph.Vistor

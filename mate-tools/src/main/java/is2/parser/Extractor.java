@@ -1,22 +1,7 @@
 package is2.parser;
 
 
-
-import java.util.concurrent.atomic.AtomicInteger;
-
-import is2.data.Cluster;
-import is2.data.D4;
-import is2.data.D6;
-import is2.data.DX;
-
-import is2.data.DataFES;
-import is2.data.F2SF;
-import is2.data.FV;
-import is2.data.IFV;
-import is2.data.Instances;
-import is2.data.Long2IntInterface;
-
-
+import is2.data.*;
 import is2.util.DB;
 import is2.util.OptionsSuper;
 

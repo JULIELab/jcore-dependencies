@@ -6,18 +6,19 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import junit.framework.*;
-import junit.textui.TestRunner;
-
-import java.util.Random;
-import java.util.Iterator;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
-import java.io.IOException;
-
 import cc.mallet.grmm.inference.*;
 import cc.mallet.grmm.types.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import junit.textui.TestRunner;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Iterator;
+import java.util.Random;
 
 
 /**

@@ -7,15 +7,15 @@
 
 package cc.mallet.grmm.test;
 
-import junit.framework.*;
-
-import java.util.List;
-import java.util.ArrayList;
-
 import cc.mallet.grmm.inference.Inferencer;
 import cc.mallet.grmm.inference.TRP;
 import cc.mallet.grmm.types.*;
 import cc.mallet.util.Randoms;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * $Id: TestAbstractBeliefPropagation.java,v 1.1 2007/10/22 21:37:40 mccallum Exp $

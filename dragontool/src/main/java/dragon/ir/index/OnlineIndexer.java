@@ -1,9 +1,12 @@
 package dragon.ir.index;
 
 import dragon.matrix.IntSparseMatrix;
-import dragon.nlp.*;
-import dragon.nlp.extract.*;
-import dragon.onlinedb.*;
+import dragon.nlp.SimpleElementList;
+import dragon.nlp.SimplePairList;
+import dragon.nlp.extract.ConceptExtractor;
+import dragon.nlp.extract.TripleExtractor;
+import dragon.onlinedb.Article;
+
 import java.util.ArrayList;
 
 /**

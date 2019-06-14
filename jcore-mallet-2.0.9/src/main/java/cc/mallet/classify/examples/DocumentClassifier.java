@@ -18,12 +18,14 @@
 
 package cc.mallet.classify.examples;
 
-import java.io.*;
-
-import cc.mallet.classify.*;
+import cc.mallet.classify.Classifier;
+import cc.mallet.classify.ClassifierTrainer;
+import cc.mallet.classify.NaiveBayesTrainer;
 import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
+import cc.mallet.pipe.iterator.FileIterator;
+import cc.mallet.types.InstanceList;
+
+import java.io.File;
 
 public class DocumentClassifier
 {

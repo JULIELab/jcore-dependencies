@@ -2,8 +2,6 @@ package de.julielab.evaluation.entities;
 
 import java.util.Set;
 
-import com.google.common.collect.Sets.SetView;
-
 public class EvaluationDataEntrySets {
 	public EvaluationDataEntrySets(Set<EvaluationDataEntry> tpSet, Set<EvaluationDataEntry> fpSet,
 			Set<EvaluationDataEntry> fnSet) {

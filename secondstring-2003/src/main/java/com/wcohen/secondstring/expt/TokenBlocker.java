@@ -1,6 +1,9 @@
 package com.wcohen.secondstring.expt;
 
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.SimpleTokenizer;
+import com.wcohen.secondstring.tokens.Token;
+import com.wcohen.secondstring.tokens.Tokenizer;
+
 import java.util.*;
 
 /**

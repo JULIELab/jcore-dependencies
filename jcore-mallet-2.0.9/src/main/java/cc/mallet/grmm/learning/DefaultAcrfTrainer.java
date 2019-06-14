@@ -7,6 +7,15 @@
 
 package cc.mallet.grmm.learning;
 
+import cc.mallet.grmm.learning.ACRF.MaximizableACRF;
+import cc.mallet.grmm.util.LabelsAssignment;
+import cc.mallet.optimize.ConjugateGradient;
+import cc.mallet.optimize.LimitedMemoryBFGS;
+import cc.mallet.optimize.Optimizable;
+import cc.mallet.optimize.Optimizer;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Timing;
 import gnu.trove.TIntArrayList;
 
 import java.io.File;
@@ -17,18 +26,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Logger;
-
-import cc.mallet.grmm.learning.ACRF;
-import cc.mallet.grmm.learning.ACRFEvaluator;
-import cc.mallet.grmm.learning.ACRF.MaximizableACRF;
-import cc.mallet.grmm.util.LabelsAssignment;
-import cc.mallet.optimize.ConjugateGradient;
-import cc.mallet.optimize.LimitedMemoryBFGS;
-import cc.mallet.optimize.Optimizable;
-import cc.mallet.optimize.Optimizer;
-import cc.mallet.types.*;
-import cc.mallet.util.MalletLogger;
-import cc.mallet.util.Timing;
 
 
 /**

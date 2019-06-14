@@ -1,9 +1,10 @@
 package salvo.jesus.graph.javax.swing;
 
-import java.awt.event.*;
-import java.awt.*;
 import javax.swing.*;
-import java.io.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.Serializable;
 
 /**
  * Listens for both button clicks / press on a JButton representing a color and

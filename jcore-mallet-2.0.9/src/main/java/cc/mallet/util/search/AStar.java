@@ -1,10 +1,10 @@
 package cc.mallet.util.search;
 
 
+import cc.mallet.util.MalletLogger;
+
 import java.util.Iterator;
 import java.util.logging.Logger;
-
-import cc.mallet.util.MalletLogger;
 
 /**
  * Created by IntelliJ IDEA.

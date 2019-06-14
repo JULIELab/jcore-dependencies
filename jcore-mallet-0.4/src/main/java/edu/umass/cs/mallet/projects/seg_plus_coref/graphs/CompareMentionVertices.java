@@ -24,8 +24,10 @@
  */
 
 package edu.umass.cs.mallet.projects.seg_plus_coref.graphs;
-import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.*;
-import salvo.jesus.graph.*;
+
+import edu.umass.cs.mallet.projects.seg_plus_coref.anaphora.CompareMentions;
+import salvo.jesus.graph.VertexImpl;
+
 import java.util.Comparator;
 
 // NOTE: This comparator imposes orderings inconsistent with equals

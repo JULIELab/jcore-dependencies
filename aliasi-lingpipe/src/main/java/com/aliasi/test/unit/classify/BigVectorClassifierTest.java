@@ -2,19 +2,17 @@ package com.aliasi.test.unit.classify;
 
 import com.aliasi.classify.BigVectorClassifier;
 import com.aliasi.classify.ScoredClassification;
-import com.aliasi.matrix.Vector;
 import com.aliasi.matrix.SparseFloatVector;
+import com.aliasi.matrix.Vector;
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.HashSet;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import java.io.IOException;
-
-import java.util.HashSet;
-import java.util.Set;
 
 
 public class BigVectorClassifierTest {

@@ -14,8 +14,6 @@
 
 package edu.umass.cs.mallet.base.minimize;
 
-import edu.umass.cs.mallet.base.types.Matrix;
-
 public interface Minimizer
 {
 	// Returns true if it has converged

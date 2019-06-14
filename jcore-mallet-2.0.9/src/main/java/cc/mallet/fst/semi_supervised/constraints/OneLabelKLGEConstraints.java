@@ -7,11 +7,10 @@
 
 package cc.mallet.fst.semi_supervised.constraints;
 
-import gnu.trove.TIntObjectHashMap;
-
 import cc.mallet.fst.semi_supervised.StateLabelMap;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.Maths;
+import gnu.trove.TIntObjectHashMap;
 
 /** 
  * A set of constraints on distributions over consecutive

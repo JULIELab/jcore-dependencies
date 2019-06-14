@@ -1,7 +1,9 @@
 package dragon.ir.index.sentence;
 
-import dragon.ir.index.*;
+import dragon.ir.index.BasicIndexReader;
+import dragon.ir.index.FileIndex;
 import dragon.onlinedb.BasicCollectionReader;
+
 import java.io.File;
 /**
  * <p>Basic index reader for reading sentence indexing information </p>

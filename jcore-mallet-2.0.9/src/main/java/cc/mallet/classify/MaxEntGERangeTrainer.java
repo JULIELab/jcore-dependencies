@@ -7,11 +7,6 @@
 
 package cc.mallet.classify;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.logging.Logger;
-
 import cc.mallet.classify.constraints.ge.MaxEntGEConstraint;
 import cc.mallet.classify.constraints.ge.MaxEntRangeL2FLGEConstraints;
 import cc.mallet.optimize.LimitedMemoryBFGS;
@@ -20,6 +15,11 @@ import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.MalletProgressMessageLogger;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  * Training of MaxEnt models with labeled features using

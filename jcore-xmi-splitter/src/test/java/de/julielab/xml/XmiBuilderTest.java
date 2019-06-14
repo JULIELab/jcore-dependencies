@@ -2,7 +2,6 @@ package de.julielab.xml;
 
 import de.julielab.jcore.types.AutoDescriptor;
 import de.julielab.jcore.types.DocumentClass;
-import de.julielab.jcore.types.Gene;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
@@ -21,7 +20,8 @@ import java.io.InputStream;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
 
 public class XmiBuilderTest {
 

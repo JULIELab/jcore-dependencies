@@ -11,9 +11,10 @@
 
 package edu.umass.cs.mallet.base.fst.confidence;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.fst.*;
-import java.util.*;
+import edu.umass.cs.mallet.base.fst.Segment;
+import edu.umass.cs.mallet.base.fst.Transducer;
+
+import java.util.Random;
 
 /** Randomly assigns values between 0-1 to the confidence of a {@link
  * Segment}. Used as baseline to compare with other methods.

@@ -1,5 +1,7 @@
 package salvo.jesus.graph.listener;
-import salvo.jesus.graph.*;
+
+import salvo.jesus.graph.GraphListener;
+import salvo.jesus.graph.Vertex;
 
 /**
  * AbstractPathListener represents a common interface for

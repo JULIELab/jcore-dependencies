@@ -15,11 +15,11 @@
 package cc.mallet.extract;
 
 
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.IOException;
-
 import cc.mallet.types.Token;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /** A sub-section of a linear string. */
 

@@ -7,11 +7,13 @@
 
 package edu.umass.cs.mallet.base.classify;
 
+import edu.umass.cs.mallet.base.types.FeatureSelection;
+import edu.umass.cs.mallet.base.types.Instance;
+import edu.umass.cs.mallet.base.types.InstanceList;
 import edu.umass.cs.mallet.base.util.MalletLogger;
 import edu.umass.cs.mallet.base.util.Maths;
-import edu.umass.cs.mallet.base.types.*;
-import java.util.Random;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 /**
  * This version of AdaBoost should be used only for binary classification.

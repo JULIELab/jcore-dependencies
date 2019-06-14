@@ -1,7 +1,6 @@
 package com.wcohen.secondstring;
 
-import java.util.*;
-import com.wcohen.secondstring.tokens.*;
+import com.wcohen.secondstring.tokens.Token;
 
 /**
  * Jensen-Shannon distance of two unsmoothed unigram language models.

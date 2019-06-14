@@ -1,6 +1,7 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.nlp.ontology.*;
+import dragon.nlp.ontology.Ontology;
+import dragon.nlp.ontology.SemanticNet;
 /**
  * <p>UMLS semantic net for semantic relation operations</p>
  * <p></p>

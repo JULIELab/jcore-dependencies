@@ -14,16 +14,12 @@
 
 package edu.umass.cs.mallet.base.pipe.iterator;
 
-import java.util.Iterator;
-import java.util.ArrayList;
-import java.io.*;
-import java.net.URI;
-import java.net.URISyntaxException;
-import edu.umass.cs.mallet.base.types.Alphabet;
-import edu.umass.cs.mallet.base.types.Label;
 import edu.umass.cs.mallet.base.types.Instance;
 import edu.umass.cs.mallet.base.util.ArrayListUtils;
-import edu.umass.cs.mallet.base.pipe.Pipe;
+
+import java.net.URI;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 public class ArrayDataAndTargetIterator extends AbstractPipeInputIterator
 {

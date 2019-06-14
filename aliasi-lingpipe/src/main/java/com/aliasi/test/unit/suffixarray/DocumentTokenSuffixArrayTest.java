@@ -2,17 +2,11 @@ package com.aliasi.test.unit.suffixarray;
 
 import com.aliasi.suffixarray.DocumentTokenSuffixArray;
 import com.aliasi.suffixarray.TokenSuffixArray;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.Tokenization;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.CollectionUtils;
-
 import org.junit.Test;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static org.junit.Assert.assertArrayEquals;
 
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +14,8 @@ import java.util.Map;
 import java.util.Set;
 
 import static com.aliasi.suffixarray.DocumentTokenSuffixArray.largestWithoutGoingOver;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 public class DocumentTokenSuffixArrayTest {
 

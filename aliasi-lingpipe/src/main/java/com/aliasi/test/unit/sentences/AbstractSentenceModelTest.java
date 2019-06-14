@@ -2,16 +2,14 @@ package com.aliasi.test.unit.sentences;
 
 import com.aliasi.sentences.AbstractSentenceModel;
 import com.aliasi.sentences.SentenceModel;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 
 import java.util.ArrayList;
 import java.util.Collection;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 
 public class AbstractSentenceModelTest  {

@@ -2,8 +2,8 @@ package com.aliasi.io;
 
 import com.aliasi.util.Math;
 
-import java.io.InputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 /** 
  * A <code>BitInput</code> wraps an underlying input stream to provide

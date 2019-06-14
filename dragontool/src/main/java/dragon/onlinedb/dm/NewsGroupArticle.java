@@ -1,8 +1,10 @@
 package dragon.onlinedb.dm;
 
-import dragon.onlinedb.*;
-import dragon.util.*;
-import java.io.*;
+import dragon.onlinedb.BasicArticle;
+import dragon.util.FileUtil;
+
+import java.io.BufferedReader;
+import java.io.File;
 
 /**
  * <p>20 news group article parser </p>

@@ -1,7 +1,7 @@
 package martin.common.compthreads;
 
 import java.util.ArrayList;
-import java.util.concurrent.*;
+import java.util.concurrent.Semaphore;
 
 /**
  * Class for facilitating parallelized computations. 

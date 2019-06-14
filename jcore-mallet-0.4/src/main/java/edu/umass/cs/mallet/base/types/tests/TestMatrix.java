@@ -15,7 +15,9 @@
 package edu.umass.cs.mallet.base.types.tests;
 
 import edu.umass.cs.mallet.base.types.DenseVector;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestMatrix extends TestCase
 {

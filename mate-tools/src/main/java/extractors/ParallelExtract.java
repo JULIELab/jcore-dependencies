@@ -1,12 +1,6 @@
 package extractors;
 
-import is2.data.Cluster;
-import is2.data.DataF;
-import is2.data.Edges;
-import is2.data.F2SF;
-import is2.data.FV;
-import is2.data.Instances;
-import is2.data.Long2IntInterface;
+import is2.data.*;
 
 import java.util.ArrayList;
 import java.util.concurrent.Callable;

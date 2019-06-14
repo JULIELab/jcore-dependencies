@@ -1,7 +1,8 @@
 package dragon.nlp.extract;
 
-import dragon.nlp.tool.*;
-import dragon.nlp.ontology.*;
+import dragon.nlp.ontology.Vocabulary;
+import dragon.nlp.tool.Lemmatiser;
+import dragon.nlp.tool.Tagger;
 
 /**
  * <p>Abstract class for phrase extraction </p>

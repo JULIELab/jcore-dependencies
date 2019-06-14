@@ -25,11 +25,10 @@
 
 package edu.umass.cs.mallet.base.minimize;
 
-import edu.umass.cs.mallet.base.minimize.LineMinimizer;
-import edu.umass.cs.mallet.base.minimize.Minimizable;
 import edu.umass.cs.mallet.base.types.Matrix;
 import edu.umass.cs.mallet.base.util.MalletLogger;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 // "Routine for Initially Bracketing a Minimum", p401, "Numeric Recipes in C"
 

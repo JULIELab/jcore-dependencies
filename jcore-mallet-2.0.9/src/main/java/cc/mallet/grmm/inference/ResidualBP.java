@@ -7,17 +7,17 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.Variable;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.Random;
 
 /**
  * A dynamic BP schedule where 

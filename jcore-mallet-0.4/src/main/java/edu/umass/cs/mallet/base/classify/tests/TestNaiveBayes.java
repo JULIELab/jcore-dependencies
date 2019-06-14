@@ -14,14 +14,19 @@
 
 package edu.umass.cs.mallet.base.classify.tests;
 
-import edu.umass.cs.mallet.base.types.*;
-import edu.umass.cs.mallet.base.classify.*;
+import edu.umass.cs.mallet.base.classify.Classification;
+import edu.umass.cs.mallet.base.classify.Classifier;
+import edu.umass.cs.mallet.base.classify.NaiveBayes;
+import edu.umass.cs.mallet.base.classify.NaiveBayesTrainer;
 import edu.umass.cs.mallet.base.pipe.*;
-import edu.umass.cs.mallet.base.util.*;
 import edu.umass.cs.mallet.base.pipe.iterator.ArrayIterator;
 import edu.umass.cs.mallet.base.pipe.iterator.FileIterator;
-import junit.framework.*;
-import java.net.URI;
+import edu.umass.cs.mallet.base.types.*;
+import edu.umass.cs.mallet.base.util.Random;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
 import java.io.File;
 
 public class TestNaiveBayes extends TestCase

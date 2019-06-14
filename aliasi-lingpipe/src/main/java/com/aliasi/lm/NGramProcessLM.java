@@ -17,23 +17,13 @@
 package com.aliasi.lm;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.io.BitInput;
 import com.aliasi.io.BitOutput;
-
 import com.aliasi.stats.Model;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Strings;
 
-import java.io.Externalizable;
-import java.io.InputStream;
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.OutputStream;
-import java.io.Serializable;
-
+import java.io.*;
 import java.util.LinkedList;
 
 /**

@@ -1,7 +1,7 @@
 package dragon.nlp.ontology.umls;
 
-import dragon.nlp.ontology.*;
-import dragon.nlp.tool.*;
+import dragon.nlp.ontology.AbstractOntology;
+import dragon.nlp.tool.Lemmatiser;
 /**
  * <p>Universal Medical Langauge System (UMLS) ontology </p>
  * <p></p>

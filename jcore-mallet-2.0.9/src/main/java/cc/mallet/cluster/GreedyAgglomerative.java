@@ -1,7 +1,5 @@
 package cc.mallet.cluster;
 
-import java.util.logging.Logger;
-
 import cc.mallet.cluster.neighbor_evaluator.AgglomerativeNeighbor;
 import cc.mallet.cluster.neighbor_evaluator.Neighbor;
 import cc.mallet.cluster.neighbor_evaluator.NeighborEvaluator;
@@ -11,6 +9,8 @@ import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletProgressMessageLogger;
+
+import java.util.logging.Logger;
 
 
 /**

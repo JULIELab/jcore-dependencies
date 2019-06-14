@@ -12,7 +12,11 @@
 package edu.umass.cs.mallet.base.pipe;
 
 import edu.umass.cs.mallet.base.types.*;
-import java.io.*;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * convert the property list on a token into a feature vector
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

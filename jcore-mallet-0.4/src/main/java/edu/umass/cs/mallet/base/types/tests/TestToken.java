@@ -14,15 +14,15 @@
 
 package edu.umass.cs.mallet.base.types.tests;
 
-import edu.umass.cs.mallet.base.types.Token;
-import edu.umass.cs.mallet.base.types.FeatureVector;
 import edu.umass.cs.mallet.base.types.Alphabet;
-import junit.framework.*;
+import edu.umass.cs.mallet.base.types.FeatureVector;
+import edu.umass.cs.mallet.base.types.Token;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
-
-import java.net.URI;
-import java.net.URL;
 import java.io.File;
+import java.net.URI;
 
 public class TestToken extends TestCase
 {

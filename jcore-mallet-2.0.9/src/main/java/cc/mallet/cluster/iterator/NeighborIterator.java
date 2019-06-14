@@ -1,9 +1,9 @@
 package cc.mallet.cluster.iterator;
 
-import java.util.Iterator;
-
 import cc.mallet.cluster.Clustering;
 import cc.mallet.types.Instance;
+
+import java.util.Iterator;
 
 /**
  * Sample Instances with data objects equal to {@link Neighbor}s. This

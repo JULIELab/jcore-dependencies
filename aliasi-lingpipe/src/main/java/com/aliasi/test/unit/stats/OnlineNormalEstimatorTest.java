@@ -1,15 +1,11 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.OnlineNormalEstimator;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import java.util.Random;
+
+import static junit.framework.Assert.assertEquals;
 
 public class OnlineNormalEstimatorTest {
 
