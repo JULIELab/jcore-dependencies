@@ -1,16 +1,16 @@
 
-/* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
+/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.cas.Feature;
-import org.apache.uima.cas.Type;
-import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.FeatureImpl;
+import org.apache.uima.cas.Feature;
 
 /** Token annotation marks the span of a token and takes all additional annotations that are on the token level, including Part-of-Speech information, lemma, stemmed form,  grammatical features such as gender, number and orthographical information; furthemore, Token includes the information about dependency relations to other tokens (see correspondent annotation types for further infromation).
- * Updated by JCasGen Wed Aug 08 13:36:50 CEST 2018
+ * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
  * @generated */
 public class Token_Type extends Annotation_Type {
   /** @generated */
@@ -320,6 +320,57 @@ public class Token_Type extends Annotation_Type {
     ll_cas.ll_setStringArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_hypernyms), i, v);
   }
  
+ 
+  /** @generated */
+  final Feature casFeat_embeddingVectors;
+  /** @generated */
+  final int     casFeatCode_embeddingVectors;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getEmbeddingVectors(int addr) {
+        if (featOkTst && casFeat_embeddingVectors == null)
+      jcas.throwFeatMissing("embeddingVectors", "de.julielab.jcore.types.Token");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setEmbeddingVectors(int addr, int v) {
+        if (featOkTst && casFeat_embeddingVectors == null)
+      jcas.throwFeatMissing("embeddingVectors", "de.julielab.jcore.types.Token");
+    ll_cas.ll_setRefValue(addr, casFeatCode_embeddingVectors, v);}
+    
+   /** @generated
+   * @param addr low level Feature Structure reference
+   * @param i index of item in the array
+   * @return value at index i in the array 
+   */
+  public int getEmbeddingVectors(int addr, int i) {
+        if (featOkTst && casFeat_embeddingVectors == null)
+      jcas.throwFeatMissing("embeddingVectors", "de.julielab.jcore.types.Token");
+    if (lowLevelTypeChecks)
+      return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors), i, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors), i);
+	return ll_cas.ll_getRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors), i);
+  }
+   
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param i index of item in the array
+   * @param v value to set
+   */ 
+  public void setEmbeddingVectors(int addr, int i, int v) {
+        if (featOkTst && casFeat_embeddingVectors == null)
+      jcas.throwFeatMissing("embeddingVectors", "de.julielab.jcore.types.Token");
+    if (lowLevelTypeChecks)
+      ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors), i, v, true);
+    jcas.checkArrayBounds(ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors), i);
+    ll_cas.ll_setRefArrayValue(ll_cas.ll_getRefValue(addr, casFeatCode_embeddingVectors), i, v);
+  }
+ 
 
 
 
@@ -363,6 +414,10 @@ public class Token_Type extends Annotation_Type {
  
     casFeat_hypernyms = jcas.getRequiredFeatureDE(casType, "hypernyms", "uima.cas.StringArray", featOkTst);
     casFeatCode_hypernyms  = (null == casFeat_hypernyms) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_hypernyms).getCode();
+
+ 
+    casFeat_embeddingVectors = jcas.getRequiredFeatureDE(casType, "embeddingVectors", "uima.cas.FSArray", featOkTst);
+    casFeatCode_embeddingVectors  = (null == casFeat_embeddingVectors) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_embeddingVectors).getCode();
 
   }
 }

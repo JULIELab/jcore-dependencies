@@ -171,7 +171,8 @@ public class VtdXmlXmiSplitterTest {
 
         assertThat(result.currentSofaIdMap).hasSize(1);
         assertThat(result.maxXmiId).isGreaterThan(1);
-        assertThat(result.namespaces).hasSize(6);
+        // {pubmed=http:///de/julielab/jcore/types/pubmed.ecore, types=http:///de/julielab/jcore/types.ecore, cas=http:///uima/cas.ecore, xmi=http://www.omg.org/XMI, tcas=http:///uima/tcas.ecore}
+        assertThat(result.namespaces).hasSize(5);
         // Tokens, PosTags and document data
         assertThat(result.xmiData).hasSize(3);
         assertThat(result.xmiData.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(),

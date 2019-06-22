@@ -1,20 +1,20 @@
 
-/* First created by JCasGen Wed Aug 08 13:36:49 CEST 2018 */
+/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.cas.Feature;
-import org.apache.uima.cas.Type;
-import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.FeatureImpl;
+import org.apache.uima.cas.Feature;
 
 /** the caption of figures, tables etc.
 
 feature captionTitle is a Title-Annotation of the title of the caption, if existent.
 
 feature captionType is an Enumeration, stating to what type of entity the caption belongs, e.g. figure or table
- * Updated by JCasGen Wed Aug 08 13:36:49 CEST 2018
+ * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
  * @generated */
 public class Caption_Type extends Zone_Type {
   /** @generated */

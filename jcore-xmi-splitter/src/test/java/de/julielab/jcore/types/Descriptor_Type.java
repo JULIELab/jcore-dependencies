@@ -1,14 +1,14 @@
 
-/* First created by JCasGen Wed Aug 08 13:36:49 CEST 2018 */
+/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.cas.Type;
-import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Type;
 
 /** An abstract type for the document descriptors, there are two subclasses: one for automatically acquired meta information and one for meta information that was added manually (such as e.g. MeSH term lists)
- * Updated by JCasGen Wed Aug 08 13:36:49 CEST 2018
+ * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
  * @generated */
 public class Descriptor_Type extends Annotation_Type {
   /** @generated */

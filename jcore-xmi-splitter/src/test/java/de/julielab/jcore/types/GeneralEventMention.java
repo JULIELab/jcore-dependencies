@@ -1,19 +1,20 @@
 
 
-/* First created by JCasGen Wed Aug 08 13:36:49 CEST 2018 */
+/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.jcas.cas.TOP_Type;
+
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.StringArray;
-import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** A super type for all event mentions. Under this type, mentions for predicate-argument relations and eventive propositional relations are found. This terminology follows section 3.1 and more especially 3.1.3 of Ekaterina Buyko's dissertation "Event Extraction from Biomedical Texts Using
 Trimmed Dependency Graphs" (http://www.db-thueringen.de/servlets/DerivateServlet/Derivate-26400/Diss2/thesis_buyko.pdf). The type system should completely follow the thesis' notion but does not due to historical reasons.
- * Updated by JCasGen Wed Aug 08 13:36:49 CEST 2018
- * XML source: /Volumes/OUTERSPACE/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/test-types/all-test-types.xml
+ * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
+ * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
  * @generated */
 public class GeneralEventMention extends ConceptMention {
   /** @generated

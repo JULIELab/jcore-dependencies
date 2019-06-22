@@ -3,6 +3,7 @@ package de.julielab.xml;
 import com.ximpleware.NavException;
 import de.julielab.jcore.types.*;
 import de.julielab.jcore.types.pubmed.Header;
+import de.julielab.jcore.utility.JCoReTools;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.UIMAException;
@@ -11,6 +12,7 @@ import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.cas.DoubleArray;
 import org.apache.uima.jcas.cas.FSArray;
 import org.junit.Test;
 
@@ -172,7 +174,9 @@ public class StaxXmiSplitterTest {
 
         assertThat(result.currentSofaIdMap).hasSize(1);
         assertThat(result.maxXmiId).isGreaterThan(1);
-        assertThat(result.namespaces).hasSize(6);
+        System.out.println(result.namespaces);
+        // {pubmed=http:///de/julielab/jcore/types/pubmed.ecore, types=http:///de/julielab/jcore/types.ecore, cas=http:///uima/cas.ecore, xmi=http://www.omg.org/XMI, tcas=http:///uima/tcas.ecore}
+        assertThat(result.namespaces).hasSize(5);
         // Tokens, PosTags and document data
         assertThat(result.xmiData).hasSize(3);
         assertThat(result.xmiData.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(),
@@ -206,7 +210,6 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-
         XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, moduleAnnotationNames.stream().toArray(String[]::new));
@@ -333,6 +336,37 @@ public class StaxXmiSplitterTest {
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
 
         assertThat(new String(result.xmiData.get("de.julielab.jcore.types.Sentence").toByteArray(), "UTF-8")).contains("sofa=\"9999\"");
+    }
+
+    @Test
+    public void testDoubleArray() throws Exception {
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        jCas.setDocumentText("Word.");
+        final DoubleArray doubles = new DoubleArray(jCas, 10);
+        final Random r = new Random(1);
+        for (int i = 0; i < doubles.size(); i++) {
+            doubles.set(i, r.nextDouble());
+        }
+        final EmbeddingVector ev = new EmbeddingVector(jCas, 0, 4);
+        ev.setSource("TestSource");
+        ev.setVector(doubles);
+        final Token t = new Token(jCas, 0, 4);
+        t.setEmbeddingVectors(JCoReTools.addToFSArray(null, ev));
+        t.addToIndexes();
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList("de.julielab.jcore.types.Token")), true, true, "docs", Collections.emptySet());
+        Map<String, Integer> sofaIdMap = new HashMap<>();
+        sofaIdMap.put("_InitialView", 1);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
+
+        final String tokenXmiData = new String(result.xmiData.get("de.julielab.jcore.types.Token").toByteArray(), "UTF-8");
+        assertThat(tokenXmiData).contains("types:Token");
+        assertThat(tokenXmiData).contains("types:EmbeddingVector");
+        assertThat(tokenXmiData).contains("source=\"TestSource\"");
+        assertThat(tokenXmiData).contains("vector=\"0.7308781907032909 0.41008081149220166 0.20771484130971707 0.3327170559595112 0.9677559094241207 0.006117182265761301 0.9637047970232077 0.9398653887819098 0.9471949176631939 0.9370821488959696\"");
     }
 
 }

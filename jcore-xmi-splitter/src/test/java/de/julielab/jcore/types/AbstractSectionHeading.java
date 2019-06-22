@@ -1,9 +1,9 @@
 
 
-/* First created by JCasGen Wed Aug 08 13:36:49 CEST 2018 */
+/* First created by JCasGen Sat Jun 22 14:44:28 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
@@ -12,8 +12,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 /** The heading of a section of a structured abstract as
 				used by MEDLINE and PubMed.
 				The TitleType feature value should always be 'abstractSection'.
- * Updated by JCasGen Wed Aug 08 13:36:49 CEST 2018
- * XML source: /Volumes/OUTERSPACE/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/test-types/all-test-types.xml
+ * Updated by JCasGen Sat Jun 22 14:44:28 CEST 2019
+ * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
  * @generated */
 public class AbstractSectionHeading extends Title {
   /** @generated

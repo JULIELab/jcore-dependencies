@@ -30,7 +30,6 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final int NO_SOFA_KEY = -1;
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
-    private static final int SOFA_UNKNOWN = Integer.MIN_VALUE;
     private final static Logger log = LoggerFactory.getLogger(StaxXmiSplitter.class);
     private static final Object depthMarker = new Object();
     private Deque<Object> depthDeque = new ArrayDeque<>();
@@ -151,7 +150,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             List<Feature> features = annotationType.getFeatures();
             for (Feature f : features) {
                 Type featureType = f.getRange();
-                if (isFSArray(featureType) || !isPrimitive(featureType)) {
+                if ((featureType.isArray() || !isPrimitive(featureType)) && (featureType.getComponentType() == null || !featureType.getComponentType().isPrimitive())) {
                     String referenceString = reader.getAttributeValue(null, f.getShortName());
                     if (referenceString != null) {
                         referencesByFeatureBaseName.put(f.getShortName(), refAttributeValue2Integers.apply(referenceString));

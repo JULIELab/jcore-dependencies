@@ -1,17 +1,18 @@
 
 
-/* First created by JCasGen Wed Aug 08 13:36:50 CEST 2018 */
+/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
 package de.julielab.jcore.types.pubmed;
 
-import de.julielab.jcore.types.Annotation;
-import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCas; 
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
 
+import de.julielab.jcore.types.Annotation;
+
 
 /** PubMed/Medline abstracts sometimes have other IDs besided their PMID from different sources. This type discloses the respective ID and source. For details see https://www.nlm.nih.gov/bsd/mms/medlineelements.html#oid
- * Updated by JCasGen Wed Aug 08 13:36:50 CEST 2018
- * XML source: /Volumes/OUTERSPACE/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/test-types/all-test-types.xml
+ * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
+ * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
  * @generated */
 public class OtherID extends Annotation {
   /** @generated
