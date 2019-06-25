@@ -1,6 +1,7 @@
 package cc.mallet.fst;
 
 import cc.mallet.optimize.LimitedMemoryBFGS;
+import cc.mallet.optimize.OptimizationException;
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
@@ -190,7 +191,7 @@ public class CRFTrainerByLabelLikelihood extends TransducerTrainer implements Tr
                 iterationCount++;
                 logger.info("CRF finished one iteration of maximizer, i=" + i);
                 runEvaluators();
-            } catch (IllegalArgumentException e) {
+            } catch (OptimizationException e) {
                 e.printStackTrace();
                 logger.info("Catching exception; saying converged.");
                 convergedByException = true;
