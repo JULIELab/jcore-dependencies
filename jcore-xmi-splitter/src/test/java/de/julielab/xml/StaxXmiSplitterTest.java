@@ -48,6 +48,24 @@ public class StaxXmiSplitterTest {
         assertThat(s).contains("<hypernyms>chemical phenomenon</hypernyms");
     }
 
+
+    @Test
+    public void testBinary() throws IOException, XMISplitterException, UIMAException, NavException {
+        // These embedded features are, for example, StringArrays that can not be references by other annotations
+        // than the one it was originally set to.
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Sentence.class.getCanonicalName(), Token.class.getCanonicalName(),
+                Gene.class.getCanonicalName(), EventMention.class.getCanonicalName(), Organism.class.getCanonicalName(), Header.class.getCanonicalName())), false, false, null, null);
+        byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        splitter.process(xmiData, jCas, 0, null);
+
+        Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        final Collection<JeDISVTDGraphNode> nodesWithLabel = nodesByXmiId.values().stream().filter(n -> !n.getAnnotationModuleLabels().isEmpty()).collect(Collectors.toList());
+        final List<String> missingItemsForMapping = encoder.findMissingItemsForMapping(nodesWithLabel, jCas.getTypeSystem(), Collections.emptyMap());
+        assertThat(missingItemsForMapping).contains("types:Sentence", "types:Token", "pubmed:Header", "xmi:id", "sofa", "cas:FSArray", "synonyms", "hypernyms", "componentId", "specificType", "protein");
+    }
+
     @Test
     public void testReferences() throws Exception {
         StaxXmiSplitter splitter = new StaxXmiSplitter(null, false, false, null, null);

@@ -13,6 +13,7 @@ public class JeDISVTDGraphNode {
     private Map<String, List<Integer>> referencedXmiIds;
     private int byteOffset;
     private int byteLength;
+    private String moduleXmlData;
 
 
     public JeDISVTDGraphNode(Integer oldXmiId) {
@@ -45,14 +46,13 @@ public class JeDISVTDGraphNode {
         byteLength = (int) (elementFragment >> 32);
     }
 
-
-    public void setByteLength(int byteLength) {
-        this.byteLength = byteLength;
-    }
-
     public int getByteLength() {
         return byteLength;
 
+    }
+
+    public void setByteLength(int byteLength) {
+        this.byteLength = byteLength;
     }
 
     public Integer getOldXmiId() {
@@ -135,4 +135,18 @@ public class JeDISVTDGraphNode {
         this.byteOffset = byteOffset;
     }
 
+    /**
+     * <p>
+     * Returns the final result of the splitting process for this node. This includes an updated XMI ID, Sofa ID and reference XMI IDs.
+     * </p>
+     *
+     * @return The final XML data to be stored in the annotation module for this node.
+     */
+    public String getModuleXmlData() {
+        return moduleXmlData;
+    }
+
+    public void setModuleData(String moduleXmlData) {
+        this.moduleXmlData = moduleXmlData;
+    }
 }

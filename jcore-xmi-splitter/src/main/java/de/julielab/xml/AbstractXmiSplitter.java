@@ -191,6 +191,7 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
                         String newReferenceString = references.stream().map(oldId -> nodesByXmiId.get(oldId).getNewXmiId()).map(String::valueOf).collect(Collectors.joining(" "));
                         xmlElement = xmlElement.replaceFirst(featureName + "=\"[0-9\\s]+\"", featureName + "=\"" + newReferenceString + "\"");
                     }
+                    node.setModuleData(xmlElement.trim());
                     baos.write(xmlElement.getBytes(StandardCharsets.UTF_8));
                 }
             } catch (IOException e) {

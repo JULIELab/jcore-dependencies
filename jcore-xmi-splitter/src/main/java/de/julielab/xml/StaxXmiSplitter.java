@@ -146,7 +146,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         if (isFSArray(annotationType)) {
             String referenceString = reader.getAttributeValue(null, "elements");
             referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
-        } else if (!isFSArray(annotationType)) {
+        } else{
             List<Feature> features = annotationType.getFeatures();
             for (Feature f : features) {
                 Type featureType = f.getRange();
