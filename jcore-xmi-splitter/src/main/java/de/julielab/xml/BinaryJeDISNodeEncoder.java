@@ -6,6 +6,8 @@ import com.ximpleware.NavException;
 import com.ximpleware.ParseException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
@@ -17,6 +19,7 @@ import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
@@ -30,7 +33,7 @@ public class BinaryJeDISNodeEncoder {
 
     public BinaryJeDISNodeEncoder() {
         vg = new VTDGen();
-        bb8 = ByteBuffer.allocate(8);
+        bb8 = ByteBuffer.allocate(Math.max(Long.SIZE, Double.SIZE));
     }
 
     public List<String> findMissingItemsForMapping(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> existingMapping) {
@@ -43,7 +46,6 @@ public class BinaryJeDISNodeEncoder {
             Multiset<String> featureOccurrences = HashMultiset.create();
             for (JeDISVTDGraphNode n : nodesWithLabel) {
                 currentXmiElementForLogging = n.getModuleXmlData();
-                System.out.println(currentXmiElementForLogging);
                 vg.setDoc_BR(n.getModuleXmlData().getBytes(StandardCharsets.UTF_8));
                 vg.parse(false);
                 final VTDNav vn = vg.getNav();
@@ -105,48 +107,91 @@ public class BinaryJeDISNodeEncoder {
 
     public Map<String, ByteArrayOutputStream> encode(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> mapping) {
         String currentXmiElementForLogging = null;
+        final Map<String, List<JeDISVTDGraphNode>> nodesByLabel = nodesWithLabel.stream().flatMap(n -> n.getAnnotationModuleLabels().stream().map(l -> new ImmutablePair<>(n, l))).collect(Collectors.groupingBy(Pair::getRight, Collectors.mapping(Pair::getLeft, Collectors.toList())));
         try {
-            for (JeDISVTDGraphNode n : nodesWithLabel) {
-                currentXmiElementForLogging = n.getModuleXmlData();
+            Map<String, ByteArrayOutputStream> binaryAnnotationModuleData = new HashMap<>();
+            for (String label : nodesByLabel.keySet()) {
+                final List<JeDISVTDGraphNode> nodesForCurrentLabel = nodesByLabel.get(label);
+                for (JeDISVTDGraphNode n : nodesForCurrentLabel) {
+                    currentXmiElementForLogging = n.getModuleXmlData();
 
-                vg.setDoc_BR(n.getModuleXmlData().getBytes(StandardCharsets.UTF_8));
-                vg.parse(false);
-                final VTDNav vn = vg.getNav();
-                int index = 0;
-                String attrName = null;
-                final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                String lastAttributeName = null;
-                while (index < vn.getTokenCount()) {
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG)
-                        writeInt(mapping.get(vn.toString(index)), baos);
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
-                        lastAttributeName = vn.toString(index);
-                        writeInt(mapping.get(lastAttributeName), baos);
-                    }
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
-                        final Feature feature = ts.getType(n.getTypeName()).getFeatureByBaseName(attrName);
-                        final String attributeValue = vn.toString(index);
-                        if (feature != null && feature.getRange().getName().equals("uima.cas.String")) {
-                            final Integer value = mapping.get(attributeValue);
-                            // Not all values are mapping, thus the check
-                            if (value != null)
-                                writeInt(value, baos);
-                        } else {
-                            if (lastAttributeName.equals("xmi:id") || lastAttributeName.equals("sofa") || isReferenceAttribute(ts.getType(n.getTypeName()), lastAttributeName)) {
-                                //writeInt(lastAttributeName.length(), bao);
-                                //unchangedAttributesStreamBuilder.accept(lastAttributeName);
-                                //unchangedAttributesStreamBuilder.accept(attributeValue);
-                            }
-                            // arrays
-                            // non-string primitive features
+                    vg.setDoc_BR(n.getModuleXmlData().getBytes(StandardCharsets.UTF_8));
+                    vg.parse(false);
+                    final VTDNav vn = vg.getNav();
+                    int index = 0;
+                    String attrName = null;
+                    final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    binaryAnnotationModuleData.put(label, baos);
+                    while (index < vn.getTokenCount()) {
+                        if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG)
+                            writeInt(mapping.get(vn.toString(index)), baos);
+                        if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
+                            attrName = vn.toString(index);
+                            writeInt(mapping.get(attrName), baos);
                         }
+                        if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
+                            final Feature feature = ts.getType(n.getTypeName()).getFeatureByBaseName(attrName);
+                            final String attributeValue = vn.toString(index);
+                            if (feature != null && feature.getRange().getName().equals("uima.cas.String")) {
+                                final Integer value = mapping.get(attributeValue);
+                                // Not all values are mapping, thus the check
+                                if (value != null)
+                                    writeInt(value, baos);
+                            } else {
+                                if (attrName.equals("xmi:id") || attrName.equals("sofa") || isReferenceAttribute(ts.getType(n.getTypeName()), attrName)) {
+                                    writeInt(mapping.get(attrName), baos);
+                                    if (attrName.equals("xmi:id"))
+                                        writeInt(Integer.valueOf(attributeValue), baos);
+                                    else if (attrName.equals("sofa"))
+                                        baos.write(Byte.valueOf(attributeValue));
+                                    else { // is reference attribute
+                                        final String[] referencedIds = attributeValue.split(" ");
+                                        writeInt(referencedIds.length, baos);
+                                        Stream.of(referencedIds).map(Integer::valueOf).forEach(i -> writeInt(i, baos));
+                                    }
+                                } else if (feature.getRange().isArray()) {
+                                    Stream<String> arrayValues = Stream.of(attributeValue.split(" "));
+                                    if (feature.getRange().getComponentType().getName().equals("uima.cas.Double")) {
+                                        arrayValues.mapToDouble(Double::valueOf).forEach(d -> writeDouble(d, baos));
+                                    }
+                                    if (feature.getRange().getComponentType().getName().equals("uima.cas.Short")) {
+                                        arrayValues.mapToInt(Integer::valueOf).forEach(i -> writeShort((short) i, baos));
+                                    }
+                                    if (feature.getRange().getComponentType().getName().equals("uima.cas.Byte")) {
+                                        arrayValues.mapToInt(Integer::valueOf).forEach(baos::write);
+                                    }
+                                    if (feature.getRange().getComponentType().getName().equals("uima.cas.Integer")) {
+                                        arrayValues.mapToDouble(Double::valueOf).forEach(i -> writeDouble(i, baos));
+                                    }
+                                    if (feature.getRange().getComponentType().getName().equals("uima.cas.Long")) {
+                                        arrayValues.mapToLong(Long::valueOf).forEach(l -> writeLong(l, baos));
+                                    }
+                                } else if (feature.getRange().isPrimitive()) {
+                                    if (feature.getRange().getName().equals("uima.cas.Double")) {
+                                        writeDouble(Double.valueOf(attributeValue), baos);
+                                    }
+                                    if (feature.getRange().getName().equals("uima.cas.Short")) {
+                                        writeShort(Short.valueOf(attributeValue), baos);
+                                    }
+                                    if (feature.getRange().getName().equals("uima.cas.Byte")) {
+                                        baos.write(Byte.valueOf(attributeValue));
+                                    }
+                                    if (feature.getRange().getName().equals("uima.cas.Integer")) {
+                                        writeDouble(Integer.valueOf(attributeValue), baos);
+                                    }
+                                    if (feature.getRange().getName().equals("uima.cas.Long")) {
+                                        writeLong(Long.valueOf(attributeValue), baos);
+                                    }
+                                }
+                            }
+                        }
+                        ++index;
                     }
-                    ++index;
                 }
 
             }
 
-            return null;
+            return binaryAnnotationModuleData;
 
         } catch (ParseException | NavException e) {
             log.error("Could not parse XMI element {}", currentXmiElementForLogging, e);
@@ -157,13 +202,31 @@ public class BinaryJeDISNodeEncoder {
     private void writeInt(int i, ByteArrayOutputStream baos) {
         bb8.position(0);
         bb8.putInt(i);
-        baos.write(bb8.array(), 0, 4);
+        baos.write(bb8.array(), 0, Integer.SIZE);
     }
 
     private void writeDouble(double d, ByteArrayOutputStream baos) {
         bb8.position(0);
         bb8.putDouble(d);
-        baos.writeBytes(bb8.array());
+        baos.write(bb8.array(), 0, Double.SIZE);
+    }
+
+    private void writeShort(short s, ByteArrayOutputStream baos) {
+        bb8.position(0);
+        bb8.putShort(s);
+        baos.write(bb8.array(), 0, Short.SIZE);
+    }
+
+    private void writeFloat(short f, ByteArrayOutputStream baos) {
+        bb8.position(0);
+        bb8.putFloat(f);
+        baos.write(bb8.array(), 0, Float.SIZE);
+    }
+
+    private void writeLong(long l, ByteArrayOutputStream baos) {
+        bb8.position(0);
+        bb8.putLong(l);
+        baos.write(bb8.array(), 0, Long.SIZE);
     }
 
     private boolean isReferenceAttribute(Type annotationType, String attributeName) {
