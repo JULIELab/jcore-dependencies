@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** For German biomedical texts, cf. Joachim Wermter and Udo Hahn. An annotated German-language medical text corpus as language resource. In LREC 2004—Proceedings of the 4th International Conference on Language Resources and Evaluation, volume 2, pages 473–476, 2004.
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
- * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
+ * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
+ * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class STTSMedPOSTag extends POSTag {
   /** @generated

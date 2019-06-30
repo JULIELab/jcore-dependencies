@@ -1,6 +1,9 @@
 package de.julielab.xml;
 
+import org.apache.uima.cas.CAS;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
+import org.apache.uima.cas.TypeSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,7 +15,7 @@ public class XmiSplitUtilities {
 private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.class);
     public static final String CAS_NULL = "uima.cas.NULL";
     public static final String CAS_VIEW = "uima.cas.View";
-    public static final String CAS_SOFA = "uima.cas.Sofa";
+    public static final String CAS_SOFA = CAS.TYPE_NAME_SOFA;
 
     /**
      * The default types namespace that is assumed if not the fully qualified
@@ -72,11 +75,7 @@ private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.clas
      * @return
      */
     public static boolean isFSArray(Type annotationType) {
-        boolean isFSArray = false;
-        if (annotationType.isArray()) {
-            isFSArray = true;
-        }
-        return isFSArray;
+        return annotationType.getName().equals(CAS.TYPE_NAME_FS_ARRAY);
     }
 
 
@@ -110,14 +109,29 @@ private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.clas
                 .getRange();
     }
 
-    public static boolean isReferenceFeature(Type type, String featureName) {
-        return isFSArray(type) || !type.getFeatureByBaseName(featureName).getRange().isPrimitive();
-    }
-
     public static boolean isAnnotationType(String qualifiedTypename) {
         // The uima.cas prefix is given to all types in package org.apache.uima.jcas.cas which includes all
         // the technical array types and the TOP type. That should qualify as the "non-annotation" types.
         return !qualifiedTypename.startsWith("uima.cas");
     }
 
+    public static boolean isReferenceAttribute(Type annotationType, String attributeName) {
+        if (annotationType.getName().equals(CAS.TYPE_NAME_FS_ARRAY)) {
+            return attributeName.equals("elements");
+        } else {
+            Type featureType = annotationType.getFeatureByBaseName(attributeName).getRange();
+            if ((featureType.isArray() || !isPrimitive(featureType)) && (featureType.getComponentType() == null || !featureType.getComponentType().isPrimitive())) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isReferenceFeature(Feature f, TypeSystem ts) {
+        if(f.isMultipleReferencesAllowed()) return true;
+        final Type range = f.getRange();
+        if (range.isArray() && !range.getComponentType().isPrimitive()) return true;
+        if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FS_LIST), range)) return true;
+        return false;
+    }
 }

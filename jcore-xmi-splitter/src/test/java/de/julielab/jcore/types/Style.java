@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** Text-markup information (italic, bold etc.) on any (e.g. character) level. Allows to keep the original style markup of the text, several style types might be set to same (or overlapping) range, when different styles are set to the same text region.
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
- * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
+ * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
+ * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class Style extends Annotation {
   /** @generated

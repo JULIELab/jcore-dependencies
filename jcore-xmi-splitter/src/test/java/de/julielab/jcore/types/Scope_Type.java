@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** This type represents the span that some cue word like negation or hedging applies to.
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
+ * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
  * @generated */
 public class Scope_Type extends Chunk_Type {
   /** @generated */

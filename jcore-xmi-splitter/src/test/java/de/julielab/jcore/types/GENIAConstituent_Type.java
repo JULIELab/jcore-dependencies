@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Ohta, Tomoko, Yuka Tateisi, Hideki Mima and Jun'ichi Tsujii. (2002). GENIA Corpus: an Annotated Research Abstract Corpus in Molecular Biology Domain. In the Proceedings of he Human Language Technology Conference (HLT 2002). pp73--77.
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
+ * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
  * @generated */
 public class GENIAConstituent_Type extends PTBConstituent_Type {
   /** @generated */

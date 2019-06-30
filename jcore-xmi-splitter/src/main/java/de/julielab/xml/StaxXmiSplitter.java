@@ -3,9 +3,11 @@ package de.julielab.xml;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
+import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +59,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public StaxXmiSplitter(Set<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
                            String docTableName, Set<String> baseDocumentAnnotations, int attribute_size) {
         this(annotationModulesToExtract, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
-     //   inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+        //   inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
 
     }
 
@@ -111,7 +113,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
                 JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, typeName.equals(CAS_SOFA) ? SofaVTDGraphNode::new : JeDISVTDGraphNode::new);
                 n.setByteOffset(reader.getLocation().getCharacterOffset());
                 n.setTypeName(typeName);
-                String sofaId = reader.getAttributeValue(null, "sofa");
+                String sofaId = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_SOFA);
                 if (sofaId != null)
                     n.setSofaXmiId(Integer.parseInt(sofaId));
                 else
@@ -143,14 +145,17 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
 
         Function<String, List<Integer>> refAttributeValue2Integers = referenceString -> Stream.of(referenceString).filter(StringUtils::isNotBlank).map(refStr -> refStr.split("\\s+")).flatMap(Stream::of).map(Integer::parseInt).collect(toList());
 
-        if (isFSArray(annotationType)) {
+        if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FS_ARRAY), annotationType)) {
             String referenceString = reader.getAttributeValue(null, "elements");
             referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
-        } else{
+        }
+        else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LIST_BASE), annotationType)) {
+            String referenceString = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_TAIL);
+            referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_TAIL, refAttributeValue2Integers.apply(referenceString));
+        } else {
             List<Feature> features = annotationType.getFeatures();
             for (Feature f : features) {
-                Type featureType = f.getRange();
-                if ((featureType.isArray() || !isPrimitive(featureType)) && (featureType.getComponentType() == null || !featureType.getComponentType().isPrimitive())) {
+                if (XmiSplitUtilities.isReferenceFeature(f, ts)) {
                     String referenceString = reader.getAttributeValue(null, f.getShortName());
                     if (referenceString != null) {
                         referencesByFeatureBaseName.put(f.getShortName(), refAttributeValue2Integers.apply(referenceString));
