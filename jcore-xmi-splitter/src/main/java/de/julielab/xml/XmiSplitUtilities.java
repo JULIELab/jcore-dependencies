@@ -12,17 +12,14 @@ import java.util.Arrays;
 import java.util.List;
 
 public class XmiSplitUtilities {
-private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.class);
     public static final String CAS_NULL = "uima.cas.NULL";
     public static final String CAS_VIEW = "uima.cas.View";
     public static final String CAS_SOFA = CAS.TYPE_NAME_SOFA;
-
     /**
      * The default types namespace that is assumed if not the fully qualified
      * java name is given for an annotation.
      */
     public static final String TYPES_NAMESPACE = "de.julielab.jules.types.";
-
     /**
      * Ranges of features that will erroneously (for our purposes) have the
      * status of not being primitive. TODO: Are there any other ranges that have
@@ -33,6 +30,7 @@ private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.clas
             "uima.cas.DoubleArray", "uima.cas.FloatArray",
             "uima.cas.IntegerArray", "uima.cas.LongArray",
             "uima.cas.ShortArray", "uima.cas.StringArray");
+    private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.class);
 
     /**
      * Extracts the first part of the fully qualified java name from the
@@ -115,23 +113,49 @@ private final static Logger log = LoggerFactory.getLogger(XmiSplitUtilities.clas
         return !qualifiedTypename.startsWith("uima.cas");
     }
 
-    public static boolean isReferenceAttribute(Type annotationType, String attributeName) {
-        if (annotationType.getName().equals(CAS.TYPE_NAME_FS_ARRAY)) {
-            return attributeName.equals("elements");
-        } else {
-            Type featureType = annotationType.getFeatureByBaseName(attributeName).getRange();
-            if ((featureType.isArray() || !isPrimitive(featureType)) && (featureType.getComponentType() == null || !featureType.getComponentType().isPrimitive())) {
-                return true;
-            }
-        }
-        return false;
+    public static boolean isReferenceAttribute(Type annotationType, String attributeName, TypeSystem ts) {
+        if (annotationType.isArray() && attributeName.equals("elements")) return !annotationType.getComponentType().isPrimitive();
+        return isReferenceFeature(annotationType.getFeatureByBaseName(attributeName), ts);
     }
 
     public static boolean isReferenceFeature(Feature f, TypeSystem ts) {
-        if(f.isMultipleReferencesAllowed()) return true;
+        if (f.isMultipleReferencesAllowed()) return true;
         final Type range = f.getRange();
+        // arrays with or without complex types
         if (range.isArray() && !range.getComponentType().isPrimitive()) return true;
+        else if (range.isArray()) return false;
+        // Lists pointing to feature structures
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FS_LIST), range)) return true;
+        // Lists containing primitive type data
+        if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LIST_BASE), range)) return false;
+        if (!range.isPrimitive()) return true;
         return false;
+    }
+
+    public static boolean isMultiValuedFeatureAttribute(Type type, String attrName) {
+        return type.isArray() && attrName.equals("elements");
+    }
+
+    public static boolean isListTypeName(String typeName) {
+        final String resolvedName = resolveListSubtypes(typeName);
+        return resolvedName.equals(CAS.TYPE_NAME_FLOAT_LIST)
+                || resolvedName.equals(CAS.TYPE_NAME_FS_LIST)
+                || resolvedName.equals(CAS.TYPE_NAME_INTEGER_LIST)
+                || resolvedName.equals(CAS.TYPE_NAME_STRING_LIST);
+    }
+
+    public static String resolveListSubtypes(String typeName) {
+        switch (typeName) {
+            case CAS.TYPE_NAME_NON_EMPTY_FLOAT_LIST:
+                return CAS.TYPE_NAME_FLOAT_LIST;
+            case CAS.TYPE_NAME_NON_EMPTY_FS_LIST:
+                return CAS.TYPE_NAME_FS_LIST;
+            case CAS.TYPE_NAME_NON_EMPTY_INTEGER_LIST:
+                return CAS.TYPE_NAME_INTEGER_LIST;
+            case CAS.TYPE_NAME_NON_EMPTY_STRING_LIST:
+                return CAS.TYPE_NAME_STRING_LIST;
+            default:
+                return typeName;
+        }
     }
 }

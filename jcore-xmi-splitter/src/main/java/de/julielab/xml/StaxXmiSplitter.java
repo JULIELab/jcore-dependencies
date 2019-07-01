@@ -148,14 +148,13 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FS_ARRAY), annotationType)) {
             String referenceString = reader.getAttributeValue(null, "elements");
             referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
-        }
-        else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LIST_BASE), annotationType)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LIST_BASE), annotationType)) {
             String referenceString = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_TAIL);
             referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_TAIL, refAttributeValue2Integers.apply(referenceString));
         } else {
             List<Feature> features = annotationType.getFeatures();
             for (Feature f : features) {
-                if (XmiSplitUtilities.isReferenceFeature(f, ts)) {
+                if (!f.getName().equals(CAS.FEATURE_FULL_NAME_SOFA) && XmiSplitUtilities.isReferenceFeature(f, ts)) {
                     String referenceString = reader.getAttributeValue(null, f.getShortName());
                     if (referenceString != null) {
                         referencesByFeatureBaseName.put(f.getShortName(), refAttributeValue2Integers.apply(referenceString));
@@ -164,6 +163,22 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             }
         }
 
+
+        // if (isFSArray(annotationType)) {
+        //            String referenceString = reader.getAttributeValue(null, "elements");
+        //            referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
+        //        } else{
+        //            List<Feature> features = annotationType.getFeatures();
+        //            for (Feature f : features) {
+        //                Type featureType = f.getRange();
+        //                if ((featureType.isArray() || !isPrimitive(featureType)) && (featureType.getComponentType() == null || !featureType.getComponentType().isPrimitive())) {
+        //                    String referenceString = reader.getAttributeValue(null, f.getShortName());
+        //                    if (referenceString != null) {
+        //                        referencesByFeatureBaseName.put(f.getShortName(), refAttributeValue2Integers.apply(referenceString));
+        //                    }
+        //                }
+        //            }
+        //        }
         return referencesByFeatureBaseName;
     }
 
@@ -180,8 +195,11 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         String namespace = reader.getName().getNamespaceURI();
         String name = reader.getName().getLocalPart();
         String nsUri = XmiSplitUtilities.convertNSUri(namespace);
-        return nsUri + name;
+        final String typeName = nsUri + name;
+        return typeName;
     }
+
+
 
     private boolean forwardTo(XMLStreamReader reader, Predicate<XMLStreamReader> predicate) throws XMLStreamException {
         while (reader.hasNext()) {

@@ -17,6 +17,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -127,9 +128,8 @@ public class BinaryJeDISNodeEncoderTest {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        System.out.println(baos.toString());
         StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName())), false, false, null, null);
-        splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
+        final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
@@ -137,7 +137,18 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryStorageAnalysisResult result = encoder.findMissingItemsForMapping(nodesWithLabel, jCas.getTypeSystem(), Collections.emptyMap());
         final List<String> missingItemsForMapping = result.getValuesToMap();
         final Map<String, Integer> mapping = IntStream.range(0, missingItemsForMapping.size()).mapToObj(i -> new ImmutablePair<>(i, missingItemsForMapping.get(i))).collect(Collectors.toMap(Pair::getRight, Pair::getLeft));
-        encoder.encode(nodesWithLabel, jCas.getTypeSystem(), mapping, result.getFeaturesToMap());
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(nodesWithLabel, jCas.getTypeSystem(), mapping, result.getFeaturesToMap());
+
+
+        List<InputStream> bais = new ArrayList<>();
+        for (String label : encode.keySet()) {
+            bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
+        }
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder();
+        final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+        final ByteArrayOutputStream decodedData = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
+        System.out.println(decodedData.toString(StandardCharsets.UTF_8));
+
     }
 
 
