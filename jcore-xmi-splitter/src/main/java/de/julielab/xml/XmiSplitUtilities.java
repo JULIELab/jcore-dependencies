@@ -8,8 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.stream.events.StartElement;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.ByteBuffer;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class XmiSplitUtilities {
     public static final String CAS_NULL = "uima.cas.NULL";
@@ -157,5 +163,50 @@ public class XmiSplitUtilities {
             default:
                 return typeName;
         }
+    }
+
+    public static ByteBuffer readInputStreamIntoBuffer(InputStream is) throws IOException {
+        final ByteBuffer bb;
+        final ByteArrayOutputStream baos = readInputStreamIntoByteArrayOutputStream(is);
+
+        bb = ByteBuffer.wrap(baos.toByteArray());
+        return bb;
+    }
+
+    public static ByteArrayOutputStream readInputStreamIntoByteArrayOutputStream(InputStream is) throws IOException {
+        byte[] buffer = new byte[8192];
+        int read;
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        while ((read = is.read(buffer)) != -1)
+            baos.write(buffer, 0, read);
+        return baos;
+    }
+
+    /**
+     * Complete type names when they are not fully qualified but only the class
+     * name itself is given. Completion is done by appending
+     * {@link XmiSplitUtilities#TYPES_NAMESPACE}. This will be wrong of course,
+     * when the type was actually from another package. An example of this
+     * approach to fail would be when only "Header" is given and
+     * "...types.pubmed.Header" was meant instead of "...types.Header".
+     *
+     * @param annotationsToRetrieve
+     * @return
+     */
+    public static Set<String> completeTypeNames(String[] annotationsToRetrieve) {
+        if (null != annotationsToRetrieve && annotationsToRetrieve.length > 0) {
+            Set<String> annotationNames = new HashSet<>();
+            for (int i = 0; i < annotationsToRetrieve.length; i++) {
+                String annotationName = annotationsToRetrieve[i];
+                if (!annotationName.contains(".")) {
+                    String typeName = TYPES_NAMESPACE + annotationsToRetrieve[i];
+                    annotationNames.add(typeName);
+                } else {
+                    annotationNames.add(annotationName);
+                }
+            }
+            return annotationNames;
+        }
+        return null;
     }
 }

@@ -77,7 +77,7 @@ public class XmiBuilder {
     // Map<String, Collection<String>> definitivelyMissingFeatures;
 
     public XmiBuilder(Map<String, String> nsAndXmiVersionMap, String[] annotationsToRetrieve, long attribute_size) {
-        this.annotationNames = completeTypeNames(annotationsToRetrieve);
+        this.annotationNames = XmiSplitUtilities.completeTypeNames(annotationsToRetrieve);
         setXMIStartElementData(nsAndXmiVersionMap);
         //if (attribute_size > 0)
           //  inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
@@ -595,33 +595,7 @@ public class XmiBuilder {
                 potentiallyMissingFeatures);
     }
 
-    /**
-     * Complete type names when they are not fully qualified but only the class
-     * name itself is given. Completion is done by appending
-     * {@link XmiSplitUtilities#TYPES_NAMESPACE}. This will be wrong of course,
-     * when the type was actually from another package. An example of this
-     * approach to fail would be when only "Header" is given and
-     * "...types.pubmed.Header" was meant instead of "...types.Header".
-     *
-     * @param annotationsToRetrieve
-     * @return
-     */
-    private Set<String> completeTypeNames(String[] annotationsToRetrieve) {
-        if (null != annotationsToRetrieve && annotationsToRetrieve.length > 0) {
-            Set<String> annotationNames = new HashSet<>();
-            for (int i = 0; i < annotationsToRetrieve.length; i++) {
-                String annotationName = annotationsToRetrieve[i];
-                if (!annotationName.contains(".")) {
-                    String typeName = TYPES_NAMESPACE + annotationsToRetrieve[i];
-                    annotationNames.add(typeName);
-                } else {
-                    annotationNames.add(annotationName);
-                }
-            }
-            return annotationNames;
-        }
-        return null;
-    }
+
 
     protected void setXMIStartElementData(Map<String, String> namespacesAndXmiVersion) {
         if (null == namespacesAndXmiVersion || namespacesAndXmiVersion.size() == 0) {

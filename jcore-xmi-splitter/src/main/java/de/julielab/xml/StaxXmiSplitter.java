@@ -149,6 +149,10 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LIST_BASE), annotationType)) {
             String referenceString = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_TAIL);
             referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_TAIL, refAttributeValue2Integers.apply(referenceString));
+            if (XmiSplitUtilities.resolveListSubtypes(annotationType.getName()).equals(CAS.TYPE_NAME_FS_LIST)) {
+                final String headReference = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_HEAD);
+                referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_HEAD, refAttributeValue2Integers.apply(headReference));
+            }
         } else {
             List<Feature> features = annotationType.getFeatures();
             for (Feature f : features) {

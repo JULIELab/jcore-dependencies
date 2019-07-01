@@ -4,11 +4,13 @@ import com.ximpleware.NavException;
 import de.julielab.jcore.types.*;
 import de.julielab.jcore.types.pubmed.Header;
 import de.julielab.jcore.types.test.MultiValueTypesHolder;
+import de.julielab.xml.util.BinaryXmiBuilder;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
+import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.jcas.JCas;
@@ -31,8 +33,9 @@ public class BinaryJeDISNodeEncoderTest {
 
     @Test
     public void testBinary() throws IOException, XMISplitterException, UIMAException, NavException {
-        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Sentence.class.getCanonicalName(), Token.class.getCanonicalName(),
-                Gene.class.getCanonicalName(), EventMention.class.getCanonicalName(), Organism.class.getCanonicalName(), Header.class.getCanonicalName())), false, false, null, null);
+        final HashSet<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(Sentence.class.getCanonicalName(), Token.class.getCanonicalName(),
+                Gene.class.getCanonicalName(), EventMention.class.getCanonicalName(), Organism.class.getCanonicalName(), Header.class.getCanonicalName()));
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, false, null, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
@@ -52,7 +55,7 @@ public class BinaryJeDISNodeEncoderTest {
         for (String label : encode.keySet()) {
             bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
         }
-        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder();
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(moduleAnnotationNames);
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
         decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
 
@@ -134,7 +137,8 @@ public class BinaryJeDISNodeEncoderTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         //System.out.println(baos.toString(UTF_8));
-        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName())), true, false, null, null);
+        final HashSet<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", null);
         final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
@@ -150,10 +154,16 @@ public class BinaryJeDISNodeEncoderTest {
         for (String label : encode.keySet()) {
             bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
         }
-        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder();
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(moduleAnnotationNames);
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-        final ByteArrayOutputStream decodedData = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
-        System.out.println(decodedData.toString(UTF_8));
+        final BinaryDecodingResult decodedData = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
+        System.out.println(decodedData.getXmiData().toString(UTF_8));
+
+        final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream xmiData = xmiBuilder.buildXmi(decodedData);
+        JCas newJCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
+        System.out.println(xmiData.toString(UTF_8));
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(xmiData.toByteArray()), newJCas.getCas());
 
     }
 

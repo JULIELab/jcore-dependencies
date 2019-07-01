@@ -1,5 +1,7 @@
 package de.julielab.xml;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
@@ -13,69 +15,86 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 public class BinaryJeDISNodeDecoder {
-    public ByteArrayOutputStream decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Set<String> mappedFeatures, Map<String, String> namespaceMap) {
-        final ByteArrayOutputStream ret = new ByteArrayOutputStream();
+
+    private Set<String> annotationLabelsToLoad;
+    private int currentXmiId = -1;
+    private int currentSofaId = -1;
+
+    public BinaryJeDISNodeDecoder(Set<String> annotationLabelsToLoad) {
+        this.annotationLabelsToLoad = annotationLabelsToLoad;
+    }
+
+    public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Set<String> mappedFeatures, Map<String, String> namespaceMap) {
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        // sofa id -> element IDs
+        final Multimap<Integer, Integer> sofaElementsMap = HashMultimap.create();
+        final BinaryDecodingResult res = new BinaryDecodingResult(baos, sofaElementsMap);
         try {
 
-            for (InputStream is : input) {
-                final ByteBuffer bb = readInputStreamIntoBuffer(is);
+            // the label is the fully qualified UIMA type name
+          for (InputStream is : input) {
+                final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
                 while (bb.position() < bb.limit()) {
                     String prefixedNameType = mapping.get(bb.getInt());
                     // '<type:Token '
-                    ret.write('<');
-                    writeWs(prefixedNameType, ret);
+                    baos.write('<');
+                    writeWs(prefixedNameType, baos);
                     final String[] prefixAndTypeName = prefixedNameType.split(":");
                     final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
                     final Type type = ts.getType(typeName);
                     final byte numAttributes = bb.get();
+                    currentSofaId = currentXmiId = -1;
                     for (int i = 0; i < numAttributes; i++) {
-                        readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, ret);
+                        readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
+                    }
+                    if (currentSofaId != -1 && currentXmiId != -1) {
+                        if(annotationLabelsToLoad.contains(typeName))
+                            sofaElementsMap.put(currentSofaId, currentXmiId);
                     }
                     // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
                     final byte finishedIndicator = bb.get();
                     if (finishedIndicator == 0) {
-                        ret.write('>');
-                        writeStringArray(bb, mapping, mappedFeatures, ret);
-                        ret.write('<');
-                        ret.write('/');
-                        write(prefixedNameType, ret);
+                        baos.write('>');
+                        writeStringArray(bb, mapping, mappedFeatures, baos);
+                        baos.write('<');
+                        baos.write('/');
+                        write(prefixedNameType, baos);
                         // Read the last byte that now should indicate finished
                         bb.get();
                     } else {
-                        ret.write('/');
+                        baos.write('/');
                     }
-                    ret.write('>');
+                    baos.write('>');
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ret;
+        return res;
     }
 
-    private void readAttribute(ByteBuffer bb, String typeName, Type type, Set<String> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, ByteArrayOutputStream ret) {
+    private void readAttribute(ByteBuffer bb, String typeName, Type type, Set<String> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, BinaryDecodingResult res) {
+        final ByteArrayOutputStream baos = res.getXmiData();
         final String attrName = mapping.get(bb.getInt());
         final Feature feature = type.getFeatureByBaseName(attrName);
         // 'attrName="attrvalue" '
-        write(attrName, ret);
-        ret.write('=');
-        ret.write('"');
+        write(attrName, baos);
+        baos.write('=');
+        baos.write('"');
         if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(type, attrName, ts)) {
-            handleReferenceAttributes(bb, attrName, ret);
+            handleReferenceAttributes(bb,typeName, attrName, res);
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
-            handleArrayElementFeature(bb, type, attrName, ret);
+            handleArrayElementFeature(bb, type, attrName, baos);
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
-            handleListTypes(bb, typeName, attrName, mapping, mappedFeatures, ret);
+            handleListTypes(bb, typeName, attrName, mapping, mappedFeatures, baos);
         } else if (feature.getRange().isPrimitive()) {
-            handlePrimitiveFeatures(bb, mappedFeatures, mapping, ret, attrName, feature);
+            handlePrimitiveFeatures(bb, mappedFeatures, mapping, baos, attrName, feature);
         } //else throw new IllegalArgumentException("Unhandled attribute '" + attrName + "' of type '" + typeName + "'.");
-        ret.write('"');
-        ret.write(' ');
+        baos.write('"');
+        baos.write(' ');
     }
 
     private void handlePrimitiveFeatures(ByteBuffer bb, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream ret, String attrName, Feature feature) {
@@ -144,36 +163,31 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handleReferenceAttributes(ByteBuffer bb, String attrName, ByteArrayOutputStream ret) {
-        if (attrName.equals("xmi:id"))
-            write(bb.getInt(), ret);
-        else if (attrName.equals("sofa"))
-            write(bb.get(), ret);
+    private void handleReferenceAttributes(ByteBuffer bb, String typeName, String attrName, BinaryDecodingResult res) {
+        final ByteArrayOutputStream baos = res.getXmiData();
+        if (attrName.equals("xmi:id")) {
+            currentXmiId = bb.getInt();
+            write(currentXmiId, baos);
+        }
+        else if (attrName.equals("sofa")) {
+            currentSofaId = bb.get();
+            write(currentSofaId, baos);
+        }
         else { // is reference attribute
             final int numReferences = bb.getInt();
             for (int j = 0; j < numReferences; j++) {
                 final int referenceXmiId = bb.getInt();
                 // -1 means "null"
                 if (referenceXmiId >= 0)
-                    write(referenceXmiId, ret);
-                else write("null", ret);
+                    write(referenceXmiId, baos);
+                else write("null", baos);
                 if (j < numReferences - 1)
-                    ret.write(' ');
+                    baos.write(' ');
             }
         }
     }
 
-    private ByteBuffer readInputStreamIntoBuffer(InputStream is) throws IOException {
-        final ByteBuffer bb;
-        byte[] buffer = new byte[8192];
-        int read;
-        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        while ((read = is.read(buffer)) != -1)
-            baos.write(buffer, 0, read);
 
-        bb = ByteBuffer.wrap(baos.toByteArray());
-        return bb;
-    }
 
     private void writeStringArray(ByteBuffer bb, Map<Integer, String> mapping, Set<String> mappedFeatures, ByteArrayOutputStream ret) {
         final int numStringArrayFeatures = bb.getInt();
