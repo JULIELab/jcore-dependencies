@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class BinaryJeDISNodeEncoderTest {
@@ -124,11 +125,16 @@ public class BinaryJeDISNodeEncoderTest {
         holder.setFslist(fslist);
         final NonEmptyFSList fslistNoRef = new FSList(jCas).push(new Annotation(jCas, 2, 1)).push(new Annotation(jCas, 2, 2));
         holder.setFslistNoRef(fslistNoRef);
+        final StringList sl = new StringList(jCas).push("eins").push("zwei").push("drei").push("vier");
+        holder.setSl(sl);
+        final NonEmptyStringList slNoRef = new StringList(jCas).push("noref-eins").push("noref-zwei").push("noref drei");
+        holder.setSlNoRef(slNoRef);
 
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName())), false, false, null, null);
+        //System.out.println(baos.toString(UTF_8));
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName())), true, false, null, null);
         final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
@@ -139,7 +145,7 @@ public class BinaryJeDISNodeEncoderTest {
         final Map<String, Integer> mapping = IntStream.range(0, missingItemsForMapping.size()).mapToObj(i -> new ImmutablePair<>(i, missingItemsForMapping.get(i))).collect(Collectors.toMap(Pair::getRight, Pair::getLeft));
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(nodesWithLabel, jCas.getTypeSystem(), mapping, result.getFeaturesToMap());
 
-
+        System.out.println(splitterResult.xmiData.get(MultiValueTypesHolder.class.getCanonicalName()).toString(UTF_8));
         List<InputStream> bais = new ArrayList<>();
         for (String label : encode.keySet()) {
             bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
@@ -147,7 +153,7 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder();
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
         final ByteArrayOutputStream decodedData = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
-        System.out.println(decodedData.toString(StandardCharsets.UTF_8));
+        System.out.println(decodedData.toString(UTF_8));
 
     }
 

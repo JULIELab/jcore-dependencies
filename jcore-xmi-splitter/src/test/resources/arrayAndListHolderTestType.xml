@@ -5,7 +5,7 @@
     <version>1.0</version>
     <vendor/>
     <imports>
-        <import name="de.julielab.jcore.types.jcore-morpho-syntax-types"/>
+        <import location="de/julielab/jcore/types/jcore-morpho-syntax-types.xml"/>
     </imports>
     <types>
         <typeDescription>
@@ -76,6 +76,20 @@
                     <rangeTypeName>uima.cas.FSList</rangeTypeName>
                     <elementType>uima.tcas.Annotation</elementType>
                     <multipleReferencesAllowed>true</multipleReferencesAllowed>
+                </featureDescription>
+                <featureDescription>
+                    <name>sl</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.StringList</rangeTypeName>
+                    <elementType>uima.tcas.Annotation</elementType>
+                    <multipleReferencesAllowed>true</multipleReferencesAllowed>
+                </featureDescription>
+                <featureDescription>
+                    <name>slNoRef</name>
+                    <description/>
+                    <rangeTypeName>uima.cas.StringList</rangeTypeName>
+                    <elementType>uima.tcas.Annotation</elementType>
+                    <multipleReferencesAllowed>false</multipleReferencesAllowed>
                 </featureDescription>
             </features>
         </typeDescription>

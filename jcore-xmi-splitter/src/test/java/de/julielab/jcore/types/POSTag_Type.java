@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
+/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** POS is a linguistic category of words (tokens) that are defined by their particular syntactic/morphological behaviours (e.g. noun, verb).
- * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
+ * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
  * @generated */
 public class POSTag_Type extends Annotation_Type {
   /** @generated */

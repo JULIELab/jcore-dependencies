@@ -59,8 +59,6 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public StaxXmiSplitter(Set<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
                            String docTableName, Set<String> baseDocumentAnnotations, int attribute_size) {
         this(annotationModulesToExtract, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
-        //   inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
-
     }
 
     @Override
@@ -107,7 +105,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
                 lastNode.setByteLength(reader.getLocation().getCharacterOffset() - lastNode.getByteOffset());
             }
             String xmiIdValue = reader.getAttributeValue(namespaceMap.get("xmi"), "id");
-            if (xmiIdValue != null) {
+            if (xmiIdValue != null && !"0".equals(xmiIdValue)) {
                 int oldXmiId = Integer.parseInt(reader.getAttributeValue(namespaceMap.get("xmi"), "id"));
                 String typeName = getTypeName(reader);
                 JeDISVTDGraphNode n = nodesByXmiId.computeIfAbsent(oldXmiId, typeName.equals(CAS_SOFA) ? SofaVTDGraphNode::new : JeDISVTDGraphNode::new);
@@ -121,7 +119,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
 
                 Map<String, List<Integer>> referencedXmiIds = getReferencedXmiIds(reader, n.getTypeName(), aCas.getTypeSystem(), namespaceMap);
                 n.setReferencedXmiIds(referencedXmiIds);
-                referencedXmiIds.values().stream().flatMap(Collection::stream).map(refId -> nodesByXmiId.computeIfAbsent(refId, JeDISVTDGraphNode::new)).forEach(referenced -> referenced.addPredecessor(n));
+                referencedXmiIds.values().stream().flatMap(Collection::stream).filter(id -> id != 0).map(refId -> nodesByXmiId.computeIfAbsent(refId, JeDISVTDGraphNode::new)).forEach(referenced -> referenced.addPredecessor(n));
 
                 if (n.getTypeName().equals(CAS_SOFA)) {
                     nodesByXmiId.put(currentSecondSofaMapKey--, n);
@@ -163,22 +161,6 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             }
         }
 
-
-        // if (isFSArray(annotationType)) {
-        //            String referenceString = reader.getAttributeValue(null, "elements");
-        //            referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
-        //        } else{
-        //            List<Feature> features = annotationType.getFeatures();
-        //            for (Feature f : features) {
-        //                Type featureType = f.getRange();
-        //                if ((featureType.isArray() || !isPrimitive(featureType)) && (featureType.getComponentType() == null || !featureType.getComponentType().isPrimitive())) {
-        //                    String referenceString = reader.getAttributeValue(null, f.getShortName());
-        //                    if (referenceString != null) {
-        //                        referencesByFeatureBaseName.put(f.getShortName(), refAttributeValue2Integers.apply(referenceString));
-        //                    }
-        //                }
-        //            }
-        //        }
         return referencesByFeatureBaseName;
     }
 
@@ -198,7 +180,6 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
         final String typeName = nsUri + name;
         return typeName;
     }
-
 
 
     private boolean forwardTo(XMLStreamReader reader, Predicate<XMLStreamReader> predicate) throws XMLStreamException {

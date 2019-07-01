@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
+/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
 package de.julielab.jcore.types.test;
 
 import org.apache.uima.jcas.JCas; 
@@ -9,6 +9,7 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 import org.apache.uima.jcas.cas.FSArray;
 import org.apache.uima.jcas.cas.FSList;
+import org.apache.uima.jcas.cas.StringList;
 import org.apache.uima.jcas.cas.IntegerList;
 import org.apache.uima.jcas.cas.ShortArray;
 import org.apache.uima.jcas.cas.DoubleArray;
@@ -16,7 +17,7 @@ import de.julielab.jcore.types.Annotation;
 
 
 /** 
- * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
+ * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
  * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class MultiValueTypesHolder extends Annotation {
@@ -431,6 +432,50 @@ public class MultiValueTypesHolder extends Annotation {
     if (MultiValueTypesHolder_Type.featOkTst && ((MultiValueTypesHolder_Type)jcasType).casFeat_fslist == null)
       jcasType.jcas.throwFeatMissing("fslist", "de.julielab.jcore.types.test.MultiValueTypesHolder");
     jcasType.ll_cas.ll_setRefValue(addr, ((MultiValueTypesHolder_Type)jcasType).casFeatCode_fslist, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: sl
+
+  /** getter for sl - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public StringList getSl() {
+    if (MultiValueTypesHolder_Type.featOkTst && ((MultiValueTypesHolder_Type)jcasType).casFeat_sl == null)
+      jcasType.jcas.throwFeatMissing("sl", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((MultiValueTypesHolder_Type)jcasType).casFeatCode_sl)));}
+    
+  /** setter for sl - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setSl(StringList v) {
+    if (MultiValueTypesHolder_Type.featOkTst && ((MultiValueTypesHolder_Type)jcasType).casFeat_sl == null)
+      jcasType.jcas.throwFeatMissing("sl", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    jcasType.ll_cas.ll_setRefValue(addr, ((MultiValueTypesHolder_Type)jcasType).casFeatCode_sl, jcasType.ll_cas.ll_getFSRef(v));}    
+   
+    
+  //*--------------*
+  //* Feature: slNoRef
+
+  /** getter for slNoRef - gets 
+   * @generated
+   * @return value of the feature 
+   */
+  public StringList getSlNoRef() {
+    if (MultiValueTypesHolder_Type.featOkTst && ((MultiValueTypesHolder_Type)jcasType).casFeat_slNoRef == null)
+      jcasType.jcas.throwFeatMissing("slNoRef", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    return (StringList)(jcasType.ll_cas.ll_getFSForRef(jcasType.ll_cas.ll_getRefValue(addr, ((MultiValueTypesHolder_Type)jcasType).casFeatCode_slNoRef)));}
+    
+  /** setter for slNoRef - sets  
+   * @generated
+   * @param v value to set into the feature 
+   */
+  public void setSlNoRef(StringList v) {
+    if (MultiValueTypesHolder_Type.featOkTst && ((MultiValueTypesHolder_Type)jcasType).casFeat_slNoRef == null)
+      jcasType.jcas.throwFeatMissing("slNoRef", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    jcasType.ll_cas.ll_setRefValue(addr, ((MultiValueTypesHolder_Type)jcasType).casFeatCode_slNoRef, jcasType.ll_cas.ll_getFSRef(v));}    
   }
 
     

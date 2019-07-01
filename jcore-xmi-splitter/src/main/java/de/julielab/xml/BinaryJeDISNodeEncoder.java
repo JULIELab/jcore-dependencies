@@ -120,7 +120,6 @@ public class BinaryJeDISNodeEncoder {
                 final List<JeDISVTDGraphNode> nodesForCurrentLabel = nodesByLabel.get(label);
                 for (JeDISVTDGraphNode n : nodesForCurrentLabel) {
                     currentXmiElementForLogging = n.getModuleXmlData();
-
                     vg.setDoc_BR(n.getModuleXmlData().getBytes(StandardCharsets.UTF_8));
                     vg.parse(false);
                     final VTDNav vn = vg.getNav();
@@ -132,12 +131,13 @@ public class BinaryJeDISNodeEncoder {
                             writeInt(mapping.get(vn.toString(index)), nodeData);
                             nodeData.write(vn.getAttrCount());
                         }
-                        if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null)
+                        if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null) {
                             // Indicate that the element is not yet finished
                             nodeData.write(0);
-                        // The string array values are the last thing we want to encode, thus this will be the
-                        // last action for the current annotation node
-                        encodeEmbeddedStringArrays(vn, index, mapping, nodeData);
+                            // The string array values are the last thing we want to encode, thus this will be the
+                            // last action for the current annotation node
+                            encodeEmbeddedStringArrays(vn, index, mapping, nodeData);
+                        }
                         if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
                             attrName = vn.toString(index);
                             writeInt(mapping.get(attrName), nodeData);
@@ -196,14 +196,15 @@ public class BinaryJeDISNodeEncoder {
         final Feature feature = nodeType != null ? nodeType.getFeatureByBaseName(attrName) : null;
         final String attributeValue = vn.toString(index);
         if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(nodeType, attrName, ts)) {
-            handleReferenceAttributes(attrName, attributeValue, mapping, baos);
+            handleReferenceAttributes(attrName, attributeValue, baos);
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
             handleListTypes(attrName, attributeValue, typeName, mapping, mappedFeatures, baos);
-        } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName)|| feature.getRange().isArray()) {
+        } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
             handleArrayElementFeature(attrName, attributeValue, typeName, nodeType, feature, baos);
         } else if (feature.getRange().isPrimitive()) {
             handlePrimitiveFeatures(attrName, attributeValue, feature, mapping, mappedFeatures, baos);
-        }
+        } else
+            throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + n.getTypeName() + "'");
     }
 
     private void handlePrimitiveFeatures(String attrName, String attributeValue, Feature feature, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos) {
@@ -223,7 +224,7 @@ public class BinaryJeDISNodeEncoder {
             baos.write(Byte.valueOf(attributeValue));
         }
         if (feature.getRange().getName().equals(CAS.TYPE_NAME_INTEGER)) {
-            writeDouble(Integer.valueOf(attributeValue), baos);
+            writeInt(Integer.valueOf(attributeValue), baos);
         }
         if (feature.getRange().getName().equals(CAS.TYPE_NAME_LONG)) {
             writeLong(Long.valueOf(attributeValue), baos);
@@ -240,25 +241,21 @@ public class BinaryJeDISNodeEncoder {
         final String[] valueSplit = attributeValue.split(" ");
         writeInt(valueSplit.length, baos);
         Stream<String> arrayValues = Stream.of(valueSplit);
+        // The list subtype names have already been resolved at the calling method
         String arrayTypeName = XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName) ? typeName : feature.getRange().getName();
-        if (arrayTypeName.equals(CAS.TYPE_NAME_DOUBLE_ARRAY)) {
+        if (arrayTypeName.equals(CAS.TYPE_NAME_DOUBLE_ARRAY) || arrayTypeName.equals(CAS.TYPE_NAME_FLOAT_LIST)) {
             arrayValues.mapToDouble(Double::valueOf).forEach(d -> writeDouble(d, baos));
-        }
-        if (arrayTypeName.equals(CAS.TYPE_NAME_SHORT_ARRAY)) {
+        } else if (arrayTypeName.equals(CAS.TYPE_NAME_SHORT_ARRAY)) {
             arrayValues.mapToInt(Integer::valueOf).forEach(i -> writeShort((short) i, baos));
-        }
-        if (arrayTypeName.equals(CAS.TYPE_NAME_BYTE_ARRAY)) {
+        } else if (arrayTypeName.equals(CAS.TYPE_NAME_BYTE_ARRAY)) {
             arrayValues.mapToInt(Integer::valueOf).forEach(baos::write);
-        }
-        if (arrayTypeName.equals(CAS.TYPE_NAME_BOOLEAN_ARRAY)) {
+        } else if (arrayTypeName.equals(CAS.TYPE_NAME_BOOLEAN_ARRAY)) {
             arrayValues.map(s -> Boolean.valueOf(s) ? 1 : 0).forEach(baos::write);
-        }
-        if (arrayTypeName.equals(CAS.TYPE_NAME_INTEGER_ARRAY)) {
-            arrayValues.mapToDouble(Double::valueOf).forEach(i -> writeDouble(i, baos));
-        }
-        if (arrayTypeName.equals(CAS.TYPE_NAME_LONG_ARRAY)) {
+        } else if (arrayTypeName.equals(CAS.TYPE_NAME_INTEGER_ARRAY) || arrayTypeName.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
+            arrayValues.mapToInt(Integer::valueOf).forEach(i -> writeInt(i, baos));
+        } else if (arrayTypeName.equals(CAS.TYPE_NAME_LONG_ARRAY)) {
             arrayValues.mapToLong(Long::valueOf).forEach(l -> writeLong(l, baos));
-        }
+        } else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
 
     private void handleListTypes(String attrName, String attributeValue, String typeName, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos) {
@@ -267,16 +264,16 @@ public class BinaryJeDISNodeEncoder {
         // The tail is a xmi:id reference to the next list node
         if (attrName.equals(CAS.FEATURE_BASE_NAME_TAIL)) {
             writeInt(Integer.valueOf(attributeValue), baos);
-        } else if (attrName.equals(CAS.FEATURE_BASE_NAME_HEAD)){
+        } else if (attrName.equals(CAS.FEATURE_BASE_NAME_HEAD)) {
             // The head contains the actual value
             if (typeName.equals(CAS.TYPE_NAME_FLOAT_LIST)) {
                 writeDouble(Double.valueOf(attributeValue), baos);
             }
             if (typeName.equals(CAS.TYPE_NAME_FS_LIST)) {
-                writeDouble(Integer.valueOf(attributeValue), baos);
+                writeInt(Integer.valueOf(attributeValue), baos);
             }
             if (typeName.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
-                writeDouble(Integer.valueOf(attributeValue), baos);
+                writeInt(Integer.valueOf(attributeValue), baos);
             }
             if (typeName.equals(CAS.TYPE_NAME_STRING_LIST)) {
                 writeStringWithMapping(attributeValue, attrName, mappedFeatures, mapping, baos);
@@ -284,8 +281,7 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void handleReferenceAttributes(String attrName, String attributeValue, Map<String, Integer> mapping, ByteArrayOutputStream baos) {
-        writeInt(mapping.get(attrName), baos);
+    private void handleReferenceAttributes(String attrName, String attributeValue, ByteArrayOutputStream baos) {
         if (attrName.equals("xmi:id"))
             writeInt(Integer.valueOf(attributeValue), baos);
         else if (attrName.equals("sofa"))

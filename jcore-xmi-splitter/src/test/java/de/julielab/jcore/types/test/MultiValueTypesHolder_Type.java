@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sun Jun 30 14:16:53 CEST 2019 */
+/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
 package de.julielab.jcore.types.test;
 
 import org.apache.uima.jcas.JCas;
@@ -11,7 +11,7 @@ import org.apache.uima.cas.Feature;
 import de.julielab.jcore.types.Annotation_Type;
 
 /** 
- * Updated by JCasGen Sun Jun 30 14:16:53 CEST 2019
+ * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
  * @generated */
 public class MultiValueTypesHolder_Type extends Annotation_Type {
   /** @generated */
@@ -423,6 +423,54 @@ public class MultiValueTypesHolder_Type extends Annotation_Type {
     ll_cas.ll_setRefValue(addr, casFeatCode_fslist, v);}
     
   
+ 
+  /** @generated */
+  final Feature casFeat_sl;
+  /** @generated */
+  final int     casFeatCode_sl;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getSl(int addr) {
+        if (featOkTst && casFeat_sl == null)
+      jcas.throwFeatMissing("sl", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_sl);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setSl(int addr, int v) {
+        if (featOkTst && casFeat_sl == null)
+      jcas.throwFeatMissing("sl", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    ll_cas.ll_setRefValue(addr, casFeatCode_sl, v);}
+    
+  
+ 
+  /** @generated */
+  final Feature casFeat_slNoRef;
+  /** @generated */
+  final int     casFeatCode_slNoRef;
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @return the feature value 
+   */ 
+  public int getSlNoRef(int addr) {
+        if (featOkTst && casFeat_slNoRef == null)
+      jcas.throwFeatMissing("slNoRef", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    return ll_cas.ll_getRefValue(addr, casFeatCode_slNoRef);
+  }
+  /** @generated
+   * @param addr low level Feature Structure reference
+   * @param v value to set 
+   */    
+  public void setSlNoRef(int addr, int v) {
+        if (featOkTst && casFeat_slNoRef == null)
+      jcas.throwFeatMissing("slNoRef", "de.julielab.jcore.types.test.MultiValueTypesHolder");
+    ll_cas.ll_setRefValue(addr, casFeatCode_slNoRef, v);}
+    
+  
 
 
 
@@ -474,6 +522,14 @@ public class MultiValueTypesHolder_Type extends Annotation_Type {
  
     casFeat_fslist = jcas.getRequiredFeatureDE(casType, "fslist", "uima.cas.FSList", featOkTst);
     casFeatCode_fslist  = (null == casFeat_fslist) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_fslist).getCode();
+
+ 
+    casFeat_sl = jcas.getRequiredFeatureDE(casType, "sl", "uima.cas.StringList", featOkTst);
+    casFeatCode_sl  = (null == casFeat_sl) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_sl).getCode();
+
+ 
+    casFeat_slNoRef = jcas.getRequiredFeatureDE(casType, "slNoRef", "uima.cas.StringList", featOkTst);
+    casFeatCode_slNoRef  = (null == casFeat_slNoRef) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_slNoRef).getCode();
 
   }
 }

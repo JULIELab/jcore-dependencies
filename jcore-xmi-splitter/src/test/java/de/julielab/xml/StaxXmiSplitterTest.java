@@ -3,17 +3,20 @@ package de.julielab.xml;
 import com.ximpleware.NavException;
 import de.julielab.jcore.types.*;
 import de.julielab.jcore.types.pubmed.Header;
+import de.julielab.jcore.types.test.MultiValueTypesHolder;
 import de.julielab.jcore.utility.JCoReTools;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.DoubleArray;
-import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.jcas.cas.*;
+import org.apache.uima.jcas.tcas.Annotation;
 import org.junit.Test;
 
 import java.io.*;
@@ -21,7 +24,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
+import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 
@@ -41,7 +46,7 @@ public class StaxXmiSplitterTest {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         // There are 1440 XML elements with an XMI:id in the respective document
         // Also, we add the sofa with the special ID -2 (as a duplicate to its original, but a priori unknown ID)
-        assertThat(nodesByXmiId).hasSize(1441);
+        assertThat(nodesByXmiId).hasSize(1440);
         JeDISVTDGraphNode tokenWithSynonyms = nodesByXmiId.get(3430);
         String s = new String(Arrays.copyOfRange(xmiData, tokenWithSynonyms.getByteOffset(), tokenWithSynonyms.getByteOffset() + tokenWithSynonyms.getByteLength()));
         assertThat(s).contains("<synonyms>exchange</synonyms");
@@ -186,7 +191,7 @@ public class StaxXmiSplitterTest {
 
         byte[] tokenBytes = result.xmiData.get(Token.class.getCanonicalName()).toByteArray();
 
-        String tokenData = new String(tokenBytes, StandardCharsets.UTF_8);
+        String tokenData = new String(tokenBytes, UTF_8);
         // There should be tokens, dependency relations and arrays but no postags
         assertThat(tokenData.indexOf("types:Token")).isGreaterThan(0);
         assertThat(tokenData.indexOf("types:DependencyRelation")).isGreaterThan(0);
@@ -195,7 +200,7 @@ public class StaxXmiSplitterTest {
 
         byte[] baseDocBytes = result.xmiData.get("docs").toByteArray();
 
-        String baseDocData = new String(baseDocBytes, StandardCharsets.UTF_8);
+        String baseDocData = new String(baseDocBytes, UTF_8);
         assertThat(baseDocData.indexOf("<cas:Sofa")).isGreaterThan(-1);
         assertThat(baseDocData.indexOf("<types:Title")).isGreaterThan(-1);
         assertThat(baseDocData.indexOf("<pubmed:Header")).isGreaterThan(-1);
@@ -369,5 +374,50 @@ public class StaxXmiSplitterTest {
         assertThat(tokenXmiData).contains("source=\"TestSource\"");
         assertThat(tokenXmiData).contains("vector=\"0.7308781907032909 0.41008081149220166 0.20771484130971707 0.3327170559595112 0.9677559094241207 0.006117182265761301 0.9637047970232077 0.9398653887819098 0.9471949176631939 0.9370821488959696\"");
     }
+    @Test
+    public void testDontStoreCasNull() throws Exception {
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        jCas.setDocumentText("This is a simple sentence.");
+        new Sentence(jCas, 0, jCas.getDocumentText().length()).addToIndexes();
 
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+        assertThat(baos.toString(UTF_8)).contains("<cas:NULL xmi:id=\"0\"/>");
+
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Sentence.class.getCanonicalName())), true, true, "docs", Collections.emptySet());
+        Map<String, Integer> sofaIdMap = new HashMap<>();
+        sofaIdMap.put("_InitialView", 9999);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
+
+        final ByteArrayOutputStream sentenceData = result.xmiData.get(Sentence.class.getCanonicalName());
+        final ByteArrayOutputStream baseData = result.xmiData.get("docs");
+
+        final String sentenceXml = sentenceData.toString(UTF_8);
+        final String basedocData = baseData.toString(UTF_8);
+
+        assertThat(sentenceXml).doesNotContain("cas:NULL");
+        assertThat(basedocData).doesNotContain("cas:NULL");
+    }
+
+    @Test
+    public void testNoCasNullWithNullArrayElements() throws Exception {
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
+        final MultiValueTypesHolder holder = new MultiValueTypesHolder(jCas);
+        holder.addToIndexes();
+        final FSArray fs = new FSArray(jCas, 2);
+        // We omit the second element, so it will be null, referencing the cas:NULL element.
+        // We want to make sure that it is not stored anyway.
+        fs.set(0, new org.apache.uima.jcas.tcas.Annotation(jCas, 1, 1));
+        holder.setFs(fs);
+
+
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName())), true, false, null, null);
+        final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
+        final String xmiData = splitterResult.xmiData.get(MultiValueTypesHolder.class.getCanonicalName()).toString(UTF_8);
+        assertThat(xmiData).doesNotContain("cas:NULL");
+
+
+    }
 }

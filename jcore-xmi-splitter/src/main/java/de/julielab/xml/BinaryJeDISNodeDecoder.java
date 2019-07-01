@@ -13,6 +13,9 @@ import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.BiConsumer;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public class BinaryJeDISNodeDecoder {
     public ByteArrayOutputStream decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Set<String> mappedFeatures, Map<String, String> namespaceMap) {
@@ -21,21 +24,29 @@ public class BinaryJeDISNodeDecoder {
 
             for (InputStream is : input) {
                 final ByteBuffer bb = readInputStreamIntoBuffer(is);
-                String prefixedNameType = mapping.get(bb.getInt());
-                // '<type:Token '
-                ret.write('<');
-                writeWs(prefixedNameType, ret);
-                final String[] prefixAndTypeName = prefixedNameType.split(":");
-                final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
-                final Type type = ts.getType(typeName);
-                final byte numAttributes = bb.get();
-                for (int i = 0; i < numAttributes; i++) {
-                    readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, ret);
-                }
-                // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
-                final byte finishedIndicator = bb.get();
-                if (finishedIndicator == 0) {
-                    writeStringArray(is, ret);
+                while (bb.position() < bb.limit()) {
+                    String prefixedNameType = mapping.get(bb.getInt());
+                    // '<type:Token '
+                    ret.write('<');
+                    writeWs(prefixedNameType, ret);
+                    final String[] prefixAndTypeName = prefixedNameType.split(":");
+                    final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
+                    final Type type = ts.getType(typeName);
+                    final byte numAttributes = bb.get();
+                    for (int i = 0; i < numAttributes; i++) {
+                        readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, ret);
+                    }
+                    // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
+                    final byte finishedIndicator = bb.get();
+                    if (finishedIndicator == 0) {
+                        writeStringArray(is, ret);
+                        ret.write('<');
+                        ret.write('/');
+                        writeWs(prefixedNameType, ret);
+                    } else {
+                        ret.write('/');
+                    }
+                    ret.write('>');
                 }
             }
         } catch (IOException e) {
@@ -49,99 +60,94 @@ public class BinaryJeDISNodeDecoder {
         final Feature feature = type.getFeatureByBaseName(attrName);
         // 'attrName="attrvalue" '
         write(attrName, ret);
+        ret.write('=');
+        ret.write('"');
         if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(type, attrName, ts)) {
             handleReferenceAttributes(bb, attrName, ret);
+        } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
+            handleArrayElementFeature(bb, type, attrName, ret);
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
             handleListTypes(bb, typeName, attrName, mapping, mappedFeatures, ret);
-        } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) || feature.getRange().isArray()) {
-            handleArrayElementFeature(bb, feature, ret);
         } else if (feature.getRange().isPrimitive()) {
             handlePrimitiveFeatures(bb, mappedFeatures, mapping, ret, attrName, feature);
-        }
-
+        } //else throw new IllegalArgumentException("Unhandled attribute '" + attrName + "' of type '" + typeName + "'.");
+        ret.write('"');
+        ret.write(' ');
     }
 
     private void handlePrimitiveFeatures(ByteBuffer bb, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream ret, String attrName, Feature feature) {
         if (feature.getRange().getName().equals(CAS.TYPE_NAME_STRING)) {
-            writeStringAttrValueWithMapping(bb, attrName, mappedFeatures, mapping, ret);
+            writeStringWithMapping(bb, attrName, mappedFeatures, mapping, ret);
         }
         if (feature.getRange().getName().equals(CAS.TYPE_NAME_DOUBLE)) {
-            writeAttrValue(bb.getDouble(), ret);
+            write(bb.getDouble(), ret);
         }
-        if (feature.getRange().getName().equals("uima.cas.Short")) {
-            writeAttrValue(bb.getShort(), ret);
+        if (feature.getRange().getName().equals(CAS.TYPE_NAME_SHORT)) {
+            write(bb.getShort(), ret);
         }
-        if (feature.getRange().getName().equals("uima.cas.Byte")) {
-            writeAttrValue(bb.get(), ret);
+        if (feature.getRange().getName().equals(CAS.TYPE_NAME_BYTE)) {
+            write(bb.get(), ret);
         }
-        if (feature.getRange().getName().equals("uima.cas.Integer")) {
-            writeAttrValue(bb.getInt(), ret);
+        if (feature.getRange().getName().equals(CAS.TYPE_NAME_INTEGER)) {
+            write(bb.getInt(), ret);
         }
-        if (feature.getRange().getName().equals("uima.cas.Long")) {
-            writeAttrValue(bb.getLong(), ret);
+        if (feature.getRange().getName().equals(CAS.TYPE_NAME_LONG)) {
+            write(bb.getLong(), ret);
         }
     }
 
-    private void handleArrayElementFeature(ByteBuffer bb, Feature feature, ByteArrayOutputStream ret) {
-        ret.write('=');
-        ret.write('"');
-        final String componentTypeName = feature.getRange().getComponentType().getName();
-        int length = bb.getInt();
-        if (componentTypeName.equals(CAS.TYPE_NAME_DOUBLE)) {
-            for (int i = 0; i < length; i++)
-                write(bb.getDouble(), ret);
+    private void handleArrayElementFeature(ByteBuffer bb, Type type, String attrName, ByteArrayOutputStream ret) {
+        final Feature feature = type.getFeatureByBaseName(attrName);
+        final String typeName = XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) ? type.getName() : feature.getRange().getName();
+        final int length = bb.getInt();
+        Consumer<ByteBuffer> componentValueConsumer;
+        if (typeName.equals(CAS.TYPE_NAME_DOUBLE_ARRAY) || typeName.equals(CAS.TYPE_NAME_FLOAT_LIST)) {
+            componentValueConsumer = buf -> write(buf.getDouble(), ret);
+        } else if (typeName.equals(CAS.TYPE_NAME_SHORT_ARRAY)) {
+            componentValueConsumer = buf -> write(bb.getShort(), ret);
+        } else if (typeName.equals(CAS.TYPE_NAME_BYTE_ARRAY)) {
+            componentValueConsumer = buf -> write(bb.get(), ret);
+        } else if (typeName.equals(CAS.TYPE_NAME_INTEGER_ARRAY) || typeName.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
+            componentValueConsumer = buf -> write(bb.getInt(), ret);
+        } else if (typeName.equals(CAS.TYPE_NAME_LONG_ARRAY)) {
+            componentValueConsumer = buf -> write(bb.getLong(), ret);
+        } else
+            throw new IllegalArgumentException("Unsupported UIMA array type: " + typeName);
+        for (int i = 0; i < length; i++) {
+            componentValueConsumer.accept(bb);
+            if (i < length - 1)
+                ret.write(' ');
         }
-        if (componentTypeName.equals(CAS.TYPE_NAME_SHORT)) {
-            for (int i = 0; i < length; i++)
-                write(bb.getShort(), ret);
-        }
-        if (componentTypeName.equals(CAS.TYPE_NAME_BYTE)) {
-            for (int i = 0; i < length; i++)
-                write(bb.get(), ret);
-        }
-        if (componentTypeName.equals(CAS.TYPE_NAME_INTEGER)) {
-            for (int i = 0; i < length; i++)
-                write(bb.getInt(), ret);
-        }
-        if (componentTypeName.equals(CAS.TYPE_NAME_LONG)) {
-            for (int i = 0; i < length; i++)
-                write(bb.getLong(), ret);
-        }
-        ret.write('"');
-        ret.write(' ');
     }
 
     private void handleListTypes(ByteBuffer bb, String typeName, String attrName, Map<Integer, String> mapping, Set<String> mappedFeatures, ByteArrayOutputStream ret) {
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
         // The tail is a xmi:id reference to the next list node
+        String baseListType = XmiSplitUtilities.resolveListSubtypes(typeName);
         if (attrName.equals(CAS.FEATURE_BASE_NAME_TAIL)) {
             write(bb.getInt(), ret);
         } else if (attrName.equals(CAS.FEATURE_BASE_NAME_HEAD)) {
             // The head contains the actual value
-            if (typeName.equals(CAS.TYPE_NAME_FLOAT_LIST)) {
+            if (baseListType.equals(CAS.TYPE_NAME_FLOAT_LIST)) {
                 write(bb.getDouble(), ret);
-            }
-            if (typeName.equals(CAS.TYPE_NAME_FS_LIST)) {
+            } else if (baseListType.equals(CAS.TYPE_NAME_FS_LIST)) {
                 write(bb.getInt(), ret);
-            }
-            if (typeName.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
+            } else if (baseListType.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
                 write(bb.getInt(), ret);
-            }
-            if (typeName.equals(CAS.TYPE_NAME_STRING_LIST)) {
-                writeStringAttrValueWithMapping(bb, attrName, mappedFeatures, mapping, ret);
-            }
+            } else if (baseListType.equals(CAS.TYPE_NAME_STRING_LIST)) {
+                writeStringWithMapping(bb, attrName, mappedFeatures, mapping, ret);
+            } else throw new IllegalArgumentException("Unhandled UIMA list type: " + typeName);
         }
     }
 
     private void handleReferenceAttributes(ByteBuffer bb, String attrName, ByteArrayOutputStream ret) {
         if (attrName.equals("xmi:id"))
-            writeAttrValue(bb.getInt(), ret);
+            write(bb.getInt(), ret);
         else if (attrName.equals("sofa"))
-            writeAttrValue(bb.get(), ret);
+            write(bb.get(), ret);
         else { // is reference attribute
             final int numReferences = bb.getInt();
-            ret.write('"');
             for (int j = 0; j < numReferences; j++) {
                 final int referenceXmiId = bb.getInt();
                 // -1 means "null"
@@ -151,8 +157,6 @@ public class BinaryJeDISNodeDecoder {
                 if (j < numReferences - 1)
                     ret.write(' ');
             }
-            ret.write('"');
-            ret.write(' ');
         }
     }
 
@@ -251,8 +255,8 @@ public class BinaryJeDISNodeDecoder {
         } else {
             int length = bb.getInt();
             baos.write(bb.array(), bb.position(), length);
+            bb.position(bb.position() + length);
         }
     }
-
 
 }
