@@ -136,7 +136,7 @@ public class BinaryJeDISNodeEncoder {
                             nodeData.write(0);
                             // The string array values are the last thing we want to encode, thus this will be the
                             // last action for the current annotation node
-                            encodeEmbeddedStringArrays(vn, index, mapping, nodeData);
+                            index = encodeEmbeddedStringArrays(vn, index, mapping, nodeData);
                         }
                         if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
                             attrName = vn.toString(index);
@@ -164,19 +164,21 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void encodeEmbeddedStringArrays(VTDNav vn, int index, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException {
+    private int encodeEmbeddedStringArrays(VTDNav vn, int index, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException {
         // First collect the values. Then write them in a compact fashion.
         Multimap<String, String> valuesByFeature = HashMultimap.create();
         while (index < vn.getTokenCount()) {
             if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
                 String feature = vn.toString(index);
                 ++index;
-                String value = vn.toString();
+                String value = vn.toString(index);
                 valuesByFeature.put(feature, value);
             }
             ++index;
         }
         // Now write the values in a compact way: Write the encoded feature name once and how many values to expect, the write those values.
+        // Write the numbers of string array features that have values
+        writeInt(valuesByFeature.keySet().size(), baos);
         for (String feature : valuesByFeature.keySet()) {
             final Collection<String> values = valuesByFeature.get(feature);
             writeInt(mapping.get(feature), baos);
@@ -186,7 +188,7 @@ public class BinaryJeDISNodeEncoder {
                 baos.writeBytes(value.getBytes(StandardCharsets.UTF_8));
             }
         }
-
+        return index;
     }
 
     private void encodeAttributeValue(int index, String attrName, JeDISVTDGraphNode n, TypeSystem ts, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos, VTDNav vn) throws NavException {

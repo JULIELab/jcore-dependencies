@@ -39,10 +39,13 @@ public class BinaryJeDISNodeDecoder {
                     // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
                     final byte finishedIndicator = bb.get();
                     if (finishedIndicator == 0) {
-                        writeStringArray(is, ret);
+                        ret.write('>');
+                        writeStringArray(bb, mapping, mappedFeatures, ret);
                         ret.write('<');
                         ret.write('/');
-                        writeWs(prefixedNameType, ret);
+                        write(prefixedNameType, ret);
+                        // Read the last byte that now should indicate finished
+                        bb.get();
                     } else {
                         ret.write('/');
                     }
@@ -172,47 +175,22 @@ public class BinaryJeDISNodeDecoder {
         return bb;
     }
 
-    private void writeStringArray(InputStream is, ByteArrayOutputStream ret) {
-    }
-
-    private void writeAttrValue(int i, ByteArrayOutputStream baos) {
-        baos.write('=');
-        baos.write('"');
-        write(i, baos);
-        baos.write('"');
-        baos.write(' ');
-    }
-
-    private void writeAttrValue(double d, ByteArrayOutputStream baos) {
-        baos.write('=');
-        baos.write('"');
-        write(d, baos);
-        baos.write('"');
-        baos.write(' ');
-    }
-
-    private void writeAttrValue(long l, ByteArrayOutputStream baos) {
-        baos.write('=');
-        baos.write('"');
-        write(l, baos);
-        baos.write('"');
-        baos.write(' ');
-    }
-
-    private void writeAttrValue(String s, ByteArrayOutputStream baos) {
-        baos.write('=');
-        baos.write('"');
-        write(s, baos);
-        baos.write('"');
-        baos.write(' ');
-    }
-
-    private void writeStringAttrValueWithMapping(ByteBuffer bb, String attrName, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream baos) {
-        baos.write('=');
-        baos.write('"');
-        writeStringWithMapping(bb, attrName, mappedFeatures, mapping, baos);
-        baos.write('"');
-        baos.write(' ');
+    private void writeStringArray(ByteBuffer bb, Map<Integer, String> mapping, Set<String> mappedFeatures, ByteArrayOutputStream ret) {
+        final int numStringArrayFeatures = bb.getInt();
+        for (int i = 0; i < numStringArrayFeatures; i++) {
+            final String featureName = mapping.get(bb.getInt());
+            final int numValues = bb.getInt();
+            for (int j = 0; j < numValues; j++) {
+                ret.write('<');
+                write(featureName, ret);
+                ret.write('>');
+                writeStringWithMapping(bb, featureName, mappedFeatures, mapping, ret);
+                ret.write('<');
+                ret.write('/');
+                write(featureName, ret);
+                ret.write('>');
+            }
+        }
     }
 
 
