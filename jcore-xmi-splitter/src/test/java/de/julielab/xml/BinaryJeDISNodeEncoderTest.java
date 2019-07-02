@@ -10,9 +10,11 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
+import org.apache.uima.cas.CASRuntimeException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
+import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.*;
 import org.apache.uima.jcas.tcas.Annotation;
@@ -27,6 +29,8 @@ import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatCode;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertNotNull;
 
@@ -133,7 +137,6 @@ public class BinaryJeDISNodeEncoderTest {
         final FSArray fsNoRef = new FSArray(jCas, 3);
         fsNoRef.set(0, new Annotation(jCas, 2, 1));
         fsNoRef.set(1, new Annotation(jCas, 2, 2));
-        fsNoRef.set(1, new Annotation(jCas, 2, 3));
         holder.setFsNoRef(fsNoRef);
         final NonEmptyFSList fslist = new FSList(jCas).push(new Annotation(jCas, 1, 1)).push(new Annotation(jCas, 1, 2)).push(new Annotation(jCas, 1, 3));
         holder.setFslist(fslist);
@@ -166,7 +169,6 @@ public class BinaryJeDISNodeEncoderTest {
         assertEquals(encode.size(), 2);
 
 
-
     }
 
     @Test(dependsOnMethods = "testEncodeArraysAndLists")
@@ -193,13 +195,70 @@ public class BinaryJeDISNodeEncoderTest {
     }
 
     @Test(dependsOnMethods = "testDecodeArraysAndLists")
-    public void testBuildDecodedBinaryXmi() throws Exception{
+    public void testBuildDecodedBinaryXmi() throws Exception {
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream xmiData = xmiBuilder.buildXmi(decodedData);
         JCas newJCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
-        System.out.println(xmiData.toString(UTF_8));
         XmiCasDeserializer.deserialize(new ByteArrayInputStream(xmiData.toByteArray()), newJCas.getCas());
 
+        final MultiValueTypesHolder holder = JCasUtil.selectSingle(newJCas, MultiValueTypesHolder.class);
+        assertNotNull(holder);
+        assertNotNull(holder.getDa());
+        assertNotNull(holder.getDaNoRef());
+        assertNotNull(holder.getSa());
+        assertNotNull(holder.getSaNoRef());
+        assertNotNull(holder.getIl());
+        assertNotNull(holder.getIlNoRef());
+        assertNotNull(holder.getFs());
+        assertNotNull(holder.getFsNoRef());
+        assertNotNull(holder.getFslist());
+        assertNotNull(holder.getFslistNoRef());
+        assertNotNull(holder.getSa());
+        assertNotNull(holder.getSaNoRef());
+        assertNotNull(holder.getSl());
+        assertNotNull(holder.getSlNoRef());
+
+        assertThat(holder.getDa().toArray()).containsExactly(0.3, 1.4, 7.567);
+        assertThat(holder.getDaNoRef().toArray()).containsExactly(1.3, 2.4, 8.567);
+        assertThat(holder.getSa().toArray()).containsExactly((short)10,(short) 20);
+        assertThat(holder.getSaNoRef().toArray()).containsExactly((short)20,(short) 30);
+        assertThat(holder.getIl().getNthElement(0)).isEqualTo(5);
+        assertThat(holder.getIl().getNthElement(1)).isEqualTo(4);
+        assertThatThrownBy(() -> holder.getIl().getNthElement(2)).isInstanceOf(ClassCastException.class);
+        assertThat(holder.getIlNoRef().getNthElement(0)).isEqualTo(3);
+        assertThat(holder.getIlNoRef().getNthElement(1)).isEqualTo(2);
+        assertThat(holder.getIlNoRef().getNthElement(2)).isEqualTo(1);
+        assertThatThrownBy(() -> holder.getIlNoRef().getNthElement(3)).isInstanceOf(CASRuntimeException.class).hasMessage("JCas getNthElement method called with index \"3\" larger than the length of the list.");
+        assertThat(((Annotation) holder.getFs().get(0)).getBegin()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFs().get(0)).getEnd()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFs().get(1)).getBegin()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFs().get(1)).getEnd()).isEqualTo(2);
+        assertThat(holder.getFs().size()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFsNoRef().get(0)).getBegin()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFsNoRef().get(0)).getEnd()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFsNoRef().get(1)).getBegin()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFsNoRef().get(1)).getEnd()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFsNoRef().get(2))).isNull();
+        assertThat(holder.getFsNoRef().size()).isEqualTo(3);
+        assertThat(((Annotation) holder.getFslist().getNthElement(0)).getBegin()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFslist().getNthElement(0)).getEnd()).isEqualTo(3);
+        assertThat(((Annotation) holder.getFslist().getNthElement(1)).getBegin()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFslist().getNthElement(1)).getEnd()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFslist().getNthElement(2)).getBegin()).isEqualTo(1);
+        assertThat(((Annotation) holder.getFslist().getNthElement(2)).getEnd()).isEqualTo(1);
+        assertThatThrownBy(() -> holder.getFslist().getNthElement(4)).isOfAnyClassIn(ClassCastException.class).hasMessageContaining("class org.apache.uima.jcas.cas.FSList cannot be cast to class org.apache.uima.jcas.cas.NonEmptyFSList");
+        assertThat(((Annotation) holder.getFslistNoRef().getNthElement(0)).getBegin()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFslistNoRef().getNthElement(0)).getEnd()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFslistNoRef().getNthElement(1)).getBegin()).isEqualTo(2);
+        assertThat(((Annotation) holder.getFslistNoRef().getNthElement(1)).getEnd()).isEqualTo(1);
+        assertThatThrownBy(() -> holder.getFslistNoRef().getNthElement(2)).isOfAnyClassIn(CASRuntimeException.class).hasMessageContaining("JCas getNthElement method called with index \"2\" larger than the length of the list.");
+        assertThat(holder.getSl().getNthElement(0)).isEqualTo("vier");
+        assertThat(holder.getSl().getNthElement(1)).isEqualTo("drei");
+        assertThat(holder.getSl().getNthElement(2)).isEqualTo("zwei");
+        assertThat(holder.getSl().getNthElement(3)).isEqualTo("eins");
+        assertThat(holder.getSlNoRef().getNthElement(0)).isEqualTo("noref drei");
+        assertThat(holder.getSlNoRef().getNthElement(1)).isEqualTo("noref-zwei");
+        assertThat(holder.getSlNoRef().getNthElement(2)).isEqualTo("noref-eins");
     }
 
 

@@ -163,13 +163,13 @@ public class BinaryJeDISNodeEncoder {
 
     private int encodeEmbeddedStringArrays(VTDNav vn, int index, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException {
         // First collect the values. Then write them in a compact fashion.
-        Multimap<String, String> valuesByFeature = HashMultimap.create();
+        Map<String, List<String>> valuesByFeature = new HashMap<>();
         while (index < vn.getTokenCount()) {
             if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
                 String feature = vn.toString(index);
                 ++index;
                 String value = vn.toString(index);
-                valuesByFeature.put(feature, value);
+                valuesByFeature.compute(feature, (k, v) -> v != null ? v : new ArrayList<>()).add(value);
             }
             ++index;
         }
@@ -199,7 +199,7 @@ public class BinaryJeDISNodeEncoder {
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
             handleListTypes(attrName, attributeValue, typeName, mapping, mappedFeatures, baos);
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
-            handleArrayElementFeature(attrName, attributeValue, typeName, nodeType, feature, baos);
+            handleArrayElementFeature(attrName, attributeValue, typeName, nodeType, feature, baos, ts);
         } else if (feature.getRange().isPrimitive()) {
             handlePrimitiveFeatures(attrName, attributeValue, feature, mapping, mappedFeatures, baos, ts);
         } else
@@ -227,7 +227,7 @@ public class BinaryJeDISNodeEncoder {
             throw new IllegalArgumentException("Unhandled feature value encoding of feature " + feature.getName() + " of type " + feature.getRange().getName());
     }
 
-    private void handleArrayElementFeature(String attrName, String attributeValue, String typeName, Type nodeType, Feature feature, ByteArrayOutputStream baos) {
+    private void handleArrayElementFeature(String attrName, String attributeValue, String typeName, Type nodeType, Feature feature, ByteArrayOutputStream baos, TypeSystem ts) {
         // This branch is entered if we have either an Array type and its elements attribute or
         // some other type with a feature that is multi valued but does not contain references
         // to other types (since the references are handled by the first if)
@@ -236,17 +236,18 @@ public class BinaryJeDISNodeEncoder {
         Stream<String> arrayValues = Stream.of(valueSplit);
         // The list subtype names have already been resolved at the calling method
         String arrayTypeName = XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName) ? typeName : feature.getRange().getName();
-        if (arrayTypeName.equals(CAS.TYPE_NAME_DOUBLE_ARRAY) || arrayTypeName.equals(CAS.TYPE_NAME_FLOAT_LIST)) {
+        Type arrayType = ts.getType(arrayTypeName);
+        if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE_ARRAY), arrayType) || ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT_LIST), arrayType)) {
             arrayValues.mapToDouble(Double::valueOf).forEach(d -> writeDouble(d, baos));
-        } else if (arrayTypeName.equals(CAS.TYPE_NAME_SHORT_ARRAY)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_SHORT_ARRAY), arrayType)) {
             arrayValues.mapToInt(Integer::valueOf).forEach(i -> writeShort((short) i, baos));
-        } else if (arrayTypeName.equals(CAS.TYPE_NAME_BYTE_ARRAY)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BYTE_ARRAY), arrayType)) {
             arrayValues.mapToInt(Integer::valueOf).forEach(baos::write);
-        } else if (arrayTypeName.equals(CAS.TYPE_NAME_BOOLEAN_ARRAY)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BOOLEAN_ARRAY), arrayType)) {
             arrayValues.map(s -> Boolean.valueOf(s) ? 1 : 0).forEach(baos::write);
-        } else if (arrayTypeName.equals(CAS.TYPE_NAME_INTEGER_ARRAY) || arrayTypeName.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_INTEGER_ARRAY), arrayType) || ts.subsumes(ts.getType(CAS.TYPE_NAME_INTEGER_LIST), arrayType)) {
             arrayValues.mapToInt(Integer::valueOf).forEach(i -> writeInt(i, baos));
-        } else if (arrayTypeName.equals(CAS.TYPE_NAME_LONG_ARRAY)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LONG_ARRAY), arrayType)) {
             arrayValues.mapToLong(Long::valueOf).forEach(l -> writeLong(l, baos));
         } else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
