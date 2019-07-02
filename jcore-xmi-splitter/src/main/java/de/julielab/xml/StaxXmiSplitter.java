@@ -68,6 +68,8 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
 
     @Override
     public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
+        // Avoid the 0 ID because it is reserved for the null pointer reference cas:NULL
+        nextPossibleId = Math.max(nextPossibleId, 1);
         this.currentXmiData = xmiData;
         try {
             final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(xmiData), "UTF-8");
@@ -83,10 +85,10 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules);
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, aCas.getTypeSystem());
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
-            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap);
+            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap, nodesByXmiId.keySet().stream().filter(id -> id > 0).map(nodesByXmiId::get).filter(node -> !node.getAnnotationModuleLabels().isEmpty()).collect(Collectors.toList()));
         } catch (XMLStreamException e) {
             e.printStackTrace();
         }
@@ -96,6 +98,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
 
     private Map<Integer, JeDISVTDGraphNode> createJedisNodes(XMLStreamReader reader, Map<String, String> namespaceMap, JCas aCas) throws XMLStreamException {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = new HashMap<>();
+        nodesByXmiId.put(0, JeDISVTDGraphNode.CAS_NULL);
         currentSecondSofaMapKey = SECOND_SOFA_MAP_KEY_START;
         forwardTo(reader, r -> depthDeque.size() == 2);
         JeDISVTDGraphNode lastNode = null;
@@ -145,13 +148,16 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
 
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FS_ARRAY), annotationType)) {
             String referenceString = reader.getAttributeValue(null, "elements");
-            referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
+            if (referenceString != null)
+                referencesByFeatureBaseName.put("elements", refAttributeValue2Integers.apply(referenceString));
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LIST_BASE), annotationType)) {
             String referenceString = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_TAIL);
-            referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_TAIL, refAttributeValue2Integers.apply(referenceString));
+            if (referenceString != null)
+                referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_TAIL, refAttributeValue2Integers.apply(referenceString));
             if (XmiSplitUtilities.resolveListSubtypes(annotationType.getName()).equals(CAS.TYPE_NAME_FS_LIST)) {
                 final String headReference = reader.getAttributeValue(null, CAS.FEATURE_BASE_NAME_HEAD);
-                referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_HEAD, refAttributeValue2Integers.apply(headReference));
+                if (headReference != null)
+                    referencesByFeatureBaseName.put(CAS.FEATURE_BASE_NAME_HEAD, refAttributeValue2Integers.apply(headReference));
             }
         } else {
             List<Feature> features = annotationType.getFeatures();

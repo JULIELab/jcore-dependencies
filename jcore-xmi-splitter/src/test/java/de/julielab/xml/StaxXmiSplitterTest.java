@@ -42,7 +42,8 @@ public class StaxXmiSplitterTest {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         // There are 1440 XML elements with an XMI:id in the respective document
         // Also, we add the sofa with the special ID -2 (as a duplicate to its original, but a priori unknown ID)
-        assertThat(nodesByXmiId).hasSize(1440);
+        // and the special cas:NULL JeDIS graph node to serve as a null reference
+        assertThat(nodesByXmiId).hasSize(1441);
         JeDISVTDGraphNode tokenWithSynonyms = nodesByXmiId.get(3430);
         String s = new String(Arrays.copyOfRange(xmiData, tokenWithSynonyms.getByteOffset(), tokenWithSynonyms.getByteOffset() + tokenWithSynonyms.getByteLength()));
         assertThat(s).contains("<synonyms>exchange</synonyms");

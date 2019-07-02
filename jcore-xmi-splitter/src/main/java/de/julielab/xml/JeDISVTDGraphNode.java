@@ -3,6 +3,8 @@ package de.julielab.xml;
 import java.util.*;
 
 public class JeDISVTDGraphNode {
+
+    public static final JeDISVTDGraphNode CAS_NULL = new JeDISVTDGraphNode(0, 0);
     protected long elementFragment;
     protected Integer oldXmiId;
     protected Integer newXmiId;
@@ -15,6 +17,16 @@ public class JeDISVTDGraphNode {
     private int byteLength;
     private String moduleXmlData;
 
+    /**
+     * For {@link #CAS_NULL}. So both IDs will be 0.
+     * @param oldXmiId The original XMI ID
+     * @param newXmiId The new XMI ID
+     */
+    private JeDISVTDGraphNode(Integer oldXmiId, Integer newXmiId) {
+        this();
+        this.oldXmiId = oldXmiId;
+        this.newXmiId = newXmiId;
+    }
 
     public JeDISVTDGraphNode(Integer oldXmiId) {
         this();

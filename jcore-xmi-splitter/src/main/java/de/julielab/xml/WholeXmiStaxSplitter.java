@@ -187,7 +187,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
         } else {
             storeSelected(ba);
         }
-        return new XmiSplitterResult(xmiData, currentMaxXmiId + 1, namespaces, currentSofaIdMap);
+        return new XmiSplitterResult(xmiData, currentMaxXmiId + 1, namespaces, currentSofaIdMap, Collections.emptyList());
         // List<Object> result = new ArrayList<Object>();
         // result.add(xmiData);
         // result.add(nextId);

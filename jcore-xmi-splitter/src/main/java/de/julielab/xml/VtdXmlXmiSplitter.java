@@ -77,10 +77,10 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules);
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, aCas.getTypeSystem());
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
-            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap);
+            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap,nodesByXmiId.keySet().stream().filter(id -> id >= 0).map(nodesByXmiId::get).collect(Collectors.toList()));
         } catch (VTDException e) {
             throw new XMISplitterException(e);
         }

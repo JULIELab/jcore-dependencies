@@ -1,18 +1,13 @@
 package de.julielab.xml.util;
 
 import de.julielab.xml.BinaryDecodingResult;
-import de.julielab.xml.XmiSplitUtilities;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.nio.ByteBuffer;
 import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -20,11 +15,9 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class BinaryXmiBuilder {
     private final static Logger log = LoggerFactory.getLogger(BinaryXmiBuilder.class);
     private Map<String, String> namespaces;
-    private final ByteBuffer bb8;
 
     public BinaryXmiBuilder(Map<String, String> nsAndXmiVersionMap) {
         namespaces = nsAndXmiVersionMap;
-        bb8 = ByteBuffer.allocate(Math.max(Long.SIZE, Double.SIZE));
     }
     public ByteArrayOutputStream buildXmi(BinaryDecodingResult decodingResult) {
         final ByteArrayOutputStream ret = new ByteArrayOutputStream();
@@ -41,7 +34,7 @@ public class BinaryXmiBuilder {
             ret.write('>');
             write("<cas:NULL xmi:id=\"0\" />", ret);
             decodingResult.getXmiData().writeTo(ret);
-            for (Integer sofaId : decodingResult.getSofaElements().keys()) {
+            for (Integer sofaId : decodingResult.getSofaElements().keySet()) {
                 final Collection<Integer> annotationIds = decodingResult.getSofaElements().get(sofaId);
                 write("<cas:View sofa=\"", ret);
                 write(sofaId, ret);
