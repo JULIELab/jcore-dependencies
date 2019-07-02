@@ -7,24 +7,20 @@ import de.julielab.jcore.types.test.MultiValueTypesHolder;
 import de.julielab.jcore.utility.JCoReTools;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
 import org.apache.uima.cas.impl.XmiCasSerializer;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.cas.*;
-import org.apache.uima.jcas.tcas.Annotation;
-import org.junit.Test;
+import org.apache.uima.jcas.cas.DoubleArray;
+import org.apache.uima.jcas.cas.FSArray;
+import org.testng.annotations.Test;
 
 import java.io.*;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -16,7 +16,7 @@ import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.*;
 import org.apache.uima.jcas.tcas.Annotation;
-import org.junit.Test;
+import org.testng.annotations.Test;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -27,9 +27,20 @@ import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 public class BinaryJeDISNodeEncoderTest {
 
+
+    // Those fields are written by tests to be used by following tests.
+    // The test order is determined by the @Test(dependsOnMethods=...) annotation
+    private Map<String, ByteArrayOutputStream> encode;
+    private XmiSplitterResult splitterResult;
+    private HashSet<String> moduleAnnotationNames;
+    private BinaryStorageAnalysisResult result;
+    private Map<String, Integer> mapping;
+    private BinaryDecodingResult decodedData;
 
     @Test
     public void testBinary() throws IOException, XMISplitterException, UIMAException, NavException {
@@ -87,7 +98,7 @@ public class BinaryJeDISNodeEncoderTest {
     }
 
     @Test
-    public void testNumericalArrays() throws Exception {
+    public void testEncodeArraysAndLists() throws Exception {
         // These embedded features are, for example, StringArrays that can not be references by other annotations
         // than the one it was originally set to.
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
@@ -137,28 +148,52 @@ public class BinaryJeDISNodeEncoderTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         //System.out.println(baos.toString(UTF_8));
-        final HashSet<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
+        moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", null);
-        final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
+        splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
         final Collection<JeDISVTDGraphNode> nodesWithLabel = nodesByXmiId.values().stream().filter(n -> !n.getAnnotationModuleLabels().isEmpty()).collect(Collectors.toList());
-        final BinaryStorageAnalysisResult result = encoder.findMissingItemsForMapping(nodesWithLabel, jCas.getTypeSystem(), Collections.emptyMap());
-        final List<String> missingItemsForMapping = result.getValuesToMap();
-        final Map<String, Integer> mapping = IntStream.range(0, missingItemsForMapping.size()).mapToObj(i -> new ImmutablePair<>(i, missingItemsForMapping.get(i))).collect(Collectors.toMap(Pair::getRight, Pair::getLeft));
-        final Map<String, ByteArrayOutputStream> encode = encoder.encode(nodesWithLabel, jCas.getTypeSystem(), mapping, result.getFeaturesToMap());
+        result = encoder.findMissingItemsForMapping(nodesWithLabel, jCas.getTypeSystem(), Collections.emptyMap());
 
-        System.out.println(splitterResult.xmiData.get(MultiValueTypesHolder.class.getCanonicalName()).toString(UTF_8));
+        final List<String> missingItemsForMapping = result.getValuesToMap();
+        mapping = IntStream.range(0, missingItemsForMapping.size()).mapToObj(i -> new ImmutablePair<>(i, missingItemsForMapping.get(i))).collect(Collectors.toMap(Pair::getRight, Pair::getLeft));
+
+        encode = encoder.encode(nodesWithLabel, jCas.getTypeSystem(), mapping, result.getFeaturesToMap());
+        assertNotNull(encode);
+        // There should be data for the base document and for MultiValueTypesHolder type
+        assertEquals(encode.size(), 2);
+
+
+
+    }
+
+    @Test(dependsOnMethods = "testEncodeArraysAndLists")
+    public void testDecodeArraysAndLists() throws Exception {
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
         List<InputStream> bais = new ArrayList<>();
         for (String label : encode.keySet()) {
             bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
         }
+
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(moduleAnnotationNames);
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-        final BinaryDecodingResult decodedData = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
-        System.out.println(decodedData.getXmiData().toString(UTF_8));
+        decodedData = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getFeaturesToMap(), splitterResult.namespaces);
+        assertThat(decodedData.getXmiData().toString(UTF_8)).contains("cas:FSArray",
+                "test:" + MultiValueTypesHolder.class.getSimpleName(),
+                "NonEmptyStringList",
+                "head",
+                "tail",
+                "elements",
+                "xmi:id",
+                "DoubleArray",
+                "0.3 1.4 7.567",
+                "1.3 2.4 8.567");
+    }
 
+    @Test(dependsOnMethods = "testDecodeArraysAndLists")
+    public void testBuildDecodedBinaryXmi() throws Exception{
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream xmiData = xmiBuilder.buildXmi(decodedData);
         JCas newJCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");

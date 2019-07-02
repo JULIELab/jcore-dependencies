@@ -7,8 +7,8 @@ import de.julielab.jcore.types.pubmed.Header;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.jcas.JCas;
-import org.junit.Ignore;
-import org.junit.Test;
+import org.testng.annotations.Ignore;
+import org.testng.annotations.Test;
 
 import java.io.FileInputStream;
 import java.util.Arrays;
