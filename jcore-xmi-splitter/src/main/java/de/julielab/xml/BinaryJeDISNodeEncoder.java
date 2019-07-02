@@ -130,19 +130,16 @@ public class BinaryJeDISNodeEncoder {
                         if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName == null) {
                             writeInt(mapping.get(vn.toString(index)), nodeData);
                             nodeData.write(vn.getAttrCount());
-                        }
-                        if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null) {
+                        } else if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null) {
                             // Indicate that the element is not yet finished
                             nodeData.write(0);
                             // The string array values are the last thing we want to encode, thus this will be the
                             // last action for the current annotation node
                             index = encodeEmbeddedStringArrays(vn, index, mapping, nodeData);
-                        }
-                        if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
+                        } else if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
                             attrName = vn.toString(index);
                             writeInt(mapping.get(attrName), nodeData);
-                        }
-                        if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
+                        } else if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
                             encodeAttributeValue(index, attrName, n, ts, mapping, mappedFeatures, nodeData, vn);
                         }
                         ++index;
@@ -204,36 +201,30 @@ public class BinaryJeDISNodeEncoder {
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
             handleArrayElementFeature(attrName, attributeValue, typeName, nodeType, feature, baos);
         } else if (feature.getRange().isPrimitive()) {
-            handlePrimitiveFeatures(attrName, attributeValue, feature, mapping, mappedFeatures, baos);
+            handlePrimitiveFeatures(attrName, attributeValue, feature, mapping, mappedFeatures, baos, ts);
         } else
             throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + n.getTypeName() + "'");
     }
 
-    private void handlePrimitiveFeatures(String attrName, String attributeValue, Feature feature, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos) {
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_STRING)) {
+    private void handlePrimitiveFeatures(String attrName, String attributeValue, Feature feature, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) {
+        if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
             writeStringWithMapping(attributeValue, attrName, mappedFeatures, mapping, baos);
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_FLOAT)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
             writeDouble(Double.valueOf(attributeValue), baos);
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_DOUBLE)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE), feature.getRange())) {
             writeDouble(Double.valueOf(attributeValue), baos);
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_SHORT)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_SHORT), feature.getRange())) {
             writeShort(Short.valueOf(attributeValue), baos);
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_BYTE)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BYTE), feature.getRange())) {
             baos.write(Byte.valueOf(attributeValue));
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_INTEGER)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_INTEGER), feature.getRange())) {
             writeInt(Integer.valueOf(attributeValue), baos);
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_LONG)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LONG), feature.getRange())) {
             writeLong(Long.valueOf(attributeValue), baos);
-        }
-        if (feature.getRange().getName().equals(CAS.TYPE_NAME_BOOLEAN)) {
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BOOLEAN), feature.getRange())) {
             baos.write(Boolean.valueOf(attributeValue) ? 1 : 0);
-        }
+        } else
+            throw new IllegalArgumentException("Unhandled feature value encoding of feature " + feature.getName() + " of type " + feature.getRange().getName());
     }
 
     private void handleArrayElementFeature(String attrName, String attributeValue, String typeName, Type nodeType, Feature feature, ByteArrayOutputStream baos) {
