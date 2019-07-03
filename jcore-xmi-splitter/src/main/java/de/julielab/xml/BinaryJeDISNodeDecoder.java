@@ -84,15 +84,20 @@ public class BinaryJeDISNodeDecoder {
         write(attrName, baos);
         baos.write('=');
         baos.write('"');
+        // Handle reference features for non-multivalue types. The type is a token, for example. FSArrays are handled here if the array is not allowed for multiple reference.
+        // In such cases, no separate array XML element like <cas:FSArray...> is created but the references are just put into the feature attribute itself like
+        // <type:Token ... deprel="25 85" .../>
         if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(type, attrName, ts)) {
-            handleReferenceAttributes(bb, typeName, attrName, res);
+            handleReferenceAttributes(bb, attrName, res);
+            // The next 'else if' handles Array and List types. Here, the type itself is an FSArray, DoubleArray and the feature is "elements" or the feature points to a list node.
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
             handleArrayElementFeature(bb, type, attrName, baos);
+            // The next 'else if' handles list elements themselves
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
             handleListTypes(bb, typeName, attrName, mapping, mappedFeatures, baos);
         } else if (feature.getRange().isPrimitive()) {
             handlePrimitiveFeatures(bb, mappedFeatures, mapping, baos, attrName, feature, ts);
-        } //else throw new IllegalArgumentException("Unhandled attribute '" + attrName + "' of type '" + typeName + "'.");
+        } else throw new IllegalArgumentException("Unhandled attribute '" + attrName + "' of type '" + typeName + "'.");
         baos.write('"');
         baos.write(' ');
     }
@@ -164,7 +169,7 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handleReferenceAttributes(ByteBuffer bb, String typeName, String attrName, BinaryDecodingResult res) {
+    private void handleReferenceAttributes(ByteBuffer bb, String attrName, BinaryDecodingResult res) {
         final ByteArrayOutputStream baos = res.getXmiData();
         if (attrName.equals("xmi:id")) {
             currentXmiId = bb.getInt();
