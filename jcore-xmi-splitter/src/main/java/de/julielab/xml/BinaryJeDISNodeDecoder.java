@@ -2,54 +2,75 @@ package de.julielab.xml;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
+import org.apache.commons.lang3.Range;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
-public class BinaryJeDISNodeDecoder {
+import static java.nio.charset.StandardCharsets.UTF_8;
 
+public class BinaryJeDISNodeDecoder {
+    private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeDecoder.class);
     private Set<String> annotationLabelsToLoad;
-    private int currentXmiId = -1;
-    private int currentSofaId = -1;
+    private int currentXmiId;
+    private int currentSofaId;
+    private Element currentElement;
+    private Set<Integer> xmiIds;
 
     public BinaryJeDISNodeDecoder(Set<String> annotationLabelsToLoad) {
         this.annotationLabelsToLoad = annotationLabelsToLoad;
     }
 
+    private void init() {
+        currentXmiId = -1;
+        currentSofaId = -1;
+        currentElement = null;
+        xmiIds = new HashSet<>();
+    }
+
     public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Set<String> mappedFeatures, Map<String, String> namespaceMap) {
+        // Reset internal states
+        init();
+
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // sofa id -> element IDs
         final Multimap<Integer, Integer> sofaElementsMap = HashMultimap.create();
         final BinaryDecodingResult res = new BinaryDecodingResult(baos, sofaElementsMap);
         try {
-
+            Map<Integer, Element> elementsWithReferences = new HashMap<>();
             // the label is the fully qualified UIMA type name
             for (InputStream is : input) {
                 final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
                 while (bb.position() < bb.limit()) {
                     String prefixedNameType = mapping.get(bb.getInt());
+                    int elementStart = baos.size();
                     // '<type:Token '
                     baos.write('<');
                     writeWs(prefixedNameType, baos);
                     final String[] prefixAndTypeName = prefixedNameType.split(":");
                     final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
+
+                    currentElement = new Element(typeName);
+
                     final Type type = ts.getType(typeName);
                     final byte numAttributes = bb.get();
                     currentSofaId = currentXmiId = -1;
                     for (int i = 0; i < numAttributes; i++) {
                         readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
                     }
+
+
                     if (currentSofaId != -1 && currentXmiId != -1) {
                         if (annotationLabelsToLoad.contains(typeName))
                             sofaElementsMap.put(currentSofaId, currentXmiId);
@@ -68,42 +89,143 @@ public class BinaryJeDISNodeDecoder {
                         baos.write('/');
                     }
                     baos.write('>');
+                    int elementEnd = baos.size();
+                    currentElement.setRange(elementStart, elementEnd);
+                    currentElement.setArray(type.isArray());
+                    currentElement.setXmiId(currentXmiId);
+                    elementsWithReferences.put(currentXmiId, currentElement);
                 }
             }
+            final HashSet<Integer> seenElementIds = new HashSet<>();
+            for (Element e : elementsWithReferences.values()) {
+                tagElementsForOmission(e, elementsWithReferences, 0, seenElementIds);
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
         return res;
     }
 
+    /**
+     * <p>
+     * Follows reference links recursively and marks those attribute for omission whose complete references do not exist
+     * in the given data and those elements which represent FSArrays or FSList nodes that also only reference elements
+     * which are not present or tagged for omission themselves.
+     * </p>
+     * <p>
+     * For omitted list nodes, the XMI ID references of other elements referencing them are updated to the first non-omitted node.
+     * </p>
+     *
+     * @param e
+     * @param elements
+     * @param recursionLevel
+     * @param seenElementIds
+     */
+    private void tagElementsForOmission(Element e, Map<Integer, Element> elements, int recursionLevel, Set<Integer> seenElementIds) {
+        if (!seenElementIds.add(e.getXmiId()))
+            return;
+        String intendation = StringUtils.repeat("    ", recursionLevel);
+        log.debug(intendation + e.getTypeName() + "(" + e.getXmiId() + ")");
+        if (e.isListNode())
+            log.debug(intendation + "WARNING: List node");
+        boolean omitAttribute = false;
+        // Here we follow all reference attributes recursively down in search of elements to be omitted.
+        // Thus, after this loop, we are  sure that all elements directly or indirectly referenced from this
+        // element have been handeled.
+        for (Attribute a : e.getAttributes().values()) {
+            log.debug("    " + intendation + a.getName() + ": " + a.getReferencedIds());
+            for (Integer id : a.getReferencedIds()) {
+                final Element element = elements.get(id);
+                if (element != null) {
+                    tagElementsForOmission(element, elements, recursionLevel + 2, seenElementIds);
+                    if (!element.isToBeOmitted())
+                        a.addFoundReference(id);
+                }
+            }
+            omitAttribute |= a.isToBeOmitted();
+        }
+        e.setToBeOmitted((e.isArray() && omitAttribute) || (e.isListNode() && e.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_HEAD) && e.getAttribute(CAS.FEATURE_BASE_NAME_HEAD).isToBeOmitted()));
+
+        // Handle list references. Repair broken list chains in case intermediate nodes are to be omitted.
+        for (Attribute a : e.getAttributes().values()) {
+            for (Integer referencedId : a.getReferencedIds()) {
+                final Element referencedElement = elements.get(referencedId);
+                if (referencedElement != null && referencedElement.isListNode && referencedElement.isToBeOmitted()) {
+                    closeLinkedListGapDueToOmission(e, a.getName(), elements, intendation);
+                }
+            }
+
+        }
+
+        log.debug(intendation + e.isToBeOmitted());
+    }
+
+    private void closeLinkedListGapDueToOmission(Element e, String attrName, Map<Integer, Element> elements, String intendation) {
+        for (Integer referencedId : e.getAttribute(attrName).getReferencedIds()) {
+            final Element referencedElement = elements.get(referencedId);
+            Element nextNode = null;
+            if (referencedElement.isToBeOmitted() && referencedElement.isListNode() && referencedElement.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_TAIL)) {
+                nextNode = elements.get(referencedElement.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).referencedIds.iterator().next());
+                if (nextNode.isToBeOmitted()) {
+                    while (nextNode.isToBeOmitted()) {
+                        final Integer nextNodeId = nextNode.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).referencedIds.iterator().next();
+                        nextNode = elements.get(nextNodeId);
+                    }
+                }
+            }
+            if (nextNode != null) {
+
+                final Set<Integer> tailId = e.getAttribute(attrName).referencedIds;
+                log.debug(intendation + "exchanging " + attrName + " ID " + referencedId + " with " + nextNode.getXmiId());
+                tailId.remove(referencedId);
+                tailId.add(nextNode.getXmiId());
+            }
+        }
+    }
+
     private void readAttribute(ByteBuffer bb, String typeName, Type type, Set<String> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, BinaryDecodingResult res) {
         final ByteArrayOutputStream baos = res.getXmiData();
         final String attrName = mapping.get(bb.getInt());
         final Feature feature = type.getFeatureByBaseName(attrName);
+        int attributeBegin = baos.size();
         // 'attrName="attrvalue" '
         write(attrName, baos);
+
+        Attribute attribute = null;
+
+
         baos.write('=');
         baos.write('"');
         // Handle reference features for non-multivalue types. The type is a token, for example. FSArrays are handled here if the array is not allowed for multiple reference.
         // In such cases, no separate array XML element like <cas:FSArray...> is created but the references are just put into the feature attribute itself like
         // <type:Token ... deprel="25 85" .../>
-        if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(type, attrName, ts)) {
-            handleReferenceAttributes(bb, attrName, res);
+        if (attrName.equals("xmi:id") || attrName.equals("sofa")) {
+            handleXmiIdAndSofaAttributes(bb, attrName, res);
+        } else if (XmiSplitUtilities.isReferenceAttribute(type, attrName, ts)) {
+            attribute = new Attribute(attrName);
+            handleReferenceAttributes(bb, res, attribute);
             // The next 'else if' handles Array and List types. Here, the type itself is an FSArray, DoubleArray and the feature is "elements" or the feature points to a list node.
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
             handleArrayElementFeature(bb, type, attrName, baos);
+//            isReferenceAttribute = true;
             // The next 'else if' handles list elements themselves
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
             handleListTypes(bb, typeName, attrName, mapping, mappedFeatures, baos);
+//            isReferenceAttribute = true;
         } else if (feature.getRange().isPrimitive()) {
             handlePrimitiveFeatures(bb, mappedFeatures, mapping, baos, attrName, feature, ts);
         } else throw new IllegalArgumentException("Unhandled attribute '" + attrName + "' of type '" + typeName + "'.");
         baos.write('"');
         baos.write(' ');
+        int attributeEnd = baos.size();
+        if (attribute != null) {
+            attribute.setRange(attributeBegin, attributeEnd);
+            currentElement.addAttribute(attribute);
+        }
     }
 
     private void handlePrimitiveFeatures(ByteBuffer bb, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream ret, String attrName, Feature feature, TypeSystem ts) {
-        final Type type = ts.getType(CAS.TYPE_NAME_STRING);
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
             writeStringWithMapping(bb, attrName, mappedFeatures, mapping, ret);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
@@ -169,25 +291,30 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handleReferenceAttributes(ByteBuffer bb, String attrName, BinaryDecodingResult res) {
+    private void handleXmiIdAndSofaAttributes(ByteBuffer bb, String attrName, BinaryDecodingResult res) {
         final ByteArrayOutputStream baos = res.getXmiData();
         if (attrName.equals("xmi:id")) {
             currentXmiId = bb.getInt();
             write(currentXmiId, baos);
+            xmiIds.add(currentXmiId);
         } else if (attrName.equals("sofa")) {
             currentSofaId = bb.get();
             write(currentSofaId, baos);
-        } else { // is reference attribute
-            final int numReferences = bb.getInt();
-            for (int j = 0; j < numReferences; j++) {
-                final int referenceXmiId = bb.getInt();
-                // -1 means "null"
-                if (referenceXmiId >= 0)
-                    write(referenceXmiId, baos);
-                else write("null", baos);
-                if (j < numReferences - 1)
-                    baos.write(' ');
-            }
+        }
+    }
+
+    private void handleReferenceAttributes(ByteBuffer bb, BinaryDecodingResult res, Attribute attribute) {
+        final ByteArrayOutputStream baos = res.getXmiData();
+        final int numReferences = bb.getInt();
+        for (int j = 0; j < numReferences; j++) {
+            final int referenceXmiId = bb.getInt();
+            attribute.addReferencedId(referenceXmiId);
+            // -1 means "null"
+            if (referenceXmiId >= 0)
+                write(referenceXmiId, baos);
+            else write("null", baos);
+            if (j < numReferences - 1)
+                baos.write(' ');
         }
     }
 
@@ -212,11 +339,11 @@ public class BinaryJeDISNodeDecoder {
 
 
     private void write(String s, ByteArrayOutputStream baos) {
-        baos.writeBytes(s.getBytes(StandardCharsets.UTF_8));
+        baos.writeBytes(s.getBytes(UTF_8));
     }
 
     private void writeWs(String s, ByteArrayOutputStream baos) {
-        baos.writeBytes(s.getBytes(StandardCharsets.UTF_8));
+        baos.writeBytes(s.getBytes(UTF_8));
         baos.write(' ');
     }
 
@@ -233,15 +360,15 @@ public class BinaryJeDISNodeDecoder {
     }
 
     private byte[] getStringBytes(int i) {
-        return String.valueOf(i).getBytes(StandardCharsets.UTF_8);
+        return String.valueOf(i).getBytes(UTF_8);
     }
 
     private byte[] getStringBytes(long l) {
-        return String.valueOf(l).getBytes(StandardCharsets.UTF_8);
+        return String.valueOf(l).getBytes(UTF_8);
     }
 
     private byte[] getStringBytes(double d) {
-        return String.valueOf(d).getBytes(StandardCharsets.UTF_8);
+        return String.valueOf(d).getBytes(UTF_8);
     }
 
     private void writeStringWithMapping(ByteBuffer bb, String attrName, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream baos) {
@@ -253,5 +380,143 @@ public class BinaryJeDISNodeDecoder {
             bb.position(bb.position() + length);
         }
     }
+
+    private class DataRange {
+        private Range<Integer> range;
+        private boolean toBeOmitted;
+
+        public boolean isToBeOmitted() {
+            return toBeOmitted;
+        }
+
+        public void setToBeOmitted(boolean toBeOmitted) {
+            this.toBeOmitted = toBeOmitted;
+        }
+
+        public Range<Integer> getRange() {
+            return range;
+        }
+
+        public void setRange(Range<Integer> range) {
+            this.range = range;
+        }
+
+        public void setRange(int begin, int end) {
+            this.range = Range.between(begin, end);
+        }
+
+        public int getLength() {
+            return range.getMaximum() - range.getMinimum();
+        }
+
+        public int getBegin() {
+            return range.getMinimum();
+        }
+
+        public int getEnd() {
+            return range.getMaximum();
+        }
+    }
+
+    private class Element extends DataRange {
+        private Map<String, Attribute> attributes = new HashMap<>();
+        private String typeName;
+        private boolean isListNode;
+        private boolean isArray;
+        private int xmiId;
+
+        public Element(String typeName) {
+            this.typeName = typeName;
+            this.isListNode = XmiSplitUtilities.isListTypeName(typeName);
+
+        }
+
+        public int getXmiId() {
+            return xmiId;
+        }
+
+        public void setXmiId(int xmiId) {
+            this.xmiId = xmiId;
+        }
+
+        public boolean isArray() {
+            return isArray;
+        }
+
+        public void setArray(boolean array) {
+            isArray = array;
+        }
+
+        public boolean isListNode() {
+            return isListNode;
+        }
+
+        public String getTypeName() {
+            return typeName;
+        }
+
+        public void addAttribute(Attribute a) {
+            attributes.put(a.getName(), a);
+            a.setElement(this);
+        }
+
+        public Map<String, Attribute> getAttributes() {
+            return attributes;
+        }
+
+        public Attribute getAttribute(String name) {
+            return attributes.get(name);
+        }
+    }
+
+    private class Attribute extends DataRange {
+        private Set<Integer> referencedIds = new HashSet<>();
+        private Set<Integer> foundReferences = new HashSet<>();
+        private String name;
+        private Element element;
+
+        public Attribute(String name) {
+
+            this.name = name;
+        }
+
+        public Set<Integer> getFoundReferences() {
+            return foundReferences;
+        }
+
+        public void addFoundReference(Integer id) {
+            foundReferences.add(id);
+        }
+
+        public Element getElement() {
+            return element;
+        }
+
+        public void setElement(Element element) {
+            this.element = element;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public Set<Integer> getReferencedIds() {
+            return referencedIds;
+        }
+
+        public void addReferencedId(Integer id) {
+            referencedIds.add(id);
+        }
+
+        public boolean hasRemovedReferences() {
+            return foundReferences.size() < referencedIds.size();
+        }
+
+        @Override
+        public boolean isToBeOmitted() {
+            return foundReferences.isEmpty();
+        }
+    }
+
 
 }
