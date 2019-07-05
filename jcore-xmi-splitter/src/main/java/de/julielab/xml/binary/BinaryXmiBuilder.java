@@ -1,6 +1,5 @@
-package de.julielab.xml.util;
+package de.julielab.xml.binary;
 
-import de.julielab.xml.BinaryDecodingResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +11,11 @@ import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
+/**
+ * <p>This class replaces the {@link de.julielab.xml.XmiBuilder} for the assembly of an XMI document from
+ * the base document and a set of annotation modules in the case that the document and annotation modules come
+ * in the binary format.</p>
+ */
 public class BinaryXmiBuilder {
     private final static Logger log = LoggerFactory.getLogger(BinaryXmiBuilder.class);
     private Map<String, String> namespaces;

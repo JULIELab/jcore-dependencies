@@ -1,8 +1,8 @@
-package de.julielab.xml;
+package de.julielab.xml.binary;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import org.apache.commons.lang3.Range;
+import de.julielab.xml.XmiSplitUtilities;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
@@ -151,7 +151,7 @@ public class BinaryJeDISNodeDecoder {
         for (Attribute a : e.getAttributes().values()) {
             for (Integer referencedId : a.getReferencedIds()) {
                 final Element referencedElement = elements.get(referencedId);
-                if (referencedElement != null && referencedElement.isListNode && referencedElement.isToBeOmitted()) {
+                if (referencedElement != null && referencedElement.isListNode() && referencedElement.isToBeOmitted()) {
                     closeLinkedListGapDueToOmission(e, a.getName(), elements, intendation);
                 }
             }
@@ -166,17 +166,17 @@ public class BinaryJeDISNodeDecoder {
             final Element referencedElement = elements.get(referencedId);
             Element nextNode = null;
             if (referencedElement.isToBeOmitted() && referencedElement.isListNode() && referencedElement.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_TAIL)) {
-                nextNode = elements.get(referencedElement.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).referencedIds.iterator().next());
+                nextNode = elements.get(referencedElement.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).getReferencedIds().iterator().next());
                 if (nextNode.isToBeOmitted()) {
                     while (nextNode.isToBeOmitted()) {
-                        final Integer nextNodeId = nextNode.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).referencedIds.iterator().next();
+                        final Integer nextNodeId = nextNode.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).getReferencedIds().iterator().next();
                         nextNode = elements.get(nextNodeId);
                     }
                 }
             }
             if (nextNode != null) {
 
-                final Set<Integer> tailId = e.getAttribute(attrName).referencedIds;
+                final Set<Integer> tailId = e.getAttribute(attrName).getReferencedIds();
                 log.debug(intendation + "exchanging " + attrName + " ID " + referencedId + " with " + nextNode.getXmiId());
                 tailId.remove(referencedId);
                 tailId.add(nextNode.getXmiId());
@@ -378,143 +378,6 @@ public class BinaryJeDISNodeDecoder {
             int length = bb.getInt();
             baos.write(bb.array(), bb.position(), length);
             bb.position(bb.position() + length);
-        }
-    }
-
-    private class DataRange {
-        private Range<Integer> range;
-        private boolean toBeOmitted;
-
-        public boolean isToBeOmitted() {
-            return toBeOmitted;
-        }
-
-        public void setToBeOmitted(boolean toBeOmitted) {
-            this.toBeOmitted = toBeOmitted;
-        }
-
-        public Range<Integer> getRange() {
-            return range;
-        }
-
-        public void setRange(Range<Integer> range) {
-            this.range = range;
-        }
-
-        public void setRange(int begin, int end) {
-            this.range = Range.between(begin, end);
-        }
-
-        public int getLength() {
-            return range.getMaximum() - range.getMinimum();
-        }
-
-        public int getBegin() {
-            return range.getMinimum();
-        }
-
-        public int getEnd() {
-            return range.getMaximum();
-        }
-    }
-
-    private class Element extends DataRange {
-        private Map<String, Attribute> attributes = new HashMap<>();
-        private String typeName;
-        private boolean isListNode;
-        private boolean isArray;
-        private int xmiId;
-
-        public Element(String typeName) {
-            this.typeName = typeName;
-            this.isListNode = XmiSplitUtilities.isListTypeName(typeName);
-
-        }
-
-        public int getXmiId() {
-            return xmiId;
-        }
-
-        public void setXmiId(int xmiId) {
-            this.xmiId = xmiId;
-        }
-
-        public boolean isArray() {
-            return isArray;
-        }
-
-        public void setArray(boolean array) {
-            isArray = array;
-        }
-
-        public boolean isListNode() {
-            return isListNode;
-        }
-
-        public String getTypeName() {
-            return typeName;
-        }
-
-        public void addAttribute(Attribute a) {
-            attributes.put(a.getName(), a);
-            a.setElement(this);
-        }
-
-        public Map<String, Attribute> getAttributes() {
-            return attributes;
-        }
-
-        public Attribute getAttribute(String name) {
-            return attributes.get(name);
-        }
-    }
-
-    private class Attribute extends DataRange {
-        private Set<Integer> referencedIds = new HashSet<>();
-        private Set<Integer> foundReferences = new HashSet<>();
-        private String name;
-        private Element element;
-
-        public Attribute(String name) {
-
-            this.name = name;
-        }
-
-        public Set<Integer> getFoundReferences() {
-            return foundReferences;
-        }
-
-        public void addFoundReference(Integer id) {
-            foundReferences.add(id);
-        }
-
-        public Element getElement() {
-            return element;
-        }
-
-        public void setElement(Element element) {
-            this.element = element;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public Set<Integer> getReferencedIds() {
-            return referencedIds;
-        }
-
-        public void addReferencedId(Integer id) {
-            referencedIds.add(id);
-        }
-
-        public boolean hasRemovedReferences() {
-            return foundReferences.size() < referencedIds.size();
-        }
-
-        @Override
-        public boolean isToBeOmitted() {
-            return foundReferences.isEmpty();
         }
     }
 

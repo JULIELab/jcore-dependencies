@@ -1,13 +1,13 @@
-package de.julielab.xml;
+package de.julielab.xml.binary;
 
-import com.google.common.collect.HashMultimap;
 import com.google.common.collect.HashMultiset;
-import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.ximpleware.NavException;
 import com.ximpleware.ParseException;
 import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
+import de.julielab.xml.JeDISVTDGraphNode;
+import de.julielab.xml.XmiSplitUtilities;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.cas.CAS;

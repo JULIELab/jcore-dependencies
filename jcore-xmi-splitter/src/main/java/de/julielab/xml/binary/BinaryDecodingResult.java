@@ -1,4 +1,4 @@
-package de.julielab.xml;
+package de.julielab.xml.binary;
 
 import com.google.common.collect.Multimap;
 
