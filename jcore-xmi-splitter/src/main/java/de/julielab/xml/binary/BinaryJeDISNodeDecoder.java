@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
 
@@ -100,7 +102,19 @@ public class BinaryJeDISNodeDecoder {
             for (Element e : elementsWithReferences.values()) {
                 tagElementsForOmission(e, elementsWithReferences, 0, seenElementIds);
             }
-
+            final List<DataRange> rangesToManipulate = elementsWithReferences.values().stream()
+                    // Line up all elements and their attributes. Those are the XMI elements that might need
+                    // to be manipulated in the BinaryXmiBuilder when building the final XMI.
+                    .flatMap(e -> Stream.concat(Stream.of(e), e.getAttributes().values().stream()))
+                    // Only collect those elements that actually need to be manipulated.
+                    .filter(dr -> dr.isToBeOmitted() || (dr instanceof Attribute && ((Attribute) dr).hasRemovedReferences()))
+                    // Sort ascending by begin offset and, for data ranges with the same begin offset, descending
+                    // be end offset. The idea is that an element should be placed preceeding its attributes.
+                    // Thus, when the element is to be omitted, we can just jump to the end of the element and
+                    // ignore its attributes.
+                    .sorted((dr1, dr2) -> Integer.compare(dr1.getBegin(), dr2.getBegin()) != 0 ? Integer.compare(dr1.getBegin(), dr2.getBegin()) : Integer.compare(dr2.getEnd(), dr1.getEnd()))
+                    .collect(Collectors.toList());
+            res.setXmiPortionsToModify(rangesToManipulate);
         } catch (IOException e) {
             e.printStackTrace();
         }

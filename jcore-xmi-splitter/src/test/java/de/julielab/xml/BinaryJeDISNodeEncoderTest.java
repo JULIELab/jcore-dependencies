@@ -196,7 +196,7 @@ public class BinaryJeDISNodeEncoderTest {
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, analysisResult.getFeaturesToMap());
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
 
-        final HashSet<String> annotationLabelsToLoad = new HashSet<>(Arrays.asList(Token.class.getCanonicalName(), PennBioIEPOSTag.class.getCanonicalName(), MultiValueTypesHolder.class.getCanonicalName(), Sentence.class.getCanonicalName()));
+        final HashSet<String> annotationLabelsToLoad = new HashSet<>(Arrays.asList(StaxXmiSplitter.DOCUMENT_MODULE_LABEL, Token.class.getCanonicalName(), PennBioIEPOSTag.class.getCanonicalName(), MultiValueTypesHolder.class.getCanonicalName(), Sentence.class.getCanonicalName()));
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(annotationLabelsToLoad);
         // Omit the dependency relations and the abbreviations on loading.
         // Omitting the abbreviations is particularly mean: The FSList contains two Abbreviations on positions 0 and 2 and one Sentence in the middle.
@@ -204,13 +204,14 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
         jCas.reset();
-//        System.out.println(builtXmiData.toString(UTF_8));
+        System.out.println(builtXmiData.toString(UTF_8));
         assertThatCode(() ->XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()),jCas.getCas())).doesNotThrowAnyException();
 
         final Token t = JCasUtil.selectSingle(jCas, Token.class);
         assertNotNull(t.getPosTag());
-        assertEquals(t.getPosTag().size(), 1);
+        assertEquals(t.getPosTag().size(), 2);
         assertNotNull(t.getPosTag(0));
+        assertNotNull(t.getPosTag(1));
         assertNull(t.getDepRel());
 
     }
