@@ -3,14 +3,13 @@ package de.julielab.xml.binary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public class BinaryStorageAnalysisResult {
     private List<String> valuesToMap;
-    private Set<String> featuresToMap;
+    private Map<String, Boolean> featuresToMap;
     private int nextAvailableId;
 
-    public BinaryStorageAnalysisResult(List<String> valuesToMap, Set<String> featuresToMap, int nextAvailableId) {
+    public BinaryStorageAnalysisResult(List<String> valuesToMap, Map<String, Boolean> featuresToMap, int nextAvailableId) {
         this.valuesToMap = valuesToMap;
         this.featuresToMap = featuresToMap;
         this.nextAvailableId = nextAvailableId;
@@ -26,7 +25,7 @@ public class BinaryStorageAnalysisResult {
     }
 
 
-    public Set<String> getFeaturesToMap() {
+    public Map<String, Boolean> getFeaturesToMap() {
         return featuresToMap;
     }
 

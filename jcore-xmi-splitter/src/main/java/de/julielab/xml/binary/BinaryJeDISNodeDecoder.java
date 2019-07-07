@@ -44,7 +44,7 @@ public class BinaryJeDISNodeDecoder {
         xmiIds = new HashSet<>();
     }
 
-    public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Set<String> mappedFeatures, Map<String, String> namespaceMap) {
+    public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) {
         // Reset internal states
         init();
 
@@ -84,7 +84,7 @@ public class BinaryJeDISNodeDecoder {
                     final byte finishedIndicator = bb.get();
                     if (finishedIndicator == 0) {
                         baos.write('>');
-                        writeStringArray(bb, mapping, mappedFeatures, baos);
+                        writeStringArray(bb, ts.getType(typeName), ts, mapping, mappedFeatures, baos);
                         baos.write('<');
                         baos.write('/');
                         write(prefixedNameType, baos);
@@ -221,7 +221,7 @@ public class BinaryJeDISNodeDecoder {
         });
     }
 
-    private void readAttribute(ByteBuffer bb, String typeName, Type type, Set<String> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, BinaryDecodingResult res) {
+    private void readAttribute(ByteBuffer bb, String typeName, Type type, Map<String, Boolean> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, BinaryDecodingResult res) {
         final ByteArrayOutputStream baos = res.getXmiData();
         final String attrName = mapping.get(bb.getInt());
         final Feature feature = type.getFeatureByBaseName(attrName);
@@ -248,7 +248,7 @@ public class BinaryJeDISNodeDecoder {
 //            isReferenceAttribute = true;
             // The next 'else if' handles list elements themselves
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
-            handleListTypes(bb, typeName, attrName, mapping, mappedFeatures, baos);
+            handleListTypes(bb, typeName, ts, attrName, mapping, mappedFeatures, baos);
 //            isReferenceAttribute = true;
         } else if (feature.getRange().isPrimitive()) {
             handlePrimitiveFeatures(bb, mappedFeatures, mapping, baos, attrName, feature, ts);
@@ -262,9 +262,9 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handlePrimitiveFeatures(ByteBuffer bb, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream ret, String attrName, Feature feature, TypeSystem ts) {
+    private void handlePrimitiveFeatures(ByteBuffer bb, Map<String, Boolean> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream ret, String attrName, Feature feature, TypeSystem ts) {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
-            writeStringWithMapping(bb, attrName, mappedFeatures, mapping, ret);
+            writeStringWithMapping(bb, feature.getName(),ts, mappedFeatures, mapping, ret);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
             write(bb.getDouble(), ret);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE), feature.getRange())) {
@@ -307,7 +307,7 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handleListTypes(ByteBuffer bb, String typeName, String attrName, Map<Integer, String> mapping, Set<String> mappedFeatures, ByteArrayOutputStream ret) {
+    private void handleListTypes(ByteBuffer bb, String typeName,TypeSystem ts,  String attrName, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream ret) {
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
         // The tail is a xmi:id reference to the next list node
@@ -323,7 +323,7 @@ public class BinaryJeDISNodeDecoder {
             } else if (baseListType.equals(CAS.TYPE_NAME_INTEGER_LIST)) {
                 write(bb.getInt(), ret);
             } else if (baseListType.equals(CAS.TYPE_NAME_STRING_LIST)) {
-                writeStringWithMapping(bb, attrName, mappedFeatures, mapping, ret);
+                writeStringWithMapping(bb, CAS.FEATURE_FULL_NAME_STRING_LIST_HEAD, ts, mappedFeatures, mapping, ret);
             } else throw new IllegalArgumentException("Unhandled UIMA list type: " + typeName);
         }
     }
@@ -356,19 +356,19 @@ public class BinaryJeDISNodeDecoder {
     }
 
 
-    private void writeStringArray(ByteBuffer bb, Map<Integer, String> mapping, Set<String> mappedFeatures, ByteArrayOutputStream ret) {
+    private void writeStringArray(ByteBuffer bb, Type type, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream ret) {
         final int numStringArrayFeatures = bb.getInt();
         for (int i = 0; i < numStringArrayFeatures; i++) {
-            final String featureName = mapping.get(bb.getInt());
+            final String featureBaseName = mapping.get(bb.getInt());
             final int numValues = bb.getInt();
             for (int j = 0; j < numValues; j++) {
                 ret.write('<');
-                write(featureName, ret);
+                write(featureBaseName, ret);
                 ret.write('>');
-                writeStringWithMapping(bb, featureName, mappedFeatures, mapping, ret);
+                writeStringWithMapping(bb, type.getFeatureByBaseName(featureBaseName).getName(), ts, mappedFeatures, mapping, ret);
                 ret.write('<');
                 ret.write('/');
-                write(featureName, ret);
+                write(featureBaseName, ret);
                 ret.write('>');
             }
         }
@@ -408,8 +408,12 @@ public class BinaryJeDISNodeDecoder {
         return String.valueOf(d).getBytes(UTF_8);
     }
 
-    private void writeStringWithMapping(ByteBuffer bb, String attrName, Set<String> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream baos) {
-        if (mappedFeatures.contains(attrName)) {
+    private void writeStringWithMapping(ByteBuffer bb, String fullFeatureName, TypeSystem ts, Map<String, Boolean> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream baos) {
+        final Feature feature = ts.getFeatureByFullName(fullFeatureName);
+        final boolean featureIsStringArray = ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING_ARRAY), feature.getRange());
+        final boolean featureIsStringList = ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING_LIST), feature.getRange());
+        // We currently do not handle arrays as lists of strings
+        if (!featureIsStringArray && !featureIsStringList && mappedFeatures.get(fullFeatureName)) {
             write(mapping.get(bb.getInt()), baos);
         } else {
             int length = bb.getInt();

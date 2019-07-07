@@ -64,7 +64,8 @@ public class BinaryJeDISNodeEncoder {
                         // the uima.cas.NULL does not have an actual Type
                         if (nodeType != null) {
                             final Feature feature = nodeType.getFeatureByBaseName(attrName);
-                            if (feature != null && feature.getRange().getName().equals("uima.cas.String")) {
+                            // Note that we currently do not handle arrays or lists of strings
+                            if (feature != null && ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
                                 final String featureName = feature.getName();
                                 // Only record features and feature values if they are either not yet known or already set to be mapped.
                                 // This is important because the expected output of this method are only items that
@@ -83,19 +84,20 @@ public class BinaryJeDISNodeEncoder {
 
             }
 
-            Set<String> featuresToMap = new HashSet<>();
+            Map<String, Boolean> featuresToMap = new HashMap<>();
             for (String featureName : featureValues.keySet()) {
                 if (!existingFeaturesToMap.containsKey(featureName)) {
                     final Set<String> values = featureValues.get(featureName);
                     int numValues = values.size();
                     final int numOccurrences = featureOccurrences.count(featureName);
-                    if (numValues / (double) numOccurrences < .5)
-                        featuresToMap.add(featureName);
+                    // Note that the value is actually a boolean, saying whether or not to map the feature.
+                    featuresToMap.put(featureName, numValues / (double) numOccurrences < .5);
                 }
             }
 
             final Stream<String> tagNames = xmiTagNames.stream();
-            final Stream<String> featureValuesToMap = featuresToMap.stream().map(featureValues::get).flatMap(Collection::stream);
+            // Only map those values where the featuresToMap says "true"
+            final Stream<String> featureValuesToMap = featuresToMap.keySet().stream().filter(featuresToMap::get).map(featureValues::get).flatMap(Collection::stream);
             Stream<String> itemsForMapping = Stream.concat(tagNames, featureAttributeNames.stream());
             itemsForMapping = Stream.concat(itemsForMapping, featureValuesToMap);
             // Filter for items that are not yet contained in the mapping
@@ -108,7 +110,7 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    public Map<String, ByteArrayOutputStream> encode(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> mapping, Set<String> mappedFeatures) {
+    public Map<String, ByteArrayOutputStream> encode(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures) {
         String currentXmiElementForLogging = null;
         final Map<String, List<JeDISVTDGraphNode>> nodesByLabel = nodesWithLabel.stream().flatMap(n -> n.getAnnotationModuleLabels().stream().map(l -> new ImmutablePair<>(n, l))).collect(Collectors.groupingBy(Pair::getRight, Collectors.mapping(Pair::getLeft, Collectors.toList())));
         try {
@@ -186,7 +188,7 @@ public class BinaryJeDISNodeEncoder {
         return index;
     }
 
-    private void encodeAttributeValue(int index, String attrName, JeDISVTDGraphNode n, TypeSystem ts, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos, VTDNav vn) throws NavException {
+    private void encodeAttributeValue(int index, String attrName, JeDISVTDGraphNode n, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, VTDNav vn) throws NavException {
         String typeName = XmiSplitUtilities.resolveListSubtypes(n.getTypeName());
         final Type nodeType = ts.getType(n.getTypeName());
         // the uima.cas.NULL element does not have an actual type
@@ -204,9 +206,9 @@ public class BinaryJeDISNodeEncoder {
             throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + n.getTypeName() + "'");
     }
 
-    private void handlePrimitiveFeatures(String attrName, String attributeValue, Feature feature, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) {
+    private void handlePrimitiveFeatures(String attrName, String attributeValue, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
-            writeStringWithMapping(attributeValue, attrName, mappedFeatures, mapping, baos);
+            writeStringWithMapping(attributeValue, feature.getName(), mappedFeatures, mapping, baos);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
             writeDouble(Double.valueOf(attributeValue), baos);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE), feature.getRange())) {
@@ -250,7 +252,7 @@ public class BinaryJeDISNodeEncoder {
         } else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
 
-    private void handleListTypes(String attrName, String attributeValue, String typeName, Map<String, Integer> mapping, Set<String> mappedFeatures, ByteArrayOutputStream baos) {
+    private void handleListTypes(String attrName, String attributeValue, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) {
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
         // The tail is a xmi:id reference to the next list node
@@ -268,7 +270,7 @@ public class BinaryJeDISNodeEncoder {
                 writeInt(Integer.valueOf(attributeValue), baos);
             }
             if (typeName.equals(CAS.TYPE_NAME_STRING_LIST)) {
-                writeStringWithMapping(attributeValue, attrName, mappedFeatures, mapping, baos);
+                writeStringWithMapping(attributeValue, CAS.FEATURE_FULL_NAME_STRING_LIST_HEAD, mappedFeatures, mapping, baos);
             }
         }
     }
@@ -286,8 +288,8 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void writeStringWithMapping(String attributeValue, String attrName, Set<String> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) {
-        if (mappedFeatures.contains(attrName)) {
+    private void writeStringWithMapping(String attributeValue, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) {
+        if (mappedFeatures.get(fullFeatureName)) {
             writeInt(mapping.get(attributeValue), baos);
         } else {
             writeInt(attributeValue.length(), baos);
