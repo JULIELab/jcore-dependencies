@@ -95,7 +95,7 @@ public class BinaryJeDISNodeEncoder {
             // Filter for items that are not yet contained in the mapping
             itemsForMapping = itemsForMapping.filter(item -> !existingMapping.containsKey(item));
             final List<String> itemsForMappingList = itemsForMapping.collect(Collectors.toList());
-            return new BinaryStorageAnalysisResult(itemsForMappingList, featuresToMap);
+            return new BinaryStorageAnalysisResult(itemsForMappingList, featuresToMap, existingMapping.size());
             //if (!itemsForMappingList.isEmpty()) {
             // lock table
             // update mapping

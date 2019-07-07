@@ -15,14 +15,14 @@ import org.apache.uima.resource.ResourceSpecifier;
 import org.apache.uima.util.CasCreationUtils;
 import org.apache.uima.util.InvalidXMLException;
 import org.apache.uima.util.XMLInputSource;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.testng.annotations.Test;
 
 import java.io.*;
 import java.util.*;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.AssertJUnit.assertEquals;
 
 /**
  * This test requires a new source XMI file because the given one uses a deprecated type system

@@ -167,6 +167,8 @@ public class BinaryJeDISNodeDecoder {
                         a.addFoundReference(id);
                 }
             }
+            if (a.getFoundReferences().size() < a.getReferencedIds().size())
+                a.setModified(true);
             omitAttribute |= a.isToBeOmitted();
         }
         if (shrinkArraysAndListsIfReferenceNotLoaded) {
