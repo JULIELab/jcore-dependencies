@@ -36,7 +36,7 @@ public class BinaryJeDISNodeEncoder {
         bb8 = ByteBuffer.allocate(Math.max(Long.SIZE, Double.SIZE));
     }
 
-    public BinaryStorageAnalysisResult findMissingItemsForMapping(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> existingMapping) {
+    public BinaryStorageAnalysisResult findMissingItemsForMapping(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> existingMapping, Map<String, Boolean> existingFeaturesToMap) {
 
         String currentXmiElementForLogging = null;
         try {
@@ -66,10 +66,15 @@ public class BinaryJeDISNodeEncoder {
                             final Feature feature = nodeType.getFeatureByBaseName(attrName);
                             if (feature != null && feature.getRange().getName().equals("uima.cas.String")) {
                                 final String featureName = feature.getName();
-                                final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
-                                final String value = vn.toString(index);
-                                values.add(value);
-                                featureOccurrences.add(featureName);
+                                // Only record features and feature values if they are either not yet known or already set to be mapped.
+                                // This is important because the expected output of this method are only items that
+                                // are missing from the existing input mapping.
+                                if (!existingFeaturesToMap.containsKey(featureName) || existingFeaturesToMap.get(featureName)) {
+                                    final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
+                                    final String value = vn.toString(index);
+                                    values.add(value);
+                                    featureOccurrences.add(featureName);
+                                }
                             }
                         }
                     }
@@ -80,12 +85,13 @@ public class BinaryJeDISNodeEncoder {
 
             Set<String> featuresToMap = new HashSet<>();
             for (String featureName : featureValues.keySet()) {
-                final Set<String> values = featureValues.get(featureName);
-                int numValues = values.size();
-                final int numOccurrences = featureOccurrences.count(featureName);
-                if (numValues / (double) numOccurrences < .5)
-                    featuresToMap.add(featureName);
-
+                if (!existingFeaturesToMap.containsKey(featureName)) {
+                    final Set<String> values = featureValues.get(featureName);
+                    int numValues = values.size();
+                    final int numOccurrences = featureOccurrences.count(featureName);
+                    if (numValues / (double) numOccurrences < .5)
+                        featuresToMap.add(featureName);
+                }
             }
 
             final Stream<String> tagNames = xmiTagNames.stream();
@@ -96,14 +102,6 @@ public class BinaryJeDISNodeEncoder {
             itemsForMapping = itemsForMapping.filter(item -> !existingMapping.containsKey(item));
             final List<String> itemsForMappingList = itemsForMapping.collect(Collectors.toList());
             return new BinaryStorageAnalysisResult(itemsForMappingList, featuresToMap, existingMapping.size());
-            //if (!itemsForMappingList.isEmpty()) {
-            // lock table
-            // update mapping
-            // filter again for items in the new mapping
-            // add new items
-            // unlock table
-            //  }
-
         } catch (ParseException | NavException e) {
             log.error("Could not parse XMI element {}", currentXmiElementForLogging, e);
             throw new IllegalArgumentException(e);

@@ -66,7 +66,7 @@ public class BinaryJeDISNodeEncoderTest {
         final XmiSplitterResult splitterResult = splitter.process(xmiData, jCas, 0, Collections.singletonMap("_InitialView", 1));
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
-        final BinaryStorageAnalysisResult result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap());
+        final BinaryStorageAnalysisResult result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
         final List<String> missingItemsForMapping = result.getValuesToMap();
         assertThat(missingItemsForMapping).contains("types:Sentence", "types:Token", "pubmed:Header", "xmi:id", "sofa", "cas:FSArray", "synonyms", "hypernyms", "componentId", "specificType", "protein");
 
@@ -149,7 +149,7 @@ public class BinaryJeDISNodeEncoderTest {
         final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap(CAS.NAME_DEFAULT_SOFA, 1));
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
-        final BinaryStorageAnalysisResult analysisResult = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap());
+        final BinaryStorageAnalysisResult analysisResult = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
         final List<String> missingItemsForMapping = analysisResult.getValuesToMap();
         final Map<String, Integer> mapping = analysisResult.getMissingItemsMapping();
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, analysisResult.getFeaturesToMap());
@@ -243,7 +243,7 @@ public class BinaryJeDISNodeEncoderTest {
 
         // ---------- Binary encoding of the modules
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
-        final BinaryStorageAnalysisResult analysisResult = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap());
+        final BinaryStorageAnalysisResult analysisResult = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
         final List<String> missingItemsForMapping = analysisResult.getValuesToMap();
         final Map<String, Integer> mapping = analysisResult.getMissingItemsMapping();
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, analysisResult.getFeaturesToMap());
@@ -326,7 +326,7 @@ public class BinaryJeDISNodeEncoderTest {
         assertTrue(splitterResult.jedisNodesInAnnotationModules.stream().filter(node -> node.getTypeName().equals(CAS.TYPE_NAME_STRING_LIST)).findAny().isPresent());
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
-        result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap());
+        result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
 
         mapping = result.getMissingItemsMapping();
 
