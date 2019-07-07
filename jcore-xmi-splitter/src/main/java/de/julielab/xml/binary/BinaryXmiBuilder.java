@@ -5,6 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -68,18 +69,30 @@ public class BinaryXmiBuilder {
                 // This happens for attributes belonging to elements to be omitted.
                 if (dataRange.getBegin() < currentEnd)
                     continue;
-                if (dataRange.isToBeOmitted()) {
+                if (dataRange.isToBeOmitted() && decodingResult.isShrinkArraysAndListsIfReferenceNotLoaded()) {
                     ret.write(xmiData, currentEnd, dataRange.getBegin() - currentEnd);
                     currentEnd = dataRange.getEnd();
                     // If this is the last XMI part to be omitted, write the remainder of the data into the final result.
-                    if (i == toModify.size()-1)
-                        ret.write(xmiData, dataRange.getEnd(), xmiData.length-dataRange.getEnd());
-                } else {
+                    if (i == toModify.size() - 1)
+                        ret.write(xmiData, dataRange.getEnd(), xmiData.length - dataRange.getEnd());
+                } else if (dataRange instanceof Attribute) {
                     // There should only be one case where a DataRange is not to be omitted: When it is an
                     // attribute and still has some - but not all - references.
+                    ret.write(xmiData, currentEnd, dataRange.getBegin() - currentEnd);
+                    currentEnd = dataRange.getEnd();
                     Attribute a = (Attribute) dataRange;
-                    System.out.println(new String(xmiData, a.getBegin(), a.getEnd()-a.getBegin()));
-                    currentEnd = a.getEnd();
+                    write(a.getName(), ret);
+                    write("=\"", ret);
+                    // When we shrink the references, we just omit all references to non-loaded elements
+                    if (decodingResult.isShrinkArraysAndListsIfReferenceNotLoaded())
+                        write(a.getFoundReferences().stream().map(String::valueOf).collect(Collectors.joining(" ")), ret);
+                    // When we don't shrink, we let point references to non-loaded elements to null (id 0 is always the cas:NULL element).
+                    else
+                        write(a.getReferencedIds().stream().map(id -> a.getFoundReferences().contains(id) ? id : 0).map(String::valueOf).collect(Collectors.joining(" ")), ret);
+                    write("\" ", ret);
+                    // If this is the last XMI part to be omitted, write the remainder of the data into the final result.
+                    if (i == toModify.size() - 1)
+                        ret.write(xmiData, dataRange.getEnd(), xmiData.length - dataRange.getEnd());
                 }
 
             }

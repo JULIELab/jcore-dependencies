@@ -40,4 +40,9 @@ public class DataRange {
     public int getEnd() {
         return range.getMaximum();
     }
+
+    @Override
+    public String toString() {
+        return range.toString();
+    }
 }

@@ -1,6 +1,8 @@
 package de.julielab.xml.binary;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -11,17 +13,26 @@ import java.util.Set;
  * @see Element
  */
 class Attribute extends DataRange {
-    private Set<Integer> referencedIds = new HashSet<>();
-    private Set<Integer> foundReferences = new HashSet<>();
+    private List<Integer> referencedIds = new ArrayList<>();
+    private List<Integer> foundReferences = new ArrayList<>();
     private String name;
     private Element element;
+    private boolean isModified;
+
+    public boolean isModified() {
+        return isModified;
+    }
+
+    public void setModified(boolean modified) {
+        isModified = modified;
+    }
 
     public Attribute(String name) {
 
         this.name = name;
     }
 
-    public Set<Integer> getFoundReferences() {
+    public List<Integer> getFoundReferences() {
         return foundReferences;
     }
 
@@ -41,7 +52,7 @@ class Attribute extends DataRange {
         return name;
     }
 
-    public Set<Integer> getReferencedIds() {
+    public List<Integer> getReferencedIds() {
         return referencedIds;
     }
 

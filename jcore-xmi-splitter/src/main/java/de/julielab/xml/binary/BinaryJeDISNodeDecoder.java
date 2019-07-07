@@ -18,6 +18,7 @@ import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
@@ -25,13 +26,15 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class BinaryJeDISNodeDecoder {
     private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeDecoder.class);
     private Set<String> annotationLabelsToLoad;
+    private boolean shrinkArraysAndListsIfReferenceNotLoaded;
     private int currentXmiId;
     private int currentSofaId;
     private Element currentElement;
     private Set<Integer> xmiIds;
 
-    public BinaryJeDISNodeDecoder(Set<String> annotationLabelsToLoad) {
+    public BinaryJeDISNodeDecoder(Set<String> annotationLabelsToLoad, boolean shrinkArraysAndListsIfReferenceNotLoaded) {
         this.annotationLabelsToLoad = annotationLabelsToLoad;
+        this.shrinkArraysAndListsIfReferenceNotLoaded = shrinkArraysAndListsIfReferenceNotLoaded;
     }
 
     private void init() {
@@ -48,7 +51,7 @@ public class BinaryJeDISNodeDecoder {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         // sofa id -> element IDs
         final Multimap<Integer, Integer> sofaElementsMap = HashMultimap.create();
-        final BinaryDecodingResult res = new BinaryDecodingResult(baos, sofaElementsMap);
+        final BinaryDecodingResult res = new BinaryDecodingResult(baos, sofaElementsMap, shrinkArraysAndListsIfReferenceNotLoaded);
         try {
             Map<Integer, Element> elementsWithReferences = new HashMap<>();
             // the label is the fully qualified UIMA type name
@@ -102,12 +105,19 @@ public class BinaryJeDISNodeDecoder {
             for (Element e : elementsWithReferences.values()) {
                 tagElementsForOmission(e, elementsWithReferences, 0, seenElementIds);
             }
-            final List<DataRange> rangesToManipulate = elementsWithReferences.values().stream()
+            final List<DataRange> rangesToManipulate;
+            Stream<DataRange> dataRangeStream = elementsWithReferences.values().stream()
                     // Line up all elements and their attributes. Those are the XMI elements that might need
                     // to be manipulated in the BinaryXmiBuilder when building the final XMI.
-                    .flatMap(e -> Stream.concat(Stream.of(e), e.getAttributes().values().stream()))
-                    // Only collect those elements that actually need to be manipulated.
-                    .filter(dr -> dr.isToBeOmitted() || (dr instanceof Attribute && ((Attribute) dr).hasRemovedReferences()))
+                    .flatMap(e -> Stream.concat(Stream.of(e), e.getAttributes().values().stream()));
+            if (shrinkArraysAndListsIfReferenceNotLoaded) {
+                dataRangeStream = dataRangeStream
+                        // Only collect those elements that actually need to be manipulated.
+                        .filter(dr -> dr.isToBeOmitted() || (dr instanceof Attribute && ((Attribute) dr).isModified()));
+            } else {
+                dataRangeStream = dataRangeStream.filter(Attribute.class::isInstance).filter(a -> ((Attribute) a).isModified());
+            }
+            rangesToManipulate = dataRangeStream
                     // Sort ascending by begin offset and, for data ranges with the same begin offset, descending
                     // be end offset. The idea is that an element should be placed preceeding its attributes.
                     // Thus, when the element is to be omitted, we can just jump to the end of the element and
@@ -159,27 +169,33 @@ public class BinaryJeDISNodeDecoder {
             }
             omitAttribute |= a.isToBeOmitted();
         }
-        e.setToBeOmitted((e.isArray() && omitAttribute) || (e.isListNode() && e.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_HEAD) && e.getAttribute(CAS.FEATURE_BASE_NAME_HEAD).isToBeOmitted()));
+        if (shrinkArraysAndListsIfReferenceNotLoaded) {
+            // Set FSArrays without existing references and list nodes with missing head reference to be omitted
+            e.setToBeOmitted((e.isArray() && omitAttribute) || (e.isListNode() && e.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_HEAD) && e.getAttribute(CAS.FEATURE_BASE_NAME_HEAD).isToBeOmitted()));
 
-        // Handle list references. Repair broken list chains in case intermediate nodes are to be omitted.
-        for (Attribute a : e.getAttributes().values()) {
-            for (Integer referencedId : a.getReferencedIds()) {
-                final Element referencedElement = elements.get(referencedId);
-                if (referencedElement != null && referencedElement.isListNode() && referencedElement.isToBeOmitted()) {
-                    closeLinkedListGapDueToOmission(e, a.getName(), elements, intendation);
+            // Handle list references. Repair broken list chains in case intermediate nodes are to be omitted.
+            for (Attribute a : e.getAttributes().values()) {
+                for (Integer referencedId : a.getReferencedIds()) {
+                    final Element referencedElement = elements.get(referencedId);
+                    if (referencedElement != null && referencedElement.isListNode() && referencedElement.isToBeOmitted()) {
+                        closeLinkedListGapDueToOmission(e, a.getName(), elements, intendation);
+                    }
                 }
             }
-
         }
 
         log.debug(intendation + e.isToBeOmitted());
     }
 
     private void closeLinkedListGapDueToOmission(Element e, String attrName, Map<Integer, Element> elements, String intendation) {
-        for (Integer referencedId : e.getAttribute(attrName).getReferencedIds()) {
+        final Attribute attribute = e.getAttribute(attrName);
+        IntStream.Builder idsToAdd = IntStream.builder();
+        IntStream.Builder idsToRemove = IntStream.builder();
+        for (Integer referencedId : attribute.getReferencedIds()) {
             final Element referencedElement = elements.get(referencedId);
             Element nextNode = null;
             if (referencedElement.isToBeOmitted() && referencedElement.isListNode() && referencedElement.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_TAIL)) {
+                idsToRemove.add(referencedId);
                 nextNode = elements.get(referencedElement.getAttribute(CAS.FEATURE_BASE_NAME_TAIL).getReferencedIds().iterator().next());
                 if (nextNode.isToBeOmitted()) {
                     while (nextNode.isToBeOmitted()) {
@@ -187,15 +203,20 @@ public class BinaryJeDISNodeDecoder {
                         nextNode = elements.get(nextNodeId);
                     }
                 }
+                if (nextNode != null)
+                    idsToAdd.add(nextNode.getXmiId());
             }
             if (nextNode != null) {
-
-                final Set<Integer> tailId = e.getAttribute(attrName).getReferencedIds();
                 log.debug(intendation + "exchanging " + attrName + " ID " + referencedId + " with " + nextNode.getXmiId());
-                tailId.remove(referencedId);
-                tailId.add(nextNode.getXmiId());
+                // We will exchange at least one ID for this attribute, mark it for modification
+                attribute.setModified(true);
             }
         }
+        idsToRemove.build().mapToObj(Integer::valueOf).forEach(attribute.getReferencedIds()::remove);
+        idsToAdd.build().forEach(i -> {
+            attribute.getReferencedIds().add(i);
+            attribute.getFoundReferences().add(i);
+        });
     }
 
     private void readAttribute(ByteBuffer bb, String typeName, Type type, Set<String> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, BinaryDecodingResult res) {
