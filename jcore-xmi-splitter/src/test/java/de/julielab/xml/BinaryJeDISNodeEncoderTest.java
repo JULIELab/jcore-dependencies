@@ -202,8 +202,10 @@ public class BinaryJeDISNodeEncoderTest {
         final MultiValueTypesHolder h = JCasUtil.selectSingle(jCas, MultiValueTypesHolder.class);
         // The FSList still has a value for middle node
         assertNotNull(h.getFslist());
-        assertNull(h.getFslist().getNthElement(0));
-        h.getFslistNoRef().getNthElement(1);
+        assertNotNull(h.getFslist().getNthElement(0));
+        // There should only be the one element checked above
+        assertThatThrownBy(() -> h.getFslist().getNthElement(1)).isInstanceOf(ClassCastException.class);
+
     }
 
     private JCas getPartiallyLoadedModuleData(boolean omitElementsWithMissingReferences) throws UIMAException, SAXException, XMISplitterException {
@@ -257,12 +259,10 @@ public class BinaryJeDISNodeEncoderTest {
         // Omit the dependency relations and the abbreviations on loading.
         // Omitting the abbreviations is particularly mean: The FSList contains two Abbreviations on positions 0 and 2 and one Sentence in the middle.
         final BinaryDecodingResult decoded = decoder.decode(encode.keySet().stream().filter(annotationLabelsToLoad::contains).map(encode::get).map(ByteArrayOutputStream::toByteArray).map(ByteArrayInputStream::new).collect(Collectors.toList()), jCas.getTypeSystem(), reverseMapping, analysisResult.getFeaturesToMap(), splitterResult.namespaces);
-        System.out.println("Hier: " + decoded.getXmiData().toString(UTF_8));
 
         // ------------ Build the XMI
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
-        System.out.println(builtXmiData.toString(UTF_8));
         jCas.reset();
         assertThatCode(() ->XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()),jCas.getCas())).doesNotThrowAnyException();
         return jCas;
