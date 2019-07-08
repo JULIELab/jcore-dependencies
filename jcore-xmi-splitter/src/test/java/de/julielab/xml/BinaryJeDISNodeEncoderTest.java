@@ -59,7 +59,7 @@ public class BinaryJeDISNodeEncoderTest {
     public void testFullEncodingDecodingBuilding() throws Exception {
         final HashSet<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(Sentence.class.getCanonicalName(), Token.class.getCanonicalName(),
                 Gene.class.getCanonicalName(), EventMention.class.getCanonicalName(), Header.class.getCanonicalName(), ResourceEntry.class.getCanonicalName()));
-        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, true, "docs", null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, true, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
@@ -145,7 +145,7 @@ public class BinaryJeDISNodeEncoderTest {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Token.class.getCanonicalName())), false, true, "doc", null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Token.class.getCanonicalName())), false, true, null);
         final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap(CAS.NAME_DEFAULT_SOFA, 1));
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
@@ -160,7 +160,7 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
         jCas.reset();
-        XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()),jCas.getCas());
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()), jCas.getCas());
 
         final Token t = JCasUtil.selectSingle(jCas, Token.class);
         assertNotNull(t.getSynonyms());
@@ -238,7 +238,7 @@ public class BinaryJeDISNodeEncoderTest {
                 DependencyRelation.class.getCanonicalName(),
                 MultiValueTypesHolder.class.getCanonicalName(),
                 Abbreviation.class.getCanonicalName(),
-                Sentence.class.getCanonicalName())), false, true, "doc", null);
+                Sentence.class.getCanonicalName())), false, true, null);
         final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap(CAS.NAME_DEFAULT_SOFA, 1));
 
         // ---------- Binary encoding of the modules
@@ -265,7 +265,7 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
         jCas.reset();
-        assertThatCode(() ->XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()),jCas.getCas())).doesNotThrowAnyException();
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
         return jCas;
     }
 
@@ -320,7 +320,7 @@ public class BinaryJeDISNodeEncoderTest {
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         System.out.println(baos.toString(UTF_8));
         moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
-        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", null);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, null);
         splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
 
         assertTrue(splitterResult.jedisNodesInAnnotationModules.stream().filter(node -> node.getTypeName().equals(CAS.TYPE_NAME_STRING_LIST)).findAny().isPresent());

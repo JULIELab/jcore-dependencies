@@ -99,13 +99,13 @@ public class XmiBuilder {
      *                 be reflected in the XMI. Since we rely on the order of
      *                 appearance of annotations to determine the end of the base
      *                 document, we must provide the correct order.
-     * @param docTable The name of the table containing the base document.
+     * @param baseDocumentLabel The key which is used in <tt>xmiData</tt> for the base document data.
      * @param ts
      * @return The combined xmi representation as output stream.
      */
-    public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, String docTable, TypeSystem ts) {
+    public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, String baseDocumentLabel, TypeSystem ts) {
         this.xmiData = xmiData;
-        this.docTableName = docTable;
+        this.docTableName = baseDocumentLabel;
         this.ts = ts;
         // Create only once since this method only has "constant" information,
         // i.e. the map would be always the same even if we created it each time

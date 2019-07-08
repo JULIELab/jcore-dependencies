@@ -46,17 +46,17 @@ public class XmiBuilderTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         System.out.println(new String(baos.toByteArray()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, "docs", Collections.emptySet());
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, Collections.emptySet());
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[]{AutoDescriptor.class.getCanonicalName()});
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, "docs", jCas.getTypeSystem());
+        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
 
         jCas.reset();
         ByteArrayInputStream finalIs = new ByteArrayInputStream(builtXmi.toByteArray());
         XmiCasDeserializer.deserialize(finalIs, jCas.getCas());
-        assertThatCode(() ->JCasUtil.selectSingle(jCas, AutoDescriptor.class)).doesNotThrowAnyException();
+        assertThatCode(() -> JCasUtil.selectSingle(jCas, AutoDescriptor.class)).doesNotThrowAnyException();
 
         AutoDescriptor ad2 = JCasUtil.selectSingle(jCas, AutoDescriptor.class);
         assertThat(ad2.getDocumentClasses()).isNotNull();
@@ -84,11 +84,11 @@ public class XmiBuilderTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         System.out.println(new String(baos.toByteArray()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, "docs", Collections.emptySet());
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, Collections.emptySet());
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        assertThatCode(() -> builder.buildXmi(inputMap, "docs", jCas.getTypeSystem())).doesNotThrowAnyException();
+        assertThatCode(() -> builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem())).doesNotThrowAnyException();
     }
 }

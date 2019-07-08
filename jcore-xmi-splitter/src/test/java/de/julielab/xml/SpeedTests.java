@@ -15,6 +15,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+
 @Ignore
 public class SpeedTests {
 
@@ -28,7 +29,7 @@ public class SpeedTests {
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
         for (int i = 0; i < 10000; i++) {
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
+            VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
             XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
 
         }
@@ -44,7 +45,7 @@ public class SpeedTests {
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         for (int i = 0; i < 10000; i++) {
-        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
+            StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
             XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
         }
     }

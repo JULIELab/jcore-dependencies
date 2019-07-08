@@ -118,7 +118,7 @@ public class EncodingTest {
 		lemma.setValue("𝒟 4");
 		token.setLemma(lemma);
 	
-		StaxXmiSplitter xmiSplitter = new StaxXmiSplitter(elementsToStore, true, true, DOC, StaxXmiSplitterTest.BASE_DOCUMENT_ANNOTATIONS);
+		StaxXmiSplitter xmiSplitter = new StaxXmiSplitter(elementsToStore, true, true,  StaxXmiSplitterTest.BASE_DOCUMENT_ANNOTATIONS);
 		// When storing the base document, begin with 0.
 		int nextPossibleId = 0;
 //		byte[] b = FileUtils.readFileToByteArray(new File(TEST_XMI));

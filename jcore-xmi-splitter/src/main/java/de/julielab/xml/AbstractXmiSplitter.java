@@ -20,25 +20,22 @@ import static java.util.stream.Collectors.toSet;
 
 public abstract class AbstractXmiSplitter implements XmiSplitter {
 
-    public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final int NO_SOFA_KEY = -1;
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private static final int SOFA_UNKNOWN = Integer.MIN_VALUE;
     protected final Set<String> moduleAnnotationNames;
     protected final boolean recursively;
     protected final boolean storeBaseDocument;
-    protected final String docTableName;
     private final Set<String> baseDocumentAnnotations;
     protected int currentSecondSofaMapKey;
     protected Map<Integer, JeDISVTDGraphNode> nodesByXmiId;
     protected Map<String, Set<JeDISVTDGraphNode>> annotationModules;
     private Set<Integer> unavailableXmiId;
 
-    public AbstractXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument, String docTableName, Set<String> baseDocumentAnnotations) {
+    public AbstractXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument, Set<String> baseDocumentAnnotations) {
         this.moduleAnnotationNames = moduleAnnotationNames != null ? new HashSet<>(moduleAnnotationNames) : null;
         this.recursively = recursively;
         this.storeBaseDocument = storeBaseDocument;
-        this.docTableName = docTableName;
         this.baseDocumentAnnotations = baseDocumentAnnotations == null ? Collections.emptySet() : baseDocumentAnnotations;
 
         if (storeBaseDocument)
@@ -190,7 +187,7 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
                 continue;
             Set<JeDISVTDGraphNode> moduleNodes = annotationModules.get(moduleName);
             try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-                annotationModuleData.put(moduleName.equals(DOCUMENT_MODULE_LABEL) ? docTableName : moduleName, baos);
+                annotationModuleData.put(moduleName, baos);
 
                 // We now traverse all the nodes that should go in the current module.
                 // We will adapt the XMI IDs and also remove features and even whole nodes when their

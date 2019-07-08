@@ -29,7 +29,6 @@ import static javax.xml.stream.XMLStreamConstants.END_ELEMENT;
 import static javax.xml.stream.XMLStreamConstants.START_ELEMENT;
 
 public class StaxXmiSplitter extends AbstractXmiSplitter {
-    public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final int NO_SOFA_KEY = -1;
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private final static Logger log = LoggerFactory.getLogger(StaxXmiSplitter.class);
@@ -39,8 +38,8 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     private XMLInputFactory inputFactory;
 
     public StaxXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
-                           String docTableName, Set<String> baseDocumentAnnotations) {
-        super(moduleAnnotationNames, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+                           Set<String> baseDocumentAnnotations) {
+        super(moduleAnnotationNames, recursively, storeBaseDocument, baseDocumentAnnotations);
         inputFactory = XMLInputFactory.newFactory();
     }
 
@@ -52,13 +51,12 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
      * @param annotationModulesToExtract
      * @param recursively
      * @param storeBaseDocument
-     * @param docTableName
      * @param baseDocumentAnnotations
      * @param attribute_size
      */
     public StaxXmiSplitter(Set<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
-                           String docTableName, Set<String> baseDocumentAnnotations, int attribute_size) {
-        this(annotationModulesToExtract, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+                            Set<String> baseDocumentAnnotations, int attribute_size) {
+        this(annotationModulesToExtract, recursively, storeBaseDocument, baseDocumentAnnotations);
     }
 
     @Override

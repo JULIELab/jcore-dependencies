@@ -26,16 +26,14 @@ import static java.util.stream.Collectors.toList;
 
 public class VtdXmlXmiSplitter extends AbstractXmiSplitter {
 private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.class);
-    public static final String DOCUMENT_MODULE_LABEL = "DOCUMENT-MODULE";
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private static final int NO_SOFA_KEY = -1;
-    private static final int SOFA_UNKNOWN = Integer.MIN_VALUE;
     private VTDNav vn;
 
 
     public VtdXmlXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
-                             String docTableName, Set<String> baseDocumentAnnotations) {
-        super(moduleAnnotationNames, recursively, storeBaseDocument, docTableName, baseDocumentAnnotations);
+                             Set<String> baseDocumentAnnotations) {
+        super(moduleAnnotationNames, recursively, storeBaseDocument,  baseDocumentAnnotations);
     }
 
     public VTDNav getVTDNav() {

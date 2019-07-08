@@ -29,7 +29,7 @@ public class VtdXmlXmiSplitterTest {
     public void testEmbeddedFeatures() throws IOException, XMISplitterException, UIMAException, NavException {
         // These embedded features are, for example, StringArrays that can not be references by other annotations
         // than the one it was originally set to.
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(null, false, false, null, null);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(null, false, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -47,7 +47,7 @@ public class VtdXmlXmiSplitterTest {
 
     @Test
     public void testReferences() throws IOException, XMISplitterException, UIMAException, NavException {
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(null, false, false, null, null);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(null, false, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -80,7 +80,7 @@ public class VtdXmlXmiSplitterTest {
                 DependencyRelation.class.getCanonicalName(),
                 Sentence.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, false, false, null, null);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, false, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -118,7 +118,7 @@ public class VtdXmlXmiSplitterTest {
         Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, false, null, null);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -138,7 +138,7 @@ public class VtdXmlXmiSplitterTest {
         Set<String> moduleAnnotationNames = new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, null, null);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         splitter.process(xmiData, jCas, 0, null);
@@ -163,7 +163,7 @@ public class VtdXmlXmiSplitterTest {
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
         Set<String> baseDocumentAnnotations = new HashSet<>(Arrays.asList(Title.class.getCanonicalName(), Header.class.getCanonicalName()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
@@ -176,7 +176,7 @@ public class VtdXmlXmiSplitterTest {
         // Tokens, PosTags and document data
         assertThat(result.xmiData).hasSize(3);
         assertThat(result.xmiData.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(),
-                PennBioIEPOSTag.class.getCanonicalName(), "docs");
+                PennBioIEPOSTag.class.getCanonicalName(), XmiSplitter.DOCUMENT_MODULE_LABEL);
 
 
         byte[] tokenBytes = result.xmiData.get(Token.class.getCanonicalName()).toByteArray();
@@ -188,7 +188,7 @@ public class VtdXmlXmiSplitterTest {
         assertThat(tokenData.indexOf("cas:FSArray")).isGreaterThan(0);
         assertThat(tokenData.indexOf("types:" + PennBioIEPOSTag.class.getSimpleName())).isEqualTo(-1);
 
-        byte[] baseDocBytes = result.xmiData.get("docs").toByteArray();
+        byte[] baseDocBytes = result.xmiData.get(XmiSplitter.DOCUMENT_MODULE_LABEL).toByteArray();
 
         String baseDocData = new String(baseDocBytes, StandardCharsets.UTF_8);
         assertThat(baseDocData.indexOf("<cas:Sofa")).isGreaterThan(-1);
@@ -203,7 +203,7 @@ public class VtdXmlXmiSplitterTest {
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName()));
         Set<String> baseDocumentAnnotations = new HashSet<>(Arrays.asList(Title.class.getCanonicalName(), Header.class.getCanonicalName()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, "docs", baseDocumentAnnotations);
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
@@ -211,7 +211,7 @@ public class VtdXmlXmiSplitterTest {
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, moduleAnnotationNames.stream().toArray(String[]::new));
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        ByteArrayOutputStream newXmiData = builder.buildXmi(inputMap, "docs", jCas.getTypeSystem());
+        ByteArrayOutputStream newXmiData = builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
 
         jCas.reset();
 
@@ -231,12 +231,12 @@ public class VtdXmlXmiSplitterTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
 
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, "docs", Collections.emptySet());
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, Collections.emptySet());
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        assertThatCode(() -> builder.buildXmi(inputMap, "docs", jCas.getTypeSystem())).doesNotThrowAnyException();
+        assertThatCode(() -> builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem())).doesNotThrowAnyException();
     }
 
     @Test
@@ -257,12 +257,12 @@ public class VtdXmlXmiSplitterTest {
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, "docs", new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())));
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(Collections.emptySet(), true, true, new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())));
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, "docs", jCas.getTypeSystem());
+        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
         jCas.reset();
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }
@@ -279,7 +279,7 @@ public class VtdXmlXmiSplitterTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
 
-        XmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList("de.julielab.jcore.types.Sentence")), true, true, "docs", Collections.emptySet());
+        XmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList("de.julielab.jcore.types.Sentence")), true, true, Collections.emptySet());
         Map<String, Integer> sofaIdMap = new HashMap<>();
         sofaIdMap.put("_InitialView", 9999);
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
