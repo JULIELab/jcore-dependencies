@@ -24,6 +24,10 @@ import java.util.stream.Stream;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BinaryJeDISNodeDecoder {
+    /**
+     * @see {@link BinaryJeDISNodeEncoder#JEDIS_BINARY_MAGIC}
+     */
+    public static final int JEDIS_BINARY_MAGIC = BinaryJeDISNodeEncoder.JEDIS_BINARY_MAGIC;
     private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeDecoder.class);
     private Set<String> annotationLabelsToLoad;
     private boolean shrinkArraysAndListsIfReferenceNotLoaded;
@@ -44,7 +48,7 @@ public class BinaryJeDISNodeDecoder {
         xmiIds = new HashSet<>();
     }
 
-    public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) {
+    public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException {
         // Reset internal states
         init();
 
@@ -52,82 +56,81 @@ public class BinaryJeDISNodeDecoder {
         // sofa id -> element IDs
         final Multimap<Integer, Integer> sofaElementsMap = HashMultimap.create();
         final BinaryDecodingResult res = new BinaryDecodingResult(baos, sofaElementsMap, shrinkArraysAndListsIfReferenceNotLoaded);
-        try {
-            Map<Integer, Element> elementsWithReferences = new HashMap<>();
-            // the label is the fully qualified UIMA type name
-            for (InputStream is : input) {
-                final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
-                while (bb.position() < bb.limit()) {
-                    String prefixedNameType = mapping.get(bb.getInt());
-                    int elementStart = baos.size();
-                    // '<type:Token '
-                    baos.write('<');
-                    writeWs(prefixedNameType, baos);
-                    final String[] prefixAndTypeName = prefixedNameType.split(":");
-                    final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
+        Map<Integer, Element> elementsWithReferences = new HashMap<>();
+        // the label is the fully qualified UIMA type name
+        for (InputStream is : input) {
+            short header = (short) ((is.read() << 8) | (is.read()));
+            if (header != JEDIS_BINARY_MAGIC)
+                throw new IOException("Not in JeDIS binary format.");
+            final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
+            while (bb.position() < bb.limit()) {
+                String prefixedNameType = mapping.get(bb.getInt());
+                int elementStart = baos.size();
+                // '<type:Token '
+                baos.write('<');
+                writeWs(prefixedNameType, baos);
+                final String[] prefixAndTypeName = prefixedNameType.split(":");
+                final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
 
-                    currentElement = new Element(typeName);
+                currentElement = new Element(typeName);
 
-                    final Type type = ts.getType(typeName);
-                    final byte numAttributes = bb.get();
-                    currentSofaId = currentXmiId = -1;
-                    for (int i = 0; i < numAttributes; i++) {
-                        readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
-                    }
-
-
-                    if (currentSofaId != -1 && currentXmiId != -1) {
-                        if (annotationLabelsToLoad.contains(typeName))
-                            sofaElementsMap.put(currentSofaId, currentXmiId);
-                    }
-                    // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
-                    final byte finishedIndicator = bb.get();
-                    if (finishedIndicator == 0) {
-                        baos.write('>');
-                        writeStringArray(bb, ts.getType(typeName), ts, mapping, mappedFeatures, baos);
-                        baos.write('<');
-                        baos.write('/');
-                        write(prefixedNameType, baos);
-                        // Read the last byte that now should indicate finished
-                        bb.get();
-                    } else {
-                        baos.write('/');
-                    }
-                    baos.write('>');
-                    int elementEnd = baos.size();
-                    currentElement.setRange(elementStart, elementEnd);
-                    currentElement.setArray(type.isArray());
-                    currentElement.setXmiId(currentXmiId);
-                    elementsWithReferences.put(currentXmiId, currentElement);
+                final Type type = ts.getType(typeName);
+                final byte numAttributes = bb.get();
+                currentSofaId = currentXmiId = -1;
+                for (int i = 0; i < numAttributes; i++) {
+                    readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
                 }
+
+
+                if (currentSofaId != -1 && currentXmiId != -1) {
+                    if (annotationLabelsToLoad.contains(typeName))
+                        sofaElementsMap.put(currentSofaId, currentXmiId);
+                }
+                // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
+                final byte finishedIndicator = bb.get();
+                if (finishedIndicator == 0) {
+                    baos.write('>');
+                    writeStringArray(bb, ts.getType(typeName), ts, mapping, mappedFeatures, baos);
+                    baos.write('<');
+                    baos.write('/');
+                    write(prefixedNameType, baos);
+                    // Read the last byte that now should indicate finished
+                    bb.get();
+                } else {
+                    baos.write('/');
+                }
+                baos.write('>');
+                int elementEnd = baos.size();
+                currentElement.setRange(elementStart, elementEnd);
+                currentElement.setArray(type.isArray());
+                currentElement.setXmiId(currentXmiId);
+                elementsWithReferences.put(currentXmiId, currentElement);
             }
-            final HashSet<Integer> seenElementIds = new HashSet<>();
-            for (Element e : elementsWithReferences.values()) {
-                tagElementsForOmission(e, elementsWithReferences, 0, seenElementIds);
-            }
-            final List<DataRange> rangesToManipulate;
-            Stream<DataRange> dataRangeStream = elementsWithReferences.values().stream()
-                    // Line up all elements and their attributes. Those are the XMI elements that might need
-                    // to be manipulated in the BinaryXmiBuilder when building the final XMI.
-                    .flatMap(e -> Stream.concat(Stream.of(e), e.getAttributes().values().stream()));
-            if (shrinkArraysAndListsIfReferenceNotLoaded) {
-                dataRangeStream = dataRangeStream
-                        // Only collect those elements that actually need to be manipulated.
-                        .filter(dr -> dr.isToBeOmitted() || (dr instanceof Attribute && ((Attribute) dr).isModified()));
-            } else {
-                dataRangeStream = dataRangeStream.filter(Attribute.class::isInstance).filter(a -> ((Attribute) a).isModified());
-            }
-            rangesToManipulate = dataRangeStream
-                    // Sort ascending by begin offset and, for data ranges with the same begin offset, descending
-                    // be end offset. The idea is that an element should be placed preceeding its attributes.
-                    // Thus, when the element is to be omitted, we can just jump to the end of the element and
-                    // ignore its attributes.
-                    .sorted((dr1, dr2) -> Integer.compare(dr1.getBegin(), dr2.getBegin()) != 0 ? Integer.compare(dr1.getBegin(), dr2.getBegin()) : Integer.compare(dr2.getEnd(), dr1.getEnd()))
-                    .collect(Collectors.toList());
-            res.setXmiPortionsToModify(rangesToManipulate);
-        } catch (IOException e) {
-            e.printStackTrace();
         }
+        final HashSet<Integer> seenElementIds = new HashSet<>();
+        for (Element e : elementsWithReferences.values()) {
+            tagElementsForOmission(e, elementsWithReferences, 0, seenElementIds);
+        }
+        final List<DataRange> rangesToManipulate;
+        Stream<DataRange> dataRangeStream = elementsWithReferences.values().stream()
+                // Line up all elements and their attributes. Those are the XMI elements that might need
+                // to be manipulated in the BinaryXmiBuilder when building the final XMI.
+                .flatMap(e -> Stream.concat(Stream.of(e), e.getAttributes().values().stream()));
+        if (shrinkArraysAndListsIfReferenceNotLoaded) {
+            dataRangeStream = dataRangeStream
+                    // Only collect those elements that actually need to be manipulated.
+                    .filter(dr -> dr.isToBeOmitted() || (dr instanceof Attribute && ((Attribute) dr).isModified()));
+        } else {
+            dataRangeStream = dataRangeStream.filter(Attribute.class::isInstance).filter(a -> ((Attribute) a).isModified());
+        }
+        rangesToManipulate = dataRangeStream
+                // Sort ascending by begin offset and, for data ranges with the same begin offset, descending
+                // be end offset. The idea is that an element should be placed preceeding its attributes.
+                // Thus, when the element is to be omitted, we can just jump to the end of the element and
+                // ignore its attributes.
+                .sorted((dr1, dr2) -> Integer.compare(dr1.getBegin(), dr2.getBegin()) != 0 ? Integer.compare(dr1.getBegin(), dr2.getBegin()) : Integer.compare(dr2.getEnd(), dr1.getEnd()))
+                .collect(Collectors.toList());
+        res.setXmiPortionsToModify(rangesToManipulate);
         return res;
     }
 
@@ -264,7 +267,7 @@ public class BinaryJeDISNodeDecoder {
 
     private void handlePrimitiveFeatures(ByteBuffer bb, Map<String, Boolean> mappedFeatures, Map<Integer, String> mapping, ByteArrayOutputStream ret, String attrName, Feature feature, TypeSystem ts) {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
-            writeStringWithMapping(bb, feature.getName(),ts, mappedFeatures, mapping, ret);
+            writeStringWithMapping(bb, feature.getName(), ts, mappedFeatures, mapping, ret);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
             write(bb.getDouble(), ret);
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE), feature.getRange())) {
@@ -307,7 +310,7 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handleListTypes(ByteBuffer bb, String typeName,TypeSystem ts,  String attrName, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream ret) {
+    private void handleListTypes(ByteBuffer bb, String typeName, TypeSystem ts, String attrName, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream ret) {
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
         // The tail is a xmi:id reference to the next list node

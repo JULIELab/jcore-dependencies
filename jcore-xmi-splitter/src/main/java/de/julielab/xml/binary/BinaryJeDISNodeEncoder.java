@@ -28,6 +28,7 @@ import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
 
 public class BinaryJeDISNodeEncoder {
     private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeEncoder.class);
+    public static final int JEDIS_BINARY_MAGIC = 0x6195;
     private final ByteBuffer bb8;
     private final VTDGen vg;
 
@@ -119,6 +120,8 @@ public class BinaryJeDISNodeEncoder {
             Map<String, ByteArrayOutputStream> binaryAnnotationModuleData = new HashMap<>();
             for (String label : nodesByLabel.keySet()) {
                 ByteArrayOutputStream moduleData = new ByteArrayOutputStream();
+                moduleData.write(JEDIS_BINARY_MAGIC>>8);
+                moduleData.write(JEDIS_BINARY_MAGIC);
                 final List<JeDISVTDGraphNode> nodesForCurrentLabel = nodesByLabel.get(label);
                 for (JeDISVTDGraphNode n : nodesForCurrentLabel) {
                     currentXmiElementForLogging = n.getModuleXmlData();

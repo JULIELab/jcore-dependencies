@@ -237,7 +237,7 @@ public class BinaryJeDISNodeEncoderTest {
 
     }
 
-    private JCas getPartiallyLoadedModuleData(boolean omitElementsWithMissingReferences) throws UIMAException, SAXException, XMISplitterException {
+    private JCas getPartiallyLoadedModuleData(boolean omitElementsWithMissingReferences) throws Exception {
         // ----------- Creating a CAS with annotations
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
         final Token token = new Token(jCas);
