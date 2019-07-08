@@ -91,7 +91,7 @@ public class BinaryJeDISNodeEncoder {
                     int numValues = values.size();
                     final int numOccurrences = featureOccurrences.count(featureName);
                     // Note that the value is actually a boolean, saying whether or not to map the feature.
-                    featuresToMap.put(featureName, numValues / (double) numOccurrences < .5);
+                    featuresToMap.put(featureName, numValues / (double) numOccurrences <= .5);
                 }
             }
 

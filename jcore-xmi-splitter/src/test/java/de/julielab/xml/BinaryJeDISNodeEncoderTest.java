@@ -3,15 +3,9 @@ package de.julielab.xml;
 import de.julielab.jcore.types.*;
 import de.julielab.jcore.types.pubmed.Header;
 import de.julielab.jcore.types.test.MultiValueTypesHolder;
-import de.julielab.xml.binary.BinaryDecodingResult;
-import de.julielab.xml.binary.BinaryJeDISNodeDecoder;
-import de.julielab.xml.binary.BinaryJeDISNodeEncoder;
-import de.julielab.xml.binary.BinaryStorageAnalysisResult;
-import de.julielab.xml.binary.BinaryXmiBuilder;
+import de.julielab.xml.binary.*;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.tuple.ImmutablePair;
-import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASRuntimeException;
@@ -35,12 +29,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import static java.nio.charset.StandardCharsets.UTF_8;
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatCode;
-import static org.assertj.core.api.Assertions.assertThatThrownBy;
+import static org.assertj.core.api.Assertions.*;
 import static org.testng.Assert.*;
 
 public class BinaryJeDISNodeEncoderTest {
