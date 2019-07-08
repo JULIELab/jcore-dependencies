@@ -8,11 +8,16 @@ public class BinaryStorageAnalysisResult {
     private List<String> valuesToMap;
     private Map<String, Boolean> featuresToMap;
     private int nextAvailableId;
+    private Map<String, Integer> missingItemsMapping;
+
 
     public BinaryStorageAnalysisResult(List<String> valuesToMap, Map<String, Boolean> featuresToMap, int nextAvailableId) {
         this.valuesToMap = valuesToMap;
         this.featuresToMap = featuresToMap;
         this.nextAvailableId = nextAvailableId;
+        missingItemsMapping = new HashMap<>();
+        for (String value : valuesToMap)
+            missingItemsMapping.put(value, nextAvailableId++);
     }
 
     /**
@@ -20,19 +25,16 @@ public class BinaryStorageAnalysisResult {
      *
      * @return The strings to include in the mapping.
      */
-    public List<String> getValuesToMap() {
+    public List<String> getMissingValuesToMap() {
         return valuesToMap;
     }
 
 
-    public Map<String, Boolean> getFeaturesToMap() {
+    public Map<String, Boolean> getMissingFeaturesToMap() {
         return featuresToMap;
     }
 
     public Map<String, Integer> getMissingItemsMapping() {
-        Map<String, Integer> missingMapping = new HashMap<>();
-        for (String value : valuesToMap)
-            missingMapping.put(value, nextAvailableId++);
-        return missingMapping;
+        return missingItemsMapping;
     }
 }
