@@ -78,9 +78,9 @@ public class BinaryJeDISNodeEncoderTest {
                 .containsKeys("types:Token", "sofa", "componentId", "xmi:id", "end", "begin", "TokenSplitter");
 
         final BinaryStorageAnalysisResult analysisResult2 = encoder.findMissingItemsForMapping(splitterResult2.jedisNodesInAnnotationModules, jCas.getTypeSystem(), analysisResult1.getMissingItemsMapping(), analysisResult1.getMissingFeaturesToMap());
-        assertThat(analysisResult2.getMissingValuesToMap()).containsExactly("orthogr");
+        assertThat(analysisResult2.getMissingValuesToMap()).containsExactlyInAnyOrder("orthogr", "TokenSplitter2");
         assertThat(analysisResult2.getMissingFeaturesToMap()).containsEntry("de.julielab.jcore.types.Token:orthogr", false);
-        assertThat(analysisResult2.getMissingItemsMapping()).containsEntry("orthogr", 7);
+        assertThat(analysisResult2.getMissingItemsMapping()).containsKeys("orthogr", "TokenSplitter2");
     }
 
     @Test

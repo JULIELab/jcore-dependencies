@@ -96,8 +96,10 @@ public class BinaryJeDISNodeEncoder {
             }
 
             final Stream<String> tagNames = xmiTagNames.stream();
-            // Only map those values where the featuresToMap says "true"
-            final Stream<String> featureValuesToMap = featuresToMap.keySet().stream().filter(featuresToMap::get).map(featureValues::get).flatMap(Collection::stream);
+            // Only map those values where the featuresToMap says "true".
+            // It is important to get the values of those features that were already before set for mapping
+            // and those that have been added in this very run.
+            final Stream<String> featureValuesToMap = Stream.concat(featuresToMap.keySet().stream().filter(featuresToMap::get), existingFeaturesToMap.keySet().stream().filter(existingFeaturesToMap::get)).map(featureValues::get).flatMap(Collection::stream);
             Stream<String> itemsForMapping = Stream.concat(tagNames, featureAttributeNames.stream());
             itemsForMapping = Stream.concat(itemsForMapping, featureValuesToMap);
             // Filter for items that are not yet contained in the mapping
