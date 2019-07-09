@@ -3,6 +3,7 @@ package de.julielab.xml.binary;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import de.julielab.xml.XmiSplitUtilities;
+import de.julielab.xml.XmiSplitter;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
@@ -48,7 +49,19 @@ public class BinaryJeDISNodeDecoder {
         xmiIds = new HashSet<>();
     }
 
-    public BinaryDecodingResult decode(Collection<InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException {
+    /**
+     * <p>Important: The base document module data must be associated with the {@link XmiSplitter#DOCUMENT_MODULE_LABEL} key
+     * in <tt>input</tt>.</p>
+     *
+     * @param input
+     * @param ts
+     * @param mapping
+     * @param mappedFeatures
+     * @param namespaceMap
+     * @return
+     * @throws IOException
+     */
+    public BinaryDecodingResult decode(Map<String, InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException {
         // Reset internal states
         init();
 
@@ -58,8 +71,9 @@ public class BinaryJeDISNodeDecoder {
         final BinaryDecodingResult res = new BinaryDecodingResult(baos, sofaElementsMap, shrinkArraysAndListsIfReferenceNotLoaded);
         Map<Integer, Element> elementsWithReferences = new HashMap<>();
         // the label is the fully qualified UIMA type name
-        for (InputStream is : input) {
-            short header = (short) ((is.read() << 8) | (is.read()));
+        for (String moduleLabel : input.keySet()) {
+            final InputStream is = input.get(moduleLabel);
+            short header = (short) (((0xff & is.read()) << 8) | (0xff & is.read()));
             if (header != JEDIS_BINARY_MAGIC)
                 throw new IOException("Not in JeDIS binary format.");
             final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
@@ -81,8 +95,9 @@ public class BinaryJeDISNodeDecoder {
                     readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
                 }
 
-
-                if (currentSofaId != -1 && currentXmiId != -1) {
+                if (moduleLabel.equals(XmiSplitter.DOCUMENT_MODULE_LABEL) && !typeName.equals(CAS.TYPE_NAME_SOFA)) {
+                    sofaElementsMap.put(currentSofaId, currentXmiId);
+                } else if (currentSofaId != -1 && currentXmiId != -1) {
                     if (annotationLabelsToLoad.contains(typeName))
                         sofaElementsMap.put(currentSofaId, currentXmiId);
                 }

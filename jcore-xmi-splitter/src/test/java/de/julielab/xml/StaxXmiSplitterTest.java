@@ -217,7 +217,7 @@ public class StaxXmiSplitterTest {
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, moduleAnnotationNames.stream().toArray(String[]::new));
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        ByteArrayOutputStream newXmiData = builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
+        ByteArrayOutputStream newXmiData = builder.buildXmi(inputMap, jCas.getTypeSystem());
 
         jCas.reset();
 
@@ -242,7 +242,7 @@ public class StaxXmiSplitterTest {
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        assertThatCode(() -> builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem())).doesNotThrowAnyException();
+        assertThatCode(() -> builder.buildXmi(inputMap, jCas.getTypeSystem())).doesNotThrowAnyException();
     }
 
     @Test
@@ -268,7 +268,7 @@ public class StaxXmiSplitterTest {
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
+        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, jCas.getTypeSystem());
         jCas.reset();
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }
@@ -292,7 +292,7 @@ public class StaxXmiSplitterTest {
 
         final XmiBuilder xmiBuilder = new XmiBuilder(splitterResult.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = splitterResult.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        final ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
+        final ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputMap, jCas.getTypeSystem());
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }
 
@@ -315,7 +315,7 @@ public class StaxXmiSplitterTest {
 
         final XmiBuilder xmiBuilder = new XmiBuilder(splitterResult.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = splitterResult.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        final ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputMap,  XmiSplitter.DOCUMENT_MODULE_LABEL,jCas.getTypeSystem());
+        final ByteArrayOutputStream builtXmi = xmiBuilder.buildXmi(inputMap,jCas.getTypeSystem());
         System.out.println(new String(builtXmi.toByteArray()));
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmi.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
     }

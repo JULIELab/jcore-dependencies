@@ -51,7 +51,7 @@ public class XmiBuilderTest {
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[]{AutoDescriptor.class.getCanonicalName()});
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem());
+        ByteArrayOutputStream builtXmi = builder.buildXmi(inputMap, jCas.getTypeSystem());
 
         jCas.reset();
         ByteArrayInputStream finalIs = new ByteArrayInputStream(builtXmi.toByteArray());
@@ -89,6 +89,6 @@ public class XmiBuilderTest {
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
-        assertThatCode(() -> builder.buildXmi(inputMap, XmiSplitter.DOCUMENT_MODULE_LABEL, jCas.getTypeSystem())).doesNotThrowAnyException();
+        assertThatCode(() -> builder.buildXmi(inputMap, jCas.getTypeSystem())).doesNotThrowAnyException();
     }
 }

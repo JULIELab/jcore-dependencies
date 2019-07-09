@@ -80,7 +80,7 @@ public class XmiBuilder {
         this.annotationNames = XmiSplitUtilities.completeTypeNames(annotationsToRetrieve);
         setXMIStartElementData(nsAndXmiVersionMap);
         //if (attribute_size > 0)
-          //  inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+        //  inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
     }
 
     public XmiBuilder(Map<String, String> nsAndXmiVersionMap, String[] annotationsToRetrieve) {
@@ -91,21 +91,22 @@ public class XmiBuilder {
      * Builds a single xmi representation out of the base document and the
      * selected annotations.
      *
-     * @param xmiData  The xmi data (document and annotations) as input streams
-     *                 mapped from storage keys. It is a <tt>LinkedHashMap</tt> because
-     *                 the order of the annotation data - e.g. first Sentences, then
-     *                 Tokens - influences the internal index order in the CAS. Thus,
-     *                 when serializing, the order of the <tt>LinkedHashMap</tt> will
-     *                 be reflected in the XMI. Since we rely on the order of
-     *                 appearance of annotations to determine the end of the base
-     *                 document, we must provide the correct order.
-     * @param baseDocumentLabel The key which is used in <tt>xmiData</tt> for the base document data.
+     * @param xmiData The xmi data (document and annotations) as input streams
+     *                mapped from storage keys. IMPORTANT: The document data must be associated
+     *                with the {@link XmiSplitter#DOCUMENT_MODULE_LABEL} key.
+     *                It is a <tt>LinkedHashMap</tt> because
+     *                the order of the annotation data - e.g. first Sentences, then
+     *                Tokens - influences the internal index order in the CAS. Thus,
+     *                when serializing, the order of the <tt>LinkedHashMap</tt> will
+     *                be reflected in the XMI. Since we rely on the order of
+     *                appearance of annotations to determine the end of the base
+     *                document, we must provide the correct order.
      * @param ts
      * @return The combined xmi representation as output stream.
      */
-    public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, String baseDocumentLabel, TypeSystem ts) {
+    public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, TypeSystem ts) {
         this.xmiData = xmiData;
-        this.docTableName = baseDocumentLabel;
+        this.docTableName = XmiSplitter.DOCUMENT_MODULE_LABEL;
         this.ts = ts;
         // Create only once since this method only has "constant" information,
         // i.e. the map would be always the same even if we created it each time
@@ -594,7 +595,6 @@ public class XmiBuilder {
         log.debug("The following features for specified types have been declared to be potentially missing: {}",
                 potentiallyMissingFeatures);
     }
-
 
 
     protected void setXMIStartElementData(Map<String, String> namespacesAndXmiVersion) {

@@ -4,9 +4,7 @@ import de.julielab.jcore.types.*;
 import de.julielab.jcore.types.pubmed.Header;
 import de.julielab.jcore.types.test.MultiValueTypesHolder;
 import de.julielab.xml.binary.*;
-import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.io.IOUtils;
-import org.apache.uima.UIMAException;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASRuntimeException;
 import org.apache.uima.cas.FeatureStructure;
@@ -18,7 +16,6 @@ import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.*;
 import org.apache.uima.jcas.tcas.Annotation;
 import org.testng.annotations.Test;
-import org.xml.sax.SAXException;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -101,9 +98,9 @@ public class BinaryJeDISNodeEncoderTest {
         final Map<String, Integer> mapping = result.getMissingItemsMapping();
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, result.getMissingFeaturesToMap());
 
-        List<InputStream> bais = new ArrayList<>();
+        Map<String, InputStream> bais = new HashMap<>();
         for (String label : encode.keySet()) {
-            bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
         }
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(moduleAnnotationNames, false);
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
@@ -158,6 +155,57 @@ public class BinaryJeDISNodeEncoderTest {
     }
 
     @Test
+    public void testDocumentModuleAnnotations() throws Exception {
+        // Here we just check that those annotations that were added to the document module
+        // end up in the CAS indexes
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        // We will add the header to the base document module
+        final Header h = new Header(jCas);
+        h.setDocId("1234");
+        h.addToIndexes();
+        final Token token = new Token(jCas);
+        final StringArray synonyms = new StringArray(jCas, 3);
+        synonyms.copyFromArray(new String[]{"s1", "s2", "s3"}, 0, 0, 3);
+        token.setSynonyms(synonyms);
+        final StringArray hypernyms = new StringArray(jCas, 2);
+        hypernyms.copyFromArray(new String[]{"h1", "h2"}, 0, 0, 2);
+        token.setHypernyms(hypernyms);
+        token.addToIndexes();
+
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+        StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Token.class.getCanonicalName())), false, true, Collections.singleton(Header.class.getCanonicalName()));
+        final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap(CAS.NAME_DEFAULT_SOFA, 1));
+
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        final BinaryStorageAnalysisResult analysisResult = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+        final Map<String, Integer> mapping = analysisResult.getMissingItemsMapping();
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, analysisResult.getMissingFeaturesToMap());
+        final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(new HashSet<>(Arrays.asList(Token.class.getCanonicalName())), false);
+        Map<String, InputStream> bais = new HashMap<>();
+        for (String label : encode.keySet()) {
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
+        }
+        final BinaryDecodingResult decoded = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, analysisResult.getMissingFeaturesToMap(), splitterResult.namespaces);
+        final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
+        jCas.reset();
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()), jCas.getCas());
+
+
+        final de.julielab.jcore.types.Header header = JCasUtil.selectSingle(jCas, de.julielab.jcore.types.Header.class);
+        assertNotNull(header);
+        assertThat(header.getDocId()).isEqualTo("1234");
+        final Token t = JCasUtil.selectSingle(jCas, Token.class);
+        assertNotNull(t.getSynonyms());
+        assertThat(t.getSynonyms().toStringArray()).containsExactly("s1", "s2", "s3");
+        assertNotNull(t.getHypernyms());
+        assertThat(t.getHypernyms().toStringArray()).containsExactly("h1", "h2");
+    }
+
+    @Test
     public void testStringArrays() throws Exception {
         // These embedded features are, for example, StringArrays that can not be references by other annotations
         // than the one it was originally set to.
@@ -178,13 +226,16 @@ public class BinaryJeDISNodeEncoderTest {
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
         final BinaryStorageAnalysisResult analysisResult = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
-        final List<String> missingItemsForMapping = analysisResult.getMissingValuesToMap();
         final Map<String, Integer> mapping = analysisResult.getMissingItemsMapping();
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, analysisResult.getMissingFeaturesToMap());
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
 
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(new HashSet<>(Arrays.asList(Token.class.getCanonicalName())), false);
-        final BinaryDecodingResult decoded = decoder.decode(encode.values().stream().map(ByteArrayOutputStream::toByteArray).map(ByteArrayInputStream::new).collect(Collectors.toList()), jCas.getTypeSystem(), reverseMapping, analysisResult.getMissingFeaturesToMap(), splitterResult.namespaces);
+        Map<String, InputStream> bais = new HashMap<>();
+        for (String label : encode.keySet()) {
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
+        }
+        final BinaryDecodingResult decoded = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, analysisResult.getMissingFeaturesToMap(), splitterResult.namespaces);
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
         jCas.reset();
@@ -287,7 +338,12 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(annotationLabelsToLoad, omitElementsWithMissingReferences);
         // Omit the dependency relations and the abbreviations on loading.
         // Omitting the abbreviations is particularly mean: The FSList contains two Abbreviations on positions 0 and 2 and one Sentence in the middle.
-        final BinaryDecodingResult decoded = decoder.decode(encode.keySet().stream().filter(annotationLabelsToLoad::contains).map(encode::get).map(ByteArrayOutputStream::toByteArray).map(ByteArrayInputStream::new).collect(Collectors.toList()), jCas.getTypeSystem(), reverseMapping, analysisResult.getMissingFeaturesToMap(), splitterResult.namespaces);
+        Map<String, InputStream> bais = new HashMap<>();
+        for (String label : encode.keySet()) {
+            if (annotationLabelsToLoad.contains(label))
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
+        }
+        final BinaryDecodingResult decoded = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, analysisResult.getMissingFeaturesToMap(), splitterResult.namespaces);
 
         // ------------ Build the XMI
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
@@ -369,9 +425,9 @@ public class BinaryJeDISNodeEncoderTest {
     @Test(dependsOnMethods = "testEncodeArraysAndLists")
     public void testDecodeArraysAndLists() throws Exception {
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "arrayAndListHolderTestType");
-        List<InputStream> bais = new ArrayList<>();
+        Map<String, InputStream> bais = new HashMap<>();
         for (String label : encode.keySet()) {
-            bais.add(new ByteArrayInputStream(encode.get(label).toByteArray()));
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
         }
 
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(moduleAnnotationNames, false);

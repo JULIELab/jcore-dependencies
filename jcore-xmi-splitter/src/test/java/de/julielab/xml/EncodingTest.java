@@ -64,7 +64,7 @@ public class EncodingTest {
 		String[] annotationsToRetrieve = { SENTTYPE, TOKTYPE };
 		XmiBuilder xmiBuilder = new XmiBuilder(nsAndXmiVersionMap, annotationsToRetrieve);
 		LinkedHashMap<String, InputStream> data =loadTestXmiByteData();
-		ByteArrayOutputStream xmi = xmiBuilder.buildXmi(data, DOC, aCAS.getTypeSystem());
+		ByteArrayOutputStream xmi = xmiBuilder.buildXmi(data, aCAS.getTypeSystem());
 		byte[] ba = xmi.toByteArray();
 
 		FileOutputStream fos = new FileOutputStream("myfile.xmi");
@@ -171,7 +171,7 @@ public class EncodingTest {
 		InputStream sentenceIS = new FileInputStream(SENTBIN);
 		// InputStream posIS = new FileInputStream(POSBIN);
 
-		xmiData.put(DOC, docIS);
+		xmiData.put(XmiSplitter.DOCUMENT_MODULE_LABEL, docIS);
 		xmiData.put(SENTTYPE, sentenceIS);
 		xmiData.put(TOKTYPE, tokenIS);
 		// xmiData.put(POSTYPE, posIS);
