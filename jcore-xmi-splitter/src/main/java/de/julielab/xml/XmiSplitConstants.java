@@ -10,4 +10,5 @@ public class XmiSplitConstants {
 	public static final String BINARY_MAPPING_COL_ID = "mapping_id";
 	public static final String BINARY_FEATURES_TO_MAP_COL_FEATURE = "feature";
 	public static final String BINARY_FEATURES_TO_MAP_COL_MAP = "map";
+	public static final String BASE_DOC_COLUMN = "base_document";
 }
