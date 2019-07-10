@@ -30,6 +30,71 @@ public class ScoredPrecisionRecallEvaluationTest  {
         eval.addMisses(1);
         return eval;
     }
+    
+    static ScoredPrecisionRecallEvaluation testCaseWithTies() {
+        ScoredPrecisionRecallEvaluation eval 
+            = new ScoredPrecisionRecallEvaluation();
+        eval.addCase(false,-1.21);
+        eval.addCase(true,-1.21);
+        eval.addCase(false,-1.39);
+        eval.addCase(true,-1.47);
+        eval.addCase(true,-1.60);
+        eval.addCase(false,-1.60 + ScoredPrecisionRecallEvaluation.FLOATING_POINT_EQUALS_EPSILON/2.0);
+        eval.addCase(false,-1.79);
+        eval.addCase(false,-1.80);
+        eval.addCase(true,-2.01);
+        eval.addCase(false,-2.01);
+        eval.addMisses(1);
+        return eval;
+    }
+    
+//    static ScoredPrecisionRecallEvaluation rocTestCaseWithTies() {
+//        ScoredPrecisionRecallEvaluation eval 
+//            = new ScoredPrecisionRecallEvaluation();
+//        eval.addCase(true,1.0);
+//        eval.addCase(false,1.0);
+//        eval.addCase(false,0.2);
+//        eval.addCase(true, 0.1);
+//        eval.addCase(false,0.0);
+//        return eval;
+//    }
+//    static ScoredPrecisionRecallEvaluation rocInvertedTestCaseWithTies() {
+//        ScoredPrecisionRecallEvaluation eval 
+//            = new ScoredPrecisionRecallEvaluation();
+//        eval.addCase(false,0.0);
+//        eval.addCase(true,0.0);
+//        eval.addCase(true,0.8);
+//        eval.addCase(false, 0.9);
+//        eval.addCase(true,1.0);
+//        return eval;
+//    }
+    static ScoredPrecisionRecallEvaluation rocTestCaseWithTies() {
+        ScoredPrecisionRecallEvaluation eval 
+            = new ScoredPrecisionRecallEvaluation();
+        eval.addCase(true,1.0);
+        eval.addCase(false,1.0);
+        eval.addCase(true,0.3);
+        eval.addCase(false,0.2);
+        eval.addCase(true,0.2);
+        eval.addCase(true, 0.1);
+        eval.addCase(false,0.0);
+        eval.addCase(true,0.0);
+        return eval;
+    }
+    static ScoredPrecisionRecallEvaluation rocInvertedTestCaseWithTies() {
+        ScoredPrecisionRecallEvaluation eval 
+            = new ScoredPrecisionRecallEvaluation();
+        eval.addCase(false,0.0);
+        eval.addCase(true,0.0);
+        eval.addCase(false,0.7);
+        eval.addCase(true,0.8);
+        //Test for "ties" less than epsilon
+        eval.addCase(false,0.8 + ScoredPrecisionRecallEvaluation.FLOATING_POINT_EQUALS_EPSILON/2.0);
+        eval.addCase(false, 0.9);
+        eval.addCase(true,1.0);
+        eval.addCase(false,1.0);
+        return eval;
+    }
 
     @Test
     public void rPrecisionTest() {
@@ -98,6 +163,12 @@ public class ScoredPrecisionRecallEvaluationTest  {
 
         // .167 * .1 + (.333 - .167)* .3 + (.833 - .333) * .7 + (1 - .833)*.9
         assertEquals(0.55, eval.areaUnderRocCurve(true),0.001);
+        
+        //Test ROC area with ties is symetric for category inversion
+        ScoredPrecisionRecallEvaluation evalWithTies = rocTestCaseWithTies();
+        ScoredPrecisionRecallEvaluation evalWithTiesInverted = rocInvertedTestCaseWithTies();
+        assertEquals(0.5,evalWithTies.areaUnderRocCurve(false),0.001);
+        assertEquals(evalWithTiesInverted.areaUnderRocCurve(false),evalWithTies.areaUnderRocCurve(false),0.001);        
     }
 
     
@@ -142,6 +213,32 @@ public class ScoredPrecisionRecallEvaluationTest  {
 
         double[][] interpolatedRps = eval.prCurve(true);
         assertEqualsArray2D(expectedInterpolatedPrs,interpolatedRps,0.01);
+        
+        //Test with ties:
+        ScoredPrecisionRecallEvaluation eval2 = testCaseWithTies();
+        double[][] expectedRps2 = new double[][] {
+        		{ 0.0, 1.0},
+                { 0.20, 0.50 },
+                { 0.20, 0.33 },
+                { 0.40, 0.50 },
+                { 0.60, 0.50 },
+                { 0.60, 0.43 },
+                { 0.60, 0.38 },
+                { 0.80, 0.40 },
+                { 1.00, 0.00 }
+            };
+        double[][] rps2 = eval2.prCurve(false);
+        assertEqualsArray2D(expectedRps2,rps2,0.01);
+        double[][] expectedInterpolatedRps2 = new double[][] {
+        		{ 0.0, 1.0},
+                { 0.20, 0.50 },
+                { 0.40, 0.50 },
+                { 0.60, 0.50 },
+                { 0.80, 0.40 },
+                { 1.00, 0.00 }
+            };
+        double[][] rps2Interpolated = eval2.prCurve(true);
+        assertEqualsArray2D(expectedInterpolatedRps2,rps2Interpolated,0.01);
     }
 
     @Test

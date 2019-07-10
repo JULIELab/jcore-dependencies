@@ -95,6 +95,7 @@ public class Iterators {
      * @param es Array of objects for iteration.
      * @return Iterator over list.
      */
+    @SuppressWarnings("unchecked") // safe because array not exposed
     public static <E> Iterator<E> list(E... es) {
         return java.util.Arrays.<E>asList(es).iterator();
     }

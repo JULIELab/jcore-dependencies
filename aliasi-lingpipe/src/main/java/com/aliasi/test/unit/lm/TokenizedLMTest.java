@@ -3,6 +3,7 @@ package com.aliasi.test.unit.lm;
 import com.aliasi.lm.CompiledTokenizedLM;
 import com.aliasi.lm.TokenizedLM;
 import com.aliasi.lm.UniformBoundaryLM;
+import com.aliasi.lm.NGramBoundaryLM;
 import com.aliasi.lm.TrieIntSeqCounter;
 
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
@@ -34,6 +35,43 @@ public class TokenizedLMTest  {
 
     private static final int MAX_NGRAM = 3;
     private static final double LAMBDA_FACTOR = 4.0;
+
+    void dumpProbs(String[] tokens, TokenizedLM lm) {
+        System.out.println("TOKENS: " + java.util.Arrays.asList(tokens));
+        System.out.println("lm.tokenProbability(): "
+                           + lm.tokenProbability(tokens,0,tokens.length));
+        System.out.println("lm.tokenProbCharSmooth(): "
+                           + lm.tokenProbCharSmooth(tokens,0,tokens.length));
+        System.out.println("lm.tokenProbCharSmoothNoBound(): "
+                           + lm.tokenProbCharSmoothNoBounds(tokens,0,tokens.length));
+        System.out.println();
+    }
+
+    @Test
+    public void testPabloBug() {
+        TokenizerFactory tokenizerFactory 
+            = IndoEuropeanTokenizerFactory.INSTANCE;
+        int nGramOrder = 3;
+        NGramBoundaryLM unknownTokenModel = new NGramBoundaryLM(3);
+        NGramBoundaryLM  whitespaceModel = new NGramBoundaryLM(3);
+        double lambdaFactor = 1.0;
+        TokenizedLM lm 
+            = new TokenizedLM(tokenizerFactory, 
+                              nGramOrder,
+                              unknownTokenModel, whitespaceModel, 
+                              lambdaFactor);
+        String text = "ba ba be lo and behold and and lo some more";
+        for (int i = 0; i < 100; ++i)
+            lm.handle(text);
+        
+        dumpProbs(new String[] { "ba" }, lm);
+        dumpProbs(new String[] { "bo" }, lm);
+        dumpProbs(new String[] { "%%" }, lm);
+           
+        // not a reasonable test for this instance
+        // assertTrue(lm.tokenProbability(test1,0,test1.length) 
+        // > lm.tokenProbability(test2,0,test2.length));
+    }
 
     @Test
     public void testTrainSequence() {

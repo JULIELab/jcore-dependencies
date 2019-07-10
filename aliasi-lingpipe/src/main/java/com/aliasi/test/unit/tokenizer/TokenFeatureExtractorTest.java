@@ -19,6 +19,14 @@ import java.util.Map;
 public class TokenFeatureExtractorTest  {
 
     @Test
+    public void testGetTf() {
+        TokenFeatureExtractor extractor1
+            = new TokenFeatureExtractor(IndoEuropeanTokenizerFactory.INSTANCE);
+        assertEquals(IndoEuropeanTokenizerFactory.INSTANCE,
+                     extractor1.tokenizerFactory());
+    }
+
+    @Test
     public void testOne() throws IOException, ClassNotFoundException {
         TokenFeatureExtractor extractor1
             = new TokenFeatureExtractor(IndoEuropeanTokenizerFactory.INSTANCE);

@@ -77,8 +77,8 @@ public class DocumentTokenSuffixArray {
      * @param idToDocMap Mapping from document identifiers to document
      * texts.
      * @param tf Tokenizer factory to use for matching.
-     * @param maxSuffixLength Maximum suffix length (in tokens) for
-     * comparsions.
+     * @param maxSuffixLength Maximum number of tokens to compare before
+     * delcaring two suffixes equal for comparison purposes.
      * @param documentBoundaryToken Distinguished token used to separate
      * documents.
      * @throws IllegalArgumentException If the tokenizer factory does not

@@ -15,46 +15,39 @@
  */
 package com.aliasi.classify;
 
-import com.aliasi.corpus.Corpus;
-
-import com.aliasi.corpus.ObjectHandler;
-
-import com.aliasi.features.Features;
-
-import com.aliasi.io.LogLevel;
-import com.aliasi.io.Reporter;
-import com.aliasi.io.Reporters;
-
-import com.aliasi.matrix.DenseVector;
-import com.aliasi.matrix.Vector;
-
-import com.aliasi.stats.AnnealingSchedule;
-import com.aliasi.stats.LogisticRegression;
-import com.aliasi.stats.RegressionPrior;
-
-import com.aliasi.symbol.MapSymbolTable;
-import com.aliasi.symbol.SymbolTable;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Compilable;
-import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToCounterMap;
-import com.aliasi.util.ObjectToDoubleMap;
-import com.aliasi.util.ScoredObject;
-
 import java.io.CharArrayWriter;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.PrintWriter;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import com.aliasi.corpus.Corpus;
+import com.aliasi.corpus.ObjectHandler;
+import com.aliasi.features.Features;
+import com.aliasi.io.Reporter;
+import com.aliasi.io.Reporters;
+import com.aliasi.matrix.DenseVector;
+import com.aliasi.matrix.SparseFloatVector;
+import com.aliasi.matrix.Vector;
+import com.aliasi.stats.AnnealingSchedule;
+import com.aliasi.stats.LogisticRegression;
+import com.aliasi.stats.RegressionPrior;
+import com.aliasi.stats.Statistics;
+import com.aliasi.symbol.MapSymbolTable;
+import com.aliasi.symbol.SymbolTable;
+import com.aliasi.util.AbstractExternalizable;
+import com.aliasi.util.Compilable;
+import com.aliasi.util.FeatureExtractor;
+import com.aliasi.util.ObjectToCounterMap;
+import com.aliasi.util.ObjectToDoubleMap;
+import com.aliasi.util.ScoredObject;
 
 /**
  * A <code>LogisticRegressionClassifier</code> provides conditional
@@ -90,7 +83,13 @@ import java.util.Set;
  * to numbers into sparse vectors, where the dimensions are the
  * identifiers for the features in the symbol table.  By convention,
  * if the intercept feature flag is set, it will set dimension 0 of
- * all inputs to 1.0.
+ * all inputs to 1.0.  Outcome categories are similarly mapped to
+ * integer identifiers. When outcome classifications are instances 
+ * of {@link ScoredClassification}, they are converted to vectors 
+ * of category weights. See {@link LogisticRegression} for details on 
+ * interpretation of category weights.
+ * 
+ *  
  *
  * <h4>Serialization and Compilation</h4>
  *
@@ -101,6 +100,7 @@ import java.util.Set;
  * the same components as the model that was serialized or compiled.
  *
  * @author  Bob Carpenter
+ * @author  Mike Ross
  * @version 4.0.1
  * @since   LingPipe3.5
  * @param <E> the type of object being classified
@@ -519,10 +519,11 @@ public class LogisticRegressionClassifier<E>
                                    featureSymbolTable,
                                    categorySymbolTable,
                                    addInterceptFeature,
-                                   featureSymbolTable.numSymbols());
+                                   featureSymbolTable.numSymbols(),
+                                   reporter);
         corpus.visitTrain(dataExtractor);
         Vector[] inputs = dataExtractor.inputs();
-        int[] categories = dataExtractor.categories();
+        Vector[] categories = dataExtractor.categories();
 
         int numInputDimensions = inputs[0].numDimensions();
 
@@ -690,27 +691,50 @@ public class LogisticRegressionClassifier<E>
         final SymbolTable mCategorySymbolTable;
         final boolean mAddInterceptFeature;
         final int mNumSymbols;
+        final Reporter mReporter;
 
         final List<Vector> mInputVectorList = new ArrayList<Vector>();
-        final List<Integer> mOutputCategoryList = new ArrayList<Integer>();
+        final List<ObjectToDoubleMap<Integer>> mOutputVectorList = new ArrayList<ObjectToDoubleMap<Integer>>();
 
         // if has intercept, already added
         DataExtractor(FeatureExtractor<? super F> featureExtractor,
                       SymbolTable featureSymbolTable,
                       SymbolTable categorySymbolTable,
                       boolean addInterceptFeature,
-                      int numSymbols) {
+                      int numSymbols,
+                      Reporter reporter) {
             mFeatureExtractor = featureExtractor;
             mFeatureSymbolTable = featureSymbolTable;
             mCategorySymbolTable = categorySymbolTable;
             mAddInterceptFeature = addInterceptFeature;
             mNumSymbols = numSymbols;
+            mReporter = reporter;
         }
         public void handle(Classified<F> classified) { 
             F input = classified.getObject();
             Classification output = classified.getClassification();
-            String outputCategoryName = output.bestCategory();
-            Integer outputCategoryId = mCategorySymbolTable.getOrAddSymbol(outputCategoryName);
+            ObjectToDoubleMap<Integer> outputMap = new ObjectToDoubleMap<Integer>();
+            if(output instanceof ScoredClassification) {
+            	ScoredClassification sc = (ScoredClassification) output;
+            	for(int r=0;r<sc.size();r++) {
+            		String outputCategoryName = sc.category(r);
+            		int categoryId = mCategorySymbolTable.getOrAddSymbol(outputCategoryName);
+            		double score = sc.score(r);
+            		if(score < 0) {
+            			String msg = "All training outcome weights must be be >= 0."
+                            + " Weight for input:[" + input + "], category:["+outputCategoryName+"] = " + score;
+                        mReporter.fatal(msg);
+                        throw new IllegalArgumentException(msg);
+            		}
+            		outputMap.set(categoryId, score);
+            	}
+            } else {
+            	String outputCategoryName = output.bestCategory();
+        		int categoryId = mCategorySymbolTable.getOrAddSymbol(outputCategoryName);
+        		outputMap.set(categoryId, 1.0);
+            }
+            mOutputVectorList.add(outputMap);
+            
             Map<String,? extends Number> featureMap = mFeatureExtractor.features(input);
             Vector vector
                 = Features
@@ -719,13 +743,12 @@ public class LogisticRegressionClassifier<E>
                           mNumSymbols,
                           mAddInterceptFeature);
             mInputVectorList.add(vector);
-            mOutputCategoryList.add(outputCategoryId);
         }
-        int[] categories() {
-            int[] inputs = new int[mOutputCategoryList.size()];
-            for (int i = 0; i < inputs.length; ++i)
-                inputs[i] = mOutputCategoryList.get(i).intValue();
-            return inputs;
+        Vector[] categories() {
+            Vector[] categoryAssignments = new Vector[mOutputVectorList.size()];
+            for (int i = 0; i < categoryAssignments.length; ++i)
+            	categoryAssignments[i] = new SparseFloatVector(mOutputVectorList.get(i), mCategorySymbolTable.numSymbols());
+            return categoryAssignments;
         }
         Vector[] inputs() {
             return mInputVectorList.<Vector>toArray(EMPTY_VECTOR_ARRAY);

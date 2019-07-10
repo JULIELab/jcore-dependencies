@@ -67,6 +67,19 @@ public class TokenFeatureExtractor
     }
 
     /**
+     * Return the tokenizer factory underlying this token
+     * feature extractor.
+     * 
+     * <p><b>Warning:</b> This is the actual tokenizer factory,
+     * not a copy, so changes to it will affect this class.
+     *
+     * @return The tokenizer factory underlying this class.
+     */
+    public TokenizerFactory tokenizerFactory() {
+        return mTokenizerFactory;
+    }
+
+    /**
      * Return the feature vector for the specified character sequence.
      * The keys are the tokens extracted and their values is the count
      * of the token in the input character sequence.

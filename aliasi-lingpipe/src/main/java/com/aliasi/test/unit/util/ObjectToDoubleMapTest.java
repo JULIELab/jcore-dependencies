@@ -1,4 +1,3 @@
-
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.ObjectToDoubleMap;
@@ -21,12 +20,12 @@ public class ObjectToDoubleMapTest  {
 
     @Test
     public void testZeroSet() {
-	ObjectToDoubleMap map = new ObjectToDoubleMap();
-	assertEquals(map.size(),0);
+        ObjectToDoubleMap map = new ObjectToDoubleMap();
+        assertEquals(map.size(),0);
         map.setAndKeepZeros("a",0.0);
-	assertEquals(map.size(),1);
-	map.set("a",0.0);
-	assertEquals(map.size(),0);
+        assertEquals(map.size(),1);
+        map.set("a",0.0);
+        assertEquals(map.size(),0);
     }
 
 

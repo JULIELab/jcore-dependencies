@@ -19,10 +19,9 @@ package com.aliasi.suffixarray;
 import com.aliasi.tokenizer.Tokenization;
 import com.aliasi.tokenizer.TokenizerFactory;
 
+import com.aliasi.util.Sort;
+
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -69,7 +68,7 @@ import java.util.List;
  * Once constructed, a tokenized suffix array is thread safe.
  * 
  * @author Bob Carpenter
- * @version 4.1.0
+ * @version 4.1.1
  * @since 4.0.2
  */
 public class TokenSuffixArray {
@@ -101,7 +100,8 @@ public class TokenSuffixArray {
      * default document-boundary token.
      *
      * @param tokenization Tokenization on which to base suffix array.
-     * @param maxSuffixLength Maximum length of token sequences to compare.
+     * @param maxSuffixLength Maximum length of of token
+     * sequences to compare before treating as equal for sorting purposes.
      */
     public TokenSuffixArray(Tokenization tokenization, int maxSuffixLength) {
         this(tokenization,maxSuffixLength,DEFAULT_DOCUMENT_BOUNDARY_TOKEN);
@@ -113,7 +113,8 @@ public class TokenSuffixArray {
      * default document-boundary token.
      *
      * @param tokenization Tokenization on which to base suffix array.
-     * @param maxSuffixLength Maximum length of token sequences to compare.
+     * @param maxSuffixLength Maximum length of token sequences to compare before
+     * treating suffixes as equal for sorting purposes.
      * @param documentBoundaryToken Token used to separate documents.
      */
     public TokenSuffixArray(Tokenization tokenization, 
@@ -122,13 +123,10 @@ public class TokenSuffixArray {
         mTokenization = tokenization;
         mDocumentBoundaryToken = documentBoundaryToken;
         mMaxSuffixLength = maxSuffixLength;
-        Integer[] is = new Integer[tokenization.numTokens()];
-        for (int i = 0; i < is.length; ++i)
-            is[i] = i;
-        Arrays.sort(is,new TokenIndexComparator());
-        int[] suffixArray = new int[is.length];
-        for (int i = 0; i < is.length; ++i)
-            suffixArray[i] = is[i];
+        int[] suffixArray = new int[tokenization.numTokens()];
+        for (int i = 0; i < suffixArray.length; ++i)
+            suffixArray[i] = i;
+        Sort.qsort(suffixArray,new TokenCompareInt());
         mSuffixArray = suffixArray;
     }
 
@@ -144,9 +142,12 @@ public class TokenSuffixArray {
     }
 
     /**
-     * Returns the maximum suffix length for this token suffix array.
+     * Returns the maximum length of suffixes to compare for
+     * this suffix array.  Suffixes that share initial sequences
+     * of characters up to the maximum suffix length are treated
+     * as equal for sorting purposes.
      *
-     * @return Maximum length of suffixes.
+     * @return Maximum number of characters to compare in a suffix.
      */
     public int maxSuffixLength() {
         return mMaxSuffixLength;
@@ -262,6 +263,30 @@ public class TokenSuffixArray {
         return true;
     }
 
+
+    class TokenCompareInt implements Sort.CompareInt {
+        public boolean lessThan(int i, int j) {
+            List<String> tokens = mTokenization.tokenList();
+            for (int m = i, n = j, k = 0; k < mMaxSuffixLength; ++m, ++n, ++k) {
+                if (m == tokens.size() || tokens.get(m).equals(mDocumentBoundaryToken)) {
+                    if (n == tokens.size() || tokens.get(n).equals(mDocumentBoundaryToken))
+                        return false;
+                    return true;
+                }
+                if (n == tokens.size() || tokens.get(n).equals(mDocumentBoundaryToken))
+                    return false;
+                int c = tokens.get(m).compareTo(tokens.get(n));
+                if (c < 0)
+                    return true;
+                if (c > 0)
+                    return false;
+            }
+            return false;
+        }
+    }
+
+
+    /*
     class TokenIndexComparator implements Comparator<Integer> {
         public int compare(Integer i, Integer j) {
             List<String> tokens = mTokenization.tokenList();
@@ -280,6 +305,7 @@ public class TokenSuffixArray {
             return 0;
         }
     }
+    */
 
 
 }

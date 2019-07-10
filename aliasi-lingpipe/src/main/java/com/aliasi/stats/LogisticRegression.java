@@ -15,30 +15,25 @@
  */
 package com.aliasi.stats;
 
-import com.aliasi.corpus.ObjectHandler;
-
-import com.aliasi.io.LogLevel;
-import com.aliasi.io.Reporter;
-import com.aliasi.io.Reporters;
-
-import com.aliasi.matrix.DenseVector;
-import com.aliasi.matrix.Matrices;
-import com.aliasi.matrix.SparseFloatVector;
-import com.aliasi.matrix.Vector;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Compilable;
-
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.PrintWriter;
 import java.io.Serializable;
-
 import java.util.Arrays;
 import java.util.Formatter;
 import java.util.IllegalFormatException;
 import java.util.Locale;
+
+import com.aliasi.corpus.ObjectHandler;
+import com.aliasi.io.Reporter;
+import com.aliasi.io.Reporters;
+import com.aliasi.matrix.DenseVector;
+import com.aliasi.matrix.Matrices;
+import com.aliasi.matrix.SparseFloatVector;
+import com.aliasi.matrix.Vector;
+import com.aliasi.util.AbstractExternalizable;
+import com.aliasi.util.Compilable;
+import com.aliasi.util.ObjectToDoubleMap;
 
 /**
  * A <code>LogisticRegression</code> instance is a multi-class vector
@@ -103,7 +98,6 @@ import java.util.Locale;
  * in the model.  Because the model is well-behaved under sparse
  * vectors, the dimensionality may be returned as {@link
  * Integer#MAX_VALUE}, a common default choice for sparse vectors.
-
  *
  * <p>A logistic regression model also fixes the number of output
  * categories.  The method {@link #numOutcomes()} returns the number
@@ -269,6 +263,25 @@ import java.util.Locale;
  * of the gradient of the prior.  The result is an algorithm that
  * handles sparse input data touching only the non-zero dimensions of
  * inputs during parameter updates.
+ * 
+ * <h4>Training Data</h4>
+ *
+ * The regression estimation method requires paired input vectors and
+ * reference categories.  References categories may be specified as 
+ * integers (from 0 to <code>numOutcomes()-1</code>) or weight vectors with 
+ * <code>numOutcomes()</code> dimensions. All weights must be greater than 0.
+ * 
+ * When the values of a weight vector sum to 1.0, training is consistent with 
+ * an interpretation of the vector as representing a probabilistic assignment 
+ * of categories. For example, if W1+W2=1.0, then training on N instances with 
+ * weights W1 and W2 for categories C1 and C2 will produce similar results to 
+ * training on N*W1 instances with integer outcome C1, and N*W2 instances with 
+ * outcome C2.
+ * 
+ * When the weight values are positive integers, they act as over-sampling
+ * multiples. So training on an instance with positive integer weight N for category C 
+ * will produce similar results to training on N unweighted instances with integer 
+ * outcome C.  
  *
  * <h4>Learning Parameters</h4>
  *
@@ -554,6 +567,32 @@ public class LogisticRegression
     Object writeReplace() {
         return new Externalizer(this);
     }
+    
+    /**
+     * Converts from an array of single category assignments to 
+     * vector category assignements.  Categories are represented 
+     * by int indexes and assumed to start at 0.  The number of
+     * dimensions in the output vectors will be max(cs)+1.  
+     *  
+     * @param cs an array of single category assignments (one 
+     * category for each item)
+     * @return an array of vector category assignments (one 
+     * non-zero dimension for each item).
+     */
+    static Vector[] toVectors(int[] cs) {
+    	int max = 0;
+    	for(int c : cs) {
+    		if(c>max) max=c;
+    	}
+    	int numDimensions = max+1;
+    	Vector[] converted = new Vector[cs.length];
+    	for(int i=0; i<converted.length; i++) {
+    		ObjectToDoubleMap<Integer> map = new ObjectToDoubleMap<Integer>();
+    		map.set(cs[i], 1.0);
+    		converted[i] = new SparseFloatVector(map,numDimensions);
+    	}
+    	return converted;
+    }
 
 
     /**
@@ -592,6 +631,55 @@ public class LogisticRegression
     public static LogisticRegression
         estimate(Vector[] xs,
                  int[] cs,
+                 RegressionPrior prior,
+
+                 AnnealingSchedule annealingSchedule,
+
+                 Reporter reporter,
+
+                 double minImprovement,
+                 int minEpochs,
+                 int maxEpochs) {
+    	return estimate(xs,toVectors(cs),prior,annealingSchedule,reporter,minImprovement,minEpochs,maxEpochs);
+    }
+    
+    /**
+     * Estimate a logistic regression model from the specified input
+     * data using the specified Gaussian prior, initial learning rate
+     * and annealing rate, the minimum improvement per epoch, the
+     * minimum and maximum number of estimation epochs, and a
+     * reporter.  The block size defaults to the number of examples
+     * divided by 50 (or 1 if the division results in 0).
+     *
+     * <p>See the class documentation above for more information on
+     * logistic regression and the stochastic gradient descent algorithm
+     * used to implement this method.
+     *
+     * <p><b>Reporting:</b> Reports at the debug level provide
+     * epoch-by-epoch feedback.  Reports at the info level indicate
+     * inputs and major milestones in the algorithm.  Reports at the
+     * fatal levels are for thrown exceptions.
+     *
+     * @param xs Input vectors indexed by training case.
+     * @param cs Output vectors representing probabilistic category assignments
+     * indexed by training case.
+     * @param prior The prior to be used for regression.
+     * @param annealingSchedule Class to compute learning rate for each epoch.
+     * @param minImprovement The minimum relative improvement in
+     * log likelihood for the corpus to continue to another epoch.
+     * @param minEpochs Minimum number of epochs.
+     * @param maxEpochs Maximum number of epochs.
+     * @param reporter Reporter to which progress reports are written, or
+     * {@code null} if no progress reports are needed.
+     * @throws IllegalArgumentException If the set of input vectors
+     * does not contain at least one instance, if the number of output
+     * categories isn't the same as the input categories, if two input
+     * vectors have different dimensions, or if the prior has a
+     * different number of dimensions than the instances.
+     */
+    public static LogisticRegression
+        estimate(Vector[] xs,
+                 Vector[] cs,
                  RegressionPrior prior,
 
                  AnnealingSchedule annealingSchedule,
@@ -668,6 +756,63 @@ public class LogisticRegression
                  ObjectHandler<LogisticRegression> handler,
 
                  Reporter reporter) {
+    	return estimate(xs,toVectors(cs),prior,blockSize,hotStart,annealingSchedule,minImprovement,rollingAverageSize,minEpochs,maxEpochs,handler,reporter);
+    }
+    
+    /**
+     * Estimate a logistic regression model from the specified input
+     * data using the specified Gaussian prior, initial learning rate
+     * and annealing rate, the minimum improvement per epoch, the
+     * minimum and maximum number of estimation epochs, and a
+     * reporter.
+     *
+     * <p>See the class documentation above for more information on
+     * logistic regression and the stochastic gradient descent algorithm
+     * used to implement this method.
+     *
+     * <p><b>Reporting:</b> Reports at the debug level provide
+     * epoch-by-epoch feedback.  Reports at the info level indicate
+     * inputs and major milestones in the algorithm.  Reports at the
+     * fatal levels are for thrown exceptions.
+     *
+     * @param xs Input vectors indexed by training case.
+     * @param cs Output vectors representing probabilistic category assignments
+     * indexed by training case. 
+     * @param prior The prior to be used for regression.
+     * @param blockSize Number of examples whose gradient is
+     * computed before updating coefficients.
+     * @param hotStart Logistic regression from which to retrieve
+     * initial weights or null to use zero vectors.
+     * @param annealingSchedule Class to compute learning rate for each epoch.
+     * @param minImprovement The minimum relative improvement in
+     * log likelihood for the corpus to continue to another epoch.
+     * @param minEpochs Minimum number of epochs.
+     * @param maxEpochs Maximum number of epochs.
+     * @param handler Handler for intermediate regression results.
+     * @param reporter Reporter to which progress reports are written, or
+     * {@code null} if no progress reports are needed.
+     * @throws IllegalArgumentException If the set of input vectors
+     * does not contain at least one instance, if the number of output
+     * categories isn't the same as the input categories, if two input
+     * vectors have different dimensions, or if the prior has a
+     * different number of dimensions than the instances.
+     */
+    public static LogisticRegression
+        estimate(Vector[] xs,
+                 Vector[] cs,
+                 RegressionPrior prior,
+
+                 int blockSize,
+                 LogisticRegression hotStart,
+                 AnnealingSchedule annealingSchedule,
+                 double minImprovement,
+                 int rollingAverageSize,
+                 int minEpochs,
+                 int maxEpochs,
+
+                 ObjectHandler<LogisticRegression> handler,
+
+                 Reporter reporter) {
 
 
         if (reporter == null)
@@ -699,8 +844,8 @@ public class LogisticRegression
         }
 
         int numTrainingInstances = xs.length;
-        int numOutcomesMinus1 = com.aliasi.util.Math.max(cs);
-        int numOutcomes = numOutcomesMinus1 + 1;
+        int numOutcomes = cs[0].numDimensions();
+        int numOutcomesMinus1 = numOutcomes-1;
         int numDimensions = xs[0].numDimensions();
 
         prior.verifyNumberOfDimensions(numDimensions);
@@ -712,6 +857,22 @@ public class LogisticRegression
                     + " xs[" + i + "].numDimensions()=" + xs[i].numDimensions();
                 reporter.fatal(msg);
                 throw new IllegalArgumentException(msg);
+            }
+            if (cs[i].numDimensions() != numOutcomes) {
+                String msg = "Number of dimensions must match for all training outcomes."
+                    + " Found cs[0].numDimensions()=" + numOutcomes
+                    + " cs[" + i + "].numDimensions()=" + cs[i].numDimensions();
+                reporter.fatal(msg);
+                throw new IllegalArgumentException(msg);
+            }
+            for(int j : cs[i].nonZeroDimensions()) {
+            	double p = cs[i].value(j);
+            	if (p<0) {
+            		String msg = "All training outcome weights must be be >= 0."
+                        + " cs[" + i + "].value("+j+")=" + p;
+                    reporter.fatal(msg);
+                    throw new IllegalArgumentException(msg);
+            	}
             }
         }
 
@@ -749,7 +910,32 @@ public class LogisticRegression
         int partialBlockSize = numTrainingInstances % blockSize;
         int numFullBlocks = numTrainingInstances / blockSize;
         double[][] blockCondProbs = new double[blockSize][numOutcomes];
-
+        
+        //calculate block weights and csSumCategoryWeights on outside
+        double[] blockWeights = new double[numFullBlocks + (partialBlockSize>0?1:0)];
+        double[] csSumCategoryWeights = new double[cs.length]; 
+        for (int b = 0; b < numFullBlocks; ++b) {
+        	blockWeights[b] = 0;
+        	for(int j=b*blockSize; j<(b+1)*blockSize; j++) {
+        		csSumCategoryWeights[j] = 0;
+            	for (int k = 0; k < cs[j].numDimensions(); ++k) { 
+                	csSumCategoryWeights[j] += cs[j].value(k);; 
+            	}
+            	blockWeights[b]+=csSumCategoryWeights[j];
+        	}
+        }
+        if (partialBlockSize > 0) {
+        	blockWeights[numFullBlocks]=0;
+    		for(int j=numFullBlocks*blockSize; j<numTrainingInstances; j++) {
+        		csSumCategoryWeights[j] = 0;
+            	for (int k = 0; k < cs[j].numDimensions(); ++k) {
+                	csSumCategoryWeights[j] += cs[j].value(k);; 
+            	}
+            	blockWeights[numFullBlocks]+=csSumCategoryWeights[j];
+        	}		
+        }
+        
+        
         for (int epoch = 0; epoch < maxEpochs; ++epoch) {
             // copy allows backout by annealing schedule
             DenseVector[] weightVectorCopies 
@@ -762,7 +948,8 @@ public class LogisticRegression
             for (int b = 0; b < numFullBlocks; ++b) {
 
                 adjustBlock(b*blockSize,(b+1)*blockSize,
-                            xs,cs,weightVectors,learningRate,prior,
+                            xs,cs,weightVectors,blockWeights[b],csSumCategoryWeights,
+                            learningRate,prior,
                             blockCondProbs,regression);
                 if (reporter.isDebugEnabled())
                     reporter.debug("          epoch " + epoch + " " 
@@ -770,7 +957,8 @@ public class LogisticRegression
                                    + "% complete");            }
             if (partialBlockSize > 0)
                 adjustBlock(numFullBlocks*blockSize,numTrainingInstances,
-                            xs,cs,weightVectors,learningRate,prior,
+                            xs,cs,weightVectors,blockWeights[numFullBlocks],csSumCategoryWeights,
+                            learningRate,prior,
                             blockCondProbs,regression);
 
             if (handler != null) {
@@ -791,7 +979,7 @@ public class LogisticRegression
             // recompute all estimates; very expensive, but required to monitor convergence
             double log2Likelihood = log2Likelihood(xs,cs,regression);
             double log2Prior = prior.log2Prior(weightVectors);
-            double log2LikelihoodAndPrior = log2Likelihood + prior.log2Prior(weightVectors);
+            double log2LikelihoodAndPrior = log2Likelihood + log2Prior;
             if (log2LikelihoodAndPrior > bestLog2LikelihoodAndPrior)
                 bestLog2LikelihoodAndPrior = log2LikelihoodAndPrior;
             
@@ -858,6 +1046,10 @@ public class LogisticRegression
      * are not the same length.
      */
     public static double log2Likelihood(Vector[] inputs, int[] cats, LogisticRegression regression) {
+    	return log2Likelihood(inputs,toVectors(cats),regression);
+    }
+    
+    public static double log2Likelihood(Vector[] inputs, Vector[] cats, LogisticRegression regression) {
         if (inputs.length != cats.length) {
             String msg = "Inputs and categories must be same length."
                 + " Found inputs.length=" + inputs.length
@@ -869,31 +1061,40 @@ public class LogisticRegression
         double[] conditionalProbs = new double[regression.numOutcomes()];
         for (int j = 0; j < numTrainingInstances; ++j) {
             regression.classify(inputs[j],conditionalProbs);
-            log2Likelihood += com.aliasi.util.Math.log2(conditionalProbs[cats[j]]);
+            for(int k : cats[j].nonZeroDimensions()) {
+            	log2Likelihood += cats[j].value(k) * com.aliasi.util.Math.log2(conditionalProbs[k]);
+            }
         }
         return log2Likelihood;
     }
 
-
+    
 
     private static void adjustBlock(int start, int end, 
-                                    Vector[] xs, int[] cs,
+                                    Vector[] xs, Vector[] cs,
                                     DenseVector[] weightVectors,
+                                    double blockWeight, double[] csSumCategoryWeights,
                                     double learningRate,
                                     RegressionPrior prior,
                                     double[][] conditionalProbs,
                                     LogisticRegression regression) {
         for (int j = start; j < end; ++j)
             regression.classify(xs[j],conditionalProbs[j-start]);
-        for (int j = start; j < end; ++j)
-            for (int k = 0; k < weightVectors.length; ++k)
+        for (int j = start; j < end; ++j) {
+            for (int k = 0; k < weightVectors.length; ++k) {
+            	double categoryWeight = cs[j].value(k);
                 adjustWeightsWithConditionalProbs(weightVectors[k],
                                                   conditionalProbs[j-start][k],
                                                   learningRate,
-                                                  xs[j],k,cs[j]);
+                                                  xs[j],categoryWeight, csSumCategoryWeights[j]);
+            }
+    	}
         if (prior != null && !prior.isUniform())
             adjustWeightsWithPrior(weightVectors,prior,
-                                   (learningRate*(end-start))/xs.length);
+                                   (learningRate*blockWeight)/xs.length);
+//        if (prior != null && !prior.isUniform())
+//            adjustWeightsWithPrior(weightVectors,prior,
+//                                   (learningRate*(end-start))/xs.length);
     }
 
     private static void adjustWeightsWithPrior(DenseVector[] weightVectors,
@@ -925,15 +1126,13 @@ public class LogisticRegression
         }
     }
 
-    private static void adjustWeightsWithConditionalProbs(DenseVector weightVectorsK, double conditionalProb,
-                                                          double learningRate, Vector xsJ, int k, int csJ) {
-        double conditionalProbMinusTruth
-            = (k == csJ)
-            ? (conditionalProb - 1.0)
-            : conditionalProb;
-        if (conditionalProbMinusTruth == 0.0) return; // could we prune this if close to 0?
-        weightVectorsK.increment(-learningRate * conditionalProbMinusTruth,xsJ);
-    }
+	private static void adjustWeightsWithConditionalProbs(
+			DenseVector weightVectorsK, double conditionalProb,
+			double learningRate, Vector xsJ, double csJK, double sum_csJK) {
+		double conditionalProbMinusTruth = (sum_csJK * conditionalProb) - csJK;
+		if (conditionalProbMinusTruth == 0.0) return; // could we prune this if close to 0?
+		weightVectorsK.increment(-learningRate * conditionalProbMinusTruth, xsJ);
+	}
 
 
 

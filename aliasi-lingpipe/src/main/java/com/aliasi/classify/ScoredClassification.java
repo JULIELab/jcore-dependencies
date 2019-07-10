@@ -106,7 +106,7 @@ public class ScoredClassification extends RankedClassification {
      * @return Scored classification corresponding to the input..
      */
     public static ScoredClassification create(List<ScoredObject<String>> categoryScores) {
-        @SuppressWarnings("unchecked")
+        @SuppressWarnings({"unchecked","rawtypes"})
         ScoredObject<String>[] sos 
             = (ScoredObject<String>[]) new ScoredObject[categoryScores.size()];
         categoryScores.toArray(sos);

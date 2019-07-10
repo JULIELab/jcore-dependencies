@@ -40,6 +40,7 @@ public class CollectionUtils {
      * @param es Array of objects to add.
      * @return Hash set containing the argument elements.
      */
+    @SuppressWarnings("unchecked") // safe because array not exposed
     public static <E> HashSet<E> asSet(E... es) {
         HashSet<E> result = new HashSet<E>();
         for (E e : es)
