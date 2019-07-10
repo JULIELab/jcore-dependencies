@@ -93,7 +93,7 @@ public class JaccardDistance extends TokenizedDistance {
     public double proximity(CharSequence cSeq1, CharSequence cSeq2) {
         Set<String> s1 = tokenSet(cSeq1);
         Set<String> s2 = tokenSet(cSeq2);
-        if (s1.size() < s2.size()) {
+        if (s1.size() > s2.size()) {
             Set<String> temp = s2;
             s2 = s1;
             s1 = temp;
