@@ -95,10 +95,11 @@ public class BinaryJeDISNodeDecoder {
                     readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
                 }
 
-                if (moduleLabel.equals(XmiSplitter.DOCUMENT_MODULE_LABEL) && !typeName.equals(CAS.TYPE_NAME_SOFA)) {
-                    sofaElementsMap.put(currentSofaId, currentXmiId);
-                } else if (currentSofaId != -1 && currentXmiId != -1) {
-                    if (annotationLabelsToLoad.contains(typeName))
+
+                if (currentSofaId != -1 && currentXmiId != -1) {
+                    if (moduleLabel.equals(XmiSplitter.DOCUMENT_MODULE_LABEL) && !typeName.equals(CAS.TYPE_NAME_SOFA))
+                        sofaElementsMap.put(currentSofaId, currentXmiId);
+                    else if (annotationLabelsToLoad.contains(typeName))
                         sofaElementsMap.put(currentSofaId, currentXmiId);
                 }
                 // 0 = that's it, 1 = there comes more which would then be the values of StringArrays
