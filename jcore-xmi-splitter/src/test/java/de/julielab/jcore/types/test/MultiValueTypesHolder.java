@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:39:40 CEST 2019 */
 package de.julielab.jcore.types.test;
 
 import org.apache.uima.jcas.JCas; 
@@ -17,7 +17,7 @@ import de.julielab.jcore.types.Annotation;
 
 
 /** 
- * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
+ * Updated by JCasGen Sat Jul 13 15:39:40 CEST 2019
  * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class MultiValueTypesHolder extends Annotation {

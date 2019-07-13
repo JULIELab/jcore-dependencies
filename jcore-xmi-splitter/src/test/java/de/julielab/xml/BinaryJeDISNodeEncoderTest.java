@@ -548,4 +548,51 @@ public class BinaryJeDISNodeEncoderTest {
         assertThat(jCas.getDocumentText()).isEqualTo(docText);
     }
 
+    @Test
+    public void testProblematicClinicalTrialsDoc() throws Exception {
+        final Set<String> moduleAnnotationNames = Collections.emptySet();
+        StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, true,
+                new HashSet<>(Arrays.asList("de.julielab.jcore.types.ct.Header",
+                "de.julielab.jcore.types.ct.BriefTitle",
+                "de.julielab.jcore.types.ct.OfficialTitle",
+                "de.julielab.jcore.types.ct.Summary",
+                "de.julielab.jcore.types.ct.Description",
+                "de.julielab.jcore.types.ct.OutcomeMeasure",
+                "de.julielab.jcore.types.ct.OutcomeDescription",
+                "de.julielab.jcore.types.ct.Condition",
+                "de.julielab.jcore.types.ct.InterventionType",
+                "de.julielab.jcore.types.ct.InterventionName",
+                "de.julielab.jcore.types.ct.ArmGroupDescription",
+                "de.julielab.jcore.types.ct.Inclusion",
+                "de.julielab.jcore.types.ct.Exclusion",
+                "de.julielab.jcore.types.pubmed.ManualDescriptor")));
+        JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "de.julielab.jcore.types.jcore-document-meta-clinicaltrial-types",
+                "de.julielab.jcore.types.jcore-document-structure-clinicaltrial-types");
+        byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/splitTestDocs/NCT03093415.xmi"));
+
+        // Split, convert, assemble...
+        final XmiSplitterResult splitterResult = splitter.process(xmiData, jCas, 0, Collections.singletonMap("_InitialView", 1));
+
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        final BinaryStorageAnalysisResult result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+
+        final Map<String, Integer> mapping = result.getMissingItemsMapping();
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, result.getMissingFeaturesToMap());
+
+        Map<String, InputStream> bais = new HashMap<>();
+        for (String label : encode.keySet()) {
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
+        }
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(moduleAnnotationNames, false);
+        final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+        final BinaryDecodingResult decode = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getMissingFeaturesToMap(), splitterResult.namespaces);
+
+        final BinaryXmiBuilder builder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream rebuiltxmiData = builder.buildXmi(decode);
+        // ---- End assembly
+
+        jCas.reset();
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(rebuiltxmiData.toByteArray()), jCas.getCas()));
+    }
+
 }

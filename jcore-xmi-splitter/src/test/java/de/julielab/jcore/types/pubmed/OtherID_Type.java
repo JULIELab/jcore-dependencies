@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types.pubmed;
 
 import org.apache.uima.jcas.JCas;
@@ -11,7 +11,7 @@ import org.apache.uima.cas.Feature;
 import de.julielab.jcore.types.Annotation_Type;
 
 /** PubMed/Medline abstracts sometimes have other IDs besided their PMID from different sources. This type discloses the respective ID and source. For details see https://www.nlm.nih.gov/bsd/mms/medlineelements.html#oid
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
  * @generated */
 public class OtherID_Type extends Annotation_Type {
   /** @generated */

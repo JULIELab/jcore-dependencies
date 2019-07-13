@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 22 14:44:28 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** AuthorInfo Type annotates the text segments containing the information about an author and his/her affiliation information.
- * Updated by JCasGen Sat Jun 22 14:44:28 CEST 2019
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
  * @generated */
 public class AuthorInfo_Type extends Annotation_Type {
   /** @generated */

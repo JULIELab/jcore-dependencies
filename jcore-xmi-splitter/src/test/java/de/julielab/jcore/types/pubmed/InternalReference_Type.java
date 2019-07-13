@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types.pubmed;
 
 import org.apache.uima.jcas.JCas;
@@ -8,7 +8,7 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 
 /** Internal references with a special feature for PMC related reference types.
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
  * @generated */
 public class InternalReference_Type extends de.julielab.jcore.types.InternalReference_Type {
   /** @generated */

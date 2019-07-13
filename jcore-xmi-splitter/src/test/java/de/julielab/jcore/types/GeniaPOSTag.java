@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** Genia Tag Set in Tateisi, Yuka and Jun'ichi Tsujii. (2004). Part-of-Speech Annotation of Biology Research Abstracts. In the Proceedings of 4th International Conference on Language Resource and Evaluation (LREC2004). IV. pp. 1267-1270. TagsetId 1
- * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
- * XML source: arrayAndListHolderTestType.xml
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * XML source: all-test-types.xml
  * @generated */
 public class GeniaPOSTag extends POSTag {
   /** @generated

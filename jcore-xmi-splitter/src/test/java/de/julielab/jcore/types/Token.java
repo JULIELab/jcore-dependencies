@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -12,8 +12,8 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** Token annotation marks the span of a token and takes all additional annotations that are on the token level, including Part-of-Speech information, lemma, stemmed form,  grammatical features such as gender, number and orthographical information; furthemore, Token includes the information about dependency relations to other tokens (see correspondent annotation types for further infromation).
- * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
- * XML source: arrayAndListHolderTestType.xml
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * XML source: all-test-types.xml
  * @generated */
 public class Token extends Annotation {
   /** @generated

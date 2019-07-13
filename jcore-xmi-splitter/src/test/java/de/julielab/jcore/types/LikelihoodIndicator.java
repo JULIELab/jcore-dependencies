@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,8 +11,8 @@ import org.apache.uima.jcas.cas.StringArray;
 
 
 /** This type refers to the likelihood aspect of epistemic modality. The annotation marks epistemic modal expressions used to linguistically modify the likelihood of an event or of a relation that an entity might be in. The employed likelihood scale also includes negation (0% likelihood) and assertion (100% likelihood), the latter being the default case where no explicit likelihood modifier is present in the text.
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
- * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * XML source: all-test-types.xml
  * @generated */
 public class LikelihoodIndicator extends Annotation {
   /** @generated

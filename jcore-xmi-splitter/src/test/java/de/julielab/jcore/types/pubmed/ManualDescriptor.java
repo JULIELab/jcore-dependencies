@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jun 22 14:44:29 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types.pubmed;
 
 import org.apache.uima.jcas.JCas; 
@@ -16,8 +16,8 @@ import de.julielab.jcore.types.MeshHeading;
 
 
 /** The special type for PubMed documents
- * Updated by JCasGen Sat Jun 22 14:44:29 CEST 2019
- * XML source: /Users/faessler/Coding/git/jcore-dependencies/jcore-xmi-splitter/src/test/resources/de/julielab/jcore/types/all-test-types.xml
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * XML source: all-test-types.xml
  * @generated */
 public class ManualDescriptor extends de.julielab.jcore.types.ManualDescriptor {
   /** @generated

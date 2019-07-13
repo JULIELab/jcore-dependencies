@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** This encodes a complex noun phrase (CNP) which is usually an extension of a ChunkNP (see, e.g., jcore-cnp-extractor-ae). A CNP is currently defined to be the top-modes noun phrase of a constituency parse tree (excluding some special phrases such as appositions and SBARs).
- * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
- * XML source: arrayAndListHolderTestType.xml
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * XML source: all-test-types.xml
  * @generated */
 public class ChunkComplexNP extends Annotation {
   /** @generated

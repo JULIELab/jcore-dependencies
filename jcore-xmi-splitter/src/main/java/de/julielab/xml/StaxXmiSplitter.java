@@ -141,6 +141,8 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
 
         Map<String, List<Integer>> referencesByFeatureBaseName = new HashMap<>();
         Type annotationType = ts.getType(typeName);
+        if (annotationType == null)
+            throw new IllegalArgumentException("Unknown type " + typeName);
 
         Function<String, List<Integer>> refAttributeValue2Integers = referenceString -> Stream.of(referenceString).filter(StringUtils::isNotBlank).map(refStr -> refStr.split("\\s+")).flatMap(Stream::of).map(Integer::parseInt).collect(toList());
 

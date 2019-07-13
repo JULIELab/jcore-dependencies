@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jun 22 14:44:28 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -12,7 +12,7 @@ import org.apache.uima.cas.Feature;
 /** The heading of a section of a structured abstract as
 				used by MEDLINE and PubMed.
 				The TitleType feature value should always be 'abstractSection'.
- * Updated by JCasGen Sat Jun 22 14:44:28 CEST 2019
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
  * @generated */
 public class AbstractSectionHeading_Type extends Title_Type {
   /** @generated */

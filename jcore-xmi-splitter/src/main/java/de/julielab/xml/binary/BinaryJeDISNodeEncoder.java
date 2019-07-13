@@ -25,10 +25,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BinaryJeDISNodeEncoder {
-    private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeEncoder.class);
     public static final int JEDIS_BINARY_MAGIC = 0x6195;
+    private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeEncoder.class);
     private final ByteBuffer bb8;
     private final VTDGen vg;
 
@@ -48,14 +49,17 @@ public class BinaryJeDISNodeEncoder {
             Multiset<String> featureOccurrences = HashMultiset.create();
             for (JeDISVTDGraphNode n : nodesWithLabel) {
                 currentXmiElementForLogging = n.getModuleXmlData();
-                vg.setDoc_BR(n.getModuleXmlData().getBytes(StandardCharsets.UTF_8));
+                vg.setDoc_BR(n.getModuleXmlData().getBytes(UTF_8));
                 vg.parse(false);
                 final VTDNav vn = vg.getNav();
                 int index = 0;
                 String attrName = null;
                 while (index < vn.getTokenCount()) {
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG)
-                        xmiTagNames.add(vn.toRawString(index));
+                    if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
+                        vn.toRawString(index);
+                        final String qualifiedElementName = vn.toRawString(index);
+                        xmiTagNames.add(qualifiedElementName);
+                    }
                     if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
                         attrName = vn.toRawString(index);
                         featureAttributeNames.add(attrName);
@@ -120,20 +124,23 @@ public class BinaryJeDISNodeEncoder {
             Map<String, ByteArrayOutputStream> binaryAnnotationModuleData = new HashMap<>();
             for (String label : nodesByLabel.keySet()) {
                 ByteArrayOutputStream moduleData = new ByteArrayOutputStream();
-                moduleData.write(JEDIS_BINARY_MAGIC>>8);
+                moduleData.write(JEDIS_BINARY_MAGIC >> 8);
                 moduleData.write(JEDIS_BINARY_MAGIC);
                 final List<JeDISVTDGraphNode> nodesForCurrentLabel = nodesByLabel.get(label);
                 for (JeDISVTDGraphNode n : nodesForCurrentLabel) {
                     currentXmiElementForLogging = n.getModuleXmlData();
-                    vg.setDoc_BR(n.getModuleXmlData().getBytes(StandardCharsets.UTF_8));
+                    vg.setDoc_BR(n.getModuleXmlData().getBytes(UTF_8));
                     vg.parse(false);
                     final VTDNav vn = vg.getNav();
                     int index = 0;
                     String attrName = null;
+                    String tagName;
                     final ByteArrayOutputStream nodeData = new ByteArrayOutputStream();
                     while (index < vn.getTokenCount()) {
                         if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName == null) {
-                            writeInt(mapping.get(vn.toRawString(index)), nodeData);
+                            tagName = vn.toRawString(index);
+                            System.out.println("Writing: " + tagName);
+                            writeInt(mapping.get(tagName), nodeData);
                             nodeData.write(vn.getAttrCount());
                         } else if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null) {
                             // Indicate that the element is not yet finished
@@ -168,12 +175,12 @@ public class BinaryJeDISNodeEncoder {
 
     private int encodeEmbeddedStringArrays(VTDNav vn, int index, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException {
         // First collect the values. Then write them in a compact fashion.
-        Map<String, List<String>> valuesByFeature = new HashMap<>();
+        Map<String, List<Long>> valuesByFeature = new HashMap<>();
         while (index < vn.getTokenCount()) {
             if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
                 String feature = vn.toRawString(index);
                 ++index;
-                String value = vn.toRawString(index);
+                long value = encodeTokenOffsetLength(vn, index);
                 valuesByFeature.compute(feature, (k, v) -> v != null ? v : new ArrayList<>()).add(value);
             }
             ++index;
@@ -182,15 +189,22 @@ public class BinaryJeDISNodeEncoder {
         // Write the numbers of string array features that have values
         writeInt(valuesByFeature.keySet().size(), baos);
         for (String feature : valuesByFeature.keySet()) {
-            final Collection<String> values = valuesByFeature.get(feature);
+            final Collection<Long> values = valuesByFeature.get(feature);
             writeInt(mapping.get(feature), baos);
             writeInt(values.size(), baos);
-            for (String value : values) {
-                writeInt(value.length(), baos);
-                baos.writeBytes(value.getBytes(StandardCharsets.UTF_8));
+            for (Long value : values) {
+                final long longValue = value.longValue();
+                final int offset = (int) (longValue >> 32);
+                final int length = (int) longValue;
+                writeInt(length, baos);
+                writeStringBytes(vn, offset, length, baos);
             }
         }
         return index;
+    }
+
+    private long encodeTokenOffsetLength(VTDNav vn, int index) {
+        return ((long) vn.getTokenOffset(index)) << 32 | (vn.getTokenLength(index));
     }
 
     private void encodeAttributeValue(int index, String attrName, JeDISVTDGraphNode n, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, VTDNav vn) throws NavException {
@@ -198,45 +212,49 @@ public class BinaryJeDISNodeEncoder {
         final Type nodeType = ts.getType(n.getTypeName());
         // the uima.cas.NULL element does not have an actual type
         final Feature feature = nodeType != null ? nodeType.getFeatureByBaseName(attrName) : null;
-        final String attributeValue = vn.toRawString(index);
+        final int tokenOffset = vn.getTokenOffset(index);
+        final int tokenLength = vn.getTokenLength(index);
         if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(nodeType, attrName, ts)) {
-            handleReferenceAttributes(attrName, attributeValue, baos);
+            handleReferenceAttributes(vn, tokenOffset, tokenLength, attrName, baos);
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {
-            handleListTypes(attrName, attributeValue, typeName, mapping, mappedFeatures, baos);
+            handleListTypes(vn, tokenOffset, tokenLength, attrName, typeName, mapping, mappedFeatures, baos);
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(nodeType, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
-            handleArrayElementFeature(attrName, attributeValue, typeName, nodeType, feature, baos, ts);
+            handleArrayElementFeature(vn, tokenOffset, tokenLength, attrName, typeName, nodeType, feature, baos, ts);
         } else if (feature.getRange().isPrimitive()) {
-            handlePrimitiveFeatures(attrName, attributeValue, feature, mapping, mappedFeatures, baos, ts);
+            handlePrimitiveFeatures(vn, tokenOffset, tokenLength, feature, mapping, mappedFeatures, baos, ts);
         } else
             throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + n.getTypeName() + "'");
     }
 
-    private void handlePrimitiveFeatures(String attrName, String attributeValue, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) {
+    private void handlePrimitiveFeatures(VTDNav vn, int tokenOffset, int tokenLength, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) throws NavException {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
-            writeStringWithMapping(attributeValue, feature.getName(), mappedFeatures, mapping, baos);
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
-            writeDouble(Double.valueOf(attributeValue), baos);
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE), feature.getRange())) {
-            writeDouble(Double.valueOf(attributeValue), baos);
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_SHORT), feature.getRange())) {
-            writeShort(Short.valueOf(attributeValue), baos);
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BYTE), feature.getRange())) {
-            baos.write(Byte.valueOf(attributeValue));
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_INTEGER), feature.getRange())) {
-            writeInt(Integer.valueOf(attributeValue), baos);
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LONG), feature.getRange())) {
-            writeLong(Long.valueOf(attributeValue), baos);
-        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BOOLEAN), feature.getRange())) {
-            baos.write(Boolean.valueOf(attributeValue) ? 1 : 0);
-        } else
-            throw new IllegalArgumentException("Unhandled feature value encoding of feature " + feature.getName() + " of type " + feature.getRange().getName());
+            writeStringWithMapping(vn, tokenOffset, tokenLength, feature.getName(), mappedFeatures, mapping, baos);
+        } else {
+            final String attributeValue = vn.toRawString(tokenOffset, tokenLength);
+            if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
+                writeDouble(Double.valueOf(attributeValue), baos);
+            } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_DOUBLE), feature.getRange())) {
+                writeDouble(Double.valueOf(attributeValue), baos);
+            } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_SHORT), feature.getRange())) {
+                writeShort(Short.valueOf(attributeValue), baos);
+            } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BYTE), feature.getRange())) {
+                baos.write(Byte.valueOf(attributeValue));
+            } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_INTEGER), feature.getRange())) {
+                writeInt(Integer.valueOf(attributeValue), baos);
+            } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LONG), feature.getRange())) {
+                writeLong(Long.valueOf(attributeValue), baos);
+            } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_BOOLEAN), feature.getRange())) {
+                baos.write(Boolean.valueOf(attributeValue) ? 1 : 0);
+            } else
+                throw new IllegalArgumentException("Unhandled feature value encoding of feature " + feature.getName() + " of type " + feature.getRange().getName());
+        }
     }
 
-    private void handleArrayElementFeature(String attrName, String attributeValue, String typeName, Type nodeType, Feature feature, ByteArrayOutputStream baos, TypeSystem ts) {
+    private void handleArrayElementFeature(VTDNav vn, int tokenOffset, int tokenLength, String attrName, String typeName, Type nodeType, Feature feature, ByteArrayOutputStream baos, TypeSystem ts) throws NavException {
         // This branch is entered if we have either an Array type and its elements attribute or
         // some other type with a feature that is multi valued but does not contain references
         // to other types (since the references are handled by the first if)
-        final String[] valueSplit = attributeValue.split(" ");
+        final String[] valueSplit = vn.toRawString(tokenOffset, tokenLength).split(" ");
         writeInt(valueSplit.length, baos);
         Stream<String> arrayValues = Stream.of(valueSplit);
         // The list subtype names have already been resolved at the calling method
@@ -257,7 +275,8 @@ public class BinaryJeDISNodeEncoder {
         } else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
 
-    private void handleListTypes(String attrName, String attributeValue, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) {
+    private void handleListTypes(VTDNav vn, int tokenOffset, int tokenLength, String attrName, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) throws NavException {
+        final String attributeValue = vn.toRawString(tokenOffset, tokenLength);
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
         // The tail is a xmi:id reference to the next list node
@@ -280,7 +299,8 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void handleReferenceAttributes(String attrName, String attributeValue, ByteArrayOutputStream baos) {
+    private void handleReferenceAttributes(VTDNav vn, int tokenOffset, int tokenLength, String attrName, ByteArrayOutputStream baos) throws NavException {
+        final String attributeValue = vn.toRawString(tokenOffset, tokenLength);
         if (attrName.equals("xmi:id"))
             writeInt(Integer.valueOf(attributeValue), baos);
         else if (attrName.equals("sofa"))
@@ -293,11 +313,19 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
+    private void writeStringWithMapping(VTDNav vn, int tokenOffset, int tokenLength, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException {
+        if (mappedFeatures.get(fullFeatureName)) {
+            writeInt(mapping.get(vn.toRawString(tokenOffset, tokenLength)), baos);
+        } else {
+            writeInt(tokenLength, baos);
+           writeStringBytes(vn, tokenOffset, tokenLength, baos);
+        }
+    }
+
     private void writeStringWithMapping(String attributeValue, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) {
         if (mappedFeatures.get(fullFeatureName)) {
             writeInt(mapping.get(attributeValue), baos);
         } else {
-            writeInt(attributeValue.length(), baos);
             writeString(attributeValue, baos);
         }
     }
@@ -320,11 +348,6 @@ public class BinaryJeDISNodeEncoder {
         baos.write(bb8.array(), 0, Short.BYTES);
     }
 
-    private void writeFloat(short f, ByteArrayOutputStream baos) {
-        bb8.position(0);
-        bb8.putFloat(f);
-        baos.write(bb8.array(), 0, Float.BYTES);
-    }
 
     private void writeLong(long l, ByteArrayOutputStream baos) {
         bb8.position(0);
@@ -333,7 +356,16 @@ public class BinaryJeDISNodeEncoder {
     }
 
     private void writeString(String s, ByteArrayOutputStream baos) {
-        baos.writeBytes(s.getBytes(StandardCharsets.UTF_8));
+        final byte[] bytes = s.getBytes(UTF_8);
+        writeInt(bytes.length, baos);
+        baos.writeBytes(bytes);
+    }
+
+    private void writeStringBytes(VTDNav vn, int offset, int length, ByteArrayOutputStream baos) {
+        for (int i = offset; i < offset + length; i++) {
+            final byte b = vn.getXML().byteAt(i);
+            baos.write(b);
+        }
     }
 
 

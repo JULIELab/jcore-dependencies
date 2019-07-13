@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Mon Jul 01 14:16:43 CEST 2019 */
+/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -8,7 +8,7 @@ import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.cas.Type;
 
 /** Results of the chunking (shallow Parsing (see Abney))
- * Updated by JCasGen Mon Jul 01 14:16:43 CEST 2019
+ * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
  * @generated */
 public class Chunk_Type extends Annotation_Type {
   /** @generated */

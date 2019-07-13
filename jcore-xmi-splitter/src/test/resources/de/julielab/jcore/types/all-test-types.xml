@@ -12,5 +12,7 @@
     <import location="jcore-document-structure-types.xml"/>
     <import location="jcore-morpho-syntax-types.xml"/>
     <import location="jcore-semantics-biology-types.xml"/>
+    <import location="jcore-document-meta-clinicaltrial-types.xml"/>
+    <import location="jcore-document-structure-clinicaltrial-types.xml"/>
   </imports>
 </typeSystemDescription>
