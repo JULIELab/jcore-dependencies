@@ -55,9 +55,9 @@ public class BinaryJeDISNodeEncoder {
                 String attrName = null;
                 while (index < vn.getTokenCount()) {
                     if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG)
-                        xmiTagNames.add(vn.toString(index));
+                        xmiTagNames.add(vn.toRawString(index));
                     if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
-                        attrName = vn.toString(index);
+                        attrName = vn.toRawString(index);
                         featureAttributeNames.add(attrName);
                     }
                     if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
@@ -73,7 +73,7 @@ public class BinaryJeDISNodeEncoder {
                                 // are missing from the existing input mapping.
                                 if (!existingFeaturesToMap.containsKey(featureName) || existingFeaturesToMap.get(featureName)) {
                                     final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
-                                    final String value = vn.toString(index);
+                                    final String value = vn.toRawString(index);
                                     values.add(value);
                                     featureOccurrences.add(featureName);
                                 }
@@ -133,7 +133,7 @@ public class BinaryJeDISNodeEncoder {
                     final ByteArrayOutputStream nodeData = new ByteArrayOutputStream();
                     while (index < vn.getTokenCount()) {
                         if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName == null) {
-                            writeInt(mapping.get(vn.toString(index)), nodeData);
+                            writeInt(mapping.get(vn.toRawString(index)), nodeData);
                             nodeData.write(vn.getAttrCount());
                         } else if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null) {
                             // Indicate that the element is not yet finished
@@ -142,7 +142,7 @@ public class BinaryJeDISNodeEncoder {
                             // last action for the current annotation node
                             index = encodeEmbeddedStringArrays(vn, index, mapping, nodeData);
                         } else if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
-                            attrName = vn.toString(index);
+                            attrName = vn.toRawString(index);
                             writeInt(mapping.get(attrName), nodeData);
                         } else if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
                             encodeAttributeValue(index, attrName, n, ts, mapping, mappedFeatures, nodeData, vn);
@@ -171,9 +171,9 @@ public class BinaryJeDISNodeEncoder {
         Map<String, List<String>> valuesByFeature = new HashMap<>();
         while (index < vn.getTokenCount()) {
             if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
-                String feature = vn.toString(index);
+                String feature = vn.toRawString(index);
                 ++index;
-                String value = vn.toString(index);
+                String value = vn.toRawString(index);
                 valuesByFeature.compute(feature, (k, v) -> v != null ? v : new ArrayList<>()).add(value);
             }
             ++index;
@@ -198,7 +198,7 @@ public class BinaryJeDISNodeEncoder {
         final Type nodeType = ts.getType(n.getTypeName());
         // the uima.cas.NULL element does not have an actual type
         final Feature feature = nodeType != null ? nodeType.getFeatureByBaseName(attrName) : null;
-        final String attributeValue = vn.toString(index);
+        final String attributeValue = vn.toRawString(index);
         if (attrName.equals("xmi:id") || attrName.equals("sofa") || XmiSplitUtilities.isReferenceAttribute(nodeType, attrName, ts)) {
             handleReferenceAttributes(attrName, attributeValue, baos);
         } else if (XmiSplitUtilities.isListTypeName(typeName)) {

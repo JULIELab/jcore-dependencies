@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import de.julielab.xml.XmiSplitUtilities;
 import de.julielab.xml.XmiSplitter;
+import de.julielab.xml.util.XMIBuilderException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
@@ -61,7 +62,7 @@ public class BinaryJeDISNodeDecoder {
      * @return
      * @throws IOException
      */
-    public BinaryDecodingResult decode(Map<String, InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException {
+    public BinaryDecodingResult decode(Map<String, InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException, XMIBuilderException {
         // Reset internal states
         init();
 
@@ -78,7 +79,10 @@ public class BinaryJeDISNodeDecoder {
                 throw new IOException("Not in JeDIS binary format.");
             final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
             while (bb.position() < bb.limit()) {
-                String prefixedNameType = mapping.get(bb.getInt());
+                final int binaryTypeId = bb.getInt();
+                String prefixedNameType = mapping.get(binaryTypeId);
+                if (prefixedNameType == null)
+                    throw new XMIBuilderException("The binary element ID " + binaryTypeId + " is not contained in the mapping. It should be the prefixed type name of an annotation element.");
                 int elementStart = baos.size();
                 // '<type:Token '
                 baos.write('<');
