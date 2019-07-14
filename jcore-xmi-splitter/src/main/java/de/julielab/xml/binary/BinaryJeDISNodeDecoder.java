@@ -82,7 +82,6 @@ public class BinaryJeDISNodeDecoder {
                 byte[] tb = new byte[20];
                 final int binaryTypeId = bb.getInt();
                 String prefixedNameType = mapping.get(binaryTypeId);
-                System.out.println("Reading: " + prefixedNameType);
                 if (prefixedNameType == null)
                     throw new XMIBuilderException("The binary element ID " + binaryTypeId + " is not contained in the mapping. It should be the prefixed type name of an annotation element.");
                 int elementStart = baos.size();

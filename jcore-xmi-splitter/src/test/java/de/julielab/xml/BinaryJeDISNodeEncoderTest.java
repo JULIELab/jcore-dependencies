@@ -595,4 +595,5 @@ public class BinaryJeDISNodeEncoderTest {
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(rebuiltxmiData.toByteArray()), jCas.getCas()));
     }
 
+
 }

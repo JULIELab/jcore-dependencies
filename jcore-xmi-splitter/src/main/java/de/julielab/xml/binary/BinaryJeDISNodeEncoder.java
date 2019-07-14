@@ -104,7 +104,7 @@ public class BinaryJeDISNodeEncoder {
             // Only map those values where the featuresToMap says "true".
             // It is important to get the values of those features that were already before set for mapping
             // and those that have been added in this very run.
-            final Stream<String> featureValuesToMap = Stream.concat(featuresToMap.keySet().stream().filter(featuresToMap::get), existingFeaturesToMap.keySet().stream().filter(existingFeaturesToMap::get)).map(featureValues::get).flatMap(Collection::stream);
+            final Stream<String> featureValuesToMap = Stream.concat(featuresToMap.keySet().stream().filter(featuresToMap::get), existingFeaturesToMap.keySet().stream().filter(existingFeaturesToMap::get)).filter(featureValues::containsKey).map(featureValues::get).flatMap(Collection::stream);
             Stream<String> itemsForMapping = Stream.concat(tagNames, featureAttributeNames.stream());
             itemsForMapping = Stream.concat(itemsForMapping, featureValuesToMap);
             // Filter for items that are not yet contained in the mapping
@@ -139,7 +139,6 @@ public class BinaryJeDISNodeEncoder {
                     while (index < vn.getTokenCount()) {
                         if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName == null) {
                             tagName = vn.toRawString(index);
-                            System.out.println("Writing: " + tagName);
                             writeInt(mapping.get(tagName), nodeData);
                             nodeData.write(vn.getAttrCount());
                         } else if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG && attrName != null) {
