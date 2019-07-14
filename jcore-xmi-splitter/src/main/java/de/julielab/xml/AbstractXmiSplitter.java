@@ -87,15 +87,17 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
         // We need to keep the Sofa XMI ID constant across all modules. Otherwise, some annotations will
         // reference a wrong element since the Sofa XMI:ID can change across serializations.
         int sofaKey = SECOND_SOFA_MAP_KEY_START;
+        int newSofaId = 1;
         while (nodesByXmiId.containsKey(sofaKey)) {
             SofaVTDGraphNode sofaNode = (SofaVTDGraphNode) nodesByXmiId.get(sofaKey);
-            Integer sofaXmiId = sofaNode.getOldXmiId();
+            //Integer sofaXmiId = sofaNode.getOldXmiId();
             String sofaID = sofaNode.getSofaID();
             int newSofaXmiId;
             if (!updatedSofaIdMap.containsKey(sofaID)) {
                 if (storeBaseDocument) {
-                    updatedSofaIdMap.put(sofaID, sofaXmiId);
-                    newSofaXmiId = sofaXmiId;
+                    updatedSofaIdMap.put(sofaID, newSofaId);
+                    newSofaXmiId = newSofaId;
+                    ++newSofaId;
                 } else {
                     // This is the signal for "Annotations of this sofa cannot be stored because the Sofa
                     // Itself is not in the potentially existing document data and will also not be stored,
