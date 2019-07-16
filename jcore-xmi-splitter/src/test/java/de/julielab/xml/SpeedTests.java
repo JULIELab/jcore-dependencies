@@ -30,7 +30,7 @@ public class SpeedTests {
 
         for (int i = 0; i < 10000; i++) {
             VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
-            XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
+            XmiSplitterResult result = splitter.process(xmiData, jCas.getTypeSystem(), 0, Collections.emptyMap());
 
         }
 
@@ -46,7 +46,7 @@ public class SpeedTests {
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         for (int i = 0; i < 10000; i++) {
             StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
-            XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
+            XmiSplitterResult result = splitter.process(xmiData, jCas.getTypeSystem(), 0, Collections.emptyMap());
         }
     }
 }

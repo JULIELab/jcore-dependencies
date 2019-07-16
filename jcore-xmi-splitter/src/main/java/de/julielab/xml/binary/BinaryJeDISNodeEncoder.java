@@ -37,8 +37,11 @@ public class BinaryJeDISNodeEncoder {
         vg = new VTDGen();
         bb8 = ByteBuffer.allocate(Math.max(Long.SIZE, Double.SIZE));
     }
-
     public BinaryStorageAnalysisResult findMissingItemsForMapping(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> existingMapping, Map<String, Boolean> existingFeaturesToMap) {
+        return findMissingItemsForMapping(nodesWithLabel, ts, existingMapping, existingFeaturesToMap, false);
+    }
+
+    public BinaryStorageAnalysisResult findMissingItemsForMapping(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> existingMapping, Map<String, Boolean> existingFeaturesToMap, boolean logMappedFeatures) {
 
         String currentXmiElementForLogging = null;
         try {
@@ -100,6 +103,19 @@ public class BinaryJeDISNodeEncoder {
                 }
             }
 
+            if (logMappedFeatures && log.isInfoEnabled()) {
+                final List<String> actuallyMappedFeatures = featuresToMap.keySet().stream().filter(featuresToMap::get).collect(Collectors.toList());
+                String none = featuresToMap.isEmpty() ? " none" : "";
+                log.info("Determined features to map:{}", none);
+                for (String featureName : actuallyMappedFeatures) {
+                    final Set<String> values = featureValues.get(featureName);
+                    int numValues = values.size();
+                    log.info(featureName);
+                    log.info("    feature occurrences: {}", featureOccurrences.count(featureName));
+                    log.info("    number different values: {}", numValues);
+                    log.info("    values: {}", values);
+                }
+            }
             final Stream<String> tagNames = xmiTagNames.stream();
             // Only map those values where the featuresToMap says "true".
             // It is important to get the values of those features that were already before set for mapping
@@ -109,7 +125,7 @@ public class BinaryJeDISNodeEncoder {
             itemsForMapping = Stream.concat(itemsForMapping, featureValuesToMap);
             // Filter for items that are not yet contained in the mapping
             itemsForMapping = itemsForMapping.filter(item -> !existingMapping.containsKey(item));
-            final List<String> itemsForMappingList = itemsForMapping.collect(Collectors.toList());
+            final List<String> itemsForMappingList = itemsForMapping.distinct().collect(Collectors.toList());
             return new BinaryStorageAnalysisResult(itemsForMappingList, featuresToMap, existingMapping.size());
         } catch (ParseException | NavException e) {
             log.error("Could not parse XMI element {}", currentXmiElementForLogging, e);

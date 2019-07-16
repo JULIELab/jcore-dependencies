@@ -58,7 +58,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
     }
 
     @Override
-    public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
+    public XmiSplitterResult process(byte[] xmiData, TypeSystem ts, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
         VTDGen vg = new VTDGen();
         vg.setDoc(xmiData);
         try {
@@ -67,7 +67,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
             log.debug("Building namespace map");
             Map<String, String> namespaceMap = JulieXMLTools.buildNamespaceMap(vn);
             log.debug("Creating JeDIS nodes");
-            nodesByXmiId = createJedisNodes(vn, namespaceMap, aCas);
+            nodesByXmiId = createJedisNodes(vn, namespaceMap, ts);
             log.debug("Labeling nodes");
             labelNodes(nodesByXmiId, moduleAnnotationNames, recursively);
             log.debug("Creating annotation modules");
@@ -75,7 +75,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, aCas.getTypeSystem());
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, ts);
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
             System.out.println(nextXmiIdAndSofaMap.right);
@@ -86,7 +86,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
     }
 
 
-    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, Map<String, String> namespaceMap, JCas aCas) throws VTDException {
+    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(VTDNav vn, Map<String, String> namespaceMap, TypeSystem ts) throws VTDException {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = new HashMap<>();
         currentSecondSofaMapKey = SECOND_SOFA_MAP_KEY_START;
         vn.toElement(VTDNav.FIRST_CHILD);
@@ -106,7 +106,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
                 else
                     n.setSofaXmiId(NO_SOFA_KEY);
 
-                Map<String, List<Integer>> referencedXmiIds = getReferencedXmiIds(vn, n.getTypeName(), aCas.getTypeSystem());
+                Map<String, List<Integer>> referencedXmiIds = getReferencedXmiIds(vn, n.getTypeName(), ts);
                 n.setReferencedXmiIds(referencedXmiIds);
                 referencedXmiIds.values().stream().flatMap(Collection::stream).map(refId -> nodesByXmiId.computeIfAbsent(refId, JeDISVTDGraphNode::new)).forEach(referenced -> referenced.addPredecessor(n));
 

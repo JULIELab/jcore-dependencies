@@ -65,7 +65,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     }
 
     @Override
-    public XmiSplitterResult process(byte[] xmiData, JCas aCas, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
+    public XmiSplitterResult process(byte[] xmiData, TypeSystem ts, int nextPossibleId, Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
         // Avoid the 0 ID because it is reserved for the null pointer reference cas:NULL
         nextPossibleId = Math.max(nextPossibleId, 1);
         this.currentXmiData = xmiData;
@@ -75,7 +75,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             log.debug("Building namespace map");
             Map<String, String> namespaceMap = buildNamespaceMap(reader);
             log.debug("Creating JeDIS nodes");
-            nodesByXmiId = createJedisNodes(reader, namespaceMap, aCas);
+            nodesByXmiId = createJedisNodes(reader, namespaceMap, ts);
             log.debug("Labeling nodes");
             labelNodes(nodesByXmiId, moduleAnnotationNames, recursively);
             log.debug("Creating annotation modules");
@@ -83,7 +83,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, aCas.getTypeSystem());
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, ts);
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
             return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap, nodesByXmiId.keySet().stream().filter(id -> id > 0).map(nodesByXmiId::get).filter(node -> !node.getAnnotationModuleLabels().isEmpty()).collect(Collectors.toList()));
@@ -94,7 +94,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     }
 
 
-    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(XMLStreamReader reader, Map<String, String> namespaceMap, JCas aCas) throws XMLStreamException {
+    private Map<Integer, JeDISVTDGraphNode> createJedisNodes(XMLStreamReader reader, Map<String, String> namespaceMap, TypeSystem ts) throws XMLStreamException {
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = new HashMap<>();
         nodesByXmiId.put(0, JeDISVTDGraphNode.CAS_NULL);
         currentSecondSofaMapKey = SECOND_SOFA_MAP_KEY_START;
@@ -118,7 +118,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
                 else
                     n.setSofaXmiId(NO_SOFA_KEY);
 
-                Map<String, List<Integer>> referencedXmiIds = getReferencedXmiIds(reader, n.getTypeName(), aCas.getTypeSystem(), namespaceMap);
+                Map<String, List<Integer>> referencedXmiIds = getReferencedXmiIds(reader, n.getTypeName(), ts, namespaceMap);
                 n.setReferencedXmiIds(referencedXmiIds);
                 referencedXmiIds.values().stream().flatMap(Collection::stream).filter(id -> id != 0).map(refId -> nodesByXmiId.computeIfAbsent(refId, JeDISVTDGraphNode::new)).forEach(referenced -> referenced.addPredecessor(n));
 

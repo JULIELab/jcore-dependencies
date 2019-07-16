@@ -125,7 +125,7 @@ public class EncodingTest {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		XmiCasSerializer.serialize(cas,baos);
 
-		XmiSplitterResult result = xmiSplitter.process(baos.toByteArray(), cas.getJCas(), nextPossibleId, defaultSofaIdMap);
+		XmiSplitterResult result = xmiSplitter.process(baos.toByteArray(), cas.getJCas().getTypeSystem(), nextPossibleId, defaultSofaIdMap);
 		Map<String, ByteArrayOutputStream> xmiData = (Map<String, ByteArrayOutputStream>) result.xmiData;
 		HashMap<String, String> namespaceMap = (HashMap<String, String>) result.namespaces;
 		try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(NAMESPACEMAP_BIN))) {

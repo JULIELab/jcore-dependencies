@@ -37,7 +37,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(null, false, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        splitter.process(xmiData, jCas, 0, null);
+        splitter.process(xmiData, jCas.getTypeSystem(), 0, null);
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         // There are 1440 XML elements with an XMI:id in the respective document
@@ -56,7 +56,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(null, false, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        splitter.process(xmiData, jCas, 0, null);
+        splitter.process(xmiData, jCas.getTypeSystem(), 0, null);
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         JeDISVTDGraphNode posTag = nodesByXmiId.get(5374);
@@ -89,7 +89,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        splitter.process(xmiData, jCas, 0, null);
+        splitter.process(xmiData, jCas.getTypeSystem(), 0, null);
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         for (JeDISVTDGraphNode n : nodesByXmiId.values()) {
@@ -127,7 +127,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, false, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        splitter.process(xmiData, jCas, 0, null);
+        splitter.process(xmiData, jCas.getTypeSystem(), 0, null);
 
         Map<Integer, JeDISVTDGraphNode> nodesByXmiId = splitter.getNodesByXmiId();
         // The dependency relation should be included with the token annotation module
@@ -147,7 +147,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, null);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        splitter.process(xmiData, jCas, 0, null);
+        splitter.process(xmiData, jCas.getTypeSystem(), 0, null);
 
         Map<String, Set<JeDISVTDGraphNode>> annotationModules = splitter.getAnnotationModules();
         assertThat(annotationModules.keySet()).containsExactlyInAnyOrder(Token.class.getCanonicalName(), PennBioIEPOSTag.class.getCanonicalName(), StaxXmiSplitter.DOCUMENT_MODULE_LABEL);
@@ -173,7 +173,7 @@ public class StaxXmiSplitterTest {
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
-        XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
+        XmiSplitterResult result = splitter.process(xmiData, jCas.getTypeSystem(), 0, Collections.emptyMap());
 
         assertThat(result.currentSofaIdMap).hasSize(1);
         assertThat(result.maxXmiId).isGreaterThan(1);
@@ -213,7 +213,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, baseDocumentAnnotations);
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/semedico.xmi"));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        XmiSplitterResult result = splitter.process(xmiData, jCas, 0, Collections.emptyMap());
+        XmiSplitterResult result = splitter.process(xmiData, jCas.getTypeSystem(), 0, Collections.emptyMap());
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, moduleAnnotationNames.stream().toArray(String[]::new));
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
@@ -238,7 +238,7 @@ public class StaxXmiSplitterTest {
         XmiCasSerializer.serialize(jCas.getCas(), baos);
 
         StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true,  Collections.emptySet());
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
@@ -264,7 +264,7 @@ public class StaxXmiSplitterTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())));
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
@@ -288,7 +288,7 @@ public class StaxXmiSplitterTest {
         final XmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, baseAnnotations);
 
         final byte[] bytes = IOUtils.toByteArray(new FileInputStream("src/test/resources/test-xmis/AACR_2017-4458.xmi"));
-        final XmiSplitterResult splitterResult = splitter.process(bytes, jCas, 0, null);
+        final XmiSplitterResult splitterResult = splitter.process(bytes, jCas.getTypeSystem(), 0, null);
 
         final XmiBuilder xmiBuilder = new XmiBuilder(splitterResult.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = splitterResult.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
@@ -311,7 +311,7 @@ public class StaxXmiSplitterTest {
         final XmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true,  baseAnnotations);
 
         final byte[] bytes = IOUtils.toByteArray(new FileInputStream("src/test/resources/test-xmis/AACR_2017-2282.xmi"));
-        final XmiSplitterResult splitterResult = splitter.process(bytes, jCas, 0, null);
+        final XmiSplitterResult splitterResult = splitter.process(bytes, jCas.getTypeSystem(), 0, null);
 
         final XmiBuilder xmiBuilder = new XmiBuilder(splitterResult.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = splitterResult.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
@@ -336,7 +336,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList("de.julielab.jcore.types.Sentence")), true, true,  Collections.emptySet());
         Map<String, Integer> sofaIdMap = new HashMap<>();
         sofaIdMap.put("_InitialView", 9999);
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, sofaIdMap);
 
         assertThat(new String(result.xmiData.get("de.julielab.jcore.types.Sentence").toByteArray(), "UTF-8")).contains("sofa=\"9999\"");
     }
@@ -363,7 +363,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList("de.julielab.jcore.types.Token")), true, true, Collections.emptySet());
         Map<String, Integer> sofaIdMap = new HashMap<>();
         sofaIdMap.put("_InitialView", 1);
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, sofaIdMap);
 
         final String tokenXmiData = new String(result.xmiData.get("de.julielab.jcore.types.Token").toByteArray(), "UTF-8");
         assertThat(tokenXmiData).contains("types:Token");
@@ -384,7 +384,7 @@ public class StaxXmiSplitterTest {
         StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(Sentence.class.getCanonicalName())), true, true,  Collections.emptySet());
         Map<String, Integer> sofaIdMap = new HashMap<>();
         sofaIdMap.put("_InitialView", 9999);
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, sofaIdMap);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, sofaIdMap);
 
         final ByteArrayOutputStream sentenceData = result.xmiData.get(Sentence.class.getCanonicalName());
         final ByteArrayOutputStream baseData = result.xmiData.get( XmiSplitter.DOCUMENT_MODULE_LABEL);
@@ -411,7 +411,7 @@ public class StaxXmiSplitterTest {
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName())), true, false,  null);
-        final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas, 0, Collections.singletonMap("_InitialView", 1));
+        final XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, Collections.singletonMap("_InitialView", 1));
         final String xmiData = splitterResult.xmiData.get(MultiValueTypesHolder.class.getCanonicalName()).toString(UTF_8);
         assertThat(xmiData).doesNotContain("cas:NULL");
 

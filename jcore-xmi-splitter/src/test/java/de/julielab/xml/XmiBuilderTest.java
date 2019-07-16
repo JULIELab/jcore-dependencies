@@ -47,7 +47,7 @@ public class XmiBuilderTest {
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         System.out.println(new String(baos.toByteArray()));
         VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, Collections.emptySet());
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[]{AutoDescriptor.class.getCanonicalName()});
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));
@@ -85,7 +85,7 @@ public class XmiBuilderTest {
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         System.out.println(new String(baos.toByteArray()));
         VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, Collections.emptySet());
-        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas, 0, null);
+        XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);
         LinkedHashMap<String, InputStream> inputMap = result.xmiData.entrySet().stream().collect(Collectors.toMap(Map.Entry::getKey, e -> new ByteArrayInputStream(e.getValue().toByteArray()), (k, v) -> v, LinkedHashMap::new));

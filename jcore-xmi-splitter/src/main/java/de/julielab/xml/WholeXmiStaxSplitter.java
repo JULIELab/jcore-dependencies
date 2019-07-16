@@ -58,7 +58,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
     private Map<Integer, String> currentSofaIdMap;
     /**
      * Maps from the Sofa name to the sofa XMI ID as passed by the map at the
-     * call to {@link #process(byte[], JCas, int, Map)}. The
+     * call to {@link #process(byte[], TypeSystem, int, Map)}. The
      * intention for this map is to map the Sofa sofaID - which is unique to
      * each CAS - to the sofa xmi:id in the original base docment that is stored
      * in the database. All new annotations should refer to this sofa because
@@ -70,7 +70,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
      * The current cas; This is used to determine if the selected annotations
      * contain complex features.
      */
-    private JCas cas;
+    private TypeSystem ts;
     /**
      * The next xmi id that can be assigned to the new annotations. This is used
      * to avoid clashes with already existing annotations.
@@ -155,7 +155,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
      * StaxXmiSplitter.
      *
      * @param ba           The current xmi data.
-     * @param aCas           The current cas.
+     * @param ts           The type system of the serialized CAS
      * @param nextPossibleId The next xmi id that can be assigned to the new annotations.
      *                       If the base document has not yet been stored this should be 0.
      * @return A list containing the xmi data (only unless the complete XMI
@@ -169,13 +169,13 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
      * URI (only unless the complete XMI document should be stored).
      * @throws IOException
      */
-    public XmiSplitterResult process(byte[] ba, JCas aCas, int nextPossibleId,
+    public XmiSplitterResult process(byte[] ba, TypeSystem ts, int nextPossibleId,
                                      Map<String, Integer> existingSofaIdMap) throws XMISplitterException {
         if (!parametersChecked)
-            checkParameters(aCas.getTypeSystem());
+            checkParameters(ts);
 
         this.originalSofaIdMap = existingSofaIdMap;
-        cas = aCas;
+        this.ts = ts;
         nextId = nextPossibleId;
         currentMaxXmiId = nextPossibleId;
         xmiData = new LinkedHashMap<String, ByteArrayOutputStream>();
@@ -388,7 +388,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
                 // special ID
                 // map into the general map so we can continue now assigning new
                 // IDs
-                removeLooseEdgesAndFS(elementsToWrite, idMap, cas.getTypeSystem());
+                removeLooseEdgesAndFS(elementsToWrite, idMap, ts);
                 idMap.putAll(specialXmiIds);
                 writeWithNewXmiIds(elementsToWrite, idMap);
             }
@@ -538,7 +538,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
                         tableWriter.add(start);
                         dataWrittenSet.addAll(storageKeys);
                         Iterator attributes = element.getAttributes();
-                        Type annotationType = cas.getTypeSystem().getType(javaName);
+                        Type annotationType = ts.getType(javaName);
                         if (annotationType != null) {
                             if (isFSArray(annotationType)) {
                                 while (attributes.hasNext()) {
@@ -978,7 +978,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
                         xmiIdsToRetrieve.removeAll(xmiId);
                     }
                 } else if (xmiIdsToRetrieve.containsKey(xmiId) && !elementsToWrite.containsKey(xmiId)) {
-                    if (isFSArray(cas.getTypeSystem().getType(javaName)) || recursively) {
+                    if (isFSArray(ts.getType(javaName)) || recursively) {
                         toBeWritten = true;
                         storageKey = new ArrayList<>(xmiIdsToRetrieve.get(xmiId));
                     } else {
@@ -990,7 +990,7 @@ public class WholeXmiStaxSplitter implements XmiSplitter {
                     withinElement = true;
                     enclosingElementName = elementName;
                     enclosingStorageKey = storageKey;
-                    Type annotationType = cas.getTypeSystem().getType(javaName);
+                    Type annotationType = ts.getType(javaName);
                     if (annotationType != null) {
                         recordXmiReferences(element, annotationType, xmiIdsToRetrieve, elementsToWrite, storageKey);
                     } else {
