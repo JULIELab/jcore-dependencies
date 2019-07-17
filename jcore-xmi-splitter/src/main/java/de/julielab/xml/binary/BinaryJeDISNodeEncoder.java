@@ -21,6 +21,7 @@ import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -287,7 +288,14 @@ public class BinaryJeDISNodeEncoder {
             arrayValues.mapToInt(Integer::valueOf).forEach(i -> writeInt(i, baos));
         } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_LONG_ARRAY), arrayType)) {
             arrayValues.mapToLong(Long::valueOf).forEach(l -> writeLong(l, baos));
-        } else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
+        } else if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING_ARRAY), arrayType)) {
+            // String arrays should only be embedded into the element if they are empty
+            if (arrayValues.filter(Predicate.not(String::isBlank)).count() > 0)
+                 throw new IllegalArgumentException("Unhandled case of a StringArray that is embedded into the type element but is not empty for feature '" + attrName + "' of type '" + typeName + "'.");
+            // String of length 0
+            writeInt(0, baos);
+        }
+        else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
 
     private void handleListTypes(VTDNav vn, int tokenOffset, int tokenLength, String attrName, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) throws NavException {

@@ -322,6 +322,10 @@ public class BinaryJeDISNodeDecoder {
             componentValueConsumer = buf -> write(bb.getInt(), ret);
         } else if (typeName.equals(CAS.TYPE_NAME_LONG_ARRAY)) {
             componentValueConsumer = buf -> write(bb.getLong(), ret);
+        } else if (typeName.equals(CAS.TYPE_NAME_STRING_ARRAY)) {
+            // String arrays embedded into the type element should always be empty (otherwise an error
+            // is already raised at encoding)
+            componentValueConsumer = buf -> bb.getInt();
         } else
             throw new IllegalArgumentException("Unsupported UIMA array type: " + typeName);
         for (int i = 0; i < length; i++) {

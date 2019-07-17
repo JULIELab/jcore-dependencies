@@ -416,7 +416,6 @@ public class BinaryJeDISNodeEncoderTest {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        System.out.println(baos.toString(UTF_8));
         moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, true, true, null);
         splitterResult = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, Collections.singletonMap("_InitialView", 1));
@@ -609,5 +608,45 @@ public class BinaryJeDISNodeEncoderTest {
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(rebuiltxmiData.toByteArray()), jCas.getCas()));
     }
 
+    @Test
+    public void testStringArrayIssue() throws Exception {
+        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-document-meta-pubmed-types");
+        final de.julielab.jcore.types.pubmed.ManualDescriptor pmd = new de.julielab.jcore.types.pubmed.ManualDescriptor(jCas);
+        final StringArray geneSymbol = new StringArray(jCas, 0);
+        pmd.setGeneSymbolList(geneSymbol);
+        pmd.addToIndexes();
+
+        final ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        XmiCasSerializer.serialize(jCas.getCas(), baos);
+        moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
+        StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(de.julielab.jcore.types.pubmed.ManualDescriptor.class.getCanonicalName()));
+        splitterResult = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, Collections.singletonMap("_InitialView", 1));
+
+
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+
+        mapping = result.getMissingItemsMapping();
+
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, result.getMissingFeaturesToMap());
+
+        Map<String, InputStream> bais = new HashMap<>();
+        for (String label : encode.keySet()) {
+            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
+        }
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
+        final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
+        final BinaryDecodingResult decode = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getMissingFeaturesToMap(), splitterResult.namespaces);
+
+        final BinaryXmiBuilder builder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream rebuiltxmiData = builder.buildXmi(decode);
+        // ---- End assembly
+
+        jCas.reset();
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(rebuiltxmiData.toByteArray()), jCas.getCas()));
+
+        final de.julielab.jcore.types.pubmed.ManualDescriptor md = JCasUtil.selectSingle(jCas, de.julielab.jcore.types.pubmed.ManualDescriptor.class);
+        assertThat(md.getGeneSymbolList().size()).isEqualTo(0);
+    }
 
 }
