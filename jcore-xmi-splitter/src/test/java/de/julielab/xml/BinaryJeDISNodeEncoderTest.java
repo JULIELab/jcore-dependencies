@@ -618,15 +618,14 @@ public class BinaryJeDISNodeEncoderTest {
 
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        moduleAnnotationNames = new HashSet<>(Arrays.asList(MultiValueTypesHolder.class.getCanonicalName()));
         StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(de.julielab.jcore.types.pubmed.ManualDescriptor.class.getCanonicalName()));
-        splitterResult = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, Collections.singletonMap("_InitialView", 1));
+        XmiSplitterResult splitterResult = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, Collections.singletonMap("_InitialView", 1));
 
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
-        result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+        final BinaryStorageAnalysisResult result = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
 
-        mapping = result.getMissingItemsMapping();
+        final Map<String, Integer> mapping = result.getMissingItemsMapping();
 
         final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), mapping, result.getMissingFeaturesToMap());
 
@@ -636,7 +635,7 @@ public class BinaryJeDISNodeEncoderTest {
         }
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
         final Map<Integer, String> reverseMapping = mapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-        final BinaryDecodingResult decode = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, result.getMissingFeaturesToMap(), splitterResult.namespaces);
+        final BinaryDecodingResult decode = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, this.result.getMissingFeaturesToMap(), splitterResult.namespaces);
 
         final BinaryXmiBuilder builder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream rebuiltxmiData = builder.buildXmi(decode);
