@@ -8,6 +8,7 @@ import com.ximpleware.VTDGen;
 import com.ximpleware.VTDNav;
 import de.julielab.xml.JeDISVTDGraphNode;
 import de.julielab.xml.XmiSplitUtilities;
+import de.julielab.xml.util.MissingBinaryMappingException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.cas.CAS;
@@ -126,7 +127,7 @@ public class BinaryJeDISNodeEncoder {
             itemsForMapping = Stream.concat(itemsForMapping, featureValuesToMap);
             // Filter for items that are not yet contained in the mapping
             itemsForMapping = itemsForMapping.filter(item -> !existingMapping.containsKey(item));
-            final List<String> itemsForMappingList = itemsForMapping.distinct().collect(Collectors.toList());
+            final Set<String> itemsForMappingList = itemsForMapping.distinct().collect(Collectors.toSet());
             return new BinaryStorageAnalysisResult(itemsForMappingList, featuresToMap, existingMapping.size());
         } catch (ParseException | NavException e) {
             log.error("Could not parse XMI element {}", currentXmiElementForLogging, e);
@@ -134,7 +135,7 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    public Map<String, ByteArrayOutputStream> encode(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures) {
+    public Map<String, ByteArrayOutputStream> encode(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures) throws MissingBinaryMappingException {
         String currentXmiElementForLogging = null;
         final Map<String, List<JeDISVTDGraphNode>> nodesByLabel = nodesWithLabel.stream().flatMap(n -> n.getAnnotationModuleLabels().stream().map(l -> new ImmutablePair<>(n, l))).collect(Collectors.groupingBy(Pair::getRight, Collectors.mapping(Pair::getLeft, Collectors.toList())));
         try {
@@ -223,7 +224,7 @@ public class BinaryJeDISNodeEncoder {
         return ((long) vn.getTokenOffset(index)) << 32 | (vn.getTokenLength(index));
     }
 
-    private void encodeAttributeValue(int index, String attrName, JeDISVTDGraphNode n, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, VTDNav vn) throws NavException {
+    private void encodeAttributeValue(int index, String attrName, JeDISVTDGraphNode n, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, VTDNav vn) throws NavException, MissingBinaryMappingException {
         String typeName = XmiSplitUtilities.resolveListSubtypes(n.getTypeName());
         final Type nodeType = ts.getType(n.getTypeName());
         // the uima.cas.NULL element does not have an actual type
@@ -242,7 +243,7 @@ public class BinaryJeDISNodeEncoder {
             throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + n.getTypeName() + "'");
     }
 
-    private void handlePrimitiveFeatures(VTDNav vn, int tokenOffset, int tokenLength, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) throws NavException {
+    private void handlePrimitiveFeatures(VTDNav vn, int tokenOffset, int tokenLength, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) throws NavException, MissingBinaryMappingException {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
             writeStringWithMapping(vn, tokenOffset, tokenLength, feature.getName(), mappedFeatures, mapping, baos);
         } else {
@@ -298,7 +299,7 @@ public class BinaryJeDISNodeEncoder {
         else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
 
-    private void handleListTypes(VTDNav vn, int tokenOffset, int tokenLength, String attrName, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) throws NavException {
+    private void handleListTypes(VTDNav vn, int tokenOffset, int tokenLength, String attrName, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) throws NavException, MissingBinaryMappingException {
         final String attributeValue = vn.toRawString(tokenOffset, tokenLength);
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
@@ -336,18 +337,25 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void writeStringWithMapping(VTDNav vn, int tokenOffset, int tokenLength, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException {
+    private void writeStringWithMapping(VTDNav vn, int tokenOffset, int tokenLength, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws NavException, MissingBinaryMappingException {
         if (mappedFeatures.get(fullFeatureName)) {
-            writeInt(mapping.get(vn.toRawString(tokenOffset, tokenLength)), baos);
+            final String value = vn.toRawString(tokenOffset, tokenLength);
+            final Integer id = mapping.get(value);
+            if (id == null)
+                throw new MissingBinaryMappingException(value, "There is no string to ID mapping for the value '" + value + "' of feature '" + fullFeatureName + "'");
+            writeInt(id, baos);
         } else {
             writeInt(tokenLength, baos);
            writeStringBytes(vn, tokenOffset, tokenLength, baos);
         }
     }
 
-    private void writeStringWithMapping(String attributeValue, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) {
+    private void writeStringWithMapping(String attributeValue, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws MissingBinaryMappingException {
         if (mappedFeatures.get(fullFeatureName)) {
-            writeInt(mapping.get(attributeValue), baos);
+            final Integer id = mapping.get(attributeValue);
+            if (id == null)
+                throw new MissingBinaryMappingException(attributeValue, "There is no string to ID mapping for the value '" + attributeValue + "' of feature '" + fullFeatureName + "'");
+            writeInt(id, baos);
         } else {
             writeString(attributeValue, baos);
         }

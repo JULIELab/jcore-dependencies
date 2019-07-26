@@ -3,14 +3,15 @@ package de.julielab.xml.binary;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BinaryStorageAnalysisResult {
-    private List<String> valuesToMap;
+    private Set<String> valuesToMap;
     private Map<String, Boolean> featuresToMap;
     private Map<String, Integer> missingItemsMapping;
 
 
-    public BinaryStorageAnalysisResult(List<String> valuesToMap, Map<String, Boolean> featuresToMap, int nextAvailableId) {
+    public BinaryStorageAnalysisResult(Set<String> valuesToMap, Map<String, Boolean> featuresToMap, int nextAvailableId) {
         this.valuesToMap = valuesToMap;
         this.featuresToMap = featuresToMap;
         missingItemsMapping = new HashMap<>();
@@ -23,7 +24,7 @@ public class BinaryStorageAnalysisResult {
      *
      * @return The strings to include in the mapping.
      */
-    public List<String> getMissingValuesToMap() {
+    public Set<String> getMissingValuesToMap() {
         return valuesToMap;
     }
 
