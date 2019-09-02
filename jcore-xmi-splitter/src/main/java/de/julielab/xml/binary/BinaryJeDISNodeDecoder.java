@@ -63,6 +63,8 @@ public class BinaryJeDISNodeDecoder {
      * @throws IOException
      */
     public BinaryDecodingResult decode(Map<String, InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException, XMIBuilderException {
+        if (namespaceMap == null || namespaceMap.isEmpty())
+            throw new IllegalArgumentException("The XMI namespace map passed to the BinaryJeDISNodeDecoder is empty. This is an error because it is required for decoding of binary annotation modules.");
         // Reset internal states
         init();
 
@@ -89,7 +91,10 @@ public class BinaryJeDISNodeDecoder {
                 baos.write('<');
                 writeWs(prefixedNameType, baos);
                 final String[] prefixAndTypeName = prefixedNameType.split(":");
-                final String typeName = XmiSplitUtilities.convertNSUri(namespaceMap.get(prefixAndTypeName[0])) + prefixAndTypeName[1];
+                final String prefix = namespaceMap.get(prefixAndTypeName[0]);
+                if (prefix == null)
+                    throw new IllegalArgumentException("The namespace map does not include an entry for the prefix '" + prefix + "' which is contained in the decoded data.");
+                final String typeName = XmiSplitUtilities.convertNSUri(prefix) + prefixAndTypeName[1];
 
                 currentElement = new Element(typeName);
 
@@ -247,7 +252,10 @@ public class BinaryJeDISNodeDecoder {
 
     private void readAttribute(ByteBuffer bb, String typeName, Type type, Map<String, Boolean> mappedFeatures, Map<Integer, String> mapping, TypeSystem ts, BinaryDecodingResult res) {
         final ByteArrayOutputStream baos = res.getXmiData();
-        final String attrName = mapping.get(bb.getInt());
+        final int attrNameCode = bb.getInt();
+        final String attrName = mapping.get(attrNameCode);
+        if (attrName == null)
+            throw new IllegalArgumentException("The binary code integer '" + attrNameCode + "' should encode an attribute name but was not found in the mapping.");
         final Feature feature = type.getFeatureByBaseName(attrName);
         int attributeBegin = baos.size();
         // 'attrName="attrvalue" '

@@ -23,7 +23,7 @@ public class BinaryXmiBuilder {
     private Map<String, String> namespaces;
     public BinaryXmiBuilder(Map<String, String> nsAndXmiVersionMap) {
         if (nsAndXmiVersionMap == null || nsAndXmiVersionMap.isEmpty())
-            throw new IllegalArgumentException("The passed XMI namespace map is empty. This is an error because it is required to assembly valid XMI documents from annotation modules.");
+            throw new IllegalArgumentException("The XMI namespace map passed to the BinaryXmiBuilder is empty. This is an error because it is required to assembly valid XMI documents from annotation modules.");
             namespaces = nsAndXmiVersionMap;
     }
 
