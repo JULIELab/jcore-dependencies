@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** An abbreviation is a letter or group of letters, taken from a word or words. For example, the word "abbreviation" can be abbreviated as "abbr." or "abbrev."
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
  * @generated */
 public class Abbreviation_Type extends Annotation_Type {
   /** @generated */

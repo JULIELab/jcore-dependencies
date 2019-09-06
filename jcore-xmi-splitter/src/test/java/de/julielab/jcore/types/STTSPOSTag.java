@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** For general language German texts, cf. Anne Schiller, Simone Teufel, Christine Stöckert, and Christine Thielen. Guidelines für das Tagging deutscher Textcorpora mit STTS (Kleines und großes Tagset). Inst. für masch. Sprachverarbeitung, U. Stuttgart; Seminar für Sprachwissenschaft, U. Tübingen, 1999.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
- * XML source: all-test-types.xml
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
+ * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class STTSPOSTag extends POSTag {
   /** @generated

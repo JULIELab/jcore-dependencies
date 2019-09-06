@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,7 +11,7 @@ import org.apache.uima.jcas.tcas.Annotation;
 
 
 /** A document class specification for the CAS' document text.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019
  * XML source: all-test-types.xml
  * @generated */
 public class DocumentClass extends Annotation {

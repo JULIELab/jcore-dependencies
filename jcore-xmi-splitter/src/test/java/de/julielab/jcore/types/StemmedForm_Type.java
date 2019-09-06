@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Represents a grammatical morpheme, identifies the morpheme's base form for the current token, activat- for activation. Different forms can be produced by stemmers.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
  * @generated */
 public class StemmedForm_Type extends Annotation_Type {
   /** @generated */

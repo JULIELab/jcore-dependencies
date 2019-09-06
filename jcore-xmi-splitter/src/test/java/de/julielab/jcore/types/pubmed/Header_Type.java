@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types.pubmed;
 
 import org.apache.uima.jcas.JCas;
@@ -11,7 +11,7 @@ import org.apache.uima.cas.Feature;
 
 /** The special Header for PubMed (http://www.pubmed.org)
 				documents
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019
  * @generated */
 public class Header_Type extends de.julielab.jcore.types.Header_Type {
   /** @generated */

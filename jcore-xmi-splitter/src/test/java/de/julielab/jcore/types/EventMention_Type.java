@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** This type was introduced during the participation of the BioNLP Shared Task 2009 by Ekaterina Buyko. Therefore, it mainly satisfies the requirements of the event type of this challenge. This includes the use of an "event trigger" which is not necessary for all relation types. In practice, the type is used to capture predicate-argument relations (such as binding) as well as eventive propositional relations (such as phosphorylation or up- and down-regulation). The latter category also includes events where one of the event arguments is an event itself.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019
  * @generated */
 public class EventMention_Type extends GeneralEventMention_Type {
   /** @generated */

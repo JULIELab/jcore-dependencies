@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,8 +10,8 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** A Zone is a distinct division of text. It is an abstract Type and provides a parent type for sub-types which represent various kinds of text zones.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
- * XML source: all-test-types.xml
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
+ * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class Zone extends Annotation {
   /** @generated

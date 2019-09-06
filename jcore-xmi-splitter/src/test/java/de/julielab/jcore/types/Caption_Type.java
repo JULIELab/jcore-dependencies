@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -14,7 +14,7 @@ import org.apache.uima.cas.Feature;
 feature captionTitle is a Title-Annotation of the title of the caption, if existent.
 
 feature captionType is an Enumeration, stating to what type of entity the caption belongs, e.g. figure or table
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
  * @generated */
 public class Caption_Type extends Zone_Type {
   /** @generated */

@@ -1,5 +1,5 @@
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas;
@@ -10,7 +10,7 @@ import org.apache.uima.cas.impl.FeatureImpl;
 import org.apache.uima.cas.Feature;
 
 /** Used for document-internal references like literature references, footnotes etc.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
  * @generated */
 public class InternalReference_Type extends Annotation_Type {
   /** @generated */
@@ -81,7 +81,7 @@ public class InternalReference_Type extends Annotation_Type {
     casImpl.getFSClassRegistry().addGeneratorForType((TypeImpl)this.casType, getFSGenerator());
 
  
-    casFeat_reftype = jcas.getRequiredFeatureDE(casType, "reftype", "de.julielab.jcore.types.ReferenceType", featOkTst);
+    casFeat_reftype = jcas.getRequiredFeatureDE(casType, "reftype", "uima.cas.String", featOkTst);
     casFeatCode_reftype  = (null == casFeat_reftype) ? JCas.INVALID_FEATURE_CODE : ((FeatureImpl)casFeat_reftype).getCode();
 
  

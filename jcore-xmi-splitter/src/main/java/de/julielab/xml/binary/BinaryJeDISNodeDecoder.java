@@ -254,8 +254,9 @@ public class BinaryJeDISNodeDecoder {
         final ByteArrayOutputStream baos = res.getXmiData();
         final int attrNameCode = bb.getInt();
         final String attrName = mapping.get(attrNameCode);
-        if (attrName == null)
-            throw new IllegalArgumentException("The binary code integer '" + attrNameCode + "' should encode an attribute name but was not found in the mapping.");
+        if (attrName == null) {
+            throw new IllegalArgumentException("The binary code integer '" + attrNameCode + "' should encode an attribute name of the UIMA type element '" + typeName + "' but was not found in the mapping. Buffer position: " + bb.position());
+        }
         final Feature feature = type.getFeatureByBaseName(attrName);
         int attributeBegin = baos.size();
         // 'attrName="attrvalue" '

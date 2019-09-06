@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,7 +10,7 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** Binary Relation between Entitiy Mentions. While quite generally called "Relation", this type is commonly used for dynamic, i.e. eventive, propositional relations such as the regulation between genes.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+ * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019
  * XML source: all-test-types.xml
  * @generated */
 public class RelationMention extends GeneralEventMention {

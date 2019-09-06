@@ -14,5 +14,6 @@
     <import location="jcore-semantics-biology-types.xml"/>
     <import location="jcore-document-meta-clinicaltrial-types.xml"/>
     <import location="jcore-document-structure-clinicaltrial-types.xml"/>
+    <import location="extensions/jcore-document-meta-extension-types.xml"/>
   </imports>
 </typeSystemDescription>

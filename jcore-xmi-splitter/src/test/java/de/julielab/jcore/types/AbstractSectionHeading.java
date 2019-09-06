@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -10,9 +10,9 @@ import org.apache.uima.jcas.cas.TOP_Type;
 
 
 /** The heading of a section of a structured abstract as
-				used by MEDLINE and PubMed.
-				The TitleType feature value should always be 'abstractSection'.
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
+                used by MEDLINE and PubMed.
+                The TitleType feature value should always be 'abstractSection'.
+ * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019
  * XML source: all-test-types.xml
  * @generated */
 public class AbstractSectionHeading extends Title {
@@ -102,7 +102,8 @@ public class AbstractSectionHeading extends Title {
   //*--------------*
   //* Feature: nlmCategory
 
-  /** getter for nlmCategory - gets The NLM category associated with the section label given by the authors (see feature 'label').
+  /** getter for nlmCategory - gets The NLM category associated with the section label given by the authors (see feature
+                        'label').
    * @generated
    * @return value of the feature 
    */
@@ -111,7 +112,8 @@ public class AbstractSectionHeading extends Title {
       jcasType.jcas.throwFeatMissing("nlmCategory", "de.julielab.jcore.types.AbstractSectionHeading");
     return jcasType.ll_cas.ll_getStringValue(addr, ((AbstractSectionHeading_Type)jcasType).casFeatCode_nlmCategory);}
     
-  /** setter for nlmCategory - sets The NLM category associated with the section label given by the authors (see feature 'label'). 
+  /** setter for nlmCategory - sets The NLM category associated with the section label given by the authors (see feature
+                        'label'). 
    * @generated
    * @param v value to set into the feature 
    */

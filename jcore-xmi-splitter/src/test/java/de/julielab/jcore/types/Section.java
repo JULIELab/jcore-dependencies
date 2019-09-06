@@ -1,6 +1,6 @@
 
 
-/* First created by JCasGen Sat Jul 13 15:41:00 CEST 2019 */
+/* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
 import org.apache.uima.jcas.JCas; 
@@ -11,8 +11,8 @@ import org.apache.uima.jcas.cas.FSArray;
 
 
 /** a section is a part of the text that often has a heading, an id, a section type, figures, tables, citations and footnotes that occur in this section
- * Updated by JCasGen Sat Jul 13 15:41:00 CEST 2019
- * XML source: all-test-types.xml
+ * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019
+ * XML source: arrayAndListHolderTestType.xml
  * @generated */
 public class Section extends Zone {
   /** @generated
