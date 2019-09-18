@@ -718,27 +718,6 @@ public class BinaryJeDISNodeEncoderTest {
     }
 
     @Test
-    public void decodeErrorDoc1() throws Exception{
-        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        final Map<String, Integer> binaryMapping = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_binary_mapping1.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> Integer.valueOf(s[1])));
-        final Map<String, Boolean> featuresToMap = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_features_to_map.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> s.equals("t") ? true : false));
-        final Map<String, String> nsMap = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "nsMap.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> s[1]));
-        String base64GzippedXmiBaseDocData = "H4sIAAAAAAAAAKVWz48bNRSedOluu/39C1pxsVQJWpRGW8Gyi0BC2U2rLrRVut2WqhJCjseTsZjYwfZkGSSExIELZwR3/gkk/gjEoRIXLpy5cODAje95nE3SbnJpJM9kZuz33ve97/mZ/5AkjXdXkiTRGK9gnG7g8ntS/76L9z7GcpeXBWvj3x8Yx+6JbW6twbLGOTwf6bZp4eNj0dSpOaYaZ3C50B4obQo5KgullWBtoVK8/gnjN4xHNO9Ug1ZvHI326OHP+t74EPeTn+1o5RUvHiu5j+cHFL6XX3rcv0Gwpzu27LNUFmokbcVMxvisTw6fLLNmwLwZKsELlhk7KAvuldGOKe2lTmVKb9kwN96klYYJwXwuLR9WrTeu3lx7fy+uPWwGU46VLprgbMStkj6EMuCF6muuPeM6ZUMrb0zeuM+VZqlyxqbSuiYCEUWZKt1nW2Zf6jcd6ygnuZNh7cNyKG2mBIhgW9zhui0LXLgVQDvgLdZmOZcDciJKC6tN5qsQc1Gx9RuHkXKtfbd9vYn/nrxyh9iH1qTgs0mQeA9WeoBF/oXR4NfjqVcR7tpZTxlXaTx62Bxyn+9zfDU1S2R3JMkkiLdmmFcWiHeesGvd4c4TON7PlcjhXpQhHdJR8Jm0UlO+ETamg1+V4m+qRiqQIwDbtWr0qXTeloISyYwg2LApNSP7AQFFwGPQXNe5BqFIQY4EmNIKGRQzpPiswlS2z0eykLrv8xYbJ31aXeCM8ZFRqQs0YGFhdB8uAmYH+1DrSCH/VnJRa4w7Z4QKgewrnzNXOS9JQDxFWhRA8BpDNmPFQResV3qmvGMiJA7BlF4VZF6RdrOilFpMsoJFrkRUUsuxUZFzi0CkhR8lHDmhmTHNsBw0VrNQwENYRCmnWc7zXu0uLotJ5X0kifIT3tFCxJAicJCWIzIrRyjXZqgQibKQTRSHQJHAvw6+J6RO+XWhhGKdNonrGz1OldXt7LXYDmFzJEWnUDN4TRUkPVdFrB4gzysXaAqizYllPEidc9A0oKAD27KvZHT2ImPjLMOCK3tOflHWYPGd1Aet2olq4wKSHOCaviTIdZqn9plpr2R3lgHoGJsCBFmUUTBTgkQ50Y5iyikNTFNGjEuWlTrlhI++uqEUPmS69qOyrHQUBRWUjBHBbhBwIMwcUEWOUegU6JgHK2M+415A5hX2ooNM1AaR9j7wHFhOZd/ytP4W94YDmwhkzA6M1vVABcV9M6iqtLo5kXc0F0iCARJlIQ/dzlvUPvi4zR2Z15tOx+cCY6XuhyvPGtMd8tKiDrnSZh0+Cq0stMhPjCkyN2mR7U5okWNbxxa1yCvbxDzkUTVZF6U6gMagAgA7aJChJ14fW1ueF9lfsXuS1b/j/9cwPoj/w+XTcZ9dOcwMx/iZIk5RrKSmGRwXFuG4FPpwZyzph3VKZzF8eyJaujwPwy45v7m+8d7a22trWHd19jmhE0HyLGIhKG8ldZpPYpzF6GIsYfvG7T9Cee9W5+7O/Vs0vXcqej85z7sh9j5CW9CQVRtFIAoJV5ejP8rtr8jYU9wV+d28ievXeHMHEzDjSgfPv9DsdzCWksbrGe6v4kNO6+8eiQFQVv6NgS9hnJ+h+eIimpfvlAOun+P1x+W4dGkesls0mQj8ntx3p5rMV9RU27Sdu5naOTcvinm1M4F3NMKjaFbrGcmlGYgnFkE8F8KjDcnEAxahbbyI9vwitKubmxvr63vtp5sbEfZhh9FQ8+Oj7Oo8e+FUvFvhBHEbqP4hDw9FjqIPO39dtCjfB6UEp+yRphIAt3i1JYuMO2xq940lMDj/0Aas0yZ79HEriftHx2iNxlKN94/d2zN6PTsvLhPiClvzlEwpDS8j04Oj/fFFWZonouT5430yo40zURuUQ8JHvmhfuRhVcbzxP+Vc4ZyqDAAA";
-        final byte[] gzippedXmiBaseDocData = Base64.getDecoder().decode(base64GzippedXmiBaseDocData);
-        final ByteArrayInputStream gzippedXmiBaseDocDataBaos = new ByteArrayInputStream(gzippedXmiBaseDocData);
-        final GZIPInputStream gzippedXmiBaseDocDataIs = new GZIPInputStream(gzippedXmiBaseDocDataBaos);
-        final byte[] xmiBaseDocBytes = IOUtils.toByteArray(gzippedXmiBaseDocDataIs);
-        System.out.println(Arrays.toString(xmiBaseDocBytes));
-        System.out.println(xmiBaseDocBytes.length);
-
-        Map<String, InputStream> decodingInput = new HashMap<>();
-        decodingInput.put(XmiSplitter.DOCUMENT_MODULE_LABEL, new ByteArrayInputStream(xmiBaseDocBytes));
-        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
-        final Map<Integer, String> reverseMapping = binaryMapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
-        decoder.decode(decodingInput, jCas.getTypeSystem(), reverseMapping, featuresToMap, nsMap);
-    }
-
-    @Test
     public void emptyReferenceTest() throws Exception{
         final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         XmiCasDeserializer.deserialize(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()), jCas.getCas());
