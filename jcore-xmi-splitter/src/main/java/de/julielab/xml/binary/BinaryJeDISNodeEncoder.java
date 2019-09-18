@@ -1,5 +1,6 @@
 package de.julielab.xml.binary;
 
+import com.ctc.wstx.stax.WstxInputFactory;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
 import com.ximpleware.NavException;
@@ -9,6 +10,7 @@ import com.ximpleware.VTDNav;
 import de.julielab.xml.JeDISVTDGraphNode;
 import de.julielab.xml.XmiSplitUtilities;
 import de.julielab.xml.util.MissingBinaryMappingException;
+import org.apache.commons.io.input.XmlStreamReader;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.cas.CAS;
@@ -18,25 +20,34 @@ import org.apache.uima.cas.TypeSystem;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.xml.namespace.QName;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static de.julielab.xml.XmiSplitUtilities.isPrimitive;
 import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BinaryJeDISNodeEncoder {
     public static final int JEDIS_BINARY_MAGIC = 0x6195;
     private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeEncoder.class);
     private final ByteBuffer bb8;
+    @Deprecated
     private final VTDGen vg;
+    private XMLInputFactory inputFactory;
 
     public BinaryJeDISNodeEncoder() {
         vg = new VTDGen();
+        // Explicitly use Woodstox because it allows to disable namespace awareness which Aalto does not
+        inputFactory = new WstxInputFactory();
+        inputFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
         bb8 = ByteBuffer.allocate(Math.max(Long.SIZE, Double.SIZE));
     }
     public BinaryStorageAnalysisResult findMissingItemsForMapping(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> existingMapping, Map<String, Boolean> existingFeaturesToMap) {
@@ -54,43 +65,77 @@ public class BinaryJeDISNodeEncoder {
             Multiset<String> featureOccurrences = HashMultiset.create();
             for (JeDISVTDGraphNode n : nodesWithLabel) {
                 currentXmiElementForLogging = n.getModuleXmlData();
-                vg.setDoc_BR(n.getModuleXmlData().getBytes(UTF_8));
-                vg.parse(false);
-                final VTDNav vn = vg.getNav();
-                int index = 0;
-                String attrName = null;
-                while (index < vn.getTokenCount()) {
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
-                        vn.toRawString(index);
-                        final String qualifiedElementName = vn.toRawString(index);
-                        xmiTagNames.add(qualifiedElementName);
-                    }
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
-                        attrName = vn.toRawString(index);
-                        featureAttributeNames.add(attrName);
-                    }
-                    if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
-                        final Type nodeType = ts.getType(n.getTypeName());
-                        // the uima.cas.NULL does not have an actual Type
-                        if (nodeType != null) {
-                            final Feature feature = nodeType.getFeatureByBaseName(attrName);
-                            // Note that we currently do not handle arrays or lists of strings
-                            if (feature != null && ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
-                                final String featureName = feature.getName();
-                                // Only record features and feature values if they are either not yet known or already set to be mapped.
-                                // This is important because the expected output of this method are only items that
-                                // are missing from the existing input mapping.
-                                if (!existingFeaturesToMap.containsKey(featureName) || existingFeaturesToMap.get(featureName)) {
-                                    final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
-                                    final String value = vn.toRawString(index);
-                                    values.add(value);
-                                    featureOccurrences.add(featureName);
+                final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(n.getModuleXmlData().getBytes(UTF_8)), "UTF-8");
+                while (reader.hasNext()) {
+                    final int eventType = reader.next();
+                    if (eventType == XMLStreamConstants.START_ELEMENT) {
+                        final QName elementName = reader.getName();
+                        xmiTagNames.add(elementName.getLocalPart());
+
+                        for (int attrIndex = 0; attrIndex < reader.getAttributeCount(); attrIndex++) {
+                            final String attrName = reader.getAttributeLocalName(attrIndex);
+                            featureAttributeNames.add(attrName);
+
+                            final Type nodeType = ts.getType(n.getTypeName());
+                            // the uima.cas.NULL does not have an actual Type
+                            if (nodeType != null) {
+                                final Feature feature = nodeType.getFeatureByBaseName(attrName);
+                                // Note that we currently do not handle arrays or lists of strings
+                                if (feature != null && ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
+                                    final String featureName = feature.getName();
+                                    // Only record features and feature values if they are either not yet known or already set to be mapped.
+                                    // This is important because the expected output of this method are only items that
+                                    // are missing from the existing input mapping.
+                                    if (!existingFeaturesToMap.containsKey(featureName) || existingFeaturesToMap.get(featureName)) {
+                                        final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
+                                        final String value = reader.getAttributeValue(attrIndex);
+                                        values.add(value);
+                                        featureOccurrences.add(featureName);
+                                    }
                                 }
                             }
                         }
+
                     }
-                    ++index;
                 }
+
+//
+//                vg.setDoc_BR(n.getModuleXmlData().getBytes(UTF_8));
+//                vg.parse(false);
+//                final VTDNav vn = vg.getNav();
+//                int index = 0;
+//                while (index < vn.getTokenCount()) {
+//                    if (vn.getTokenType(index) == VTDNav.TOKEN_STARTING_TAG) {
+//                        vn.toRawString(index);
+//                        final String qualifiedElementName = vn.toRawString(index);
+//                        xmiTagNames.add(qualifiedElementName);
+//                    }
+//                    if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_NAME) {
+//                        attrName = vn.toRawString(index);
+//                        featureAttributeNames.add(attrName);
+//                    }
+//                    if (vn.getTokenType(index) == VTDNav.TOKEN_ATTR_VAL) {
+//                        final Type nodeType = ts.getType(n.getTypeName());
+//                        // the uima.cas.NULL does not have an actual Type
+//                        if (nodeType != null) {
+//                            final Feature feature = nodeType.getFeatureByBaseName(attrName);
+//                            // Note that we currently do not handle arrays or lists of strings
+//                            if (feature != null && ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
+//                                final String featureName = feature.getName();
+//                                // Only record features and feature values if they are either not yet known or already set to be mapped.
+//                                // This is important because the expected output of this method are only items that
+//                                // are missing from the existing input mapping.
+//                                if (!existingFeaturesToMap.containsKey(featureName) || existingFeaturesToMap.get(featureName)) {
+//                                    final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
+//                                    final String value = vn.toRawString(index);
+//                                    values.add(value);
+//                                    featureOccurrences.add(featureName);
+//                                }
+//                            }
+//                        }
+//                    }
+//                    ++index;
+//                }
 
             }
 
@@ -129,7 +174,7 @@ public class BinaryJeDISNodeEncoder {
             itemsForMapping = itemsForMapping.filter(item -> !existingMapping.containsKey(item));
             final Set<String> itemsForMappingList = itemsForMapping.distinct().collect(Collectors.toSet());
             return new BinaryStorageAnalysisResult(itemsForMappingList, featuresToMap, existingMapping.size());
-        } catch (ParseException | NavException e) {
+        } catch (XMLStreamException e) {
             log.error("Could not parse XMI element {}", currentXmiElementForLogging, e);
             throw new IllegalArgumentException(e);
         }

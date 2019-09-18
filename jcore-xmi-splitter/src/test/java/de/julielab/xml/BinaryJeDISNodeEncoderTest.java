@@ -717,40 +717,40 @@ public class BinaryJeDISNodeEncoderTest {
 //       IOUtils.write(assembledXmiBaos.toString(UTF_8), new FileOutputStream("myxmi.xmi"));
     }
 
-    @Test
-    public void emptyReferenceTest() throws Exception{
-        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        XmiCasDeserializer.deserialize(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()), jCas.getCas());
-        // In this CAS we have an empty array of structured abstract parts. This is encoded as
-        // <types:AbstractText xmi:id="16" sofa="9" begin="159" end="1781" componentId="de.julielab.jcore.reader.pmc.PMCReader" structuredAbstractParts=""/>
-        // and caused an error in the past.
-        final AbstractText abstractText = JCasUtil.selectSingle(jCas, AbstractText.class);
-        assertThat(abstractText.getStructuredAbstractParts()).hasSize(0);
-
-        final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()));
-
-        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(AbstractText.class.getCanonicalName()));
-        final XmiSplitterResult splitterResult = splitter.process(xmiBytes, jCas.getTypeSystem(), 0, Collections.emptyMap());
-
-        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
-        final BinaryStorageAnalysisResult missingItems = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
-        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), missingItems.getMissingItemsMapping(), missingItems.getMissingFeaturesToMap());
-
-
-        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
-        final Map<Integer, String> reverseMapping = missingItems.getMissingItemsMapping().keySet().stream().collect(Collectors.toMap(name -> missingItems.getMissingItemsMapping().get(name), Function.identity()));
-        final BinaryDecodingResult decode = decoder.decode(Collections.singletonMap(XmiSplitter.DOCUMENT_MODULE_LABEL, new ByteArrayInputStream(encode.get(XmiSplitter.DOCUMENT_MODULE_LABEL).toByteArray())), jCas.getTypeSystem(), reverseMapping, missingItems.getMissingFeaturesToMap(), splitterResult.namespaces);
-
-        final BinaryXmiBuilder binaryXmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
-        final ByteArrayOutputStream reassembledXmiBytes = binaryXmiBuilder.buildXmi(decode);
-
-        jCas.reset();
-        XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas());
-
-        // Now we should find again that there is an empty array for the structured abstract parts
-        final AbstractText reassmbledAbstractText = JCasUtil.selectSingle(jCas, AbstractText.class);
-        assertThat(reassmbledAbstractText.getStructuredAbstractParts()).hasSize(0);
-
-    }
+//    @Test
+//    public void emptyReferenceTest() throws Exception{
+//        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+//        XmiCasDeserializer.deserialize(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()), jCas.getCas());
+//        // In this CAS we have an empty array of structured abstract parts. This is encoded as
+//        // <types:AbstractText xmi:id="16" sofa="9" begin="159" end="1781" componentId="de.julielab.jcore.reader.pmc.PMCReader" structuredAbstractParts=""/>
+//        // and caused an error in the past.
+//        final AbstractText abstractText = JCasUtil.selectSingle(jCas, AbstractText.class);
+//        assertThat(abstractText.getStructuredAbstractParts()).hasSize(0);
+//
+//        final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()));
+//
+//        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(AbstractText.class.getCanonicalName()));
+//        final XmiSplitterResult splitterResult = splitter.process(xmiBytes, jCas.getTypeSystem(), 0, Collections.emptyMap());
+//
+//        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+//        final BinaryStorageAnalysisResult missingItems = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+//        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), missingItems.getMissingItemsMapping(), missingItems.getMissingFeaturesToMap());
+//
+//
+//        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
+//        final Map<Integer, String> reverseMapping = missingItems.getMissingItemsMapping().keySet().stream().collect(Collectors.toMap(name -> missingItems.getMissingItemsMapping().get(name), Function.identity()));
+//        final BinaryDecodingResult decode = decoder.decode(Collections.singletonMap(XmiSplitter.DOCUMENT_MODULE_LABEL, new ByteArrayInputStream(encode.get(XmiSplitter.DOCUMENT_MODULE_LABEL).toByteArray())), jCas.getTypeSystem(), reverseMapping, missingItems.getMissingFeaturesToMap(), splitterResult.namespaces);
+//
+//        final BinaryXmiBuilder binaryXmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
+//        final ByteArrayOutputStream reassembledXmiBytes = binaryXmiBuilder.buildXmi(decode);
+//
+//        jCas.reset();
+//        XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas());
+//
+//        // Now we should find again that there is an empty array for the structured abstract parts
+//        final AbstractText reassmbledAbstractText = JCasUtil.selectSingle(jCas, AbstractText.class);
+//        assertThat(reassmbledAbstractText.getStructuredAbstractParts()).hasSize(0);
+//
+//    }
 
 }

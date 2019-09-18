@@ -1,5 +1,6 @@
 package de.julielab.xml;
 
+import com.fasterxml.aalto.stax.InputFactoryImpl;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
@@ -7,8 +8,6 @@ import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
-import org.apache.uima.cas.impl.TypeImpl;
-import org.apache.uima.jcas.JCas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,7 +39,8 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
     public StaxXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
                            Set<String> baseDocumentAnnotations) {
         super(moduleAnnotationNames, recursively, storeBaseDocument, baseDocumentAnnotations);
-        inputFactory = XMLInputFactory.newFactory();
+        // explicitly create the Aalto input factory
+        inputFactory = new InputFactoryImpl();
     }
 
     /**
