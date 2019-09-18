@@ -72,6 +72,12 @@
             <version>2.3.0</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.13</version>
+        </dependency>
+
     </dependencies>
     <description>Parses CAS data in XMI format in order to select specified annotations (XmiSplitter) or or builds a
         single XMI representation out of the base document and the selected annotations (XmiBuilder).

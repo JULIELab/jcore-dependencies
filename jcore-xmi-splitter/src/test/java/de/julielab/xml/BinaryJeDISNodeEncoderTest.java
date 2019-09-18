@@ -4,6 +4,8 @@ import de.julielab.jcore.types.*;
 import de.julielab.jcore.types.pubmed.Header;
 import de.julielab.jcore.types.test.MultiValueTypesHolder;
 import de.julielab.xml.binary.*;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.codec.digest.Md5Crypt;
 import org.apache.commons.io.IOUtils;
 import org.apache.uima.cas.CAS;
 import org.apache.uima.cas.CASRuntimeException;
@@ -21,6 +23,7 @@ import java.io.*;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -669,7 +672,7 @@ public class BinaryJeDISNodeEncoderTest {
                "banner:de.julielab.jcore.types.Gene",
                "bannerbiosem:de.julielab.jcore.types.EventMention").collect(Collectors.toSet());
         final Map<String, Integer> binaryMapping = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_binary_mapping1.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> Integer.valueOf(s[1])));
-        final Map<String, Boolean> featuresToMap = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_features_to_map.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> s.equals("t") ? true : false));
+        final Map<String, Boolean> featuresToMap = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_features_to_map.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> s[1].equals("t") ? true : false));
 
         final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         final byte[] fullDocBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "15790300.xmi").toFile()));
@@ -682,6 +685,12 @@ public class BinaryJeDISNodeEncoderTest {
         System.out.println(splitResult.jedisNodesInAnnotationModules.size());
         System.out.println(binaryMapping.size());
         System.out.println(featuresToMap.size());
+        for (String k : featuresToMap.keySet())
+            System.out.println(k + ": " + featuresToMap.get(k));
+        String mappingString = binaryMapping.keySet().stream().sorted().map(k -> k + "->" + binaryMapping.get(k)).collect(Collectors.joining(", "));
+        String featuresString = featuresToMap.keySet().stream().sorted().map(k -> k + "->" + featuresToMap.get(k)).collect(Collectors.joining(", "));
+        System.out.println("Mapping MD5: " + new String(Base64.getEncoder().encode(DigestUtils.md5(mappingString.getBytes(UTF_8)))));
+        System.out.println("Features to map MD5: " + new String(Base64.getEncoder().encode(DigestUtils.md5(featuresString.getBytes(UTF_8)))));
         System.out.println("Num BaseDoc JedisNodes: " + splitResult.jedisNodesInAnnotationModules.stream().filter(n -> n.annotationModuleLabels.contains(XmiSplitter.DOCUMENT_MODULE_LABEL)).count());
         final List<JeDISVTDGraphNode> baseDocNodes = splitResult.jedisNodesInAnnotationModules.stream().filter(n -> n.annotationModuleLabels.contains(XmiSplitter.DOCUMENT_MODULE_LABEL)).collect(Collectors.toList());
         for (JeDISVTDGraphNode n : baseDocNodes)
@@ -727,6 +736,42 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
         final Map<Integer, String> reverseMapping = binaryMapping.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
         decoder.decode(decodingInput, jCas.getTypeSystem(), reverseMapping, featuresToMap, nsMap);
+    }
+
+    @Test
+    public void emptyReferenceTest() throws Exception{
+        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+        XmiCasDeserializer.deserialize(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()), jCas.getCas());
+        // In this CAS we have an empty array of structured abstract parts. This is encoded as
+        // <types:AbstractText xmi:id="16" sofa="9" begin="159" end="1781" componentId="de.julielab.jcore.reader.pmc.PMCReader" structuredAbstractParts=""/>
+        // and caused an error in the past.
+        final AbstractText abstractText = JCasUtil.selectSingle(jCas, AbstractText.class);
+        assertThat(abstractText.getStructuredAbstractParts()).hasSize(0);
+
+        final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()));
+
+        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(AbstractText.class.getCanonicalName()));
+        final XmiSplitterResult splitterResult = splitter.process(xmiBytes, jCas.getTypeSystem(), 0, Collections.emptyMap());
+
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        final BinaryStorageAnalysisResult missingItems = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), missingItems.getMissingItemsMapping(), missingItems.getMissingFeaturesToMap());
+
+
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
+        final Map<Integer, String> reverseMapping = missingItems.getMissingItemsMapping().keySet().stream().collect(Collectors.toMap(name -> missingItems.getMissingItemsMapping().get(name), Function.identity()));
+        final BinaryDecodingResult decode = decoder.decode(Collections.singletonMap(XmiSplitter.DOCUMENT_MODULE_LABEL, new ByteArrayInputStream(encode.get(XmiSplitter.DOCUMENT_MODULE_LABEL).toByteArray())), jCas.getTypeSystem(), reverseMapping, missingItems.getMissingFeaturesToMap(), splitterResult.namespaces);
+
+        final BinaryXmiBuilder binaryXmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream reassembledXmiBytes = binaryXmiBuilder.buildXmi(decode);
+
+        jCas.reset();
+        XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas());
+
+        // Now we should find again that there is an empty array for the structured abstract parts
+        final AbstractText reassmbledAbstractText = JCasUtil.selectSingle(jCas, AbstractText.class);
+        assertThat(reassmbledAbstractText.getStructuredAbstractParts()).hasSize(0);
+
     }
 
 }

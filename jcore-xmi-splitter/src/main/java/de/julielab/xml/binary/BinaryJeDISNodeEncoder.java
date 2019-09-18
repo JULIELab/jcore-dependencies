@@ -181,7 +181,6 @@ public class BinaryJeDISNodeEncoder {
                 binaryAnnotationModuleData.put(label, moduleData);
 
             }
-
             return binaryAnnotationModuleData;
 
         } catch (ParseException | NavException e) {
@@ -330,10 +329,15 @@ public class BinaryJeDISNodeEncoder {
         else if (attrName.equals("sofa"))
             baos.write(Byte.valueOf(attributeValue));
         else { // is reference attribute
-            final String[] referencedIds = attributeValue.split(" ");
-            writeInt(referencedIds.length, baos);
-            // -1 means "null"
-            Stream.of(referencedIds).map(id -> id.equals("null") ? -1 : Integer.valueOf(id)).forEach(i -> writeInt(i, baos));
+            if (!attributeValue.isBlank()) {
+                final String[] referencedIds = attributeValue.split(" ");
+                writeInt(referencedIds.length, baos);
+                // -1 means "null"
+                Stream.of(referencedIds).map(id -> id.equals("null") ? -1 : Integer.valueOf(id)).forEach(i -> writeInt(i, baos));
+            } else {
+                // this is an empty reference array
+                writeInt(0, baos);
+            }
         }
     }
 
