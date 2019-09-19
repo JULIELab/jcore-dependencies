@@ -5,7 +5,6 @@ import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.annotation.Annotation;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -80,12 +79,12 @@ public class BinaryXmiBuilder {
                     // If this is the last XMI part to be omitted, write the remainder of the data into the final result.
                     if (i == toModify.size() - 1)
                         ret.write(xmiData, dataRange.getEnd(), xmiData.length - dataRange.getEnd());
-                } else if (dataRange instanceof Attribute) {
+                } else if (dataRange instanceof JeDISAttribute) {
                     // There should only be one case where a DataRange is not to be omitted: When it is an
                     // attribute and still has some - but not all - references.
                     ret.write(xmiData, currentEnd, dataRange.getBegin() - currentEnd);
                     currentEnd = dataRange.getEnd();
-                    Attribute a = (Attribute) dataRange;
+                    JeDISAttribute a = (JeDISAttribute) dataRange;
                     write(a.getName(), ret);
                     write("=\"", ret);
                     // When we shrink the references, we just omit all references to non-loaded elements

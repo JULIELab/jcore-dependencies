@@ -3,7 +3,7 @@ package de.julielab.xml.binary;
 import org.apache.commons.lang3.Range;
 
 /**
- * <p>This is the base class for {@link Element} and {@link Attribute} which represent parts of an XMI document.</p>
+ * <p>This is the base class for {@link Element} and {@link JeDISAttribute} which represent parts of an XMI document.</p>
  */
 public class DataRange {
     private Range<Integer> range;

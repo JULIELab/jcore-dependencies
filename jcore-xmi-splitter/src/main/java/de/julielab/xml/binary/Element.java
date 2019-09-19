@@ -12,10 +12,10 @@ import java.util.Map;
  * If these elements are FSArrays or FSLists and only reference non-existing elements, they can be removed
  * alltogether.</p>
  *
- * @see Attribute
+ * @see JeDISAttribute
  */
 class Element extends DataRange {
-    private Map<String, Attribute> attributes = new HashMap<>();
+    private Map<String, JeDISAttribute> attributes = new HashMap<>();
     private String typeName;
     private boolean isListNode;
     private boolean isArray;
@@ -51,16 +51,16 @@ class Element extends DataRange {
         return typeName;
     }
 
-    public void addAttribute(Attribute a) {
+    public void addAttribute(JeDISAttribute a) {
         attributes.put(a.getName(), a);
         a.setElement(this);
     }
 
-    public Map<String, Attribute> getAttributes() {
+    public Map<String, JeDISAttribute> getAttributes() {
         return attributes;
     }
 
-    public Attribute getAttribute(String name) {
+    public JeDISAttribute getAttribute(String name) {
         return attributes.get(name);
     }
 }

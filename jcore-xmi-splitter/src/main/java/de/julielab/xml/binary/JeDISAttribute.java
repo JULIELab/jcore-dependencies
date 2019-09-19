@@ -12,7 +12,7 @@ import java.util.Set;
  * when rebuilding the final XMI document by {@link BinaryXmiBuilder}.</p>
  * @see Element
  */
-class Attribute extends DataRange {
+class JeDISAttribute extends DataRange {
     private List<Integer> referencedIds = new ArrayList<>();
     private List<Integer> foundReferences = new ArrayList<>();
     private String name;
@@ -27,7 +27,7 @@ class Attribute extends DataRange {
         isModified = modified;
     }
 
-    public Attribute(String name) {
+    public JeDISAttribute(String name) {
 
         this.name = name;
     }

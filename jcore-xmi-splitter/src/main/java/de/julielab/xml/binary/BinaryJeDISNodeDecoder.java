@@ -145,9 +145,9 @@ public class BinaryJeDISNodeDecoder {
         if (shrinkArraysAndListsIfReferenceNotLoaded) {
             dataRangeStream = dataRangeStream
                     // Only collect those elements that actually need to be manipulated.
-                    .filter(dr -> dr.isToBeOmitted() || (dr instanceof Attribute && ((Attribute) dr).isModified()));
+                    .filter(dr -> dr.isToBeOmitted() || (dr instanceof JeDISAttribute && ((JeDISAttribute) dr).isModified()));
         } else {
-            dataRangeStream = dataRangeStream.filter(Attribute.class::isInstance).filter(a -> ((Attribute) a).isModified());
+            dataRangeStream = dataRangeStream.filter(JeDISAttribute.class::isInstance).filter(a -> ((JeDISAttribute) a).isModified());
         }
         rangesToManipulate = dataRangeStream
                 // Sort ascending by begin offset and, for data ranges with the same begin offset, descending
@@ -186,7 +186,7 @@ public class BinaryJeDISNodeDecoder {
         // Here we follow all reference attributes recursively down in search of elements to be omitted.
         // Thus, after this loop, we are  sure that all elements directly or indirectly referenced from this
         // element have been handeled.
-        for (Attribute a : e.getAttributes().values()) {
+        for (JeDISAttribute a : e.getAttributes().values()) {
             log.debug("    " + intendation + a.getName() + ": " + a.getReferencedIds());
             for (Integer id : a.getReferencedIds()) {
                 final Element element = elements.get(id);
@@ -205,7 +205,7 @@ public class BinaryJeDISNodeDecoder {
             e.setToBeOmitted((e.isArray() && omitAttribute) || (e.isListNode() && e.getAttributes().containsKey(CAS.FEATURE_BASE_NAME_HEAD) && e.getAttribute(CAS.FEATURE_BASE_NAME_HEAD).isToBeOmitted()));
 
             // Handle list references. Repair broken list chains in case intermediate nodes are to be omitted.
-            for (Attribute a : e.getAttributes().values()) {
+            for (JeDISAttribute a : e.getAttributes().values()) {
                 for (Integer referencedId : a.getReferencedIds()) {
                     final Element referencedElement = elements.get(referencedId);
                     if (referencedElement != null && referencedElement.isListNode() && referencedElement.isToBeOmitted()) {
@@ -219,7 +219,7 @@ public class BinaryJeDISNodeDecoder {
     }
 
     private void closeLinkedListGapDueToOmission(Element e, String attrName, Map<Integer, Element> elements, String intendation) {
-        final Attribute attribute = e.getAttribute(attrName);
+        final JeDISAttribute attribute = e.getAttribute(attrName);
         IntStream.Builder idsToAdd = IntStream.builder();
         IntStream.Builder idsToRemove = IntStream.builder();
         for (Integer referencedId : attribute.getReferencedIds()) {
@@ -262,7 +262,7 @@ public class BinaryJeDISNodeDecoder {
         // 'attrName="attrvalue" '
         write(attrName, baos);
 
-        Attribute attribute = null;
+        JeDISAttribute attribute = null;
 
 
         baos.write('=');
@@ -273,7 +273,7 @@ public class BinaryJeDISNodeDecoder {
         if (attrName.equals("xmi:id") || attrName.equals("sofa")) {
             handleXmiIdAndSofaAttributes(bb, attrName, res);
         } else if (XmiSplitUtilities.isReferenceAttribute(type, attrName, ts)) {
-            attribute = new Attribute(attrName);
+            attribute = new JeDISAttribute(attrName);
             handleReferenceAttributes(bb, res, attribute);
             // The next 'else if' handles Array and List types. Here, the type itself is an FSArray, DoubleArray and the feature is "elements" or the feature points to a list node.
         } else if (XmiSplitUtilities.isMultiValuedFeatureAttribute(type, attrName) || feature.getRange().isArray() || XmiSplitUtilities.isListTypeName(feature.getRange().getName())) {
@@ -377,7 +377,7 @@ public class BinaryJeDISNodeDecoder {
         }
     }
 
-    private void handleReferenceAttributes(ByteBuffer bb, BinaryDecodingResult res, Attribute attribute) {
+    private void handleReferenceAttributes(ByteBuffer bb, BinaryDecodingResult res, JeDISAttribute attribute) {
         final ByteArrayOutputStream baos = res.getXmiData();
         final int numReferences = bb.getInt();
         for (int j = 0; j < numReferences; j++) {
