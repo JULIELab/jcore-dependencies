@@ -2,7 +2,6 @@ package de.julielab.xml.binary;
 
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,8 +24,15 @@ public class AttributeParser {
             int bytesRead = 0;
             while ((c = r.read()) != -1) {
                 s = doStateTransition(c, s);
+                if (((byte) c) != 0)
+                    ++bytesRead;
+                if(((byte)(c>>8)) != 0)
+                    ++bytesRead;
+                if(((byte)(c>>16)) != 0)
+                    ++bytesRead;
+                if(((byte)(c>>24 )) != 0)
+                    ++bytesRead;
 
-                bytesRead += Math.ceil(c / 256d);
 
                 if (s == State.IN_ELEM_PREFIX && elementNameBegin == -1)
                     elementNameBegin = lastPos;
