@@ -1,20 +1,12 @@
 package de.julielab.xml.binary;
 
-import com.ctc.wstx.io.WstxInputSource;
-import com.ctc.wstx.sr.AttributeCollector;
-import com.ctc.wstx.sr.BasicStreamReader;
-import com.ctc.wstx.sr.ValidatingStreamReader;
+import com.ctc.wstx.api.WstxInputProperties;
 import com.ctc.wstx.stax.WstxInputFactory;
 import com.google.common.collect.HashMultiset;
 import com.google.common.collect.Multiset;
-import com.ximpleware.NavException;
-import com.ximpleware.ParseException;
-import com.ximpleware.VTDGen;
-import com.ximpleware.VTDNav;
 import de.julielab.xml.JeDISVTDGraphNode;
 import de.julielab.xml.XmiSplitUtilities;
 import de.julielab.xml.util.MissingBinaryMappingException;
-import org.apache.commons.io.input.XmlStreamReader;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.cas.CAS;
@@ -25,9 +17,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.xml.namespace.QName;
-import javax.xml.stream.*;
-import javax.xml.stream.events.Characters;
-import java.io.*;
+import javax.xml.stream.XMLInputFactory;
+import javax.xml.stream.XMLStreamConstants;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 import java.util.*;
 import java.util.function.Predicate;
@@ -46,6 +41,8 @@ public class BinaryJeDISNodeEncoder {
         // Explicitly use Woodstox because it allows to disable namespace awareness which Aalto does not
         inputFactory = new WstxInputFactory();
         inputFactory.setProperty(XMLInputFactory.IS_NAMESPACE_AWARE, false);
+        // Effectively remove the size restriction of attribute values
+        inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, Integer.MAX_VALUE);
         bb8 = ByteBuffer.allocate(Math.max(Long.SIZE, Double.SIZE));
     }
 
