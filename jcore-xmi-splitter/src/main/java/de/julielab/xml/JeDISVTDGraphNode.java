@@ -1,6 +1,11 @@
 package de.julielab.xml;
 
+import de.julielab.xml.binary.AttributeParser;
+import de.julielab.xml.binary.XmlStartTag;
+
 import java.util.*;
+
+import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class JeDISVTDGraphNode {
 
@@ -16,6 +21,7 @@ public class JeDISVTDGraphNode {
     private int byteOffset;
     private int byteLength;
     private String moduleXmlData;
+    private XmlStartTag byteSegmentedStartTag;
 
     /**
      * For {@link #CAS_NULL}. So both IDs will be 0.
@@ -160,5 +166,17 @@ public class JeDISVTDGraphNode {
 
     public void setModuleData(String moduleXmlData) {
         this.moduleXmlData = moduleXmlData;
+    }
+
+    public XmlStartTag getByteSegmentedStartTag(byte[] elementData) {
+        if (byteSegmentedStartTag == null) {
+            final AttributeParser attributeParser = new AttributeParser();
+            byteSegmentedStartTag = attributeParser.parse(elementData);
+        }
+        return byteSegmentedStartTag;
+    }
+
+    public void setByteSegmentedStartTag(XmlStartTag byteSegmentedStartTag) {
+        this.byteSegmentedStartTag = byteSegmentedStartTag;
     }
 }

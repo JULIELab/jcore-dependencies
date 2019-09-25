@@ -777,9 +777,37 @@ public class BinaryJeDISNodeEncoderTest {
 
         final BinaryXmiBuilder binaryXmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream reassembledXmiBytes = binaryXmiBuilder.buildXmi(decode);
-        System.out.println(new String(reassembledXmiBytes.toByteArray()));
         jCas.reset();
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
+
+    }
+
+    @Test
+    public void testError2() throws Exception{
+        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+
+        final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "4197749.xmi").toFile()));
+
+        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(Header.class.getCanonicalName()));
+        final XmiSplitterResult splitterResult = splitter.process(xmiBytes, jCas.getTypeSystem(), 0, Collections.emptyMap());
+
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        final BinaryStorageAnalysisResult missingItems = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.singletonMap("de.julielab.jcore.types.Journal:title", true));
+        // We need to mark the journal titel feature in the output as well
+        missingItems.getMissingFeaturesToMap().put("de.julielab.jcore.types.Journal:title", true);
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), missingItems.getMissingItemsMapping(), missingItems.getMissingFeaturesToMap());
+
+
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
+        final Map<Integer, String> reverseMapping = missingItems.getMissingItemsMapping().keySet().stream().collect(Collectors.toMap(name -> missingItems.getMissingItemsMapping().get(name), Function.identity()));
+        final BinaryDecodingResult decode = decoder.decode(Collections.singletonMap(XmiSplitter.DOCUMENT_MODULE_LABEL, new ByteArrayInputStream(encode.get(XmiSplitter.DOCUMENT_MODULE_LABEL).toByteArray())), jCas.getTypeSystem(), reverseMapping, missingItems.getMissingFeaturesToMap(), splitterResult.namespaces);
+
+        final BinaryXmiBuilder binaryXmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream reassembledXmiBytes = binaryXmiBuilder.buildXmi(decode);
+        jCas.reset();
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
+        final Header header = JCasUtil.selectSingle(jCas, Header.class);
+       assertThat(((Journal)header.getPubTypeList(0)).getTitle()).isEqualTo("Pain Research & Management : The Journal of the Canadian Pain Society");
 
     }
 }

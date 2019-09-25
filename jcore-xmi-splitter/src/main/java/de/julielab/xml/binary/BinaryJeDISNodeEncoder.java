@@ -60,9 +60,11 @@ public class BinaryJeDISNodeEncoder {
             Set<String> xmiTagNames = new HashSet<>();
             Set<String> featureAttributeNames = new HashSet<>();
             Multiset<String> featureOccurrences = HashMultiset.create();
+            final AttributeParser attributeParser = new AttributeParser();
             for (JeDISVTDGraphNode n : nodesWithLabel) {
                 currentXmiElementForLogging = n.getModuleXmlData();
-                final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(n.getModuleXmlData().getBytes(UTF_8)), "UTF-8");
+                final byte[] elementData = n.getModuleXmlData().getBytes(UTF_8);
+                final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(elementData), "UTF-8");
                 while (reader.hasNext()) {
                     if (reader.next() == XMLStreamConstants.START_ELEMENT) {
 
@@ -85,7 +87,9 @@ public class BinaryJeDISNodeEncoder {
                                     // are missing from the existing input mapping.
                                     if (!existingFeaturesToMap.containsKey(featureName) || existingFeaturesToMap.get(featureName)) {
                                         final Set<String> values = featureValues.compute(featureName, (k, v) -> v != null ? v : new HashSet<>());
-                                        final String value = reader.getAttributeValue(attrIndex);
+                                        final XmlStartTag startTag = n.getByteSegmentedStartTag(elementData);
+                                        String value = startTag.getAttributes().get(attrIndex).getAttributeValue().toString();
+//                                        final String value = reader.getAttributeValue(attrIndex);
                                         values.add(value);
                                         featureOccurrences.add(featureName);
                                     }
@@ -148,7 +152,6 @@ public class BinaryJeDISNodeEncoder {
                 moduleData.write(JEDIS_BINARY_MAGIC >> 8);
                 moduleData.write(JEDIS_BINARY_MAGIC);
                 final List<JeDISVTDGraphNode> nodesForCurrentLabel = nodesByLabel.get(label);
-                final AttributeParser attributeParser = new AttributeParser();
                 for (JeDISVTDGraphNode n : nodesForCurrentLabel) {
                     currentXmiElementForLogging = n.getModuleXmlData();
                     final ByteArrayOutputStream nodeData = new ByteArrayOutputStream();
@@ -156,7 +159,8 @@ public class BinaryJeDISNodeEncoder {
                     currentNodeData = n.getModuleXmlData().getBytes(UTF_8);
                     final XMLStreamReader reader = inputFactory.createXMLStreamReader(new ByteArrayInputStream(currentNodeData), "UTF-8");
 
-                    final XmlStartTag xmlStartTag = attributeParser.parse(currentNodeData);
+                    // This will reuse the XmlStartTag instance created in findMissingItemsForMapping
+                    final XmlStartTag xmlStartTag = n.getByteSegmentedStartTag(currentNodeData);
 
                     boolean encounteredStart = false;
                     while (reader.hasNext()) {
@@ -243,7 +247,7 @@ public class BinaryJeDISNodeEncoder {
 
     private void handlePrimitiveFeatures(XMLStreamReader reader, int attributeIndex, XmlStartTag xmlStartTag, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) throws MissingBinaryMappingException {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
-            writeStringWithMapping(reader, attributeIndex, xmlStartTag, feature.getName(), mappedFeatures, mapping, baos);
+            writeStringWithMapping(attributeIndex, xmlStartTag, feature.getName(), mappedFeatures, mapping, baos);
         } else {
             final String attributeValue = reader.getAttributeValue(attributeIndex);
             if (ts.subsumes(ts.getType(CAS.TYPE_NAME_FLOAT), feature.getRange())) {
@@ -339,9 +343,9 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void writeStringWithMapping(XMLStreamReader reader, int attributeIndex, XmlStartTag xmlStartTag, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws MissingBinaryMappingException {
+    private void writeStringWithMapping(int attributeIndex, XmlStartTag xmlStartTag, String fullFeatureName, Map<String, Boolean> mappedFeatures, Map<String, Integer> mapping, ByteArrayOutputStream baos) throws MissingBinaryMappingException {
         if (mappedFeatures.get(fullFeatureName)) {
-            final String value = reader.getAttributeValue(attributeIndex);
+            final String value = xmlStartTag.getAttributes().get(attributeIndex).getAttributeValue().toString();
             final Integer id = mapping.get(value);
             if (id == null)
                 throw new MissingBinaryMappingException(value, "There is no string to ID mapping for the value '" + value + "' of feature '" + fullFeatureName + "'");
