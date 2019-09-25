@@ -36,6 +36,7 @@ public class BinaryJeDISNodeEncoder {
     private final static Logger log = LoggerFactory.getLogger(BinaryJeDISNodeEncoder.class);
     private final ByteBuffer bb8;
     private XMLInputFactory inputFactory;
+    private byte[] currentNodeData;
 
     public BinaryJeDISNodeEncoder() {
         // Explicitly use Woodstox because it allows to disable namespace awareness which Aalto does not
@@ -137,7 +138,6 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private byte[] currentNodeData;
     public Map<String, ByteArrayOutputStream> encode(Collection<JeDISVTDGraphNode> nodesWithLabel, TypeSystem ts, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures) throws MissingBinaryMappingException {
         String currentXmiElementForLogging = null;
         final Map<String, List<JeDISVTDGraphNode>> nodesByLabel = nodesWithLabel.stream().flatMap(n -> n.getAnnotationModuleLabels().stream().map(l -> new ImmutablePair<>(n, l))).collect(Collectors.groupingBy(Pair::getRight, Collectors.mapping(Pair::getLeft, Collectors.toList())));
@@ -161,7 +161,7 @@ public class BinaryJeDISNodeEncoder {
                     boolean encounteredStart = false;
                     while (reader.hasNext()) {
                         final int eventType = reader.next();
-                        if (eventType == XMLStreamConstants.START_ELEMENT && ! encounteredStart) {
+                        if (eventType == XMLStreamConstants.START_ELEMENT && !encounteredStart) {
                             encounteredStart = true;
                             String tagName = reader.getName().getLocalPart();
                             writeInt(mapping.get(tagName), nodeData);
@@ -241,7 +241,7 @@ public class BinaryJeDISNodeEncoder {
             throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + n.getTypeName() + "'");
     }
 
-    private void handlePrimitiveFeatures(XMLStreamReader reader, int attributeIndex, XmlStartTag xmlStartTag, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) throws  MissingBinaryMappingException {
+    private void handlePrimitiveFeatures(XMLStreamReader reader, int attributeIndex, XmlStartTag xmlStartTag, Feature feature, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos, TypeSystem ts) throws MissingBinaryMappingException {
         if (ts.subsumes(ts.getType(CAS.TYPE_NAME_STRING), feature.getRange())) {
             writeStringWithMapping(reader, attributeIndex, xmlStartTag, feature.getName(), mappedFeatures, mapping, baos);
         } else {
@@ -269,7 +269,7 @@ public class BinaryJeDISNodeEncoder {
         // This branch is entered if we have either an Array type and its elements attribute or
         // some other type with a feature that is multi valued but does not contain references
         // to other types (since the references are handled by the first if)
-        final String[] valueSplit =reader.getAttributeValue(attributeIndex).split(" ");
+        final String[] valueSplit = reader.getAttributeValue(attributeIndex).split(" ");
         writeInt(valueSplit.length, baos);
         Stream<String> arrayValues = Stream.of(valueSplit);
         // The list subtype names have already been resolved at the calling method
@@ -296,7 +296,7 @@ public class BinaryJeDISNodeEncoder {
         } else throw new IllegalArgumentException("Unhandled feature '" + attrName + "' of type '" + typeName + "'.");
     }
 
-    private void handleListTypes(XMLStreamReader reader, int attributeIndex, String attrName, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) throws  MissingBinaryMappingException {
+    private void handleListTypes(XMLStreamReader reader, int attributeIndex, String attrName, String typeName, Map<String, Integer> mapping, Map<String, Boolean> mappedFeatures, ByteArrayOutputStream baos) throws MissingBinaryMappingException {
         final String attributeValue = reader.getAttributeValue(attributeIndex);
         // Handle the list node elements themselves. Their features are "head" and "tail", head being
         // the value of the linked list node, tail being a reference to the next node, if it exists.
@@ -320,7 +320,7 @@ public class BinaryJeDISNodeEncoder {
         }
     }
 
-    private void handleReferenceAttributes(XMLStreamReader reader,int attributeIndex, String attrName, ByteArrayOutputStream baos)  {
+    private void handleReferenceAttributes(XMLStreamReader reader, int attributeIndex, String attrName, ByteArrayOutputStream baos) {
         final String attributeValue = reader.getAttributeValue(attributeIndex);
         if (attrName.equals("xmi:id"))
             writeInt(Integer.valueOf(attributeValue), baos);

@@ -756,4 +756,30 @@ public class BinaryJeDISNodeEncoderTest {
         assertThat(reassmbledAbstractText.getStructuredAbstractParts()).hasSize(0);
 
     }
+
+    @Test
+    public void testError() throws Exception{
+        final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
+
+        final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "4532726.xmi").toFile()));
+
+        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(Header.class.getCanonicalName()));
+        final XmiSplitterResult splitterResult = splitter.process(xmiBytes, jCas.getTypeSystem(), 0, Collections.emptyMap());
+
+        final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
+        final BinaryStorageAnalysisResult missingItems = encoder.findMissingItemsForMapping(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), Collections.emptyMap(), Collections.emptyMap());
+        final Map<String, ByteArrayOutputStream> encode = encoder.encode(splitterResult.jedisNodesInAnnotationModules, jCas.getTypeSystem(), missingItems.getMissingItemsMapping(), missingItems.getMissingFeaturesToMap());
+
+
+        final BinaryJeDISNodeDecoder decoder = new BinaryJeDISNodeDecoder(Collections.emptySet(), false);
+        final Map<Integer, String> reverseMapping = missingItems.getMissingItemsMapping().keySet().stream().collect(Collectors.toMap(name -> missingItems.getMissingItemsMapping().get(name), Function.identity()));
+        final BinaryDecodingResult decode = decoder.decode(Collections.singletonMap(XmiSplitter.DOCUMENT_MODULE_LABEL, new ByteArrayInputStream(encode.get(XmiSplitter.DOCUMENT_MODULE_LABEL).toByteArray())), jCas.getTypeSystem(), reverseMapping, missingItems.getMissingFeaturesToMap(), splitterResult.namespaces);
+
+        final BinaryXmiBuilder binaryXmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
+        final ByteArrayOutputStream reassembledXmiBytes = binaryXmiBuilder.buildXmi(decode);
+        System.out.println(new String(reassembledXmiBytes.toByteArray()));
+        jCas.reset();
+        assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
+
+    }
 }

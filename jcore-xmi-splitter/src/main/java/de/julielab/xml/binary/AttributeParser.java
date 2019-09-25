@@ -24,13 +24,16 @@ public class AttributeParser {
             int bytesRead = 0;
             while ((c = r.read()) != -1) {
                 s = doStateTransition(c, s);
-                if (((byte) c) != 0)
+
+                // UTF-8 uses a varying number of bytes to encode characters.
+                // The numbers below are the highest code points for one byte, two byte
+                // and three byte encodings, respectively (taken from Wikipedia).
+                ++bytesRead;
+                if (c > 127)
                     ++bytesRead;
-                if(((byte)(c>>8)) != 0)
+                if (c > 2047)
                     ++bytesRead;
-                if(((byte)(c>>16)) != 0)
-                    ++bytesRead;
-                if(((byte)(c>>24 )) != 0)
+                if (c > 65535)
                     ++bytesRead;
 
 
