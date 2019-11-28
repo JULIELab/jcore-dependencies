@@ -9,11 +9,11 @@ public class XmlByteSpan {
 
     public XmlByteSpan(int start, int end, byte[] xmlData) {
         if (start < 0)
-            throw new IllegalArgumentException("Start offset must by >= 0 but was " + start);
+            throw new IllegalArgumentException("Start offset must by >= 0 but was " + start+ " for element " + new String(xmlData, UTF_8));
         if (end < 0)
-            throw new IllegalArgumentException("End offset must be >= 0 but was " + end);
+            throw new IllegalArgumentException("End offset must be >= 0 but was " + end + " for element " + new String(xmlData, UTF_8));
         if (end < start)
-            throw new IllegalArgumentException("End offset must be >= start offset but start = " + start + " and end = " + end);
+            throw new IllegalArgumentException("End offset must be >= start offset but start = " + start + " and end = " + end+ " for element " + new String(xmlData, UTF_8));
         this.start = start;
         this.end = end;
         this.xmlData = xmlData;

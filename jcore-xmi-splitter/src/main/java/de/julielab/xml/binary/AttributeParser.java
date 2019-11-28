@@ -22,7 +22,7 @@ public class AttributeParser {
             int lastPos = -2;
             List<XmlAttribute> xmlAttributes = new ArrayList<>();
             int bytesRead = 0;
-            while ((c = r.read()) != -1) {
+            while ((c = r.read()) != -1 && s != State.TAG_END) {
                 s = doStateTransition(c, s);
 
                 // UTF-8 uses a varying number of bytes to encode characters.
