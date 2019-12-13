@@ -358,7 +358,7 @@ public class BinaryJeDISNodeEncoderTest {
         Map<String, InputStream> bais = new HashMap<>();
         for (String label : encode.keySet()) {
             if (annotationLabelsToLoad.contains(label))
-            bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
+                bais.put(label, new ByteArrayInputStream(encode.get(label).toByteArray()));
         }
         final BinaryDecodingResult decoded = decoder.decode(bais, jCas.getTypeSystem(), reverseMapping, analysisResult.getMissingFeaturesToMap(), splitterResult.namespaces);
 
@@ -528,6 +528,7 @@ public class BinaryJeDISNodeEncoderTest {
         assertThat(holder.getSlNoRef().getNthElement(1)).isEqualTo("noref-zwei");
         assertThat(holder.getSlNoRef().getNthElement(2)).isEqualTo("noref-eins");
     }
+
     @Test
     public void testXmlSpecialCharacters() throws Exception {
         final Set<String> moduleAnnotationNames = Collections.emptySet();
@@ -569,19 +570,19 @@ public class BinaryJeDISNodeEncoderTest {
         final Set<String> moduleAnnotationNames = Collections.emptySet();
         StaxXmiSplitter splitter = new StaxXmiSplitter(moduleAnnotationNames, false, true,
                 new HashSet<>(Arrays.asList("de.julielab.jcore.types.ct.Header",
-                "de.julielab.jcore.types.ct.BriefTitle",
-                "de.julielab.jcore.types.ct.OfficialTitle",
-                "de.julielab.jcore.types.ct.Summary",
-                "de.julielab.jcore.types.ct.Description",
-                "de.julielab.jcore.types.ct.OutcomeMeasure",
-                "de.julielab.jcore.types.ct.OutcomeDescription",
-                "de.julielab.jcore.types.ct.Condition",
-                "de.julielab.jcore.types.ct.InterventionType",
-                "de.julielab.jcore.types.ct.InterventionName",
-                "de.julielab.jcore.types.ct.ArmGroupDescription",
-                "de.julielab.jcore.types.ct.Inclusion",
-                "de.julielab.jcore.types.ct.Exclusion",
-                "de.julielab.jcore.types.pubmed.ManualDescriptor")));
+                        "de.julielab.jcore.types.ct.BriefTitle",
+                        "de.julielab.jcore.types.ct.OfficialTitle",
+                        "de.julielab.jcore.types.ct.Summary",
+                        "de.julielab.jcore.types.ct.Description",
+                        "de.julielab.jcore.types.ct.OutcomeMeasure",
+                        "de.julielab.jcore.types.ct.OutcomeDescription",
+                        "de.julielab.jcore.types.ct.Condition",
+                        "de.julielab.jcore.types.ct.InterventionType",
+                        "de.julielab.jcore.types.ct.InterventionName",
+                        "de.julielab.jcore.types.ct.ArmGroupDescription",
+                        "de.julielab.jcore.types.ct.Inclusion",
+                        "de.julielab.jcore.types.ct.Exclusion",
+                        "de.julielab.jcore.types.pubmed.ManualDescriptor")));
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types", "de.julielab.jcore.types.jcore-document-meta-clinicaltrial-types",
                 "de.julielab.jcore.types.jcore-document-structure-clinicaltrial-types");
         byte[] xmiData = IOUtils.toByteArray(new FileInputStream("src/test/resources/splitTestDocs/NCT03093415.xmi"));
@@ -655,25 +656,25 @@ public class BinaryJeDISNodeEncoderTest {
     @Ignore
     @Test
     public void testErrorDoc1() throws Exception {
-       Set<String> baseDocTypes = Stream.of("de.julielab.jcore.types.pubmed.Header",
+        Set<String> baseDocTypes = Stream.of("de.julielab.jcore.types.pubmed.Header",
                 "de.julielab.jcore.types.pubmed.ManualDescriptor",
                 "de.julielab.jcore.types.AbstractText",
                 "de.julielab.jcore.types.Title").collect(Collectors.toSet());
-       Set<String> moduleNames = Stream.of("de.julielab.jcore.types.Sentence",
-               "de.julielab.jcore.types.Token",
-               "de.julielab.jcore.types.Abbreviation",
-               "de.julielab.jcore.types.Organism",
-               "de.julielab.jcore.types.EventTrigger",
-               "de.julielab.jcore.types.LikelihoodIndicator",
-               "de.julielab.jcore.types.ChunkADJP",
-               "de.julielab.jcore.types.ChunkADJVP",
-               "de.julielab.jcore.types.ChunkCONJP",
-               "de.julielab.jcore.types.ChunkNP",
-               "de.julielab.jcore.types.ChunkPP",
-               "de.julielab.jcore.types.ChunkSBAR",
-               "de.julielab.jcore.types.ChunkVP",
-               "banner:de.julielab.jcore.types.Gene",
-               "bannerbiosem:de.julielab.jcore.types.EventMention").collect(Collectors.toSet());
+        Set<String> moduleNames = Stream.of("de.julielab.jcore.types.Sentence",
+                "de.julielab.jcore.types.Token",
+                "de.julielab.jcore.types.Abbreviation",
+                "de.julielab.jcore.types.Organism",
+                "de.julielab.jcore.types.EventTrigger",
+                "de.julielab.jcore.types.LikelihoodIndicator",
+                "de.julielab.jcore.types.ChunkADJP",
+                "de.julielab.jcore.types.ChunkADJVP",
+                "de.julielab.jcore.types.ChunkCONJP",
+                "de.julielab.jcore.types.ChunkNP",
+                "de.julielab.jcore.types.ChunkPP",
+                "de.julielab.jcore.types.ChunkSBAR",
+                "de.julielab.jcore.types.ChunkVP",
+                "banner:de.julielab.jcore.types.Gene",
+                "bannerbiosem:de.julielab.jcore.types.EventMention").collect(Collectors.toSet());
         final Map<String, Integer> binaryMapping = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_binary_mapping1.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> Integer.valueOf(s[1])));
         final Map<String, Boolean> featuresToMap = IOUtils.readLines(new FileInputStream(Path.of("src", "test", "resources", "errorcase1", "real_features_to_map.tsv").toFile()), "UTF-8").stream().map(l -> l.split("\t")).collect(Collectors.toMap(s -> s[0], s -> s[1].equals("t") ? true : false));
 
@@ -722,7 +723,7 @@ public class BinaryJeDISNodeEncoderTest {
 
 
     @Test
-    public void emptyReferenceTest() throws Exception{
+    public void emptyReferenceTest() throws Exception {
         final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
         XmiCasDeserializer.deserialize(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "6302719.xmi").toFile()), jCas.getCas());
         // In this CAS we have an empty array of structured abstract parts. This is encoded as
@@ -758,7 +759,7 @@ public class BinaryJeDISNodeEncoderTest {
     }
 
     @Test
-    public void testError() throws Exception{
+    public void testError() throws Exception {
         final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
         final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "4532726.xmi").toFile()));
@@ -783,12 +784,12 @@ public class BinaryJeDISNodeEncoderTest {
     }
 
     @Test
-    public void testError2() throws Exception{
+    public void testError2() throws Exception {
         final JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
 
         final byte[] xmiBytes = IOUtils.toByteArray(new FileInputStream(Path.of("src", "test", "resources", "test-xmis", "4197749.xmi").toFile()));
 
-        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, Collections.singleton(Header.class.getCanonicalName()));
+        final StaxXmiSplitter splitter = new StaxXmiSplitter(Collections.emptySet(), true, true, new HashSet<>(Arrays.asList(AbstractText.class.getCanonicalName(), Header.class.getCanonicalName())));
         final XmiSplitterResult splitterResult = splitter.process(xmiBytes, jCas.getTypeSystem(), 0, Collections.emptyMap());
 
         final BinaryJeDISNodeEncoder encoder = new BinaryJeDISNodeEncoder();
@@ -807,7 +808,8 @@ public class BinaryJeDISNodeEncoderTest {
         jCas.reset();
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(reassembledXmiBytes.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
         final Header header = JCasUtil.selectSingle(jCas, Header.class);
-       assertThat(((Journal)header.getPubTypeList(0)).getTitle()).isEqualTo("Pain Research & Management : The Journal of the Canadian Pain Society");
+        assertThat(((Journal) header.getPubTypeList(0)).getTitle()).isEqualTo("Pain Research & Management : The Journal of the Canadian Pain Society");
+        assertThatCode(() -> JCasUtil.selectSingle(jCas, AbstractText.class).getCoveredText()).doesNotThrowAnyException();
 
     }
 }
