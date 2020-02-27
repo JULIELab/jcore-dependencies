@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toList;
 
 
 public class VtdXmlXmiSplitter extends AbstractXmiSplitter {
-private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.class);
+    private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.class);
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private static final int NO_SOFA_KEY = -1;
     private VTDNav vn;
@@ -33,7 +33,7 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
 
     public VtdXmlXmiSplitter(Set<String> moduleAnnotationNames, boolean recursively, boolean storeBaseDocument,
                              Set<String> baseDocumentAnnotations) {
-        super(moduleAnnotationNames, recursively, storeBaseDocument,  baseDocumentAnnotations);
+        super(moduleAnnotationNames, recursively, storeBaseDocument, baseDocumentAnnotations);
     }
 
     public VTDNav getVTDNav() {
@@ -75,11 +75,13 @@ private final static Logger log = LoggerFactory.getLogger(VtdXmlXmiSplitter.clas
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, ts);
+            Map<Integer, Integer> oldSofaXmiId2NewSofaXmiId = new HashMap<>();//existingSofaIdMap.keySet().stream().collect(Collectors.toMap(existingSofaIdMap::get, oldSofaName -> nextXmiIdAndSofaMap.getRight().get(existingSofaIdMap.get(oldSofaName))));
+            //nextXmiIdAndSofaMap.getRight().values().stream().filter(newSofaXmiId -> !oldSofaXmiId2NewSofaXmiId.values().contains(newSofaXmiId)).forEach(newSofaXmiId -> oldSofaXmiId2NewSofaXmiId.put(newSofaXmiId, newSofaXmiId));
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, oldSofaXmiId2NewSofaXmiId, annotationModules, ts);
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
             System.out.println(nextXmiIdAndSofaMap.right);
-            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap,nodesByXmiId.keySet().stream().filter(id -> id >= 0).map(nodesByXmiId::get).collect(Collectors.toList()));
+            return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap, nodesByXmiId.keySet().stream().filter(id -> id >= 0).map(nodesByXmiId::get).collect(Collectors.toList()));
         } catch (VTDException e) {
             throw new XMISplitterException(e);
         }

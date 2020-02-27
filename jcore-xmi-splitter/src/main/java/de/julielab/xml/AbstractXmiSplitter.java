@@ -77,7 +77,7 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
      * to {@link #SOFA_UNKNOWN} to indicate that no annotations referencing this sofa can be stored.
      *
      * @param nodesByXmiId
-     * @param updatedSofaIdMap
+     * @param updatedSofaIdMap Should be a copy of the previous sofa ID map, if existing. When the base document is written, this should be an empty map that will be filled in this method.
      */
     protected void adaptSofaIdMap(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Integer> updatedSofaIdMap) {
         unavailableXmiId = new HashSet<>();
@@ -170,7 +170,7 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
 
     protected abstract String getNodeXml(JeDISVTDGraphNode node) throws XMISplitterException;
 
-    protected LinkedHashMap<String, ByteArrayOutputStream> createAnnotationModuleData(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<String, Set<JeDISVTDGraphNode>> annotationModules, TypeSystem ts) throws XMISplitterException {
+    protected LinkedHashMap<String, ByteArrayOutputStream> createAnnotationModuleData(Map<Integer, JeDISVTDGraphNode> nodesByXmiId, Map<Integer, Integer> oldSofaXmiId2NewSofaXmiId, Map<String, Set<JeDISVTDGraphNode>> annotationModules, TypeSystem ts) throws XMISplitterException {
         LinkedHashMap<String, ByteArrayOutputStream> annotationModuleData = new LinkedHashMap<>();
 
 
@@ -226,6 +226,7 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
                         int oldSofaXmiId = node.getSofaXmiId();
                         // Adapt sofa ID and xmi:id for this annotation
                         if (oldSofaXmiId != NO_SOFA_KEY) {
+                            //xmlElement = xmlElement.replaceFirst("sofa=\"[0-9]+\"", "sofa=\"" + oldSofaXmiId2NewSofaXmiId.get(node.getSofaXmiId()) + "\"");
                             xmlElement = xmlElement.replaceFirst("sofa=\"[0-9]+\"", "sofa=\"" + nodesByXmiId.get(node.getSofaXmiId()).getNewXmiId() + "\"");
                         }
                         xmlElement = xmlElement.replaceFirst("xmi:id=\"[0-9]+\"", "xmi:id=\"" + node.getNewXmiId() + "\"");

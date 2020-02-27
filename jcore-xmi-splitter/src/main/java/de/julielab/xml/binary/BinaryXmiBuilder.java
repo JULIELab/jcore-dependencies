@@ -20,10 +20,11 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class BinaryXmiBuilder {
     private final static Logger log = LoggerFactory.getLogger(BinaryXmiBuilder.class);
     private Map<String, String> namespaces;
+
     public BinaryXmiBuilder(Map<String, String> nsAndXmiVersionMap) {
         if (nsAndXmiVersionMap == null || nsAndXmiVersionMap.isEmpty())
             throw new IllegalArgumentException("The XMI namespace map passed to the BinaryXmiBuilder is empty. This is an error because it is required to assembly valid XMI documents from annotation modules.");
-            namespaces = nsAndXmiVersionMap;
+        namespaces = nsAndXmiVersionMap;
     }
 
     public Map<String, String> getNamespaces() {
@@ -31,30 +32,43 @@ public class BinaryXmiBuilder {
     }
 
     public ByteArrayOutputStream buildXmi(BinaryDecodingResult decodingResult) {
+        return buildXmi(decodingResult, true);
+    }
+
+    /**
+     * @param decodingResult
+     * @param makeValidXmi   If set to true, an XML header, XMI namespaces, the cas:NULL element and the cas:View element are created, everything wrapped into a xmi:XMI element. Otherwise, the input data is purely decoded to XML without any additions.
+     * @return
+     */
+    public ByteArrayOutputStream buildXmi(BinaryDecodingResult decodingResult, boolean makeValidXmi) {
         final byte[] xmiData = decodingResult.getXmiData().toByteArray();
         final ByteArrayOutputStream ret = new ByteArrayOutputStream();
         try {
-            write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", ret);
-            write("<xmi:XMI ", ret);
-            for (String prefix : namespaces.keySet()) {
-                write("xmlns:", ret);
-                write(prefix, ret);
-                write("=\"", ret);
-                write(namespaces.get(prefix), ret);
-                write("\" ", ret);
+            if (makeValidXmi) {
+                write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>", ret);
+                write("<xmi:XMI ", ret);
+                for (String prefix : namespaces.keySet()) {
+                    write("xmlns:", ret);
+                    write(prefix, ret);
+                    write("=\"", ret);
+                    write(namespaces.get(prefix), ret);
+                    write("\" ", ret);
+                }
+                ret.write('>');
+                write("<cas:NULL xmi:id=\"0\" />", ret);
             }
-            ret.write('>');
-            write("<cas:NULL xmi:id=\"0\" />", ret);
             writeContent(xmiData, decodingResult, ret);
-            for (Integer sofaId : decodingResult.getSofaElements().keySet()) {
-                final Collection<Integer> annotationIds = decodingResult.getSofaElements().get(sofaId);
-                write("<cas:View sofa=\"", ret);
-                write(sofaId, ret);
-                write("\" members=\"", ret);
-                write(annotationIds.stream().map(String::valueOf).collect(Collectors.joining(" ")), ret);
-                write("\" />", ret);
+            if (makeValidXmi) {
+                for (Integer sofaId : decodingResult.getSofaElements().keySet()) {
+                    final Collection<Integer> annotationIds = decodingResult.getSofaElements().get(sofaId);
+                    write("<cas:View sofa=\"", ret);
+                    write(sofaId, ret);
+                    write("\" members=\"", ret);
+                    write(annotationIds.stream().map(String::valueOf).collect(Collectors.joining(" ")), ret);
+                    write("\" />", ret);
+                }
+                write("</xmi:XMI>", ret);
             }
-            write("</xmi:XMI>", ret);
             return ret;
         } catch (IOException e) {
             log.error("Could not create final XMI document", e);
@@ -94,12 +108,10 @@ public class BinaryXmiBuilder {
                     else
                         write(a.getReferencedIds().stream().map(id -> a.getFoundReferences().contains(id) ? id : 0).map(String::valueOf).collect(Collectors.joining(" ")), ret);
                     write("\" ", ret);
-                    // If this is the last XMI part to be omitted, write the remainder of the data into the final result.
-                    if (i == toModify.size() - 1)
-                        ret.write(xmiData, dataRange.getEnd(), xmiData.length - dataRange.getEnd());
                 }
-
             }
+            // Write the remainder of the data
+            ret.write(xmiData, currentEnd, xmiData.length - currentEnd);
         } else {
             ret.write(xmiData);
         }

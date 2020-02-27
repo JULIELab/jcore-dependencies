@@ -56,13 +56,13 @@ public class BinaryJeDISNodeDecoder {
      *
      * @param input
      * @param ts
-     * @param mapping
+     * @param reversedMapping
      * @param mappedFeatures
      * @param namespaceMap
      * @return
      * @throws IOException
      */
-    public BinaryDecodingResult decode(Map<String, InputStream> input, TypeSystem ts, Map<Integer, String> mapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException, XMIBuilderException {
+    public BinaryDecodingResult decode(Map<String, InputStream> input, TypeSystem ts, Map<Integer, String> reversedMapping, Map<String, Boolean> mappedFeatures, Map<String, String> namespaceMap) throws IOException, XMIBuilderException {
         if (namespaceMap == null || namespaceMap.isEmpty())
             throw new IllegalArgumentException("The XMI namespace map passed to the BinaryJeDISNodeDecoder is empty. This is an error because it is required for decoding of binary annotation modules.");
         // Reset internal states
@@ -81,9 +81,8 @@ public class BinaryJeDISNodeDecoder {
                 throw new IOException("Not in JeDIS binary format.");
             final ByteBuffer bb = XmiSplitUtilities.readInputStreamIntoBuffer(is);
             while (bb.position() < bb.limit()) {
-                byte[] tb = new byte[20];
                 final int binaryTypeId = bb.getInt();
-                String prefixedNameType = mapping.get(binaryTypeId);
+                String prefixedNameType = reversedMapping.get(binaryTypeId);
                 if (prefixedNameType == null)
                     throw new XMIBuilderException("The binary element ID " + binaryTypeId + " is not contained in the mapping. It should be the prefixed type name of an annotation element.");
                 int elementStart = baos.size();
@@ -102,7 +101,7 @@ public class BinaryJeDISNodeDecoder {
                 final byte numAttributes = bb.get();
                 currentSofaId = currentXmiId = -1;
                 for (int i = 0; i < numAttributes; i++) {
-                    readAttribute(bb, typeName, type, mappedFeatures, mapping, ts, res);
+                    readAttribute(bb, typeName, type, mappedFeatures, reversedMapping, ts, res);
                 }
 
 
@@ -116,7 +115,7 @@ public class BinaryJeDISNodeDecoder {
                 final byte finishedIndicator = bb.get();
                 if (finishedIndicator == 0) {
                     baos.write('>');
-                    writeStringArray(bb, ts.getType(typeName), ts, mapping, mappedFeatures, baos);
+                    writeStringArray(bb, ts.getType(typeName), ts, reversedMapping, mappedFeatures, baos);
                     baos.write('<');
                     baos.write('/');
                     write(prefixedNameType, baos);

@@ -55,7 +55,7 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
      * @param attribute_size
      */
     public StaxXmiSplitter(Set<String> annotationModulesToExtract, boolean recursively, boolean storeBaseDocument,
-                            Set<String> baseDocumentAnnotations, int attribute_size) {
+                           Set<String> baseDocumentAnnotations, int attribute_size) {
         this(annotationModulesToExtract, recursively, storeBaseDocument, baseDocumentAnnotations);
     }
 
@@ -83,7 +83,9 @@ public class StaxXmiSplitter extends AbstractXmiSplitter {
             log.debug("Assigning new XMI IDs");
             ImmutablePair<Integer, Map<String, Integer>> nextXmiIdAndSofaMap = assignNewXmiIds(nodesByXmiId, existingSofaIdMap, nextPossibleId);
             log.debug("Slicing XMI data into annotation module data");
-            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, annotationModules, ts);
+            Map<Integer, Integer> oldSofaXmiId2NewSofaXmiId = new HashMap();//existingSofaIdMap.keySet().stream().collect(Collectors.toMap(existingSofaIdMap::get, oldSofaName -> nextXmiIdAndSofaMap.getRight().get(existingSofaIdMap.get(oldSofaName))));
+            //nextXmiIdAndSofaMap.getRight().values().stream().filter(newSofaXmiId -> !oldSofaXmiId2NewSofaXmiId.values().contains(newSofaXmiId)).forEach(newSofaXmiId -> oldSofaXmiId2NewSofaXmiId.put(newSofaXmiId, newSofaXmiId));
+            LinkedHashMap<String, ByteArrayOutputStream> moduleData = createAnnotationModuleData(nodesByXmiId, oldSofaXmiId2NewSofaXmiId, annotationModules, ts);
             Map<Integer, String> reverseSofaIdMap = nextXmiIdAndSofaMap.right.entrySet().stream().collect(Collectors.toMap(Map.Entry::getValue, Map.Entry::getKey));
             log.debug("Returning XMI annotation module result");
             return new XmiSplitterResult(moduleData, nextXmiIdAndSofaMap.left, namespaceMap, reverseSofaIdMap, nodesByXmiId.keySet().stream().filter(id -> id > 0).map(nodesByXmiId::get).filter(node -> !node.getAnnotationModuleLabels().isEmpty()).collect(Collectors.toList()));

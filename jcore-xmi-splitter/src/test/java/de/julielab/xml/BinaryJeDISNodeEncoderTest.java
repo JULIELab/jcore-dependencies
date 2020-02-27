@@ -327,7 +327,7 @@ public class BinaryJeDISNodeEncoderTest {
         // --------- Creating annotation modules
         final ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
-        // Store all the types separatly. Later own, we will only load the tokens and the pos tags
+        // Store all the types separately. Later own, we will only load the tokens and the pos tags
         StaxXmiSplitter splitter = new StaxXmiSplitter(new HashSet<>(Arrays.asList(
                 Token.class.getCanonicalName(),
                 PennBioIEPOSTag.class.getCanonicalName(),
@@ -366,6 +366,7 @@ public class BinaryJeDISNodeEncoderTest {
         final BinaryXmiBuilder xmiBuilder = new BinaryXmiBuilder(splitterResult.namespaces);
         final ByteArrayOutputStream builtXmiData = xmiBuilder.buildXmi(decoded);
         jCas.reset();
+        System.out.println(new String(builtXmiData.toByteArray()));
         assertThatCode(() -> XmiCasDeserializer.deserialize(new ByteArrayInputStream(builtXmiData.toByteArray()), jCas.getCas())).doesNotThrowAnyException();
         return jCas;
     }
