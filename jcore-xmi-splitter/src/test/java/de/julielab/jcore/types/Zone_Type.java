@@ -2,10 +2,10 @@
 /* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
-import org.apache.uima.cas.Type;
 
 /** A Zone is a distinct division of text. It is an abstract Type and provides a parent type for sub-types which represent various kinds of text zones.
  * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019

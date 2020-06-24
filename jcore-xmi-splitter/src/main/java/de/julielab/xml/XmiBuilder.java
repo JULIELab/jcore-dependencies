@@ -17,7 +17,6 @@ import java.io.SequenceInputStream;
 import java.util.*;
 import java.util.Map.Entry;
 
-import static de.julielab.xml.XmiSplitUtilities.TYPES_NAMESPACE;
 import static de.julielab.xml.XmiSplitUtilities.getTypeJavaName;
 
 public class XmiBuilder {

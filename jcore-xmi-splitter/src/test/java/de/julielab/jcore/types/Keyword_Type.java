@@ -2,12 +2,12 @@
 /* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 
 /** A term of a controlled keyword list to describe the content of the publication.
  * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019

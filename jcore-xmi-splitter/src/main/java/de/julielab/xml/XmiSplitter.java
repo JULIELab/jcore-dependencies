@@ -2,7 +2,6 @@ package de.julielab.xml;
 
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.uima.cas.TypeSystem;
-import org.apache.uima.jcas.JCas;
 
 import java.util.Map;
 

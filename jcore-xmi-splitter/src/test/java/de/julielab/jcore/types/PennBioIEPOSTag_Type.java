@@ -2,10 +2,10 @@
 /* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
-import org.apache.uima.cas.Type;
 
 /** Mark A. Mandel. Integrated Annotation of Biomedical Text: Creating the PennBioIE Corpus. March 2006. Text Mining, Ontologies and Natural Language Processing in Biomedicine.
  * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019

@@ -19,7 +19,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
  */
 public class BinaryXmiBuilder {
     private final static Logger log = LoggerFactory.getLogger(BinaryXmiBuilder.class);
-    private Map<String, String> namespaces;
+    private final Map<String, String> namespaces;
 
     public BinaryXmiBuilder(Map<String, String> nsAndXmiVersionMap) {
         if (nsAndXmiVersionMap == null || nsAndXmiVersionMap.isEmpty())

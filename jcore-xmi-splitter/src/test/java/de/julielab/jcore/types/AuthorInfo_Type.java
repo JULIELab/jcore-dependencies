@@ -2,12 +2,12 @@
 /* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 
 /** AuthorInfo Type annotates the text segments containing the information about an author and his/her affiliation information.
  * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019

@@ -5,8 +5,6 @@ import de.julielab.xml.binary.XmlStartTag;
 
 import java.util.*;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
 public class JeDISVTDGraphNode {
 
     public static final JeDISVTDGraphNode CAS_NULL = new JeDISVTDGraphNode(0, 0);

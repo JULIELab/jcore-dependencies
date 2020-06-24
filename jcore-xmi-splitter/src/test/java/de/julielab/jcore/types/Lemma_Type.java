@@ -2,12 +2,12 @@
 /* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 
 /** Lemma is the canonical form of a lexeme. Lemma can be retrieved from lexicon or be produced by lemmatizer.
  * Updated by JCasGen Tue Sep 03 12:35:27 CEST 2019

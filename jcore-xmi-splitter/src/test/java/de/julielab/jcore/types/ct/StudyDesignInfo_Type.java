@@ -2,13 +2,13 @@
 /* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types.ct;
 
-import org.apache.uima.jcas.JCas;
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
+import de.julielab.jcore.types.DocumentAnnotation_Type;
+import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.impl.FeatureImpl;
-import org.apache.uima.cas.Feature;
-import de.julielab.jcore.types.DocumentAnnotation_Type;
+import org.apache.uima.cas.impl.TypeImpl;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
 
 /** 
  * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019

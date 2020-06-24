@@ -10,7 +10,6 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
-import org.apache.uima.jcas.JCas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -94,7 +93,7 @@ public class VtdXmlXmiSplitter extends AbstractXmiSplitter {
         vn.toElement(VTDNav.FIRST_CHILD);
         vn.toElement(VTDNav.FIRST_CHILD);
         do {
-            Integer xmiIdIndex = vn.getAttrVal("xmi:id");
+            int xmiIdIndex = vn.getAttrVal("xmi:id");
             if (xmiIdIndex >= 0) {
                 int i = vn.getCurrentIndex();
                 int oldXmiId = Integer.parseInt(vn.toRawString(xmiIdIndex));

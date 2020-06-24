@@ -1,9 +1,7 @@
 package de.julielab.xml.binary;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * <p>For XMI documents, this class represents one XMI element attribute whose contents are references to other elements.</p>

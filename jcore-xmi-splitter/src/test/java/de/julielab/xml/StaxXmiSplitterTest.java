@@ -18,8 +18,8 @@ import org.apache.uima.jcas.cas.FSArray;
 import org.testng.annotations.Test;
 
 import java.io.*;
-import java.util.*;
 import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.nio.charset.StandardCharsets.UTF_8;

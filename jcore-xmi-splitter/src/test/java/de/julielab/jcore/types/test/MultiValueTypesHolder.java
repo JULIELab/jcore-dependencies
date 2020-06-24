@@ -3,17 +3,10 @@
 /* First created by JCasGen Tue Sep 03 12:35:27 CEST 2019 */
 package de.julielab.jcore.types.test;
 
-import org.apache.uima.jcas.JCas; 
-import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.jcas.cas.TOP_Type;
-
-import org.apache.uima.jcas.cas.FSArray;
-import org.apache.uima.jcas.cas.FSList;
-import org.apache.uima.jcas.cas.StringList;
-import org.apache.uima.jcas.cas.IntegerList;
-import org.apache.uima.jcas.cas.ShortArray;
-import org.apache.uima.jcas.cas.DoubleArray;
 import de.julielab.jcore.types.Annotation;
+import org.apache.uima.jcas.JCas;
+import org.apache.uima.jcas.JCasRegistry;
+import org.apache.uima.jcas.cas.*;
 
 
 /** 

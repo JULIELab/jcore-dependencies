@@ -61,11 +61,11 @@ public class XmiBuilderTest {
         AutoDescriptor ad2 = JCasUtil.selectSingle(jCas, AutoDescriptor.class);
         assertThat(ad2.getDocumentClasses()).isNotNull();
         assertThat(ad2.getDocumentClasses()).hasSize(1);
-        assertThat(ad2.getDocumentClasses().get(0)).extracting("classname").containsExactly("myclass");
+        assertThat(ad2.getDocumentClasses().get(0)).extracting("classname").isEqualTo("myclass");
     }
 
     @Test
-    public void testArrayShareNotAllowedMultipleElements() throws UIMAException, SAXException, XMISplitterException, IOException {
+    public void testArrayShareNotAllowedMultipleElements() throws UIMAException, SAXException, XMISplitterException {
         // In this test we check that we handle correctly arrays that may not be shared. Those arrays are represented
         // in memory as FSArray but in XMI the FSArray is left out: the array-valued feature just lists all the
         // xmi:id references itself, without creating an FSArray element
@@ -84,7 +84,7 @@ public class XmiBuilderTest {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
         System.out.println(new String(baos.toByteArray()));
-        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Arrays.asList(AutoDescriptor.class.getCanonicalName())), true, true, Collections.emptySet());
+        VtdXmlXmiSplitter splitter = new VtdXmlXmiSplitter(new HashSet<>(Collections.singletonList(AutoDescriptor.class.getCanonicalName())), true, true, Collections.emptySet());
         XmiSplitterResult result = splitter.process(baos.toByteArray(), jCas.getTypeSystem(), 0, null);
 
         XmiBuilder builder = new XmiBuilder(result.namespaces, new String[0]);

@@ -3,11 +3,10 @@
 /* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types.ct;
 
-import org.apache.uima.jcas.JCas; 
+import de.julielab.jcore.types.Zone;
+import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
 import org.apache.uima.jcas.cas.TOP_Type;
-
-import de.julielab.jcore.types.Zone;
 
 
 /** This should actually be a list where each list item consists of the elements 'measure', 'time frame' and 'description'. But at time of creation of type, these information were not parsed in the required granularity.

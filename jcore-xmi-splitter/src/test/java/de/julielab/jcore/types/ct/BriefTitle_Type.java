@@ -2,11 +2,11 @@
 /* First created by JCasGen Tue Sep 03 12:34:17 CEST 2019 */
 package de.julielab.jcore.types.ct;
 
+import de.julielab.jcore.types.Title_Type;
+import org.apache.uima.cas.Type;
+import org.apache.uima.cas.impl.TypeImpl;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.JCasRegistry;
-import org.apache.uima.cas.impl.TypeImpl;
-import org.apache.uima.cas.Type;
-import de.julielab.jcore.types.Title_Type;
 
 /** 
  * Updated by JCasGen Tue Sep 03 12:34:17 CEST 2019

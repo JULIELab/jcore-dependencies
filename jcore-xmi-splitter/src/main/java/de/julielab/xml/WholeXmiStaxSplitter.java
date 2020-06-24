@@ -6,7 +6,6 @@ import com.google.common.collect.Sets;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.uima.cas.Type;
 import org.apache.uima.cas.TypeSystem;
-import org.apache.uima.jcas.JCas;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
