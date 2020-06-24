@@ -4,6 +4,7 @@ import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
 import org.junit.Test;
 
 import java.io.File;
+import java.util.Map;
 
 import static org.junit.Assert.*;
 
@@ -75,5 +76,13 @@ public class EvaluationDataTest {
 		assertEquals(8, e2.getEnd());
 		assertEquals("gen2", e2.getEntityString());
 		assertEquals(null, e2.getRecognitionSystem());
+	}
+
+	@Test
+	public void testGroupByLabel() {
+		EvaluationData data = EvaluationData.readDataFile(new File("src/test/resources/test-data-label-grouping.genelist"));
+		Map<String, EvaluationData> m = data.groupByEntityLabel();
+		System.out.println(m);
+
 	}
 }

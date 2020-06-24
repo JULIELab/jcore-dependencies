@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.Optional;
 
 /**
+ * <p>Evaluation result of multiple entity groups (e.g. entity class or label groups).</p>
  * This class is just a map from string (should be the entity type for a result)
  * to entity evaluation result. It defines one additional method,
  * {@link #getSingle()} to quickly get the single evaluation result, if there is
@@ -42,37 +43,38 @@ public class EntityEvaluationResults extends HashMap<String, EntityEvaluationRes
 	
 	public String getEvaluationReportShort() {
 		StringBuilder sb = new StringBuilder();
+		String ls = System.getProperty("line.separator");
 		for (EntityEvaluationResult res : values()) {
 			sb.append(res.getEvaluationReportShort());
-			sb.append(System.getProperty("line.separator"));
-			sb.append(System.getProperty("line.separator"));
+			sb.append(ls);
+			sb.append(ls);
 		}
 		if (size() > 1) {
-			sb.append("Evaluation results across all classes:");
-			sb.append("Document Level:");
+			sb.append("Evaluation results across all classes:").append(ls);
+			sb.append("Document Level:").append(ls);
 			Triple<Double, Double, Double> microStatsDocWise = getMicroStatsDocWise();
 			Triple<Double, Double, Double> macroStatsDocWise = getMacroStatsDocWise();
-			sb.append("  Recall (micro):    " + microStatsDocWise.getLeft());
-			sb.append("  Precision (micro): " + microStatsDocWise.getLeft());
-			sb.append("  F-Score (micro):   " + microStatsDocWise.getLeft());
-			sb.append("  Recall (macro):    " + macroStatsDocWise.getLeft());
-			sb.append("  Precision (macro): " + macroStatsDocWise.getLeft());
-			sb.append("  F-Score (macro):   " + macroStatsDocWise.getLeft());
-			sb.append(System.getProperty("line.separator"));
-			sb.append(System.getProperty("line.separator"));
+			sb.append("  Recall (micro):    " + microStatsDocWise.getLeft()).append(ls);
+			sb.append("  Precision (micro): " + microStatsDocWise.getLeft()).append(ls);
+			sb.append("  F-Score (micro):   " + microStatsDocWise.getLeft()).append(ls);
+			sb.append("  Recall (macro):    " + macroStatsDocWise.getLeft()).append(ls);
+			sb.append("  Precision (macro): " + macroStatsDocWise.getLeft()).append(ls);
+			sb.append("  F-Score (macro):   " + macroStatsDocWise.getLeft()).append(ls);
+			sb.append(ls);
+			sb.append(ls);
 
 			if (getEvaluationMode() == EvaluationMode.MENTION) {
-				sb.append("Document Level:");
+				sb.append("Document Level:").append(ls);
 				Triple<Double, Double, Double> microStatsMentionWise = getMicroStatsMentionWise();
 				Triple<Double, Double, Double> macroStatsMentionWise = getMacroStatsMentionWise();
-				sb.append("  Recall (micro):    " + microStatsMentionWise.getLeft());
-				sb.append("  Precision (micro): " + microStatsMentionWise.getLeft());
-				sb.append("  F-Score (micro):   " + microStatsMentionWise.getLeft());
-				sb.append("  Recall (macro):    " + macroStatsMentionWise.getLeft());
-				sb.append("  Precision (macro): " + macroStatsMentionWise.getLeft());
-				sb.append("  F-Score (macro):   " + macroStatsMentionWise.getLeft());
-				sb.append(System.getProperty("line.separator"));
-				sb.append(System.getProperty("line.separator"));
+				sb.append("  Recall (micro):    " + microStatsMentionWise.getLeft()).append(ls);
+				sb.append("  Precision (micro): " + microStatsMentionWise.getLeft()).append(ls);
+				sb.append("  F-Score (micro):   " + microStatsMentionWise.getLeft()).append(ls);
+				sb.append("  Recall (macro):    " + macroStatsMentionWise.getLeft()).append(ls);
+				sb.append("  Precision (macro): " + macroStatsMentionWise.getLeft()).append(ls);
+				sb.append("  F-Score (macro):   " + macroStatsMentionWise.getLeft()).append(ls);
+				sb.append(ls);
+				sb.append(ls);
 			}
 		}
 		return sb.toString();

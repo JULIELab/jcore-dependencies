@@ -6,356 +6,362 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.stream.Stream;
 
+/**
+ * Evaluation result of one evaluation group (e.g. entity class).
+ */
 public class EntityEvaluationResult {
-	private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentMentionWise;
-	private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentDocWise;
-	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentMentionWise;
-	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise;
-	private String entityType;
-	private EvaluationMode evaluationMode;
+    private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentMentionWise;
+    private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentDocWise;
+    private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentMentionWise;
+    private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise;
+    private String entityType;
+    private EvaluationMode evaluationMode;
 
-	public EvaluationMode getEvaluationMode() {
-		return evaluationMode;
-	}
+    public EvaluationMode getEvaluationMode() {
+        return evaluationMode;
+    }
 
-	public void addStatisticsByDocument(String docId, Set<EvaluationDataEntry> tpSet,
-										Set<EvaluationDataEntry> fpSet, Set<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
-		evaluationMode = statsMode;
-		switch (statsMode) {
-		case DOCUMENT:
-			if (null == statisticsByDocumentDocWise)
-				statisticsByDocumentDocWise = new LinkedHashMap<>();
-			statisticsByDocumentDocWise.put(docId, new EvaluationStatistics(tpSet.size(), fpSet.size(), fnSet.size()));
-			if (null == entrySetsByDocumentDocWise)
-				entrySetsByDocumentDocWise = new LinkedHashMap<>();
-			entrySetsByDocumentDocWise.put(docId, new EvaluationDataEntrySets(tpSet, fpSet, fnSet));
-			break;
-		case MENTION:
-			if (null == statisticsByDocumentMentionWise)
-				statisticsByDocumentMentionWise = new LinkedHashMap<>();
-			statisticsByDocumentMentionWise.put(docId,
-					new EvaluationStatistics(tpSet.size(), fpSet.size(), fnSet.size()));
-			if (null == entrySetsByDocumentMentionWise)
-				entrySetsByDocumentMentionWise = new LinkedHashMap<>();
-			entrySetsByDocumentMentionWise.put(docId, new EvaluationDataEntrySets(tpSet, fpSet, fnSet));
-			break;
-		}
-	}
+    public void addStatisticsByDocument(String docId, Set<EvaluationDataEntry> tpSet,
+                                        Set<EvaluationDataEntry> fpSet, Set<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
+        switch (statsMode) {
+            case DOCUMENT:
+                // Do not override mention mode if already set
+                if (evaluationMode == null)
+                    evaluationMode = statsMode;
+                if (null == statisticsByDocumentDocWise)
+                    statisticsByDocumentDocWise = new LinkedHashMap<>();
+                statisticsByDocumentDocWise.put(docId, new EvaluationStatistics(tpSet.size(), fpSet.size(), fnSet.size()));
+                if (null == entrySetsByDocumentDocWise)
+                    entrySetsByDocumentDocWise = new LinkedHashMap<>();
+                entrySetsByDocumentDocWise.put(docId, new EvaluationDataEntrySets(tpSet, fpSet, fnSet));
+                break;
+            case MENTION:
+                evaluationMode = statsMode;
+                if (null == statisticsByDocumentMentionWise)
+                    statisticsByDocumentMentionWise = new LinkedHashMap<>();
+                statisticsByDocumentMentionWise.put(docId,
+                        new EvaluationStatistics(tpSet.size(), fpSet.size(), fnSet.size()));
+                if (null == entrySetsByDocumentMentionWise)
+                    entrySetsByDocumentMentionWise = new LinkedHashMap<>();
+                entrySetsByDocumentMentionWise.put(docId, new EvaluationDataEntrySets(tpSet, fpSet, fnSet));
+                break;
+        }
+    }
 
-	public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentMentionWise() {
-		return entrySetsByDocumentMentionWise;
-	}
+    public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentMentionWise() {
+        return entrySetsByDocumentMentionWise;
+    }
 
-	public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentDocWise() {
-		return entrySetsByDocumentDocWise;
-	}
-	
-	public Stream<EvaluationDataEntry> getTpEvaluationDataEntriesMentionWise(){
-		return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.tpSet.stream());
-	}
-	
-	public Stream<EvaluationDataEntry> getFpEvaluationDataEntriesMentionWise(){
-		return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.fpSet.stream());
-	}
-	
-	public Stream<EvaluationDataEntry> getFnEvaluationDataEntriesMentionWise(){
-		return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.fnSet.stream());
-	}
-	
-	public Stream<EvaluationDataEntry> getTpEvaluationDataEntriesDocWise(){
-		return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.tpSet.stream());
-	}
-	
-	public Stream<EvaluationDataEntry> getFpEvaluationDataEntriesDocWise(){
-		return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.fpSet.stream());
-	}
-	
-	public Stream<EvaluationDataEntry> getFnEvaluationDataEntriesDocWise(){
-		return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.fnSet.stream());
-	}
+    public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentDocWise() {
+        return entrySetsByDocumentDocWise;
+    }
 
-	public Map<String, EvaluationStatistics> getStatisticsByDocumentMentionWise() {
-		return statisticsByDocumentMentionWise;
-	}
+    public Stream<EvaluationDataEntry> getTpEvaluationDataEntriesMentionWise() {
+        return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.tpSet.stream());
+    }
 
-	public Map<String, EvaluationStatistics> getStatisticsByDocumentDocWise() {
-		return statisticsByDocumentDocWise;
-	}
+    public Stream<EvaluationDataEntry> getFpEvaluationDataEntriesMentionWise() {
+        return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.fpSet.stream());
+    }
 
-	public double getMacroFMeasureMentionWise() {
-		double sum = 0;
-		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
-			sum += entry.getValue().getFMeasure();
-		}
-		return sum / statisticsByDocumentMentionWise.size();
-	}
+    public Stream<EvaluationDataEntry> getFnEvaluationDataEntriesMentionWise() {
+        return entrySetsByDocumentMentionWise.values().stream().flatMap(set -> set.fnSet.stream());
+    }
 
-	public double getMacroPrecisionMentionWise() {
-		double sum = 0;
-		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
-			sum += entry.getValue().getPrecision();
-		}
-		return sum / statisticsByDocumentMentionWise.size();
-	}
+    public Stream<EvaluationDataEntry> getTpEvaluationDataEntriesDocWise() {
+        return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.tpSet.stream());
+    }
 
-	public double getMacroRecallMentionWise() {
-		double sum = 0;
-		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
-			sum += entry.getValue().getRecall();
-		}
-		return sum / statisticsByDocumentMentionWise.size();
-	}
+    public Stream<EvaluationDataEntry> getFpEvaluationDataEntriesDocWise() {
+        return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.fpSet.stream());
+    }
 
-	public double getMacroFMeasureDocWise() {
-		double sum = 0;
-		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
-			sum += entry.getValue().getFMeasure();
-		}
-		return sum / statisticsByDocumentDocWise.size();
-	}
+    public Stream<EvaluationDataEntry> getFnEvaluationDataEntriesDocWise() {
+        return entrySetsByDocumentDocWise.values().stream().flatMap(set -> set.fnSet.stream());
+    }
 
-	public double getMicroFMeasureDocWise() {
-		return FMeasure.getFMeasure(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
-	}
+    public Map<String, EvaluationStatistics> getStatisticsByDocumentMentionWise() {
+        return statisticsByDocumentMentionWise;
+    }
 
-	public double getMicroRecallDocWise() {
-		return FMeasure.getRecall(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
-	}
+    public Map<String, EvaluationStatistics> getStatisticsByDocumentDocWise() {
+        return statisticsByDocumentDocWise;
+    }
 
-	public double getMicroPrecisionDocWise() {
-		return FMeasure.getPrecision(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
-	}
+    public double getMacroFMeasureMentionWise() {
+        double sum = 0;
+        for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
+            sum += entry.getValue().getFMeasure();
+        }
+        return sum / statisticsByDocumentMentionWise.size();
+    }
 
-	public double getMicroFMeasureMentionWise() {
-		return FMeasure.getFMeasure(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
-	}
+    public double getMacroPrecisionMentionWise() {
+        double sum = 0;
+        for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
+            sum += entry.getValue().getPrecision();
+        }
+        return sum / statisticsByDocumentMentionWise.size();
+    }
 
-	public double getMicroRecallMentionWise() {
-		return FMeasure.getRecall(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
-	}
+    public double getMacroRecallMentionWise() {
+        double sum = 0;
+        for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
+            sum += entry.getValue().getRecall();
+        }
+        return sum / statisticsByDocumentMentionWise.size();
+    }
 
-	public double getMicroPrecisionMentionWise() {
-		return FMeasure.getPrecision(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
-	}
+    public double getMacroFMeasureDocWise() {
+        double sum = 0;
+        for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
+            sum += entry.getValue().getFMeasure();
+        }
+        return sum / statisticsByDocumentDocWise.size();
+    }
 
-	public double getMacroPrecisionDocWise() {
-		double sum = 0;
-		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
-			sum += entry.getValue().getPrecision();
-		}
-		return sum / statisticsByDocumentDocWise.size();
-	}
+    public double getMicroFMeasureDocWise() {
+        return FMeasure.getFMeasure(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
+    }
 
-	public double getMacroRecallDocWise() {
-		double sum = 0;
-		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
-			sum += entry.getValue().getRecall();
-		}
-		return sum / statisticsByDocumentDocWise.size();
-	}
+    public double getMicroRecallDocWise() {
+        return FMeasure.getRecall(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
+    }
 
-	public int getSumFpDocWise() {
-		int sum = 0;
-		for (EvaluationStatistics stats : statisticsByDocumentDocWise.values())
-			sum += stats.fp;
+    public double getMicroPrecisionDocWise() {
+        return FMeasure.getPrecision(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
+    }
 
-		return sum;
-	}
+    public double getMicroFMeasureMentionWise() {
+        return FMeasure.getFMeasure(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
+    }
 
-	public int getSumFnDocWise() {
-		int sum = 0;
-		for (EvaluationStatistics stats : statisticsByDocumentDocWise.values())
-			sum += stats.fn;
+    public double getMicroRecallMentionWise() {
+        return FMeasure.getRecall(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
+    }
 
-		return sum;
-	}
+    public double getMicroPrecisionMentionWise() {
+        return FMeasure.getPrecision(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
+    }
 
-	public int getSumTpDocWise() {
-		int sum = 0;
-		for (EvaluationStatistics stats : statisticsByDocumentDocWise.values())
-			sum += stats.tp;
+    public double getMacroPrecisionDocWise() {
+        double sum = 0;
+        for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
+            sum += entry.getValue().getPrecision();
+        }
+        return sum / statisticsByDocumentDocWise.size();
+    }
 
-		return sum;
-	}
+    public double getMacroRecallDocWise() {
+        double sum = 0;
+        for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
+            sum += entry.getValue().getRecall();
+        }
+        return sum / statisticsByDocumentDocWise.size();
+    }
 
-	public int getSumFpMentionWise() {
-		int sum = 0;
-		for (EvaluationStatistics stats : statisticsByDocumentMentionWise.values())
-			sum += stats.fp;
+    public int getSumFpDocWise() {
+        int sum = 0;
+        for (EvaluationStatistics stats : statisticsByDocumentDocWise.values())
+            sum += stats.fp;
 
-		return sum;
-	}
+        return sum;
+    }
 
-	public int getSumFnMentionWise() {
-		int sum = 0;
-		for (EvaluationStatistics stats : statisticsByDocumentMentionWise.values())
-			sum += stats.fn;
+    public int getSumFnDocWise() {
+        int sum = 0;
+        for (EvaluationStatistics stats : statisticsByDocumentDocWise.values())
+            sum += stats.fn;
 
-		return sum;
-	}
+        return sum;
+    }
 
-	public int getSumTpMentionWise() {
-		int sum = 0;
-		for (EvaluationStatistics stats : statisticsByDocumentMentionWise.values())
-			sum += stats.tp;
+    public int getSumTpDocWise() {
+        int sum = 0;
+        for (EvaluationStatistics stats : statisticsByDocumentDocWise.values())
+            sum += stats.tp;
 
-		return sum;
-	}
+        return sum;
+    }
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((statisticsByDocumentDocWise == null) ? 0 : statisticsByDocumentDocWise.hashCode());
-		result = prime * result
-				+ ((statisticsByDocumentMentionWise == null) ? 0 : statisticsByDocumentMentionWise.hashCode());
-		return result;
-	}
+    public int getSumFpMentionWise() {
+        int sum = 0;
+        for (EvaluationStatistics stats : statisticsByDocumentMentionWise.values())
+            sum += stats.fp;
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		EntityEvaluationResult other = (EntityEvaluationResult) obj;
-		if (statisticsByDocumentDocWise == null) {
-			if (other.statisticsByDocumentDocWise != null)
-				return false;
-		} else if (!statisticsByDocumentDocWise.equals(other.statisticsByDocumentDocWise))
-			return false;
-		if (statisticsByDocumentMentionWise == null) {
-			if (other.statisticsByDocumentMentionWise != null)
-				return false;
-		} else if (!statisticsByDocumentMentionWise.equals(other.statisticsByDocumentMentionWise))
-			return false;
-		return true;
-	}
+        return sum;
+    }
 
-	@Override
-	public String toString() {
-		return "EntityEvaluationResult [statisticsByDocumentMentionWise=" + statisticsByDocumentMentionWise
-				+ ", statisticsByDocumentDocWise=" + statisticsByDocumentDocWise + "]";
-	}
+    public int getSumFnMentionWise() {
+        int sum = 0;
+        for (EvaluationStatistics stats : statisticsByDocumentMentionWise.values())
+            sum += stats.fn;
 
-	public String getEvaluationReportLong() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
-		sb.append("Document Level:\n");
-		for (Entry<String, EvaluationStatistics> entry : this.getStatisticsByDocumentDocWise().entrySet()) {
-			String docId = entry.getKey();
-			EvaluationStatistics stats = entry.getValue();
-			sb.append(docId + ": F: " + stats.getFMeasure() + ", R: " + stats.getRecall() + ", P: "
-					+ stats.getPrecision() + " (tp: " + stats.tp + ", fp: " + stats.fp + ", fn: " + stats.fn + ")");
-			sb.append("\n");
-		}
-		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
-		sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
-		sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
-		sb.append("  Recall (micro):    ").append(getMicroRecallDocWise()).append("\n");
-		sb.append("  Precision (micro): ").append(getMicroPrecisionDocWise()).append("\n");
-		sb.append("  F-Score (micro):   ").append(getMicroFMeasureDocWise()).append("\n");
-		sb.append("  Recall (macro):    ").append(getMacroRecallDocWise()).append("\n");
-		sb.append("  Precision (macro): ").append(getMacroPrecisionDocWise()).append("\n");
-		sb.append("  F-Score (macro):   ").append(getMacroFMeasureDocWise()).append("\n");
+        return sum;
+    }
 
-		sb.append("Mention Level:\n");
-		if (null != statisticsByDocumentMentionWise) {
-			for (Entry<String, EvaluationStatistics> entry : this.getStatisticsByDocumentMentionWise().entrySet()) {
-				String docId = entry.getKey();
-				EvaluationStatistics stats = entry.getValue();
-				sb.append(docId + ": F: " + stats.getFMeasure() + ", R: " + stats.getRecall() + ", P: "
-						+ stats.getPrecision() + " (tp: " + stats.tp + ", fp: " + stats.fp + ", fn: " + stats.fn + ")");
-				sb.append("\n");
-			}
-			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
-			sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
-			sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
-			sb.append("  Recall (micro):    ").append(getMicroRecallMentionWise()).append("\n");
-			sb.append("  Precision (micro): ").append(getMicroPrecisionMentionWise()).append("\n");
-			sb.append("  F-Score (micro):   ").append(getMicroFMeasureMentionWise()).append("\n");
-			sb.append("  Recall (macro):    ").append(getMacroRecallMentionWise()).append("\n");
-			sb.append("  Precision (macro): ").append(getMacroPrecisionMentionWise()).append("\n");
-			sb.append("  F-Score (macro):   ").append(getMacroFMeasureMentionWise()).append("\n");
-		} else {
-			sb.append("No mention information available.");
-		}
-		sb.append("\n");
-		return sb.toString();
-	}
+    public int getSumTpMentionWise() {
+        int sum = 0;
+        for (EvaluationStatistics stats : statisticsByDocumentMentionWise.values())
+            sum += stats.tp;
 
-	public String getEvaluationReportShort() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
-		sb.append("Document Level:\n");
-		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
-		sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
-		sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
-		sb.append("  Recall (micro):    ").append(getMicroRecallDocWise()).append("\n");
-		sb.append("  Precision (micro): ").append(getMicroPrecisionDocWise()).append("\n");
-		sb.append("  F-Score (micro):   ").append(getMicroFMeasureDocWise()).append("\n");
+        return sum;
+    }
 
-		sb.append("Mention Level:\n");
-		if (null != statisticsByDocumentMentionWise) {
-			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
-			sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
-			sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
-			sb.append("  Recall (micro):    ").append(getMicroRecallMentionWise()).append("\n");
-			sb.append("  Precision (micro): ").append(getMicroPrecisionMentionWise()).append("\n");
-			sb.append("  F-Score (micro):   ").append(getMicroFMeasureMentionWise()).append("\n");
-		} else {
-			sb.append("No mention information available.");
-		}
-		return sb.toString();
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((statisticsByDocumentDocWise == null) ? 0 : statisticsByDocumentDocWise.hashCode());
+        result = prime * result
+                + ((statisticsByDocumentMentionWise == null) ? 0 : statisticsByDocumentMentionWise.hashCode());
+        return result;
+    }
 
-	public String getEvaluationReportAllTp(EvaluationMode mode) {
-		return getEvaluationReportAllEntries(mode, Statistics.TP);
-	}
-	
-	public String getEvaluationReportAllFp(EvaluationMode mode) {
-		return getEvaluationReportAllEntries(mode, Statistics.FP);
-	}
-	
-	public String getEvaluationReportAllFn(EvaluationMode mode) {
-		return getEvaluationReportAllEntries(mode, Statistics.FN);
-	}
-	
-	public String getEvaluationReportAllEntries(EvaluationMode mode, Statistics type) {
-		StringBuilder sb = new StringBuilder();
-		switch (mode) {
-		case DOCUMENT:
-			for (Entry<String, EvaluationDataEntrySets> entry : entrySetsByDocumentDocWise.entrySet()) {
-				for (EvaluationDataEntry dataEntry : entry.getValue().get(type)) {
-					sb.append(entry.getKey());
-					sb.append(":");
-					sb.append(dataEntry.getEntityId());
-					sb.append("\n");
-				}
-			}
-			break;
-		case MENTION:
-			for (Entry<String, EvaluationDataEntrySets> entry : entrySetsByDocumentMentionWise.entrySet()) {
-				for (EvaluationDataEntry dataEntry : entry.getValue().get(type)) {
-					sb.append(entry.getKey());
-					sb.append(":");
-					sb.append(dataEntry.getEntityId());
-					sb.append("\n");
-				}
-			}
-			break;
-		}
-		return sb.toString();
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        EntityEvaluationResult other = (EntityEvaluationResult) obj;
+        if (statisticsByDocumentDocWise == null) {
+            if (other.statisticsByDocumentDocWise != null)
+                return false;
+        } else if (!statisticsByDocumentDocWise.equals(other.statisticsByDocumentDocWise))
+            return false;
+        if (statisticsByDocumentMentionWise == null) {
+            if (other.statisticsByDocumentMentionWise != null)
+                return false;
+        } else if (!statisticsByDocumentMentionWise.equals(other.statisticsByDocumentMentionWise))
+            return false;
+        return true;
+    }
 
-	public void setEntityType(String entityType) {
-		this.entityType = entityType;
-	}
+    @Override
+    public String toString() {
+        return "EntityEvaluationResult [statisticsByDocumentMentionWise=" + statisticsByDocumentMentionWise
+                + ", statisticsByDocumentDocWise=" + statisticsByDocumentDocWise + "]";
+    }
 
-	public String getEntityType() {
-		return entityType;
-	}
+    public String getEvaluationReportLong() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
+        sb.append("Document Level:\n");
+        for (Entry<String, EvaluationStatistics> entry : this.getStatisticsByDocumentDocWise().entrySet()) {
+            String docId = entry.getKey();
+            EvaluationStatistics stats = entry.getValue();
+            sb.append(docId + ": F: " + stats.getFMeasure() + ", R: " + stats.getRecall() + ", P: "
+                    + stats.getPrecision() + " (tp: " + stats.tp + ", fp: " + stats.fp + ", fn: " + stats.fn + ")");
+            sb.append("\n");
+        }
+        sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
+        sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
+        sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
+        sb.append("  Recall (micro):    ").append(getMicroRecallDocWise()).append("\n");
+        sb.append("  Precision (micro): ").append(getMicroPrecisionDocWise()).append("\n");
+        sb.append("  F-Score (micro):   ").append(getMicroFMeasureDocWise()).append("\n");
+        sb.append("  Recall (macro):    ").append(getMacroRecallDocWise()).append("\n");
+        sb.append("  Precision (macro): ").append(getMacroPrecisionDocWise()).append("\n");
+        sb.append("  F-Score (macro):   ").append(getMacroFMeasureDocWise()).append("\n");
+
+        sb.append("Mention Level:\n");
+        if (null != statisticsByDocumentMentionWise) {
+            for (Entry<String, EvaluationStatistics> entry : this.getStatisticsByDocumentMentionWise().entrySet()) {
+                String docId = entry.getKey();
+                EvaluationStatistics stats = entry.getValue();
+                sb.append(docId + ": F: " + stats.getFMeasure() + ", R: " + stats.getRecall() + ", P: "
+                        + stats.getPrecision() + " (tp: " + stats.tp + ", fp: " + stats.fp + ", fn: " + stats.fn + ")");
+                sb.append("\n");
+            }
+            sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
+            sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
+            sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
+            sb.append("  Recall (micro):    ").append(getMicroRecallMentionWise()).append("\n");
+            sb.append("  Precision (micro): ").append(getMicroPrecisionMentionWise()).append("\n");
+            sb.append("  F-Score (micro):   ").append(getMicroFMeasureMentionWise()).append("\n");
+            sb.append("  Recall (macro):    ").append(getMacroRecallMentionWise()).append("\n");
+            sb.append("  Precision (macro): ").append(getMacroPrecisionMentionWise()).append("\n");
+            sb.append("  F-Score (macro):   ").append(getMacroFMeasureMentionWise()).append("\n");
+        } else {
+            sb.append("No mention information available.");
+        }
+        sb.append("\n");
+        return sb.toString();
+    }
+
+    public String getEvaluationReportShort() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Evaluation results for entity type \"" + entityType + "\":\n");
+        sb.append("Document Level:\n");
+        sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
+        sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
+        sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
+        sb.append("  Recall (micro):    ").append(getMicroRecallDocWise()).append("\n");
+        sb.append("  Precision (micro): ").append(getMicroPrecisionDocWise()).append("\n");
+        sb.append("  F-Score (micro):   ").append(getMicroFMeasureDocWise()).append("\n");
+
+        sb.append("Mention Level:\n");
+        if (null != statisticsByDocumentMentionWise) {
+            sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
+            sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
+            sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
+            sb.append("  Recall (micro):    ").append(getMicroRecallMentionWise()).append("\n");
+            sb.append("  Precision (micro): ").append(getMicroPrecisionMentionWise()).append("\n");
+            sb.append("  F-Score (micro):   ").append(getMicroFMeasureMentionWise()).append("\n");
+        } else {
+            sb.append("No mention information available.");
+        }
+        return sb.toString();
+    }
+
+    public String getEvaluationReportAllTp(EvaluationMode mode) {
+        return getEvaluationReportAllEntries(mode, Statistics.TP);
+    }
+
+    public String getEvaluationReportAllFp(EvaluationMode mode) {
+        return getEvaluationReportAllEntries(mode, Statistics.FP);
+    }
+
+    public String getEvaluationReportAllFn(EvaluationMode mode) {
+        return getEvaluationReportAllEntries(mode, Statistics.FN);
+    }
+
+    public String getEvaluationReportAllEntries(EvaluationMode mode, Statistics type) {
+        StringBuilder sb = new StringBuilder();
+        switch (mode) {
+            case DOCUMENT:
+                for (Entry<String, EvaluationDataEntrySets> entry : entrySetsByDocumentDocWise.entrySet()) {
+                    for (EvaluationDataEntry dataEntry : entry.getValue().get(type)) {
+                        sb.append(entry.getKey());
+                        sb.append(":");
+                        sb.append(dataEntry.getEntityId());
+                        sb.append("\n");
+                    }
+                }
+                break;
+            case MENTION:
+                for (Entry<String, EvaluationDataEntrySets> entry : entrySetsByDocumentMentionWise.entrySet()) {
+                    for (EvaluationDataEntry dataEntry : entry.getValue().get(type)) {
+                        sb.append(entry.getKey());
+                        sb.append(":");
+                        sb.append(dataEntry.getEntityId());
+                        sb.append("\n");
+                    }
+                }
+                break;
+        }
+        return sb.toString();
+    }
+
+    public String getEntityType() {
+        return entityType;
+    }
+
+    public void setEntityType(String entityType) {
+        this.entityType = entityType;
+    }
 
 }
