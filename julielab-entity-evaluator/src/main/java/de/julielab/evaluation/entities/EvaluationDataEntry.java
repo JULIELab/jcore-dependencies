@@ -63,6 +63,29 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 		overlapSize = 100;
 		entityType = "entity";
 	}
+
+	public EvaluationDataEntry(String docId, String entityId, int begin, int end, String recognitionSystem) {
+		this.docId = docId;
+		this.entityId = entityId;
+		offsetRange = Range.between(begin, end);
+		comparisonType = ComparisonType.EXACT;
+		overlapType = OverlapType.PERCENT;
+		overlapSize = 100;
+		entityType = "entity";
+		this.recognitionSystem = recognitionSystem;
+	}
+
+	public EvaluationDataEntry(String docId, String entityId, int begin, int end, String recognitionSystem, String entityString) {
+		this.docId = docId;
+		this.entityId = entityId;
+		offsetRange = Range.between(begin, end);
+		comparisonType = ComparisonType.EXACT;
+		overlapType = OverlapType.PERCENT;
+		overlapSize = 100;
+		entityType = "entity";
+		this.recognitionSystem = recognitionSystem;
+		this.entityString = entityString;
+	}
 	
 	public EvaluationDataEntry(String docId, String entityId, int begin, int end, String entityString, String recognitionSystem, String entityType) {
 		this(docId, entityId, begin, end);
@@ -171,7 +194,7 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	 * have comparable offsets. What 'comparable' exactly is, is subject to
 	 * definition and may range from exact matching to loose overlapping.
 	 * 
-	 * @param otherEntry
+	 * @param other
 	 * @return
 	 */
 	public boolean hasComparableOffset(EvaluationDataEntry other) {
