@@ -12,9 +12,15 @@ public class EntityEvaluationResult {
 	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentMentionWise;
 	private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise;
 	private String entityType;
+	private EvaluationMode evaluationMode;
+
+	public EvaluationMode getEvaluationMode() {
+		return evaluationMode;
+	}
 
 	public void addStatisticsByDocument(String docId, Set<EvaluationDataEntry> tpSet,
-			Set<EvaluationDataEntry> fpSet, Set<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
+										Set<EvaluationDataEntry> fpSet, Set<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
+		evaluationMode = statsMode;
 		switch (statsMode) {
 		case DOCUMENT:
 			if (null == statisticsByDocumentDocWise)
@@ -76,7 +82,7 @@ public class EntityEvaluationResult {
 		return statisticsByDocumentDocWise;
 	}
 
-	public double getAvgFMeasureMentionWise() {
+	public double getMacroFMeasureMentionWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
 			sum += entry.getValue().getFMeasure();
@@ -84,7 +90,7 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentMentionWise.size();
 	}
 
-	public double getAvgPrecisionMentionWise() {
+	public double getMacroPrecisionMentionWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
 			sum += entry.getValue().getPrecision();
@@ -92,7 +98,7 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentMentionWise.size();
 	}
 
-	public double getAvgRecallMentionWise() {
+	public double getMacroRecallMentionWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentMentionWise.entrySet()) {
 			sum += entry.getValue().getRecall();
@@ -100,7 +106,7 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentMentionWise.size();
 	}
 
-	public double getAvgFMeasureDocWise() {
+	public double getMacroFMeasureDocWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
 			sum += entry.getValue().getFMeasure();
@@ -108,31 +114,31 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentDocWise.size();
 	}
 
-	public double getOverallFMeasureDocWise() {
+	public double getMicroFMeasureDocWise() {
 		return FMeasure.getFMeasure(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
 	}
 
-	public double getOverallRecallDocWise() {
+	public double getMicroRecallDocWise() {
 		return FMeasure.getRecall(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
 	}
 
-	public double getOverallPrecisionDocWise() {
+	public double getMicroPrecisionDocWise() {
 		return FMeasure.getPrecision(getSumTpDocWise(), getSumFpDocWise(), getSumFnDocWise());
 	}
 
-	public double getOverallFMeasureMentionWise() {
+	public double getMicroFMeasureMentionWise() {
 		return FMeasure.getFMeasure(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
 	}
 
-	public double getOverallRecallMentionWise() {
+	public double getMicroRecallMentionWise() {
 		return FMeasure.getRecall(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
 	}
 
-	public double getOverallPrecisionMentionWise() {
+	public double getMicroPrecisionMentionWise() {
 		return FMeasure.getPrecision(getSumTpMentionWise(), getSumFpMentionWise(), getSumFnMentionWise());
 	}
 
-	public double getAvgPrecisionDocWise() {
+	public double getMacroPrecisionDocWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
 			sum += entry.getValue().getPrecision();
@@ -140,7 +146,7 @@ public class EntityEvaluationResult {
 		return sum / statisticsByDocumentDocWise.size();
 	}
 
-	public double getAvgRecallDocWise() {
+	public double getMacroRecallDocWise() {
 		double sum = 0;
 		for (Entry<String, EvaluationStatistics> entry : statisticsByDocumentDocWise.entrySet()) {
 			sum += entry.getValue().getRecall();
@@ -248,12 +254,12 @@ public class EntityEvaluationResult {
 		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
 		sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
 		sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
-		sb.append("  Recall:    ").append(getOverallRecallDocWise()).append("\n");
-		sb.append("  Precision: ").append(getOverallPrecisionDocWise()).append("\n");
-		sb.append("  F-Score:   ").append(getOverallFMeasureDocWise()).append("\n");
-		sb.append("  Average Recall:    ").append(getAvgRecallDocWise()).append("\n");
-		sb.append("  Average Precision: ").append(getAvgPrecisionDocWise()).append("\n");
-		sb.append("  Average F-Score:   ").append(getAvgFMeasureDocWise()).append("\n");
+		sb.append("  Recall (micro):    ").append(getMicroRecallDocWise()).append("\n");
+		sb.append("  Precision (micro): ").append(getMicroPrecisionDocWise()).append("\n");
+		sb.append("  F-Score (micro):   ").append(getMicroFMeasureDocWise()).append("\n");
+		sb.append("  Recall (macro):    ").append(getMacroRecallDocWise()).append("\n");
+		sb.append("  Precision (macro): ").append(getMacroPrecisionDocWise()).append("\n");
+		sb.append("  F-Score (macro):   ").append(getMacroFMeasureDocWise()).append("\n");
 
 		sb.append("Mention Level:\n");
 		if (null != statisticsByDocumentMentionWise) {
@@ -267,12 +273,12 @@ public class EntityEvaluationResult {
 			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
 			sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
 			sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
-			sb.append("  Recall:    ").append(getOverallRecallMentionWise()).append("\n");
-			sb.append("  Precision: ").append(getOverallPrecisionMentionWise()).append("\n");
-			sb.append("  F-Score:   ").append(getOverallFMeasureMentionWise()).append("\n");
-			sb.append("  Average Recall:    ").append(getAvgRecallMentionWise()).append("\n");
-			sb.append("  Average Precision: ").append(getAvgPrecisionMentionWise()).append("\n");
-			sb.append("  Average F-Score:   ").append(getAvgFMeasureMentionWise()).append("\n");
+			sb.append("  Recall (micro):    ").append(getMicroRecallMentionWise()).append("\n");
+			sb.append("  Precision (micro): ").append(getMicroPrecisionMentionWise()).append("\n");
+			sb.append("  F-Score (micro):   ").append(getMicroFMeasureMentionWise()).append("\n");
+			sb.append("  Recall (macro):    ").append(getMacroRecallMentionWise()).append("\n");
+			sb.append("  Precision (macro): ").append(getMacroPrecisionMentionWise()).append("\n");
+			sb.append("  F-Score (macro):   ").append(getMacroFMeasureMentionWise()).append("\n");
 		} else {
 			sb.append("No mention information available.");
 		}
@@ -287,18 +293,18 @@ public class EntityEvaluationResult {
 		sb.append("  TP: ").append(getSumTpDocWise()).append("\n");
 		sb.append("  FP: ").append(getSumFpDocWise()).append("\n");
 		sb.append("  FN: ").append(getSumFnDocWise()).append("\n");
-		sb.append("  Recall:    ").append(getOverallRecallDocWise()).append("\n");
-		sb.append("  Precision: ").append(getOverallPrecisionDocWise()).append("\n");
-		sb.append("  F-Score:   ").append(getOverallFMeasureDocWise()).append("\n");
+		sb.append("  Recall (micro):    ").append(getMicroRecallDocWise()).append("\n");
+		sb.append("  Precision (micro): ").append(getMicroPrecisionDocWise()).append("\n");
+		sb.append("  F-Score (micro):   ").append(getMicroFMeasureDocWise()).append("\n");
 
 		sb.append("Mention Level:\n");
 		if (null != statisticsByDocumentMentionWise) {
 			sb.append("  TP: ").append(getSumTpMentionWise()).append("\n");
 			sb.append("  FP: ").append(getSumFpMentionWise()).append("\n");
 			sb.append("  FN: ").append(getSumFnMentionWise()).append("\n");
-			sb.append("  Recall:    ").append(getOverallRecallMentionWise()).append("\n");
-			sb.append("  Precision: ").append(getOverallPrecisionMentionWise()).append("\n");
-			sb.append("  F-Score:   ").append(getOverallFMeasureMentionWise()).append("\n");
+			sb.append("  Recall (micro):    ").append(getMicroRecallMentionWise()).append("\n");
+			sb.append("  Precision (micro): ").append(getMicroPrecisionMentionWise()).append("\n");
+			sb.append("  F-Score (micro):   ").append(getMicroFMeasureMentionWise()).append("\n");
 		} else {
 			sb.append("No mention information available.");
 		}

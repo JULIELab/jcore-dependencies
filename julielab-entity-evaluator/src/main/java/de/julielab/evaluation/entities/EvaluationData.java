@@ -18,6 +18,8 @@ import java.util.stream.Collectors;
 
 public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 
+	public enum GroupingType {ENTITYTYPE, LABEL}
+
 	private static final Logger log = LoggerFactory.getLogger(EvaluationData.class);
 	public static final String PROP_INPUT_FORMAT_CLASS = "input-format-class";
 	/**
@@ -259,6 +261,12 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	public Map<String, EvaluationData> groupByEntityTypes() {
 		return stream().collect(
 				Collectors.groupingBy(EvaluationDataEntry::getEntityType, HashMap::new,
+						Collectors.mapping(Function.identity(), Collectors.toCollection(() -> new EvaluationData(isMentionData)))));
+	}
+
+	public Map<String, EvaluationData> groupByEntityLabel() {
+		return stream().collect(
+				Collectors.groupingBy(EvaluationDataEntry::getEntityId, HashMap::new,
 						Collectors.mapping(Function.identity(), Collectors.toCollection(() -> new EvaluationData(isMentionData)))));
 	}
 }

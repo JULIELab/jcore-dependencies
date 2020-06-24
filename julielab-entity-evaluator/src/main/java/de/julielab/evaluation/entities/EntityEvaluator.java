@@ -30,6 +30,7 @@ public class EntityEvaluator {
     public static final String PROP_OVERLAP_TYPE = "overlap-type";
     public static final String PROP_OVERLAP_SIZE = "overlap-size";
     public static final String PROP_WITH_IDS = "with-ids";
+    public static final String PROP_GROUPING_TYPE = "grouping-type";
     public static final Logger log = LoggerFactory.getLogger(EntityEvaluator.class);
     private ComparisonType comparisonType;
     private OverlapType overlapType;
@@ -66,7 +67,7 @@ public class EntityEvaluator {
 
     }
 
-    public EntityEvaluator(Properties properties) throws FileNotFoundException, IOException {
+    public EntityEvaluator(Properties properties) {
         this.properties = properties;
 
         comparisonType = EvaluationDataEntry.ComparisonType.valueOf(properties
@@ -212,13 +213,24 @@ public class EntityEvaluator {
             entryConfigurator.accept(predicted.stream());
         }
 
+        EvaluationData.GroupingType groupingType = properties != null ? EvaluationData.GroupingType.valueOf(properties.getProperty(PROP_GROUPING_TYPE, EvaluationData.GroupingType.ENTITYTYPE.name()).toUpperCase()) : EvaluationData.GroupingType.ENTITYTYPE;
 
-        Function<EvaluationData, Map<String, EvaluationData>> toLabelGroups = data -> {
-            final Map<String, EvaluationData> map = data.groupByEntityTypes();
-            if (map.size() > 1)
-                map.put(EntityEvaluationResults.OVERALL, data);
-            return map;
-        };
+        Function<EvaluationData, Map<String, EvaluationData>> toLabelGroups =
+                groupingType == EvaluationData.GroupingType.ENTITYTYPE
+                ?
+                data -> {
+                    final Map<String, EvaluationData> map = data.groupByEntityTypes();
+                    if (map.size() > 1)
+                        map.put(EntityEvaluationResults.OVERALL, data);
+                    return map;
+                }
+                :
+                data -> {
+                    final Map<String, EvaluationData> map = data.groupByEntityLabel();
+                    if (map.size() > 1)
+                        map.put(EntityEvaluationResults.OVERALL, data);
+                    return map;
+                };
         Map<String, EvaluationData> goldByEntityTypes = toLabelGroups.apply(gold);
         Map<String, EvaluationData> goldAltByEntityTypes = toLabelGroups.apply(alternative);
         Map<String, EvaluationData> predictedByEntityTypes = toLabelGroups.apply(predicted);

@@ -186,7 +186,7 @@ public class EntityEvaluatorTest {
     public void testBANNEROutput() throws  IOException {
         // We test the performance of the BANNER tagger trained on BC2GM train on BC2GM test, both with alternatives (e.g. alternatives were also added to the training data).
         // The target performance values were calculated using the alt_eval.pl script of the BC2GM corpus.
-        // The EntityEvaluator finds one TP less and one FN more which I didn't persue further because that is already
+        // The EntityEvaluator finds one TP less and one FN more which I didn't pursue further because that is already
         // a minor deviation for two different evaluation algorithms. It is basically the same result.
         // Thus, we expect a certain outcome of this evaluation which is fixed here as a test.
         final EvaluationData gold = EvaluationData.readDataFile(new File("src/test/resources/bc2gmtestgold.genelist"));
@@ -194,9 +194,9 @@ public class EntityEvaluatorTest {
         final EvaluationData pred = EvaluationData.readDataFile(new File("src/test/resources/bc2gmbannerpred.julieeval"));
         final EntityEvaluator evaluator = new EntityEvaluator();
         final EntityEvaluationResults evaluationResults = evaluator.evaluate(gold, alt, pred);
-        final double recall = evaluationResults.getOverallResult().getOverallRecallMentionWise();
-        final double precision = evaluationResults.getOverallResult().getOverallPrecisionMentionWise();
-        final double fscore = evaluationResults.getOverallResult().getOverallFMeasureMentionWise();
+        final double recall = evaluationResults.getOverallResult().getMicroRecallMentionWise();
+        final double precision = evaluationResults.getOverallResult().getMicroPrecisionMentionWise();
+        final double fscore = evaluationResults.getOverallResult().getMicroFMeasureMentionWise();
 
         assertThat(recall).isCloseTo(0.8445, Offset.offset(0.001));
         assertThat(precision).isCloseTo(0.8817, Offset.offset(0.001));
