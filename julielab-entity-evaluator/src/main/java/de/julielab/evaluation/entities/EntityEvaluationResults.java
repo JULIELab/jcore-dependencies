@@ -52,27 +52,27 @@ public class EntityEvaluationResults extends HashMap<String, EntityEvaluationRes
 		if (size() > 1) {
 			sb.append("Evaluation results across all classes:").append(ls);
 			sb.append("Document Level:").append(ls);
-			Triple<Double, Double, Double> microStatsDocWise = getMicroStatsDocWise();
-			Triple<Double, Double, Double> macroStatsDocWise = getMacroStatsDocWise();
-			sb.append("  Recall (micro):    " + microStatsDocWise.getLeft()).append(ls);
-			sb.append("  Precision (micro): " + microStatsDocWise.getLeft()).append(ls);
-			sb.append("  F-Score (micro):   " + microStatsDocWise.getLeft()).append(ls);
-			sb.append("  Recall (macro):    " + macroStatsDocWise.getLeft()).append(ls);
-			sb.append("  Precision (macro): " + macroStatsDocWise.getLeft()).append(ls);
-			sb.append("  F-Score (macro):   " + macroStatsDocWise.getLeft()).append(ls);
+			FMetric microStatsDocWise = getMicroStatsDocWise();
+			FMetric macroStatsDocWise = getMacroStatsDocWise();
+			sb.append("  Recall (micro):    " + microStatsDocWise.getRecall()).append(ls);
+			sb.append("  Precision (micro): " + microStatsDocWise.getPrecision()).append(ls);
+			sb.append("  F-Score (micro):   " + microStatsDocWise.getF()).append(ls);
+			sb.append("  Recall (macro):    " + macroStatsDocWise.getRecall()).append(ls);
+			sb.append("  Precision (macro): " + macroStatsDocWise.getPrecision()).append(ls);
+			sb.append("  F-Score (macro):   " + macroStatsDocWise.getF()).append(ls);
 			sb.append(ls);
 			sb.append(ls);
 
 			if (getEvaluationMode() == EvaluationMode.MENTION) {
 				sb.append("Document Level:").append(ls);
-				Triple<Double, Double, Double> microStatsMentionWise = getMicroStatsMentionWise();
-				Triple<Double, Double, Double> macroStatsMentionWise = getMacroStatsMentionWise();
-				sb.append("  Recall (micro):    " + microStatsMentionWise.getLeft()).append(ls);
-				sb.append("  Precision (micro): " + microStatsMentionWise.getLeft()).append(ls);
-				sb.append("  F-Score (micro):   " + microStatsMentionWise.getLeft()).append(ls);
-				sb.append("  Recall (macro):    " + macroStatsMentionWise.getLeft()).append(ls);
-				sb.append("  Precision (macro): " + macroStatsMentionWise.getLeft()).append(ls);
-				sb.append("  F-Score (macro):   " + macroStatsMentionWise.getLeft()).append(ls);
+				FMetric microStatsMentionWise = getMicroStatsMentionWise();
+				FMetric macroStatsMentionWise = getMacroStatsMentionWise();
+				sb.append("  Recall (micro):    " + microStatsMentionWise.getRecall()).append(ls);
+				sb.append("  Precision (micro): " + microStatsMentionWise.getPrecision()).append(ls);
+				sb.append("  F-Score (micro):   " + microStatsMentionWise.getF()).append(ls);
+				sb.append("  Recall (macro):    " + macroStatsMentionWise.getRecall()).append(ls);
+				sb.append("  Precision (macro): " + macroStatsMentionWise.getPrecision()).append(ls);
+				sb.append("  F-Score (macro):   " + macroStatsMentionWise.getF()).append(ls);
 				sb.append(ls);
 				sb.append(ls);
 			}
@@ -94,31 +94,31 @@ public class EntityEvaluationResults extends HashMap<String, EntityEvaluationRes
 		return sb.toString();
 	}
 
-	public Triple<Double, Double, Double> getMacroStatsDocWise() {
+	public FMetric getMacroStatsDocWise() {
 		double macroRecall = values().stream().mapToDouble(EntityEvaluationResult::getMicroRecallDocWise).average().orElse(0);
 		double macroPrecision = values().stream().mapToDouble(EntityEvaluationResult::getMicroPrecisionDocWise).average().orElse(0);
 		double macroF = values().stream().mapToDouble(EntityEvaluationResult::getMicroFMeasureDocWise).average().orElse(0);
-		return new ImmutableTriple<>(macroRecall, macroPrecision, macroF);
+		return new FMetric(macroRecall, macroPrecision, macroF);
 	}
 
-	public Triple<Double, Double, Double> getMicroStatsDocWise() {
+	public FMetric getMicroStatsDocWise() {
 		int sumTps = values().stream().mapToInt(r -> r.getSumTpDocWise()).sum();
 		int sumFps = values().stream().mapToInt(r -> r.getSumFpDocWise()).sum();
 		int sumFns = values().stream().mapToInt(r -> r.getSumFnDocWise()).sum();
-		return new ImmutableTriple<>(FMeasure.getRecall(sumTps, sumFps, sumFns), FMeasure.getPrecision(sumTps, sumFps, sumFns), FMeasure.getFMeasure(sumTps, sumFps, sumFns));
+		return new FMetric(FMeasure.getRecall(sumTps, sumFps, sumFns), FMeasure.getPrecision(sumTps, sumFps, sumFns), FMeasure.getFMeasure(sumTps, sumFps, sumFns));
 	}
 
-	public Triple<Double, Double, Double> getMacroStatsMentionWise() {
+	public FMetric getMacroStatsMentionWise() {
 		double macroRecall = values().stream().mapToDouble(EntityEvaluationResult::getMicroRecallMentionWise).average().orElse(0);
 		double macroPrecision = values().stream().mapToDouble(EntityEvaluationResult::getMicroPrecisionMentionWise).average().orElse(0);
 		double macroF = values().stream().mapToDouble(EntityEvaluationResult::getMicroFMeasureMentionWise).average().orElse(0);
-		return new ImmutableTriple<>(macroRecall, macroPrecision, macroF);
+		return new FMetric(macroRecall, macroPrecision, macroF);
 	}
 
-	public Triple<Double, Double, Double> getMicroStatsMentionWise() {
+	public FMetric getMicroStatsMentionWise() {
 		int sumTps = values().stream().mapToInt(r -> r.getSumTpMentionWise()).sum();
 		int sumFps = values().stream().mapToInt(r -> r.getSumFpMentionWise()).sum();
 		int sumFns = values().stream().mapToInt(r -> r.getSumFnMentionWise()).sum();
-		return new ImmutableTriple<>(FMeasure.getRecall(sumTps, sumFps, sumFns), FMeasure.getPrecision(sumTps, sumFps, sumFns), FMeasure.getFMeasure(sumTps, sumFps, sumFns));
+		return new FMetric(FMeasure.getRecall(sumTps, sumFps, sumFns), FMeasure.getPrecision(sumTps, sumFps, sumFns), FMeasure.getFMeasure(sumTps, sumFps, sumFns));
 	}
 }

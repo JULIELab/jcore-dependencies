@@ -98,6 +98,8 @@ public class BinaryJeDISNodeDecoder {
                 currentElement = new Element(typeName);
 
                 final Type type = ts.getType(typeName);
+                if (type == null)
+                    throw new IllegalArgumentException("Unknown UIMA type: " + typeName);
                 final byte numAttributes = bb.get();
                 currentSofaId = currentXmiId = -1;
                 for (int i = 0; i < numAttributes; i++) {
@@ -178,15 +180,15 @@ public class BinaryJeDISNodeDecoder {
         if (!seenElementIds.add(e.getXmiId()))
             return;
         String intendation = StringUtils.repeat("    ", recursionLevel);
-        log.debug(intendation + e.getTypeName() + "(" + e.getXmiId() + ")");
+        log.trace(intendation + e.getTypeName() + "(" + e.getXmiId() + ")");
         if (e.isListNode())
-            log.debug(intendation + "WARNING: List node");
+            log.trace(intendation + "WARNING: List node");
         boolean omitAttribute = false;
         // Here we follow all reference attributes recursively down in search of elements to be omitted.
         // Thus, after this loop, we are  sure that all elements directly or indirectly referenced from this
         // element have been handeled.
         for (JeDISAttribute a : e.getAttributes().values()) {
-            log.debug("    " + intendation + a.getName() + ": " + a.getReferencedIds());
+            log.trace("    " + intendation + a.getName() + ": " + a.getReferencedIds());
             for (Integer id : a.getReferencedIds()) {
                 final Element element = elements.get(id);
                 if (element != null) {
@@ -214,7 +216,7 @@ public class BinaryJeDISNodeDecoder {
             }
         }
 
-        log.debug(intendation + e.isToBeOmitted());
+        log.trace(intendation + e.isToBeOmitted());
     }
 
     private void closeLinkedListGapDueToOmission(Element e, String attrName, Map<Integer, Element> elements, String intendation) {
@@ -237,7 +239,7 @@ public class BinaryJeDISNodeDecoder {
                     idsToAdd.add(nextNode.getXmiId());
             }
             if (nextNode != null) {
-                log.debug(intendation + "exchanging " + attrName + " ID " + referencedId + " with " + nextNode.getXmiId());
+                log.trace(intendation + "exchanging " + attrName + " ID " + referencedId + " with " + nextNode.getXmiId());
                 // We will exchange at least one ID for this attribute, mark it for modification
                 attribute.setModified(true);
             }
