@@ -98,6 +98,23 @@ public class ScoredObject<E> implements Scored {
     }
 
     /**
+     * Returns the hash code of the ScoredObject.  The hash code
+     * is defined to be consistent with equality:
+     *
+     * 
+     */
+    @Override
+    public int hashCode() {
+        int result = 7;
+        int objHashCode = mObj.hashCode();
+        long f = Double.doubleToLongBits(mScore);
+		int scoreHashCode = (int)(f ^ (f >>> 32));
+		result = 37 * result + objHashCode;
+		result = 37 * result + scoreHashCode;
+		return result;
+    }
+    
+    /**
      * Returns a comparator that sorts in ascending order of score.
      *
      * <p>This comparator may not be consistent with equality on

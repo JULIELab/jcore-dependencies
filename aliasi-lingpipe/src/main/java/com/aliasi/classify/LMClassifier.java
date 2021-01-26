@@ -118,7 +118,7 @@ import java.util.Set;
  * dynamic language models.
  *
  * @author  Bob Carpenter
- * @version 4.0.0
+ * @version 4.0.2
  * @since   LingPipe2.0
  * @param <L> the type of language model used to generate text from categories
  * @param <M> the multivariate distribution over categories
@@ -195,6 +195,9 @@ public class LMClassifier<L extends LanguageModel, M extends MultivariateDistrib
      *
      * <P>This method copies the array and thus changes to
      * it do not affect the categories for this classifier.
+     * Thus if a client needs repeated access to a classifier's
+     * categores, this method should be called once and the
+     * resulting array reused.
      *
      * @return The array of categories for this classifier.
      */
@@ -275,10 +278,10 @@ public class LMClassifier<L extends LanguageModel, M extends MultivariateDistrib
         // need to deal with array of generic typed objects
         @SuppressWarnings({"unchecked","rawtypes"})
         ScoredObject<String>[] estimates
-            = new ScoredObject[categories().length];
+            = new ScoredObject[mCategories.length];
 
-        for (int i = 0; i < categories().length; ++i) {
-            String category = categories()[i];
+        for (int i = 0; i < mCategories.length; ++i) {
+            String category = mCategories[i];
             LanguageModel model = mLanguageModels[i];
             double charsGivenCatLogProb
                 = model.log2Estimate(new String(cs,start,end-start));

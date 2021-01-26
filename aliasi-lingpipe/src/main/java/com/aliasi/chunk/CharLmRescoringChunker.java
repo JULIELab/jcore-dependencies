@@ -93,7 +93,7 @@ import java.util.Map;
  * @since   LingPipe2.3
  */
 public class CharLmRescoringChunker
-    extends AbstractCharLmRescoringChunker<CharLmHmmChunker, // PLEASE IGNORE DEPRECATION WARNING
+    extends AbstractCharLmRescoringChunker<CharLmHmmChunker, 
                                            NGramProcessLM,
                                            NGramBoundaryLM>
     implements ObjectHandler<Chunking>, 

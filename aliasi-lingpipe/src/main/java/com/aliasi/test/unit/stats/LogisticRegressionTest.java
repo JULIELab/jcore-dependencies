@@ -1,5 +1,15 @@
 package com.aliasi.test.unit.stats;
 
+import static junit.framework.Assert.assertEquals;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.junit.Test;
+
 import com.aliasi.corpus.ObjectHandler;
 import com.aliasi.io.Reporter;
 import com.aliasi.matrix.DenseVector;
@@ -9,9 +19,9 @@ import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.LogisticRegression;
 import com.aliasi.stats.RegressionPrior;
 import com.aliasi.util.AbstractExternalizable;
-import org.junit.Test;
-
-import java.io.IOException;
+import com.aliasi.util.ObjectToCounterMap;
+import com.aliasi.util.ObjectToDoubleMap;
+import com.aliasi.util.Pair;
 
 import static junit.framework.Assert.assertEquals;
 
@@ -486,19 +496,84 @@ public class LogisticRegressionTest  {
         for (int i = 0; i < data_matrix.length; ++i)
             data_matrix[i] = new DenseVector(WALLET_DATA_MATRIX[i]);
 
-        Vector[] sparse_data_matrix = sparseCopy(data_matrix);
-
-        assertCorrectRegression(data_matrix);
-        assertCorrectRegression(sparse_data_matrix);
+        Vector[] sparse_data_matrix = sparseCopy(data_matrix);        
+        assertCorrectRegression(data_matrix,null);
+        assertCorrectRegression(sparse_data_matrix,null);
+        
+        //Test Weighted Data 
+        Pair<Vector[],Vector[]> convertedData2 = convertDataToWeightedProbs(data_matrix,WALLET_OUTCOME_VECTOR,23,false);
+        assertCorrectRegression(convertedData2.a(),convertedData2.b());
+        
+        convertedData2 = convertDataToWeightedProbs(sparse_data_matrix,WALLET_OUTCOME_VECTOR,23,false);
+        assertCorrectRegression(convertedData2.a(),convertedData2.b());
+        
+        convertedData2 = convertDataToWeightedProbs(data_matrix,WALLET_OUTCOME_VECTOR,23,true);
+        assertCorrectRegression(convertedData2.a(),convertedData2.b());
+        
+        convertedData2 = convertDataToWeightedProbs(sparse_data_matrix,WALLET_OUTCOME_VECTOR,23,true);
+        assertCorrectRegression(convertedData2.a(),convertedData2.b());
+        
+    }
+    
+    //Returns a new set of input/output vectors in which the outputs have been converted to Vectors
+    Pair<Vector[],Vector[]> convertDataToWeightedProbs(Vector[] input_data_matrix, int[] outcomes, int uniqueInputs, boolean consolidateToUniqueInputs) {
+    	//Store outcome counts for each unique input
+    	Map<Vector,ObjectToCounterMap<Integer>> inputsToOutcomeCounts = new HashMap<Vector,ObjectToCounterMap<Integer>>();
+    	int numOutcomes = 0;
+    	for(int i=0; i<input_data_matrix.length;i++) {
+    		Vector input = input_data_matrix[i];
+    		ObjectToCounterMap<Integer> outcomeCount = inputsToOutcomeCounts.get(input);
+    		if(outcomeCount==null) {
+    			outcomeCount = new ObjectToCounterMap<Integer>();
+    			inputsToOutcomeCounts.put(input, outcomeCount);
+    		}
+    		outcomeCount.increment(outcomes[i]);
+    		numOutcomes = Math.max(numOutcomes, outcomes[i]+1);
+    	}
+    	assertEquals(inputsToOutcomeCounts.keySet().size(),uniqueInputs);  
+    	
+    	//Convert outcome counts into normalized vectors
+    	List<Vector> convertedInputs = new ArrayList<Vector>();
+    	List<Vector> convertedOutputs = new ArrayList<Vector>();
+    	for(Vector input : inputsToOutcomeCounts.keySet()) {
+    		ObjectToCounterMap<Integer> outcomeCounts = inputsToOutcomeCounts.get(input);
+    		ObjectToDoubleMap<Integer> convertedOutput = new ObjectToDoubleMap<Integer>();
+    		int repeats = 0;
+    		for(Integer outcome : outcomeCounts.keySet()) {
+    			int count = outcomeCounts.getCount(outcome);
+    			convertedOutput.set(outcome, count);
+    			repeats += count;
+    		}
+    		for(Integer outcome : outcomeCounts.keySet()) {
+    			double newValue = convertedOutput.getValue(outcome);
+    			if (!consolidateToUniqueInputs) newValue /= repeats; //If not reducing, normalize so some of weights is 1.0
+    			convertedOutput.set(outcome, newValue);
+    		} 
+    		int rLim = consolidateToUniqueInputs ? 1 : repeats; //If not reducing, add multiple copies of the the input/output pair to the data
+    		for(int r=0; r<rLim; r++) {
+    			convertedOutputs.add(new SparseFloatVector(convertedOutput,numOutcomes));
+    			convertedInputs.add(input);
+    		}
+    	}
+    	Pair<Vector[],Vector[]> inOutPair = new Pair<Vector[],Vector[]>(convertedInputs.toArray(new Vector[]{}),convertedOutputs.toArray(new Vector[]{}));
+    	if(consolidateToUniqueInputs) {
+    		assertEquals(inOutPair.a().length,uniqueInputs);
+    	} else {
+    		assertEquals(inOutPair.a().length,input_data_matrix.length);
+    	}
+    	return inOutPair;
     }
 
-    void assertCorrectRegression(Vector[] data_matrix) throws IOException, ClassNotFoundException {
+    void assertCorrectRegression(Vector[] data_matrix, Vector[] outcomes) throws IOException, ClassNotFoundException {
+//    	System.out.println(data_matrix.length + " instances");
         Reporter reporter = null; // Reporters.stdOut().setLevel(LogLevel.DEBUG); // null;
         LogisticRegression hotStart = null;
         ObjectHandler<LogisticRegression> handler = null;
-        int priorBlockSize = 3;
-        LogisticRegression regression
-            = LogisticRegression.estimate(data_matrix,
+        int priorBlockSize = 5;
+        LogisticRegression regression = null;
+        if(outcomes==null) {
+        	//outcomes is array of integers
+            regression = LogisticRegression.estimate(data_matrix,
                                           WALLET_OUTCOME_VECTOR,
                                           RegressionPrior.noninformative(),
                                           priorBlockSize,
@@ -510,11 +585,28 @@ public class LogisticRegressionTest  {
                                           500000, // max epochs
                                           handler, // handler for each epoch's regression
                                           reporter);  // no print feedback
-
+        } else {
+        	//outcomes is array of vectors
+        	regression = LogisticRegression.estimate(data_matrix,
+                    outcomes,
+                    RegressionPrior.noninformative(),
+                    priorBlockSize,
+                    hotStart,
+                    AnnealingSchedule.inverse(0.05,100),
+                    0.00001, // min improve
+                    5, // rolling avg size
+                    10, // min epochs
+                    500000, // max epochs
+                    handler, // handler for each epoch's regression
+                    reporter);  // no print feedback
+        }
+        double ALLOWABLE_ERROR = 0.12; //slightly bigger than 0.1 because of consolidated input testing
         Vector[] vs = regression.weightVectors();
         for (int i = 0; i < vs.length; ++i) {
+//        	System.out.println();
             for (int j = 0; j < vs[i].numDimensions(); ++j) {
-                assertEquals(WALLET_EXPECTED_FEATURES[i][j],vs[i].value(j),0.1);
+//            	System.out.println(WALLET_EXPECTED_FEATURES[i][j] + "=" + vs[i].value(j) + ", " );
+                assertEquals(WALLET_EXPECTED_FEATURES[i][j],vs[i].value(j),ALLOWABLE_ERROR);
             }
         }
 
@@ -534,9 +626,10 @@ public class LogisticRegressionTest  {
 
 
         hotStart = regression;
-        priorBlockSize = 2;
-        LogisticRegression regression3
-            = LogisticRegression.estimate(data_matrix,
+        priorBlockSize = 6;
+        LogisticRegression regression3 = null;
+        if (outcomes == null) {
+            regression3 = LogisticRegression.estimate(data_matrix,
                                           WALLET_OUTCOME_VECTOR,
                                           RegressionPrior.noninformative(),
                                           priorBlockSize,
@@ -548,11 +641,25 @@ public class LogisticRegressionTest  {
                                           500000, // max epochs
                                           handler, // handler for epoch's regression
                                           reporter);  // no print feedback
+        } else {
+        	regression3 = LogisticRegression.estimate(data_matrix,
+                    outcomes,
+                    RegressionPrior.noninformative(),
+                    priorBlockSize,
+                    hotStart,
+                    AnnealingSchedule.inverse(0.05,100),
+                    0.0000001, // min improve
+                    5, // rolling avg size
+                    10, // min epochs
+                    500000, // max epochs
+                    handler, // handler for epoch's regression
+                    reporter);  // no print feedback
+        }
 
         vs = regression3.weightVectors();
         for (int i = 0; i < vs.length; ++i) {
             for (int j = 0; j < vs[i].numDimensions(); ++j) {
-                assertEquals(WALLET_EXPECTED_FEATURES[i][j],vs[i].value(j),0.1);
+                assertEquals(WALLET_EXPECTED_FEATURES[i][j],vs[i].value(j),ALLOWABLE_ERROR);
             }
         }
 

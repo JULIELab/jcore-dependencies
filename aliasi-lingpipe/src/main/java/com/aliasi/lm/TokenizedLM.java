@@ -725,6 +725,58 @@ public class TokenizedLM
         return java.lang.Math.pow(2.0,tokenLog2Probability(tokens,start,end));
     }
 
+    public double tokenLog2ProbCharSmooth(String[] tokens, int start, int end) {
+        double logEstimate = 0.0;
+        // collect tokens, estimate whitespaces
+        List<String> tokenList = new ArrayList<String>();
+        for (int i = start; i < end; ++i)
+            tokenList.add(tokens[i]);
+
+        // collect token ids, estimate unknown tokens
+        int[] tokIds = new int[tokenList.size()+2];
+        tokIds[0] = BOUNDARY_TOKEN;
+        tokIds[tokIds.length-1] = BOUNDARY_TOKEN;
+        Iterator<String> it = tokenList.iterator();
+        for (int i = 1; it.hasNext(); ++i) {
+            String token = it.next();
+            tokIds[i] = mSymbolTable.symbolToID(token);
+            if (tokIds[i] < 0)
+                logEstimate += mUnknownTokenModel.log2Estimate(token);
+        }
+        // estimate token ids excluding start, inlcuding end
+        for (int i = 2; i <= tokIds.length; ++i) {
+            logEstimate += conditionalLog2TokenEstimate(tokIds,0,i);
+        }
+        return logEstimate;
+    }
+    public double tokenProbCharSmooth(String[] tokens, int start, int end) {
+        return java.lang.Math.pow(2.0,tokenLog2ProbCharSmooth(tokens,start,end));
+    }
+
+
+    public double tokenLog2ProbCharSmoothNoBounds(String[] tokens, int start, int end) {
+        if (start >= end) return 0.0;
+        double logEstimate = 0.0;
+        // collect tokens, estimate whitespaces
+        // collect token ids, estimate unknown tokens
+        int[] tokIds = new int[end - start];
+        for (int i = start; i < end; ++i) {
+            tokIds[i] = mSymbolTable.symbolToID(tokens[i]);
+            if (tokIds[i] < 0)
+                logEstimate += mUnknownTokenModel.log2Estimate(tokens[i]);
+        }
+        // estimate token ids excluding start, inlcuding end
+        for (int i = 0; i < tokIds.length; ++i)
+            logEstimate += conditionalLog2TokenEstimate(tokIds,0,i+1);
+
+        return logEstimate;
+    }
+    public double tokenProbCharSmoothNoBounds(String[] tokens, int start, int end) {
+        return java.lang.Math.pow(2.0,tokenLog2ProbCharSmoothNoBounds(tokens,start,end));
+    }
+
+
+
 
     public double tokenLog2Probability(String[] tokens, int start, int end) {
         // check args!!!

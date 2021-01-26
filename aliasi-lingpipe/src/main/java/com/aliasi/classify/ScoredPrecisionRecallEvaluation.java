@@ -382,6 +382,12 @@ import java.util.*;
  */
 public class ScoredPrecisionRecallEvaluation {
 
+	/*
+	 * When calculating roc and pr curves, floating point scores are considered
+	 * equal if they differ by less than FLOATING_POINT_EQUALS_EPSILON
+	 */
+	public static final double FLOATING_POINT_EQUALS_EPSILON = 1E-12;
+	
     private final List<Case> mCases = new ArrayList<Case>();
     private int mNegativeRef = 0;
     private int mPositiveRef = 0;
@@ -564,17 +570,31 @@ public class ScoredPrecisionRecallEvaluation {
         PrecisionRecallEvaluation eval
             = new PrecisionRecallEvaluation();
         List<double[]> prList = new ArrayList<double[]>();
-        prList.add(new double[] { 0.0, 1.0 });
+        double previousScore = -1;
         for (Case cse : sortedCases()) {
+        	if (eval.total() > 0 && !epsilonEquals(cse.score(),previousScore)) {
+        		double r = div(eval.truePositive(),mPositiveRef);
+                double p = eval.precision();
+                if (!(r == 0.0 && p == 0.0)) 
+                	prList.add(new double[] { r, p});
+            	previousScore = cse.score(); 
+            } else if (eval.total()==0) {
+            	previousScore = cse.score();
+            }
             boolean correct = cse.mCorrect;
             eval.addCase(correct,true);
-            double r = div(eval.truePositive(),mPositiveRef);
-            double p = eval.precision();
-            if (r == 0.0 && p == 0.0) 
-                continue;
-            prList.add(new double[] { r, p });
+            previousScore = cse.score();
         }
-        prList.add(new double[] { 1.0, 0.0 });
+        //Add final point:
+        double r = div(eval.truePositive(),mPositiveRef);
+        double p = eval.precision();
+        if (!(r == 0.0 && p == 0.0))
+        	prList.add(new double[] { r, p});
+    	//add endpoints {0,0} and {1,1} if they are not already there
+    	if (r!=1.0 || p!=0.0)
+    		prList.add(new double[] { 1.0, 0.0});
+    	if (prList.get(0)[0]!=0.0 || prList.get(0)[1]!=1.0)
+    		prList.add(0,new double[] { 0.0, 1.0});
         return interpolate(prList,interpolate);
     }
 
@@ -593,16 +613,32 @@ public class ScoredPrecisionRecallEvaluation {
         PrecisionRecallEvaluation eval
             = new PrecisionRecallEvaluation();
         List<double[]> prList = new ArrayList<double[]>();
-
+        double previousScore = -1;
         for (Case cse : sortedCases()) {
+        	if (eval.total() > 0 && !epsilonEquals(cse.score(),previousScore)) {
+        		double r = div(eval.truePositive(),mPositiveRef);
+                double p = eval.precision();
+                double s = previousScore;
+                if (!(r == 0.0 && p == 0.0))
+                	prList.add(new double[] { r, p, s });
+            	previousScore = cse.score(); 
+            } else if (eval.total()==0) {
+            	previousScore = cse.score();
+            }
             boolean correct = cse.mCorrect;
             eval.addCase(correct,true);
-            double r = div(eval.truePositive(),mPositiveRef);
-            double p = eval.precision();
-            double s = cse.score();
-            prList.add(new double[] { r, p, s });
         }
+        //Add final point:
+        double r = div(eval.truePositive(),mPositiveRef);
+        double p = eval.precision();
+        double s = previousScore;
+        if (!(r == 0.0 && p == 0.0))
+        	prList.add(new double[] { r, p, s });
         return interpolate(prList,interpolate);
+    }
+    
+    private boolean epsilonEquals(double val1, double val2) {
+    	return Math.abs(val1-val2) < FLOATING_POINT_EQUALS_EPSILON;
     }
 
     /**
@@ -618,17 +654,34 @@ public class ScoredPrecisionRecallEvaluation {
         PrecisionRecallEvaluation eval = new PrecisionRecallEvaluation();
         List<double[]> ssList = new ArrayList<double[]>();
         int trueNegs = mNegativeRef;
-        ssList.add(new double[] { 0.0, 0.0 });
+        double previousScore = -1;
+        //Note: previousScore is used to detect scores which are ties.
+        //Ties are tested using epsilonEquals to the last non-tied value.
         for (Case cse : sortedCases()) {
+        	if (eval.total() > 0 && !epsilonEquals(cse.score(),previousScore)) {
+            	double r = div(eval.truePositive(), mPositiveRef);
+            	double rr = div(trueNegs,mNegativeRef);
+            	ssList.add(new double[] { 1-rr, r });
+            	previousScore = cse.score(); 
+            } else if (eval.total()==0) {
+            	previousScore = cse.score();
+            }
             boolean correct = cse.mCorrect;
             eval.addCase(correct,true);
             if (!correct) --trueNegs;
-            double r = div(eval.truePositive(), mPositiveRef);
-            double rr = div(trueNegs,mNegativeRef);
-            ssList.add(new double[] { 1-rr, r });
         }
-        ssList.add(new double[] { 1.0, 1.0 });
-        if (interpolate)
+        //Add roc point for the final set of cases:
+        double r = div(eval.truePositive(), mPositiveRef);
+    	double rr = div(trueNegs,mNegativeRef);
+    	ssList.add(new double[] { 1-rr, r });
+    	
+    	//add endpoints {0,0} and {1,1} if they are not already there
+    	if (r!=1.0 || rr!=0.0)
+    		ssList.add(new double[] { 1.0, 1.0 });
+    	if (ssList.get(0)[0]!=0.0 || ssList.get(0)[1]!=0.0)
+    		ssList.add(0,new double[] { 0.0, 0.0});
+    	
+    	if (interpolate)
             ssList = interpolateRoc(ssList);
         return ssList.toArray(EMPTY_DOUBLE_2D_ARRAY);
     }
@@ -641,6 +694,8 @@ public class ScoredPrecisionRecallEvaluation {
         result.add(ssList.get(ssList.size()-1));
         return result;
     }
+    
+    
 
 
     /**

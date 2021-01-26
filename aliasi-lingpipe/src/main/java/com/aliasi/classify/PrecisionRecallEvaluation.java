@@ -18,6 +18,8 @@ package com.aliasi.classify;
 
 import com.aliasi.stats.Statistics;
 
+import java.util.Set;
+
 /**
  * A <code>PrecisionRecallEvaluation</code> collects and reports a
  * suite of descriptive statistics for binary classification tasks.
@@ -441,7 +443,7 @@ import com.aliasi.stats.Statistics;
  * </blockquote>
  *
  * @author Bob Carpenter
- * @version 2.1
+ * @version 4.1.1
  * @since   LingPipe2.1
  */
 public class PrecisionRecallEvaluation {
@@ -500,6 +502,40 @@ public class PrecisionRecallEvaluation {
         else if (reference && (!response)) mFN += count;
         else if ((!reference) && response) mFP += count;
         else mTN += count;
+    }
+
+    /**
+     * Add the cases corresponding to the specified set of
+     * reference positives and response positives.
+     *
+     * Based on whether an element is in the reference set, the
+     * the response set, or both, we get a true positive, false
+     * negative or false positive as follows.
+     *
+     * <blockquote><ul>
+     * <li>TP: +reference, +response
+     * <li>FN: +reference, -response
+     * <li>FP: -reference, +response
+     * <ul></blockquote>
+     *
+     * <p>Thanks to Erel Segal for suggesting this function
+     * and providing an initial implementation.
+     *
+     * @param referencePositives Set of truly positive items.
+     * @param responsePositives Set of positive response items.
+     * @param <T> Type of elements in the sets.
+     */
+    public <T> void addCases(Set<T> referencePositives, 
+			     Set<T> responsePositives) {
+        for (T t: referencePositives) {
+	    if (responsePositives.contains(t))
+		++mTP;
+	    else
+		++mFN;
+	}
+	for (T t: responsePositives)
+	    if (!referencePositives.contains(t))
+		++mFP;
     }
 
     /**

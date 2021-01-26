@@ -181,6 +181,7 @@ public class CompactHashSet<E>
      *
      * @param es Initial values to add to set.
      */
+    @SuppressWarnings("unchecked") // safe because array not exposed
     public CompactHashSet(E... es) {
         this(1);
         for (E e : es)

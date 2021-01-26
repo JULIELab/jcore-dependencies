@@ -5,8 +5,22 @@ import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 
+import static com.aliasi.util.CollectionUtils.asSet;
+import java.util.Set;
 
 public class PrecisionRecallEvaluationTest  {
+
+    @Test
+    public void testSetCases() {
+	PrecisionRecallEvaluation eval =
+	    new PrecisionRecallEvaluation();
+	eval.addCases(asSet("a","b","c"), // refs
+		      asSet("b","c","d","e","f")); // responses
+	assertEquals(2,eval.truePositive());
+	assertEquals(1,eval.falseNegative());
+	assertEquals(3,eval.falsePositive());
+	assertEquals(0,eval.trueNegative());
+    }
 
     @Test
     public void testOne() {

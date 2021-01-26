@@ -78,6 +78,7 @@ public class AddFeatureExtractor<E>
      * 
      * @param extractors Variable length list (or a single array) of extractors.
      */
+    @SuppressWarnings("unchecked") // safe because array not exposed
     public AddFeatureExtractor(FeatureExtractor<? super E>... extractors) {
         this(Arrays.asList(extractors));
     }

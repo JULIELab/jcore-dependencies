@@ -81,7 +81,7 @@ import java.io.UnsupportedEncodingException;
  * <ul>
  * <li><a href="http://www.w3.org/TR/xhtml1/">Official XHTML 1.0 Specification</a> (from W3C)
  * <li><a href="http://validator.w3.org/">W3C XHTML Validator</a></li>
- * <li><a href="http://www.w3schools.com/xhtml/default.asp">W3 Schools XHTML Tutorial</a></li> (W3 Schools is not affiliated with the W3C -- they're
+ * <li><a href="http://wiht.link/xhtml-primer">W3 Schools XHTML Tutorial</a></li> (W3 Schools is not affiliated with the W3C -- they're
  * a <a href="http://www.w3schools.com/about/about_refsnes.asp">small Norwegian outfit</a>)</li>
 
  * </ul>

@@ -27,7 +27,7 @@ import java.util.Set;
 
 /**
  * An <code>IndoEuropeanSentenceModel</code> is a heuristic sentence
- * designed primarily for English.  Whehter or not it balances
+ * designed primarily for English.  Whether or not it balances
  * parentheses or forces the last token to be a boundary may be
  * set in the constructor.  It uses the default implementation of
  * possible sentence starts and the following token sets:

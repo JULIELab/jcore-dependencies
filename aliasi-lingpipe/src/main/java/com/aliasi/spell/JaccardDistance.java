@@ -53,7 +53,15 @@ import java.util.Set;
  * Distances also run between 0 and 1.  A distance of 0 means the
  * character sequences share all of their terms, whereas a distance of
  * 1 means they have no terms in common.
- *
+ * <p>
+ *   Changes to this class by the JULIE Lab Jena, Germany:
+ *   <ol>
+ *       <li>Switched line
+ *       <pre>if (s1.size() < s2.size()) {</pre>
+ *       to
+ *       <pre>if (s1.size() &gt; s2.size()) {</pre>
+ *       on July 10th, 2019 by Erik Faesser due to PR https://github.com/JULIELab/jcore-dependencies/pull/12.</li>
+ * </ol>
  * @author  Bob Carpenter
  * @version 3.8
  * @since   LingPipe2.4
@@ -93,7 +101,7 @@ public class JaccardDistance extends TokenizedDistance {
     public double proximity(CharSequence cSeq1, CharSequence cSeq2) {
         Set<String> s1 = tokenSet(cSeq1);
         Set<String> s2 = tokenSet(cSeq2);
-        if (s1.size() < s2.size()) {
+        if (s1.size() > s2.size()) {
             Set<String> temp = s2;
             s2 = s1;
             s1 = temp;

@@ -21,12 +21,22 @@ import com.aliasi.chunk.*;
 import com.aliasi.tokenizer.LowerCaseTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
+
+import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Scored;
 import com.aliasi.util.ScoredObject;
 import com.aliasi.util.Strings;
 
+import java.io.IOException;
+import java.io.ObjectInput;
+import java.io.ObjectOutput;
+import java.io.Serializable;
+import java.io.NotSerializableException;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -108,12 +118,20 @@ import java.util.Set;
  * it didn't seem worth the complexity here when the dictionaries
  * would be long-lived.
  *
+ * <h3>Serialization</h3>
+ *
+ * <p>An exact dictionary chunker can be serialized if its
+ * tokenizer factory is serializable.  The deserialized version
+ * of the exact dictionary chunker is an instance of this class
+ * which is behaviorally identical to the chunker that was
+ * serialized.
+ *
  * <ul>
-
+ *
  * <li>Aho, Alfred V. and Margaret J. Corasick. 1975. Efficient string
  * matching: an aid to bibliographic search, <i>CACM</i>,
  * <b>18</b>(6):333-340.
-
+ *
  * <li><a href="http://en.wikipedia.org/wiki/Aho-Corasick_algorithm"
  *      >Wikipedia: Aho-Corasick Algorithm</a>
  * <br /><small>[Entry sketchy at the time of writing, but good links.]</small>
@@ -124,16 +142,21 @@ import java.util.Set;
  * </ul>
  *
  * @author Bob Carpenter
- * @version 3.8.1
+ * @version 4.0.2
  * @since   LingPipe2.3.1
  */
-public class ExactDictionaryChunker implements Chunker {
+public class ExactDictionaryChunker 
+    implements Chunker, Serializable {
+
+    static final long serialVersionUID = -4380886361370971305L;
 
     final TrieNode mTrieRootNode;
     final TokenizerFactory mTokenizerFactory;
     final boolean mCaseSensitive;
     boolean mReturnAllMatches;
     int mMaxPhraseLength = 0;
+
+    
 
     /**
      * Construct an exact dictionary chunker from the specified
@@ -149,7 +172,8 @@ public class ExactDictionaryChunker implements Chunker {
      * @param dict Dictionary forming the basis of the chunker.
      * @param factory Tokenizer factory underlying chunker.
      */
-    public ExactDictionaryChunker(Dictionary<String> dict, TokenizerFactory factory) {
+    public ExactDictionaryChunker(Dictionary<String> dict, 
+                                  TokenizerFactory factory) {
         this(dict,factory,true,true);
     }
 
@@ -184,6 +208,21 @@ public class ExactDictionaryChunker implements Chunker {
         mCaseSensitive = caseSensitive;
         mTrieRootNode = compileTrie(dict);
     }
+
+
+    // called by Serializer for deserialization
+    private ExactDictionaryChunker(TrieNode rootNode,
+                                   TokenizerFactory tokenizerFactory,
+                                   boolean caseSensitive,
+                                   boolean returnAllMatches,
+                                   int maxPhraseLength) {
+        mTrieRootNode = rootNode;
+        mTokenizerFactory = tokenizerFactory;
+        mCaseSensitive = caseSensitive;
+        mReturnAllMatches = returnAllMatches;
+        mMaxPhraseLength = maxPhraseLength;
+    }
+
 
     /**
      * Returns the tokenizer factory underlying this chunker.  Once
@@ -276,7 +315,6 @@ public class ExactDictionaryChunker implements Chunker {
         while ((token = tokenizer.nextToken()) != null) {
             int tokenStartPos = tokenizer.lastTokenStartPosition();
             int tokenEndPos = tokenizer.lastTokenEndPosition();
-            // System.out.println("token=|" + token + "| start=" + tokenStartPos + " |end=" + tokenEndPos);
             queue.enqueue(tokenStartPos);
             while (true) {
                 TrieNode daughterNode = node.getDaughter(token);
@@ -323,6 +361,10 @@ public class ExactDictionaryChunker implements Chunker {
         return sb.toString();
     }
 
+    Object writeReplace() {
+        return new Serializer(this);
+    }
+
     void emit(TrieNode node, CircularQueueInt queue, int end,
               ChunkingImpl chunking) {
         ScoredCat[] scoredCats = node.mCategories;
@@ -349,7 +391,7 @@ public class ExactDictionaryChunker implements Chunker {
         return rootNode;
     }
 
-    final void computeSuffixes(TrieNode node, TrieNode rootNode,
+    final static void computeSuffixes(TrieNode node, TrieNode rootNode,
                          String[] tokens, int length) {
         for (int i = 1; i < length; ++i) {
             TrieNode suffixNode = rootNode.getDaughter(tokens,i,length);
@@ -406,9 +448,12 @@ public class ExactDictionaryChunker implements Chunker {
         }
     }
 
-    static ScoredCat[] EMPTY_SCORED_CATS = new ScoredCat[0];
+    static final ScoredCat[] EMPTY_SCORED_CATS = new ScoredCat[0];
 
-    static class TrieNode {
+    static class TrieNode implements Serializable {
+
+        static final long serialVersionUID = -6412834366677374806L;
+
         int mDepth;
 
         Map<String,TrieNode> mDaughterMap = null;
@@ -500,11 +545,87 @@ public class ExactDictionaryChunker implements Chunker {
                 getDaughter(token).toString(sb,depth+1);
             }
         }
+        
+        Object writeReplace() {
+            return new Serializer(this);
+        }
 
         static void indent(StringBuilder sb, int depth) {
             sb.append("\n");
             for (int i = 0; i < depth; ++i)
                 sb.append("  ");
+        }
+
+        static class Serializer extends AbstractExternalizable {
+            static final long serialVersionUID = 4017335190312081213L;
+            private final TrieNode mNode;
+            public Serializer(TrieNode node) {
+                mNode = node;
+            }
+            public Serializer() {
+                this(null);
+            }
+            public Object read(ObjectInput in) 
+                throws IOException, ClassNotFoundException {
+                TrieNode rootNode = new TrieNode(0);
+                int maxPhraseLength = 0;
+                while (true) {
+                    int numToks = in.readInt();
+                    if (numToks == -1) break; // end signal
+                    if (numToks > maxPhraseLength)
+                        maxPhraseLength = numToks;
+                    TrieNode node = rootNode;
+                    for (int i = 0; i < numToks; ++i) {
+                        String tok = in.readUTF();
+                        node = node.getOrCreateDaughter(tok);
+                    }
+                    List<ScoredCat> scoredCatList = new ArrayList<ScoredCat>();
+                    int numCats = in.readInt();
+                    for (int i = 0; i < numCats; ++i) {
+                        String cat = in.readUTF();
+                        double score = in.readDouble();
+                        scoredCatList.add(new ScoredCat(cat,score));
+                    }
+                    ScoredCat[] scoredCats = scoredCatList.toArray(new ScoredCat[0]);
+                    Arrays.sort(scoredCats,ScoredObject.reverseComparator());
+                    node.mCategories = scoredCats;
+                }
+                computeSuffixes(rootNode,rootNode,new String[maxPhraseLength],0);
+                return rootNode;
+            }
+            public void writeExternal(ObjectOutput out) throws IOException {
+                List<String> tokenList = new ArrayList<String>();
+                writeAll(mNode,tokenList,0,out);
+                out.writeInt(-1);
+            }
+            void writeAll(TrieNode node, List<String> tokens, 
+                          int pos, ObjectOutput out)
+                throws IOException {
+
+                if (node.mCategories.length > 0)
+                    writeNode(node.mCategories,tokens,pos,out);
+                if (node.mDaughterMap != null) {
+                    for (Map.Entry<String,TrieNode> entry 
+                             : node.mDaughterMap.entrySet()) {
+                        if (tokens.size() <= pos)
+                            tokens.add(entry.getKey());
+                        else
+                            tokens.set(pos,entry.getKey());
+                        writeAll(entry.getValue(), tokens, pos + 1, out);
+                    }
+                }
+            }
+            void writeNode(ScoredCat[] cats, List<String> tokens, int numTokens, ObjectOutput out) 
+                throws IOException {
+                out.writeInt(numTokens);
+                for (int i = 0; i < numTokens; ++i) 
+                    out.writeUTF(tokens.get(i));
+                out.writeInt(cats.length);
+                for (int i = 0; i < cats.length; ++i) {
+                    out.writeUTF(cats[i].mCat);
+                    out.writeDouble(cats[i].mScore);
+                }
+            }
         }
 
     }
@@ -531,5 +652,33 @@ public class ExactDictionaryChunker implements Chunker {
     }
 
     static final Chunk[] EMPTY_CHUNK_ARRAY = new Chunk[0];
+
+    static class Serializer extends AbstractExternalizable {
+        static final long serialVersionUID = 5411870376342457513L;
+        private final ExactDictionaryChunker mChunker;
+        public Serializer() {
+            this(null);
+        }
+        public Serializer(ExactDictionaryChunker chunker) {
+            mChunker = chunker;
+        }
+        public Object read(ObjectInput in) 
+            throws IOException, ClassNotFoundException {
+            TrieNode rootNode = (TrieNode) in.readObject();
+            TokenizerFactory tokenizerFactory = (TokenizerFactory) in.readObject();
+            boolean caseSensitive = in.readBoolean();
+            boolean returnAllMatches = in.readBoolean();
+            int maxPhraseLength = in.readInt();
+            return new ExactDictionaryChunker(rootNode,tokenizerFactory,
+                                              caseSensitive,returnAllMatches,maxPhraseLength);
+        }
+        public void writeExternal(ObjectOutput out) throws IOException {
+            out.writeObject(mChunker.mTrieRootNode);
+            out.writeObject(mChunker.mTokenizerFactory);
+            out.writeBoolean(mChunker.mCaseSensitive);
+            out.writeBoolean(mChunker.mReturnAllMatches);
+            out.writeInt(mChunker.mMaxPhraseLength);
+        }
+    }
 
 }

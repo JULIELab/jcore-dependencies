@@ -7,12 +7,12 @@
   <name>LingPipe, Alias-i</name>
   <description>This is the original Lingpipe:
 http://alias-i.com/lingpipe/web/download.html
-There were not made any changes to the source code.</description>
+There is one small change in the JaccardDistance class.</description>
   <dependencies>
    <dependency>
    	<groupId>junit</groupId>
    	<artifactId>junit</artifactId>
-   	<version>4.10</version>
+   	<version>4.13.1</version>
    	<scope>provided</scope>
    </dependency>
    <dependency>
@@ -32,9 +32,12 @@ There were not made any changes to the source code.</description>
         </license>
     </licenses>
   <url>https://github.com/JULIELab/jcore-dependencies/tree/master/aliasi-lingpipe</url>
+    <properties>
+        <additionalparam>-Xdoclint:none</additionalparam>
+    </properties>
   <organization>
   	<name>Alias-i, Inc.</name>
   	<url>http://alias-i.com/lingpipe/index.html</url>
   </organization>
-  <version>4.1.0</version>
+  <version>4.1.2-JL1.0</version>
 </project>

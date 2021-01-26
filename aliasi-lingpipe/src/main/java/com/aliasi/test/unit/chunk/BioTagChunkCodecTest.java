@@ -2,6 +2,8 @@ package com.aliasi.test.unit.chunk;
 
 import com.aliasi.chunk.*;
 import com.aliasi.crf.ForwardBackwardTagLattice;
+import com.aliasi.sentences.IndoEuropeanSentenceModel;
+import com.aliasi.sentences.SentenceChunker;
 import com.aliasi.symbol.SymbolTable;
 import com.aliasi.tag.StringTagging;
 import com.aliasi.tag.TagLattice;
@@ -22,6 +24,21 @@ import static junit.framework.Assert.*;
 public class BioTagChunkCodecTest {
 
     @Test
+    public void testToTagging() {
+    	
+    	TagChunkCodec codec
+        	= new BioTagChunkCodec(IndoEuropeanTokenizerFactory.INSTANCE,
+                               false);
+    	ChunkingImpl chunking = new ChunkingImpl("This chunk. This is more.");
+    	
+    	chunking.add(ChunkFactory.createChunk(0, 11,"S"));
+    	Tagging<String> tagging = codec.toTagging(chunking);
+    	assertEquals(tagging.tag(2),"I_S");
+    	assertEquals(tagging.tag(3),"O");
+    	System.out.println(tagging);
+    }
+	
+	@Test
     public void testNBestChunks() {
         TagChunkCodec codec
             = new BioTagChunkCodec(IndoEuropeanTokenizerFactory.INSTANCE,
@@ -184,6 +201,7 @@ public class BioTagChunkCodecTest {
         assertEquals(c1.end(),c2.end());
         assertEquals(c1.type(),c2.type());
         assertEquals(c1.score(),c2.score(),0.1);
+        
     }
 
     List<Chunk> bruteForce(TagLattice<String> lattice,

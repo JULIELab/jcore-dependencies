@@ -17,9 +17,9 @@
 package com.aliasi.suffixarray;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
+
+import com.aliasi.util.Sort;
 
 /**
  * A {@code CharSuffixArray} implements a suffix array of characters.
@@ -139,7 +139,7 @@ import java.util.List;
  * A suffix array is thread safe after construction.
  * 
  * @author Bob Carpenter
- * @version 4.1.0
+ * @version 4.1.1
  * @since 4.0.2
  */
 public class CharSuffixArray {
@@ -167,18 +167,16 @@ public class CharSuffixArray {
      * specified length.
      *
      * @param text Underlying text for suffix array.
-     * @param maxSuffixLength Maximum suffix length for comparison.
+     * @param maxSuffixLength Maximum length of of characters to
+     * compare before treating suffixes as equal for sorting purposes.
      */
     public CharSuffixArray(String text, int maxSuffixLength) {
         mText = text;
         mMaxSuffixLength = maxSuffixLength;
-        Integer[] is = new Integer[text.length()];
+        int[] suffixArray = new int[text.length()];
         for (int i = 0; i < text.length(); ++i)
-            is[i] = i;
-        Arrays.sort(is,new IndexComparator());
-        int[] suffixArray = new int[is.length];
-        for (int i = 0; i < is.length; ++i)
-            suffixArray[i] = is[i];
+            suffixArray[i] = i;
+        Sort.qsort(suffixArray,new IndexCompare());
         mSuffixArray = suffixArray;
     }
 
@@ -192,8 +190,10 @@ public class CharSuffixArray {
     }
 
     /**
-     * Returns the maximum suffix length for this character suffix
-     * array.
+     * Returns the maximum length of suffixes to compare for
+     * this suffix array.  Suffixes that share initial sequences
+     * of characters up to the maximum suffix length are treated
+     * as equal for sorting purposes.
      *
      * @return Maximum length of suffixes.
      */
@@ -300,7 +300,27 @@ public class CharSuffixArray {
      */
     public static char SEPARATOR = '\uFFFF';
 
+    class IndexCompare implements Sort.CompareInt {
+        public boolean lessThan(int i, int j) {
+            String cs = mText;
+            for (int m = i, n = j, k = 0; k < mMaxSuffixLength; ++m, ++n, ++k) {
+                if (m == cs.length() || cs.charAt(m) == SEPARATOR) {
+                    if (n == cs.length() || cs.charAt(n) == SEPARATOR)
+                        return false;
+                    return true;
+                }
+                if (n == cs.length() || cs.charAt(n) == SEPARATOR)
+                    return false;
+                if (cs.charAt(m) < cs.charAt(n))
+                    return true;
+                if (cs.charAt(m) > cs.charAt(n))
+                    return false;
+            }
+            return false;
+        }
+    }
 
+    /*
     class IndexComparator implements Comparator<Integer> {
         public int compare(Integer i, Integer j) {
             String cs = mText;
@@ -320,5 +340,6 @@ public class CharSuffixArray {
             return 0;
         }
     }
+    */
 
 }

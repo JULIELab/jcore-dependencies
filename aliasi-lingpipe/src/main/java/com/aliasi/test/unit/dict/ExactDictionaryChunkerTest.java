@@ -12,12 +12,22 @@ import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.LowerCaseTokenizerFactory;
 import com.aliasi.tokenizer.RegExTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
+import com.aliasi.chunk.Chunk;
+import com.aliasi.chunk.ChunkFactory;
+import com.aliasi.chunk.Chunking;
+import com.aliasi.chunk.ChunkingImpl;
+
+import com.aliasi.util.AbstractExternalizable;
+
 import org.junit.Test;
+
+import java.io.IOException;
 
 import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
+import static junit.framework.Assert.assertTrue;
 
 
 public class ExactDictionaryChunkerTest  {
@@ -245,7 +255,116 @@ public class ExactDictionaryChunkerTest  {
 
         assertEquals(chunkingExpected,chunking);
     }
+    
+    @Test
+    public void testSuffixes() {
+        MapDictionary dictionary = new MapDictionary();
+        dictionary.addEntry(new DictionaryEntry("john smith","PER",7.0));
+        dictionary.addEntry(new DictionaryEntry("Barry J. Jones III","PER",5.0));
+        dictionary.addEntry(new DictionaryEntry("Barry","PER",5.0));
+        dictionary.addEntry(new DictionaryEntry("Jones","PER",5.0));
+        dictionary.addEntry(new DictionaryEntry("J. Barry Johnson","PER",5.0));
+        
+        dictionary.addEntry(new DictionaryEntry("I.B.M.","ORG",5.0));
+        dictionary.addEntry(new DictionaryEntry("Dean Witter","PER",3.0));
+        dictionary.addEntry(new DictionaryEntry("Dean Witter","ORG",7.0));
 
 
+        dictionary.addEntry(new DictionaryEntry("a b c","PER",7.0));
+        dictionary.addEntry(new DictionaryEntry("b","PER",5.2));
+        ExactDictionaryChunker chunker
+            = new ExactDictionaryChunker(dictionary,TOKENIZER_FACTORY,
+                                         true,true);
+        assertChunking(chunker, "a b d",
+                       new Chunk[] { ChunkFactory.createChunk(2,3,"PER",5.2) });
+        assertChunking(chunker, "J. Barry Warwick",
+                       new Chunk[] { ChunkFactory.createChunk(3,8,"PER",5.0) });
+    }
+
+    @Test
+    public void testSerialization() throws IOException, ClassNotFoundException {
+        MapDictionary dictionary = new MapDictionary();
+        dictionary.addEntry(new DictionaryEntry("john smith","PER",7.0));
+        
+        ExactDictionaryChunker chunker
+            = new ExactDictionaryChunker(dictionary,TOKENIZER_FACTORY,
+                                         true,true);
+
+        assertTrue(chunker.caseSensitive());
+        assertTrue(chunker.returnAllMatches());
+
+        Chunk[] noChunks = new Chunk[0];
+        assertChunking(chunker,"john",noChunks);
+        
+        ExactDictionaryChunker chunker2
+            = (ExactDictionaryChunker) 
+            AbstractExternalizable.serializeDeserialize(chunker);
+
+        assertTrue(chunker2.caseSensitive());
+        assertTrue(chunker2.returnAllMatches());
+
+        assertChunking(chunker2,"john",noChunks);
+
+        assertChunking(chunker2,"smith john",noChunks);
+        assertChunking(chunker2,"john smith",
+                       new Chunk[] { ChunkFactory.createChunk(0,10,"PER",7.0) });
+        assertChunking(chunker2,"john smith smith",
+                       new Chunk[] { ChunkFactory.createChunk(0,10,"PER",7.0) });
+        assertChunking(chunker2,"john smith frank",
+                       new Chunk[] { ChunkFactory.createChunk(0,10,"PER",7.0) });
+        assertChunking(chunker2,"then john smith",
+                       new Chunk[] { ChunkFactory.createChunk(5,15,"PER",7.0) });
+        assertChunking(chunker2,"john john smith",
+                       new Chunk[] { ChunkFactory.createChunk(5,15,"PER",7.0) });
+        assertChunking(chunker2,"john john smith smith",
+                       new Chunk[] { ChunkFactory.createChunk(5,15,"PER",7.0) });
+
+    }
+
+
+    @Test
+    public void testSerialization2() throws IOException, ClassNotFoundException {
+        MapDictionary dictionary = new MapDictionary();
+        dictionary.addEntry(new DictionaryEntry("john smith","PER",7.0));
+        dictionary.addEntry(new DictionaryEntry("Barry J. Jones III","PER",5.0));
+        dictionary.addEntry(new DictionaryEntry("Barry","PER",5.0));
+        dictionary.addEntry(new DictionaryEntry("Jones","PER",5.0));
+        dictionary.addEntry(new DictionaryEntry("J. Barry Johnson","PER",5.0));
+        
+        dictionary.addEntry(new DictionaryEntry("I.B.M.","ORG",5.0));
+        dictionary.addEntry(new DictionaryEntry("Dean Witter","PER",3.0));
+        dictionary.addEntry(new DictionaryEntry("Dean Witter","ORG",7.0));
+        
+        ExactDictionaryChunker chunker
+            = new ExactDictionaryChunker(dictionary,TOKENIZER_FACTORY,
+                                         true,true);
+
+        assertTrue(chunker.caseSensitive());
+        assertTrue(chunker.returnAllMatches());
+        
+        ExactDictionaryChunker chunker2
+            = (ExactDictionaryChunker) 
+            AbstractExternalizable.serializeDeserialize(chunker);
+        
+        assertTrue(chunker2.caseSensitive());
+        assertTrue(chunker2.returnAllMatches());
+
+        Chunk[] noChunks = new Chunk[0];
+        assertChunking(chunker2,"john",noChunks);
+        assertChunking(chunker2,"smith john",noChunks);
+        assertChunking(chunker2,"J. Barry Warwick",
+                       new Chunk[] { ChunkFactory.createChunk(3,8,"PER",5.0) });
+        assertChunking(chunker2,"john smith smith",
+                       new Chunk[] { ChunkFactory.createChunk(0,10,"PER",7.0) });
+        assertChunking(chunker2,"john smith frank",
+                       new Chunk[] { ChunkFactory.createChunk(0,10,"PER",7.0) });
+        assertChunking(chunker2,"then john smith",
+                       new Chunk[] { ChunkFactory.createChunk(5,15,"PER",7.0) });
+        assertChunking(chunker2,"john john smith",
+                       new Chunk[] { ChunkFactory.createChunk(5,15,"PER",7.0) });
+        assertChunking(chunker2,"john john smith smith",
+                       new Chunk[] { ChunkFactory.createChunk(5,15,"PER",7.0) });
+
+    }
 
 }
