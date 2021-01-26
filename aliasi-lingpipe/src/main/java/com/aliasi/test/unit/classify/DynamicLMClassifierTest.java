@@ -20,6 +20,14 @@ import java.io.IOException;
 import java.io.File;
 import com.aliasi.util.Files;
 import com.aliasi.util.Strings;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 
 public class DynamicLMClassifierTest  {

@@ -1,9 +1,7 @@
 package com.aliasi.test.unit.spell;
 
 import com.aliasi.spell.EditDistance;
-
 import com.aliasi.util.Distance;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

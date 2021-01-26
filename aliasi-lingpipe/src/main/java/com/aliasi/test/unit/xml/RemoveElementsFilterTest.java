@@ -16,16 +16,13 @@
 
 package com.aliasi.test.unit.xml;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 import com.aliasi.test.unit.MockObjectHelper;
-
 import com.aliasi.xml.RemoveElementsFilter;
 import com.aliasi.xml.SimpleElementHandler;
-
+import org.junit.Test;
 import org.xml.sax.SAXException;
+
+import static junit.framework.Assert.assertEquals;
 
 public class RemoveElementsFilterTest  {
 

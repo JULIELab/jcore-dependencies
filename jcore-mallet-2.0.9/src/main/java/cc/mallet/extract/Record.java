@@ -6,11 +6,10 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.extract;
 
+import cc.mallet.types.Label;
 import gnu.trove.THashMap;
 
 import java.util.Iterator;
-
-import cc.mallet.types.Label;
 
 /**
  * Created: Oct 12, 2004

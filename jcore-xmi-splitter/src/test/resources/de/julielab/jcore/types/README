@@ -1,0 +1,6 @@
+These copies of some (not all!) JCoRe type system descriptors only serve for testing of the XMI splitter.
+The splitter (and builder) are not tied to any specific type system. Do not use the files in this directory
+for production in any way. The JCoRe type system is found in the https://github.com/JULIELab/jcore-base/
+repository and available via Maven with the coordinates de.julielab:jcore-types:<version>.
+We do not refer to the Maven artifact in this project because this would introduce a cyclic dependency between
+jcore-base and jcore-dependencies.

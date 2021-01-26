@@ -1,29 +1,24 @@
 package com.aliasi.test.unit.dict;
 
-import com.aliasi.chunk.Chunker;
 import com.aliasi.chunk.ChunkFactory;
+import com.aliasi.chunk.Chunker;
 import com.aliasi.chunk.Chunking;
 import com.aliasi.chunk.ChunkingImpl;
-
+import com.aliasi.dict.ApproxDictionaryChunker;
 import com.aliasi.dict.DictionaryEntry;
 import com.aliasi.dict.TrieDictionary;
-import com.aliasi.dict.ApproxDictionaryChunker;
-
 import com.aliasi.spell.FixedWeightEditDistance;
 import com.aliasi.spell.WeightedEditDistance;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class ApproxDictionaryChunkerTest  {
 

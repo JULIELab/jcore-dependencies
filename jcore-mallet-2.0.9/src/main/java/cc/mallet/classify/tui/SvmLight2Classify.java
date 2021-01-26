@@ -7,15 +7,18 @@ information, see the file `LICENSE' included with this distribution. */
 
 package cc.mallet.classify.tui;
 
-import java.util.Iterator;
-import java.util.logging.*;
+import cc.mallet.classify.Classifier;
+import cc.mallet.pipe.iterator.SelectiveFileLineIterator;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.Labeling;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+
 import java.io.*;
 import java.nio.charset.Charset;
-
-import cc.mallet.classify.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * Command line tool for classifying a sequence of instances directly from text

@@ -11,10 +11,10 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.util.Iterator;
-
-import cc.mallet.pipe.*;
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
+
+import java.util.Iterator;
 
 /**
  * Provides a {@link PipeExtendedIterator} that applies a {@link Pipe} to

@@ -2,24 +2,19 @@ package com.aliasi.test.unit.hmm;
 
 import com.aliasi.hmm.HmmCharLmEstimator;
 import com.aliasi.hmm.HmmDecoder;
-
 import com.aliasi.tag.ScoredTagging;
 import com.aliasi.tag.TagLattice;
 import com.aliasi.tag.Tagging;
-
 import com.aliasi.util.FastCache;
 import com.aliasi.util.ScoredObject;
 import com.aliasi.util.Strings;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static org.junit.Assert.assertArrayEquals;
 
 import java.util.Arrays;
 import java.util.Iterator;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class HmmDecoderTest  {
 

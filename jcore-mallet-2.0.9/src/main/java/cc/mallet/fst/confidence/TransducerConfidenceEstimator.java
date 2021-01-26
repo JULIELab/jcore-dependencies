@@ -12,15 +12,19 @@
 package cc.mallet.fst.confidence;
 
 
-import java.util.logging.*;
-import java.util.*;
-import java.io.Serializable;
-
-import cc.mallet.fst.*;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.SumLatticeDefault;
+import cc.mallet.fst.Transducer;
 import cc.mallet.pipe.Noop;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
+import cc.mallet.pipe.iterator.SegmentIterator;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.logging.Logger;
 
 /**
  * Abstract class that estimates the confidence of a {@link Segment}

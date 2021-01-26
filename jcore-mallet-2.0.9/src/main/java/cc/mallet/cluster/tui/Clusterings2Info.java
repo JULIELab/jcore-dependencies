@@ -1,15 +1,15 @@
 package cc.mallet.cluster.tui;
 
 
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.util.logging.Logger;
-
 import cc.mallet.cluster.Clustering;
 import cc.mallet.cluster.Clusterings;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
+
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.util.logging.Logger;
 
 //In progress
 public class Clusterings2Info {

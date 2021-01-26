@@ -10,14 +10,12 @@
 
 package cc.mallet.classify;
 
-import java.util.logging.Logger;
-
-import cc.mallet.classify.Boostable;
-import cc.mallet.classify.ClassifierTrainer;
 import cc.mallet.types.FeatureSelection;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.util.logging.Logger;
 
 
 /**

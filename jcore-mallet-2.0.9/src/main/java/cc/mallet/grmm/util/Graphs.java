@@ -6,13 +6,12 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.util;
 
-import org._3pq.jgrapht.UndirectedGraph;
-import org._3pq.jgrapht.graph.SimpleGraph;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.VarSet;
 import cc.mallet.grmm.types.Variable;
+import org._3pq.jgrapht.UndirectedGraph;
+import org._3pq.jgrapht.graph.SimpleGraph;
 
 import java.util.Iterator;
 

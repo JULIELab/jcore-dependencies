@@ -19,10 +19,14 @@
 
 package cc.mallet.types;
 
-import java.io.*;
-import java.util.*;
-import cc.mallet.pipe.*;
-import cc.mallet.util.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.util.BshInterpreter;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.IoUtils;
+
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
+import java.util.Iterator;
 
 public class InstanceListTUI
 {

@@ -10,15 +10,18 @@
 
 package cc.mallet.pipe;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.logging.*;
-import java.io.*;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.Token;
 import cc.mallet.types.TokenSequence;
 import cc.mallet.util.MalletLogger;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 /**
 	 Run a regular expression over the text of each token; replace the
 	 text with the substring matching one regex group; create a target

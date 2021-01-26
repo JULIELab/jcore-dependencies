@@ -1,34 +1,23 @@
 package com.aliasi.test.unit.classify;
 
-import com.aliasi.classify.BinaryLMClassifier;
-import com.aliasi.classify.Classified;
-import com.aliasi.classify.Classification;
-import com.aliasi.classify.PerceptronClassifier;
-import com.aliasi.classify.ScoredClassification;
-
+import com.aliasi.classify.*;
 import com.aliasi.corpus.Corpus;
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.matrix.PolynomialKernel;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenFeatureExtractor;
-
+import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
 import com.aliasi.util.ObjectToDoubleMap;
 import com.aliasi.util.Strings;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 
 import java.io.IOException;
 import java.io.Serializable;
-
 import java.util.Map;
+
+import static junit.framework.Assert.assertEquals;
 
 
 public class PerceptronClassifierTest  {

@@ -14,13 +14,15 @@
 
 package cc.mallet.classify;
 
-import java.util.logging.*;
-
-import cc.mallet.classify.evaluate.*;
+import cc.mallet.classify.evaluate.ConfusionMatrix;
 import cc.mallet.pipe.Classification2ConfidencePredictingFeatureVector;
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSelection;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.PerLabelInfoGain;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 public class ConfidencePredictingClassifierTrainer extends ClassifierTrainer<ConfidencePredictingClassifier> implements Boostable
 {

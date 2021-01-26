@@ -1,7 +1,5 @@
 package is2.lemmatizer;
 
-import is2.util.DB;
-
 import java.util.ArrayList;
 
 public class StringEdit {

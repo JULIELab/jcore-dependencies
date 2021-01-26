@@ -8,10 +8,10 @@
 package cc.mallet.grmm.types; // Generated package name
 
 
+import cc.mallet.util.Randoms;
+
 import java.io.Serializable;
 import java.util.Collection;
-
-import cc.mallet.util.Randoms;
 
 
 

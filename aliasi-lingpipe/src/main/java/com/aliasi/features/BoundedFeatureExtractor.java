@@ -24,9 +24,6 @@ import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
 
-import java.util.HashMap;
-import java.util.Map;
-
 /**
  * A {@code BoundedFeatureExtractor} provides a lower-bound and
  * upper-bound on feature values between which all values from a

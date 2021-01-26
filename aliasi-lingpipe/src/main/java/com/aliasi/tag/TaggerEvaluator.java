@@ -16,20 +16,13 @@
 
 package com.aliasi.tag;
 
-import com.aliasi.classify.Classification;
 import com.aliasi.classify.BaseClassifierEvaluator;
-
+import com.aliasi.classify.Classification;
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Strings;
 
-import java.util.ArrayList;
-import java.util.Formatter;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A <code>TaggerEvaluator</code> provides evaluation for

@@ -7,14 +7,13 @@
 package cc.mallet.grmm.util;
 
 
-import java.util.*;
-
 import cc.mallet.grmm.inference.Inferencer;
 import cc.mallet.grmm.inference.JunctionTree;
 import cc.mallet.grmm.inference.JunctionTreeInferencer;
 import cc.mallet.grmm.types.*;
-
 import gnu.trove.THashSet;
+
+import java.util.*;
 
 /**
  * Static utilities that do useful things with factor graphs.

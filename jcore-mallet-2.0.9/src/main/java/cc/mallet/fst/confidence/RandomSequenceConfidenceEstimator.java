@@ -11,10 +11,10 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.*;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.Instance;
 
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import java.util.Random;
 
 /**
 	 Estimates the confidence of an entire sequence randomly.

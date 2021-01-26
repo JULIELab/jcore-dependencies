@@ -6,15 +6,6 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.extract.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
-
 import cc.mallet.extract.*;
 import cc.mallet.pipe.*;
 import cc.mallet.pipe.iterator.ArrayIterator;
@@ -23,6 +14,14 @@ import cc.mallet.types.InstanceList;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.Sequence;
 import cc.mallet.util.CharSequenceLexer;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.ByteArrayOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 
 /**
  * Created: Nov 18, 2004

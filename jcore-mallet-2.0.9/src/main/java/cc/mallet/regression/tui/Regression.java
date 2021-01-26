@@ -1,11 +1,16 @@
 package cc.mallet.regression.tui;
 
-import cc.mallet.regression.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.regression.LeastSquares;
+import cc.mallet.regression.LinearRegression;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
 
-import java.io.*;
-import java.util.logging.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.logging.Logger;
 
 public class Regression {
 	

@@ -7,10 +7,13 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.Iterator;
-
-import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.types.Assignment;
+import cc.mallet.grmm.types.Factor;
+import cc.mallet.grmm.types.FactorGraph;
+import cc.mallet.grmm.types.VarSet;
 import cc.mallet.util.Randoms;
+
+import java.util.Iterator;
 
 /**
  * Computes an exact sample from the distribution of a given factor graph by forming

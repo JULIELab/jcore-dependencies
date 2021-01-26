@@ -1,17 +1,15 @@
 package com.aliasi.test.unit.util;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-
-
 import com.aliasi.util.MinMaxHeap;
 import com.aliasi.util.Scored;
 import com.aliasi.util.ScoredObject;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Random;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 
 public class MinMaxHeapTest  {

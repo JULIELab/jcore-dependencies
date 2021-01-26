@@ -1,13 +1,11 @@
 package com.aliasi.test.unit.classify;
 
+import com.aliasi.classify.ConfusionMatrix;
+import com.aliasi.classify.PrecisionRecallEvaluation;
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
-
-
-import com.aliasi.classify.ConfusionMatrix;
-import com.aliasi.classify.PrecisionRecallEvaluation;
 
 public class ConfusionMatrixTest  {
 

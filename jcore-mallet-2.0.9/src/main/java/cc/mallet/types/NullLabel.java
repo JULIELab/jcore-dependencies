@@ -7,10 +7,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AlphabetCarrying;
-import cc.mallet.types.LabelAlphabet;
-
 /**
  * Object that carries a LabelAlphabet. Can be used in place of a
  * null target for unlabeled instances, which avoids issues

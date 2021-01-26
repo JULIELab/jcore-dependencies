@@ -1,8 +1,11 @@
 package cc.mallet.topics;
 
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import gnu.trove.TIntIntHashMap;
-import java.io.*;
+
+import java.io.File;
 
 /** A wrapper for a topic model to be used from the R statistical package through rJava.
 	R does not distinguish between integers and floating point numbers, so many of these

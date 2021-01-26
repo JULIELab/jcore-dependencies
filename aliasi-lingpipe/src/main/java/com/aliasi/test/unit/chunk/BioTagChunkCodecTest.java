@@ -1,52 +1,25 @@
 package com.aliasi.test.unit.chunk;
 
-import com.aliasi.chunk.BioTagChunkCodec;
-import com.aliasi.chunk.Chunk;
-import com.aliasi.chunk.ChunkFactory;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.chunk.ChunkingImpl;
-import com.aliasi.chunk.TagChunkCodec;
-
+import com.aliasi.chunk.*;
 import com.aliasi.crf.ForwardBackwardTagLattice;
-
 import com.aliasi.sentences.IndoEuropeanSentenceModel;
 import com.aliasi.sentences.SentenceChunker;
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.tag.StringTagging;
-import com.aliasi.tag.Tagging;
 import com.aliasi.tag.TagLattice;
-
+import com.aliasi.tag.Tagging;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.ScoredObject;
-import com.aliasi.util.Scored;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
-
-
-import org.junit.Test;
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
+import java.util.*;
 
 import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 public class BioTagChunkCodecTest {
 

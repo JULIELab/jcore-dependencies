@@ -1,7 +1,5 @@
 package is2.util;
 
-import is2.io.CONLLReader09;
-
 import java.io.File;
 
 public class OptionsSuper {

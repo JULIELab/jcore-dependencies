@@ -1,17 +1,16 @@
 package com.aliasi.test.unit.symbol;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import com.aliasi.symbol.MapSymbolTable;
+import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.junit.Test;
-
-import com.aliasi.symbol.MapSymbolTable;
-import com.aliasi.util.AbstractExternalizable;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class MapSymbolTableTest  {
 

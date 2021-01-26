@@ -1,16 +1,13 @@
 package com.aliasi.test.unit.cluster;
 
 import com.aliasi.cluster.LatentDirichletAllocation;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
 import java.io.IOException;
-
 import java.util.Random;
+
+import static junit.framework.Assert.assertEquals;
 
 public class LatentDirichletAllocationTest  {
 

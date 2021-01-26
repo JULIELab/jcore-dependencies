@@ -18,16 +18,14 @@ package com.aliasi.test.unit.coref;
 
 import com.aliasi.coref.CachedMention;
 import com.aliasi.coref.Mention;
-
 import org.junit.Test;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static org.junit.Assert.assertArrayEquals;
-
-
-import java.util.HashSet;
-import java.util.Set;
 
 public class CachedMentionTest  {
 

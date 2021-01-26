@@ -1,46 +1,49 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version="1.0" ?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0                           http://maven.apache.org/maven-v4_0_0.xsd">
-
-	<modelVersion>4.0.0</modelVersion>
-	
-	
+    <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>de.julielab</groupId>
         <artifactId>jcore-parent</artifactId>
-        <version>2.2.0</version>
+        <version>2.5.1</version>
     </parent>
-	<artifactId>jcore-dependencies</artifactId>
-	<packaging>pom</packaging>
-	
-	<name>JCoRe Dependencies</name>
-	<description>The POM for the JCoRe Dependencies projects.</description>
-	<organization>
+    <artifactId>jcore-dependencies</artifactId>
+    <version>2.4.1</version>
+    <packaging>pom</packaging>
+    <name>JCoRe Dependencies</name>
+    <description>The POM for the JCoRe Dependencies projects.</description>
+    <organization>
         <name>JULIE Lab, Germany</name>
-		<url>http://www.julielab.de</url>
-	</organization>
+        <url>http://www.julielab.de</url>
+    </organization>
     <licenses>
         <license>
-            <name>GNU Lesser General Public License, Version 3.0</name>
-            <url>http://www.gnu.org/licenses/lgpl-3.0.html</url>
+            <name>BSD-2-Clause</name>
+            <url>https://opensource.org/licenses/BSD-2-Clause</url>
         </license>
     </licenses>
     <url>https://github.com/JULIELab/jcore-dependencies</url>
-	
-	<modules>
-		<module>aliasi-lingpipe</module>
-		<module>biosem-event-extractor</module>
-		<module>jcore-mallet-2.0.9</module>
-		<module>julie-segment-eval</module>
-		<module>julie-xml-tools</module>
+    <modules>
+        <module>abner-1.5</module>
+        <module>aliasi-lingpipe</module>
+        <module>biosem-event-extractor</module>
+        <module>dragontool</module>
+        <module>jcore-mallet-2.0.9</module>
+        <module>julie-segment-eval</module>
+        <module>julie-xml-tools</module>
         <module>uea-stemmer</module>
         <module>jules-trove</module>
         <module>mate-tools</module>
-	</modules>
-	
-	
-	<scm>
+        <module>julielab-entity-evaluator</module>
+        <module>linnaeus</module>
+        <module>jcore-xmi-splitter</module>
+        <module>jcore-db-test-utilities</module>
+        <module>jcore-mallet-0.4</module>
+        <module>secondstring-2003</module>
+        <module>openjgraph</module>
+    </modules>
+    <scm>
         <connection>scm:git:git://github.com/JULIELab/jcore-dependencies.git</connection>
-        <developerConnection>scm:git:git://github.com/JULIELab/jcore-dependencies.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/JULIELab/jcore-dependencies.git</developerConnection>
         <url>scm:git:https://github.com/JULIELab/jcore-dependencies</url>
     </scm>
 </project>

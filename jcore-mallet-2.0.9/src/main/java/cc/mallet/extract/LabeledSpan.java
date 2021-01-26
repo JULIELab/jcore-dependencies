@@ -6,12 +6,12 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.extract;
 
+import cc.mallet.types.Label;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import cc.mallet.types.Label;
 
 
 /**

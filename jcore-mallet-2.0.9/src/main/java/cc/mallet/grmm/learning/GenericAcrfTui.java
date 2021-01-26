@@ -14,25 +14,25 @@ package cc.mallet.grmm.learning;
  */
 
 import bsh.EvalError;
+import cc.mallet.grmm.inference.Inferencer;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
+import cc.mallet.pipe.iterator.LineGroupIterator;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.BshInterpreter;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.FileUtils;
+import cc.mallet.util.Timing;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
+import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import cc.mallet.grmm.inference.Inferencer;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.LineGroupIterator;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Instance;
-import cc.mallet.util.*;
 
 public class GenericAcrfTui {
 

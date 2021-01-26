@@ -18,16 +18,12 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.CollectionUtils;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Set;
+
+import static junit.framework.Assert.assertEquals;
 
 public class CollectionUtilsTest {
 

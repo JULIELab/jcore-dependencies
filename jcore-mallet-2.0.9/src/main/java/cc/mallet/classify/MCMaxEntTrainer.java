@@ -12,25 +12,19 @@ information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.classify;
 
 
-import java.util.logging.*;
-import java.util.*;
-import java.io.*;
-
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.optimize.Optimizer;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.Labeling;
-import cc.mallet.types.MatrixOps;
+import cc.mallet.types.*;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.MalletProgressMessageLogger;
 import cc.mallet.util.Maths;
+
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 // Does not currently handle instances that are labeled with distributions
 // instead of a single label.

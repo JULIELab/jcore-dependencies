@@ -14,14 +14,12 @@
 
 package cc.mallet.types;
 
-import java.util.Arrays;
-import java.util.logging.*;
-import java.io.*;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSequence;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.PropertyList;
+
+import java.io.*;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
  *  A subset of an {@link cc.mallet.types.Alphabet} in which each element of the subset has an associated value.

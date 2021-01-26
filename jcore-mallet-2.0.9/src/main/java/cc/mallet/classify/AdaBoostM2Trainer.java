@@ -7,12 +7,15 @@
 
 package cc.mallet.classify;
 
-import java.util.Arrays;
-import java.util.logging.*;
-
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSelection;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
  * This version of AdaBoost can handle multi-class problems.  For

@@ -7,17 +7,16 @@
 
 package cc.mallet.grmm.types;
 
-import gnu.trove.TObjectIntHashMap;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.io.*;
-
 import cc.mallet.grmm.inference.Utils;
 import cc.mallet.types.Matrixn;
 import cc.mallet.types.SparseMatrixn;
 import cc.mallet.util.Randoms;
+import gnu.trove.TObjectIntHashMap;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 /**

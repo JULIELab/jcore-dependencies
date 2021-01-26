@@ -12,30 +12,22 @@
 package cc.mallet.fst;
 
 
-
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import cc.mallet.fst.Transducer.State;
+import cc.mallet.fst.Transducer.TransitionIterator;
 import cc.mallet.types.ArraySequence;
 import cc.mallet.types.Sequence;
 import cc.mallet.types.SequencePairAlignment;
-
-import cc.mallet.fst.Transducer.State;
-import cc.mallet.fst.Transducer.TransitionIterator;
-
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.search.AStar;
 import cc.mallet.util.search.AStarState;
 import cc.mallet.util.search.SearchNode;
 import cc.mallet.util.search.SearchState;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /** Default, full dynamic programming version of the Viterbi "Max-(Product)-Lattice" algorithm.
  * 

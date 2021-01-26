@@ -12,15 +12,12 @@
 package cc.mallet.types;
 
 
-import java.io.Serializable;
-import java.io.ObjectOutputStream;
+import cc.mallet.util.Randoms;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.util.Randoms;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 /**
  * A probability distribution over a set of features represented as a {@link cc.mallet.types.FeatureVector}.

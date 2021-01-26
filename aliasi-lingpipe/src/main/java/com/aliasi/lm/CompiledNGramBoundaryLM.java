@@ -16,12 +16,11 @@
 
 package com.aliasi.lm;
 
-import java.io.ObjectInput;
-import java.io.IOException;
-
 import com.aliasi.stats.Model;
-
 import com.aliasi.util.Exceptions;
+
+import java.io.IOException;
+import java.io.ObjectInput;
 
 /**
  * A <code>CompiledNGramBoundaryLM</code> is constructed by reading

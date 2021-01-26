@@ -3,8 +3,6 @@
  */
 package is2.data;
 
-import is2.data.IFV;
-
 /**
  * @author Dr. Bernd Bohnet, 30.08.2011
  * 

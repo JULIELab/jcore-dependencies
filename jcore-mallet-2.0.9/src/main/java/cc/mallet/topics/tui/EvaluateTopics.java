@@ -1,10 +1,11 @@
 package cc.mallet.topics.tui;
 
-import cc.mallet.util.*;
-import cc.mallet.types.*;
-import cc.mallet.topics.*;
+import cc.mallet.topics.MarginalProbEstimator;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CommandOption;
 
-import java.io.*;
+import java.io.File;
+import java.io.PrintStream;
 
 public class EvaluateTopics {
 

@@ -17,18 +17,14 @@
 package com.aliasi.lm;
 
 import com.aliasi.symbol.SymbolTable;
-
-import com.aliasi.tokenizer.TokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
-
+import com.aliasi.tokenizer.TokenizerFactory;
 import com.aliasi.util.Strings;
 
+import java.io.IOException;
+import java.io.ObjectInput;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-
-import java.io.ObjectInput;
-import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

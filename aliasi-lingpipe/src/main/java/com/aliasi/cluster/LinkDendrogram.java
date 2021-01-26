@@ -16,8 +16,8 @@
 
 package com.aliasi.cluster;
 
-import com.aliasi.util.Distance;
 import com.aliasi.util.BoundedPriorityQueue;
+import com.aliasi.util.Distance;
 
 import java.util.Collection;
 import java.util.HashSet;

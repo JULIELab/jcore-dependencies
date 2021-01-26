@@ -1,21 +1,17 @@
 package com.aliasi.test.unit.corpus;
 
 import com.aliasi.corpus.Corpus;
-import com.aliasi.corpus.ObjectHandler;
 import com.aliasi.corpus.ListCorpus;
-
+import com.aliasi.corpus.ObjectHandler;
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
 import java.io.IOException;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Random;
+
+import static junit.framework.Assert.assertEquals;
 
 public class ListCorpusTest {
 

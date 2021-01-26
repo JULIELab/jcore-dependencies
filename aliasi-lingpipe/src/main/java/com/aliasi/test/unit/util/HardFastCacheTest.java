@@ -1,13 +1,11 @@
 package com.aliasi.test.unit.util;
 
+import com.aliasi.util.HardFastCache;
 import org.junit.Test;
 
+import static com.aliasi.test.unit.Asserts.succeed;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-import static com.aliasi.test.unit.Asserts.succeed;
-
-
-import com.aliasi.util.HardFastCache;
 
 public class HardFastCacheTest  {
 

@@ -16,21 +16,16 @@
 
 package com.aliasi.test.unit.tokenizer;
 
-import com.aliasi.util.AbstractExternalizable;
-
 import com.aliasi.tokenizer.RegExTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNull;
-import static org.junit.Assert.assertArrayEquals;
-
-
 import java.io.IOException;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class RegExTokenizerFactoryTest  {
 

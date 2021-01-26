@@ -1,15 +1,14 @@
 package examples;
- 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.StringTokenizer;
 
 import is2.data.SentenceData09;
 import is2.lemmatizer.Lemmatizer;
 import is2.parser.Options;
 import is2.parser.Parser;
 import is2.tag.Tagger;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.StringTokenizer;
 
 /**
  * @author Bernd Bohnet, 13.09.2010

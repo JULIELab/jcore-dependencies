@@ -18,16 +18,9 @@ package com.aliasi.suffixarray;
 
 import com.aliasi.tokenizer.Tokenization;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.Strings;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A {@code DocumentTokenSuffixArray} implements a suffix array over a

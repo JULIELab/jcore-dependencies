@@ -17,27 +17,16 @@
 package com.aliasi.classify;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.features.Features;
-
 import com.aliasi.matrix.EuclideanDistance;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.symbol.MapSymbolTable;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Compilable;
-import com.aliasi.util.Distance;
-import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.Proximity;
-import com.aliasi.util.ScoredObject;
+import com.aliasi.util.*;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;

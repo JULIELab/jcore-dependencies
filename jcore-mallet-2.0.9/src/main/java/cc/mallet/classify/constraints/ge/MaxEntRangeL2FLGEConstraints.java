@@ -7,6 +7,9 @@
 
 package cc.mallet.classify.constraints.ge;
 
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import gnu.trove.TDoubleArrayList;
 import gnu.trove.TIntArrayList;
 import gnu.trove.TIntObjectHashMap;
@@ -14,10 +17,6 @@ import gnu.trove.TIntObjectHashMap;
 import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.HashMap;
-
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
 
 /**
  * Expectation constraint for use with GE.

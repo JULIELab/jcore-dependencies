@@ -15,17 +15,22 @@
 package cc.mallet.classify.tests;
 
 //import edu.umass.cs.mallet.base.pipe.SerialPipe;
-import junit.framework.*;
-import java.net.URI;
-import java.util.Iterator;
 
-import cc.mallet.classify.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.ArrayIterator;
-import cc.mallet.pipe.iterator.PipeInputIterator;
+import cc.mallet.classify.Classifier;
+import cc.mallet.classify.ClassifierTrainer;
+import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.classify.Trial;
 import cc.mallet.pipe.iterator.RandomTokenSequenceIterator;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.Dirichlet;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.Randoms;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.Iterator;
 
 public class TestClassifiers extends TestCase
 {

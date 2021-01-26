@@ -1,14 +1,12 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.BernoulliConstant;
-
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.Assert.fail;
-
-
-import java.io.*;
 
 public class BernoulliConstantTest  {
 

@@ -7,15 +7,15 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.*;
-import java.util.logging.Logger;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.UndirectedGrid;
 import cc.mallet.grmm.types.Variable;
 import cc.mallet.util.CollectionUtils;
 import cc.mallet.util.MalletLogger;
+
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created: Jun 1, 2005

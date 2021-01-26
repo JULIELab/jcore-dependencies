@@ -7,26 +7,16 @@
 
 package cc.mallet.classify;
 
+import cc.mallet.topics.ParallelTopicModel;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Maths;
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.logging.Logger;
-
-import cc.mallet.topics.ParallelTopicModel;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.InfoGain;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Labeling;
-import cc.mallet.types.MatrixOps;
-import cc.mallet.util.MalletLogger;
-import cc.mallet.util.Maths;
 
 /**
  * Utility functions for creating feature constraints that can be used with GE training.

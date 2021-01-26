@@ -16,20 +16,14 @@
 
 package com.aliasi.sentences;
 
-import com.aliasi.classify.PrecisionRecallEvaluation;
-
 import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.ChunkAndCharSeq;
 import com.aliasi.chunk.Chunking;
 import com.aliasi.chunk.ChunkingEvaluation;
-
+import com.aliasi.classify.PrecisionRecallEvaluation;
 import com.aliasi.util.Strings;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A <code>SentenceEvaluation</code> stores and reports the results of

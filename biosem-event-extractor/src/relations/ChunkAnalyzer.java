@@ -1,7 +1,8 @@
 package relations;
 
-import java.util.*;
 import parser.Parser;
+
+import java.util.*;
 
 /**
  *

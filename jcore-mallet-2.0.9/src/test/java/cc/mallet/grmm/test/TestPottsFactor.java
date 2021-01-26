@@ -7,20 +7,13 @@
 
 package cc.mallet.grmm.test;
 
-import static org.junit.Assert.*;
-
+import cc.mallet.grmm.types.*;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cc.mallet.grmm.types.AbstractTableFactor;
-import cc.mallet.grmm.types.Assignment;
-import cc.mallet.grmm.types.Factor;
-import cc.mallet.grmm.types.HashVarSet;
-import cc.mallet.grmm.types.PottsTableFactor;
-import cc.mallet.grmm.types.TableFactor;
-import cc.mallet.grmm.types.VarSet;
-import cc.mallet.grmm.types.Variable;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * $Id: TestPottsFactor.java,v 1.1 2007/10/22 21:37:41 mccallum Exp $

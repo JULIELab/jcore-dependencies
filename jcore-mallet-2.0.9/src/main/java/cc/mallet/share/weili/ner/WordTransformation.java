@@ -12,8 +12,9 @@
 
 package cc.mallet.share.weili.ner;
 
-import java.util.regex.*;
-import cc.mallet.types.*;
+import cc.mallet.types.Token;
+
+import java.util.regex.Pattern;
 
 public class WordTransformation
 {

@@ -11,13 +11,13 @@
 
 package cc.mallet.cluster;
 
+import cc.mallet.types.InstanceList;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Arrays;
-
-import cc.mallet.types.InstanceList;
 
 
 public class Clustering implements Serializable {

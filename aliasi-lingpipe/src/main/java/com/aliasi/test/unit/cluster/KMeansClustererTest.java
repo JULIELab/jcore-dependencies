@@ -1,29 +1,16 @@
 package com.aliasi.test.unit.cluster;
 
-import com.aliasi.cluster.Clusterer;
 import com.aliasi.cluster.KMeansClusterer;
-
-import com.aliasi.io.LogLevel;
-import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenFeatureExtractor;
-
-import com.aliasi.util.Distance;
 import com.aliasi.util.FeatureExtractor;
-
 import org.junit.Test;
+
+import java.util.*;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Random;
-import java.util.Set;
 
 
 

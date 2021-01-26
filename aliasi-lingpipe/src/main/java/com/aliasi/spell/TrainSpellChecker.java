@@ -17,23 +17,19 @@
 package com.aliasi.spell;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.lm.CompiledNGramProcessLM;
 import com.aliasi.lm.NGramProcessLM;
-
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Strings;
 
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
 import java.io.Serializable;
-
 import java.util.HashSet;
 import java.util.Set;
 

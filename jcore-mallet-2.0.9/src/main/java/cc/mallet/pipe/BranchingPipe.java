@@ -1,10 +1,10 @@
 package cc.mallet.pipe;
 
+import cc.mallet.types.Instance;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-
-import cc.mallet.types.Instance;
 
 /** A Pipe that works like a rule list.  Evaluate predicate() on each Pipe in the array;
  * the first one that returns true, call that one ("the called Pipe"), and ignore the 

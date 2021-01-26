@@ -17,22 +17,19 @@
 package com.aliasi.classify;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.lm.LanguageModel;
-import com.aliasi.lm.NGramProcessLM;
 import com.aliasi.lm.NGramBoundaryLM;
+import com.aliasi.lm.NGramProcessLM;
 import com.aliasi.lm.TokenizedLM;
-
 import com.aliasi.stats.MultivariateDistribution;
 import com.aliasi.stats.MultivariateEstimator;
-
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;
+
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
 
 /**
  * A <code>DynamicLMClassifier</code> is a language model classifier

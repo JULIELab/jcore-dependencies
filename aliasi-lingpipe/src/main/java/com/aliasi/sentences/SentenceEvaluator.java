@@ -17,7 +17,6 @@
 package com.aliasi.sentences;
 
 import com.aliasi.chunk.Chunking;
-
 import com.aliasi.corpus.ObjectHandler;
 
 /**

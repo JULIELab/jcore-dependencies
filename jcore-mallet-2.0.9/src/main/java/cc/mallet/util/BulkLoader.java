@@ -1,11 +1,16 @@
 package cc.mallet.util;
 
-import cc.mallet.types.*;
 import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
+import cc.mallet.pipe.iterator.CsvIterator;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 
-import java.util.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  *  This class reads through a single file, breaking each line

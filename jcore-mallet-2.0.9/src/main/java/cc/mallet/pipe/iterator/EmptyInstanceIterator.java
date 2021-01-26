@@ -1,8 +1,8 @@
 package cc.mallet.pipe.iterator;
 
-import java.util.Iterator;
-
 import cc.mallet.types.Instance;
+
+import java.util.Iterator;
 
 public class EmptyInstanceIterator implements Iterator<Instance> {
 

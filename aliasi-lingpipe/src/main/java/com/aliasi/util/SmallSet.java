@@ -16,11 +16,7 @@
 
 package com.aliasi.util;
 
-import java.util.AbstractSet;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The <code>SmallSet</code> class implements immutable instances the

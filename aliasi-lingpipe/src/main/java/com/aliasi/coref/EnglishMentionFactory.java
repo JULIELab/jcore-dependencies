@@ -17,12 +17,11 @@
 package com.aliasi.coref;
 
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-
 import com.aliasi.util.Strings;
 
 import java.util.HashSet;
-import java.util.Set;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * A mention factory for English phrases.  Defines genders

@@ -10,12 +10,13 @@ package cc.mallet.grmm.test;
 import cc.mallet.grmm.types.*;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.Randoms;
-import junit.framework.*;
 import gnu.trove.TDoubleArrayList;
-import no.uib.cipr.matrix.Vector;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+import no.uib.cipr.matrix.DenseMatrix;
 import no.uib.cipr.matrix.DenseVector;
 import no.uib.cipr.matrix.Matrix;
-import no.uib.cipr.matrix.DenseMatrix;
+import no.uib.cipr.matrix.Vector;
 
 /**
  * $Id: TestNormalFactor.java,v 1.1 2007/10/22 21:37:41 mccallum Exp $

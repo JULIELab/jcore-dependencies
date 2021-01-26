@@ -1,9 +1,7 @@
 package com.aliasi.test.unit.classify;
 
 import com.aliasi.classify.NaiveBayesClassifier;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

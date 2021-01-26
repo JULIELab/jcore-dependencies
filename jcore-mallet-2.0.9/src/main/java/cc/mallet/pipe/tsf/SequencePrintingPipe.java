@@ -7,11 +7,11 @@
 package cc.mallet.pipe.tsf;
 
 
-import java.io.PrintWriter;
-
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
 import cc.mallet.util.Maths;
+
+import java.io.PrintWriter;
 
 /**
  * Created: Jul 6, 2005

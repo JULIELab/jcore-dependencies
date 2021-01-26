@@ -7,16 +7,12 @@
 package cc.mallet.extract;
 
 
+import cc.mallet.fst.*;
+import cc.mallet.types.*;
+
 import java.io.*;
 import java.text.DecimalFormat;
 import java.util.List;
-
-import cc.mallet.fst.CRF;
-import cc.mallet.fst.MaxLattice;
-import cc.mallet.fst.MaxLatticeDefault;
-import cc.mallet.fst.SumLatticeDefault;
-import cc.mallet.fst.Transducer;
-import cc.mallet.types.*;
 
 /**
  * Created: Oct 31, 2004

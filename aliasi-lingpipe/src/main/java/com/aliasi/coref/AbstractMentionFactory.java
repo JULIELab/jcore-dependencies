@@ -18,7 +18,6 @@ package com.aliasi.coref;
 
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.SmallSet;
 import com.aliasi.util.Strings;
 

@@ -8,11 +8,14 @@ This software is provided under the terms of the Common Public License,
 version 1.0, as published by http://www.opensource.org.  For further
 information, see the file `LICENSE' included with this distribution. */
 
-import cc.mallet.types.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.Randoms;
-import java.util.Arrays;
+
 import java.io.*;
 import java.text.NumberFormat;
+import java.util.Arrays;
 
 /**
  * Four Level Pachinko Allocation with MLE learning, 

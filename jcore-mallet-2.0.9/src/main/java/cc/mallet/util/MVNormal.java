@@ -1,10 +1,10 @@
 package cc.mallet.util;
 
-import java.util.Arrays;
-import java.text.NumberFormat;
-import cc.mallet.util.Randoms;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureVector;
 
-import cc.mallet.types.*;
+import java.text.NumberFormat;
+import java.util.Arrays;
 
 /** Tools for working with multivariate normal distributions */
 

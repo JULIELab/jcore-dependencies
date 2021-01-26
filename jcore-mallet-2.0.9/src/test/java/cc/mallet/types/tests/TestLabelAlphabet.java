@@ -6,16 +6,14 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.types.tests;
 
-import junit.framework.TestCase;
+import cc.mallet.types.Label;
+import cc.mallet.types.LabelAlphabet;
 import junit.framework.Test;
+import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.Label;
-import cc.mallet.types.LabelAlphabet;
 
 /**
  * Created: Nov 24, 2004

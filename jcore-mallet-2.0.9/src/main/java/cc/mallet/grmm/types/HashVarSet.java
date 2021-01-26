@@ -7,6 +7,7 @@
 
 package cc.mallet.grmm.types;
 
+import cc.mallet.grmm.inference.Utils;
 import gnu.trove.THashSet;
 
 import java.io.IOException;
@@ -14,8 +15,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.*;
-
-import cc.mallet.grmm.inference.Utils;
 
 
 

@@ -1,4 +1,7 @@
-/.settings/
-/.project
+.settings/
+.project
+.classpath
 .DS_Store
-/target/
+target/
+.idea
+*.iml

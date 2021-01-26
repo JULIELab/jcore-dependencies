@@ -4,11 +4,7 @@ package is2.data;
 import is2.io.CONLLReader09;
 import is2.io.CONLLWriter09;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.StringWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 public class SentenceData09 {

@@ -10,9 +10,10 @@
  */
 
 package cc.mallet.types;
-import java.util.LinkedHashMap;
 
-import cc.mallet.util.*;
+import cc.mallet.util.CommandOption;
+
+import java.util.LinkedHashMap;
 
 /**
 	 Computes a similarity metric between two strings, based on counts

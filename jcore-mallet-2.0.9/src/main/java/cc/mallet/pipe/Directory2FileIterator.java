@@ -11,13 +11,15 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-import java.util.regex.Pattern;
-import java.net.URI;
-import java.util.Iterator;
-import cc.mallet.pipe.iterator.*;
+import cc.mallet.pipe.iterator.FileIterator;
 import cc.mallet.types.Instance;
 import cc.mallet.util.RegexFileFilter;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.net.URI;
+import java.util.Iterator;
+import java.util.regex.Pattern;
 /**
  * Convert a File object representing a directory into a FileIterator which
  * iterates over files in the directory matching a pattern and which extracts

@@ -16,16 +16,9 @@
 
 package com.aliasi.sentences;
 
-import com.aliasi.chunk.Chunk;
-import com.aliasi.chunk.ChunkFactory;
-import com.aliasi.chunk.Chunker;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.chunk.ChunkingImpl;
-
+import com.aliasi.chunk.*;
 import com.aliasi.tokenizer.Tokenization;
-import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Strings;
 
@@ -33,9 +26,6 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * The <code>SentenceChunker</code> class uses a

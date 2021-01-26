@@ -1,7 +1,6 @@
 package com.aliasi.hmm;
 
 import com.aliasi.lm.LanguageModel;
-
 import com.aliasi.symbol.SymbolTable;
 
 import java.io.IOException;

@@ -11,12 +11,14 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.ArrayList;
-import java.util.logging.*;
-
-import cc.mallet.fst.*;
+import cc.mallet.fst.MultiSegmentationEvaluator;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.Transducer;
 import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Corrects a subset of the {@link Segment}s produced by a {@link

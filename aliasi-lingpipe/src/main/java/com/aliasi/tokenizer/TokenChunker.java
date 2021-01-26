@@ -16,18 +16,13 @@
 
 package com.aliasi.tokenizer;
 
-import com.aliasi.chunk.Chunk;
-import com.aliasi.chunk.Chunker;
-import com.aliasi.chunk.ChunkingImpl;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.chunk.ChunkFactory;
-
+import com.aliasi.chunk.*;
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Strings;
 
+import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.IOException;
 import java.io.Serializable;
 
 /**

@@ -7,11 +7,13 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.io.*;
-import java.util.Iterator;
-import java.net.URI;
+import cc.mallet.types.Instance;
 
-import cc.mallet.types.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.Reader;
+import java.net.URI;
+import java.util.Iterator;
 
 /**
  * Very similar to the SimpleFileLineIterator, 

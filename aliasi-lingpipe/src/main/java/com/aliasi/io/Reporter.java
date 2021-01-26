@@ -16,8 +16,6 @@
 
 package com.aliasi.io;
 
-import java.io.IOException;
-
 /**
  * A {@code Reporter} is the abstract base class on which reporters
  * are defined that provide incremental feedback from long-running

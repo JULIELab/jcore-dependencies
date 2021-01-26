@@ -7,14 +7,13 @@
 
 package cc.mallet.fst;
 
-import java.util.logging.Logger;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Sequence;
 import cc.mallet.util.MalletLogger;
 
 import java.text.NumberFormat;
+import java.util.logging.Logger;
 
 /**
  * Prints predicted and true label distribution.

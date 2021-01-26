@@ -1,15 +1,7 @@
 package is2.lemmatizer;
 
 
-import is2.data.Cluster;
-import is2.data.F2SF;
-import is2.data.FV;
-import is2.data.Instances;
-import is2.data.InstancesTagger;
-import is2.data.Long2Int;
-import is2.data.ParametersFloat;
-import is2.data.PipeGen;
-import is2.data.SentenceData09;
+import is2.data.*;
 import is2.io.CONLLReader09;
 import is2.io.CONLLWriter09;
 import is2.tools.IPipe;
@@ -18,14 +10,7 @@ import is2.tools.Train;
 import is2.util.DB;
 import is2.util.OptionsSuper;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;

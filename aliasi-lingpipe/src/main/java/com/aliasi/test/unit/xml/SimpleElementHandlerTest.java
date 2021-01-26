@@ -16,23 +16,18 @@
 
 package com.aliasi.test.unit.xml;
 
-import com.aliasi.xml.SAXFilterHandler;
-
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 import com.aliasi.test.unit.MockObjectHelper;
-
 import com.aliasi.util.Tuple;
+import com.aliasi.xml.SAXFilterHandler;
+import org.junit.Test;
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
+import org.xml.sax.helpers.DefaultHandler;
 
 import java.util.ArrayList;
 
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-
-import org.xml.sax.helpers.AttributesImpl;
-import org.xml.sax.helpers.DefaultHandler;
+import static junit.framework.Assert.assertEquals;
 
 public class SimpleElementHandlerTest  {
 

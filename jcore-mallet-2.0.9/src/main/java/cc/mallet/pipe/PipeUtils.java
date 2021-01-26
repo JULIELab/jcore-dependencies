@@ -6,8 +6,6 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.pipe;
 
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.SerialPipes;
 import cc.mallet.types.Alphabet;
 
 /**

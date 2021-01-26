@@ -17,28 +17,17 @@
 package com.aliasi.features;
 
 import com.aliasi.classify.Classified;
-import com.aliasi.classify.Classification;
-
 import com.aliasi.corpus.Corpus;
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.stats.OnlineNormalEstimator;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A {@code ZScoreFeatureExtractor} converts features to their

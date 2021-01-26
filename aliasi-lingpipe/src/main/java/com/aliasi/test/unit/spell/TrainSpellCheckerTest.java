@@ -1,24 +1,17 @@
 package com.aliasi.test.unit.spell;
 
 import com.aliasi.lm.NGramProcessLM;
-
-import com.aliasi.spell.TrainSpellChecker;
 import com.aliasi.spell.FixedWeightEditDistance;
+import com.aliasi.spell.TrainSpellChecker;
 import com.aliasi.spell.WeightedEditDistance;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-
 import com.aliasi.util.AbstractExternalizable;
-
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import java.io.IOException;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 
 public class TrainSpellCheckerTest  {

@@ -1,16 +1,15 @@
 package cc.mallet.topics;
 
+import cc.mallet.classify.MaxEnt;
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.OptimizationException;
-
-import cc.mallet.types.*;
-import cc.mallet.classify.MaxEnt;
-import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.Noop;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
-import java.io.File;
 
 public class DMRTopicModel extends LDAHyper {
 

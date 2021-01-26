@@ -18,8 +18,8 @@ package com.aliasi.features;
 
 import com.aliasi.util.FeatureExtractor;
 
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A {@code ModifiedFeatureExtractor} allows feature values to be

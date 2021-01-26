@@ -3,18 +3,16 @@ package com.aliasi.test.unit.cluster;
 import com.aliasi.cluster.Dendrogram;
 import com.aliasi.cluster.LeafDendrogram;
 import com.aliasi.cluster.SingleLinkClusterer;
-
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-
 import com.aliasi.util.Distance;
+import org.junit.Test;
 
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class SingleLinkClustererTest  {
 

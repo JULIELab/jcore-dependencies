@@ -1,17 +1,15 @@
 package com.aliasi.test.unit.suffixarray;
 
 import com.aliasi.suffixarray.TokenSuffixArray;
-
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.Tokenization;
-import com.aliasi.tokenizer.TokenizerFactory;
-
 import org.junit.Test;
+
+import java.util.List;
+
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
 import static org.junit.Assert.assertArrayEquals;
-
-import java.util.List;
 
 public class TokenSuffixArrayTest {
 

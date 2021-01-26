@@ -4,20 +4,17 @@ import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.ChunkFactory;
 import com.aliasi.chunk.Chunking;
 import com.aliasi.chunk.ChunkingImpl;
-
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
-
-
 import com.aliasi.util.Strings;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.aliasi.test.unit.Asserts.assertFullEquals;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 
 public class ChunkingImplTest {
 

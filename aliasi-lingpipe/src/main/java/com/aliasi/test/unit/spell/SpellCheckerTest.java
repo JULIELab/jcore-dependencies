@@ -1,26 +1,20 @@
 package com.aliasi.test.unit.spell;
 
 import com.aliasi.lm.NGramProcessLM;
-
 import com.aliasi.spell.CompiledSpellChecker;
 import com.aliasi.spell.FixedWeightEditDistance;
 import com.aliasi.spell.TrainSpellChecker;
 import com.aliasi.spell.WeightedEditDistance;
-
+import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import com.aliasi.util.AbstractExternalizable;
+import com.aliasi.util.ScoredObject;
 import org.junit.Test;
+
+import java.io.IOException;
+import java.util.Iterator;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
-
-
-import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.ScoredObject;
-
-import java.io.IOException;
-
-import java.util.Iterator;
 
 public class SpellCheckerTest  {
 

@@ -16,16 +16,14 @@
 
 package com.aliasi.xml;
 
+import org.xml.sax.Attributes;
+import org.xml.sax.SAXException;
+import org.xml.sax.ext.Attributes2Impl;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.util.Collections;
 import java.util.List;
 import java.util.Stack;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
-
-import org.xml.sax.ext.Attributes2Impl;
-
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Provides a SAX filter that maintains a stack of elements visited.

@@ -1,13 +1,12 @@
 package com.aliasi.test.unit.spell;
 
-import static junit.framework.Assert.assertEquals;
+import com.aliasi.spell.TfIdfDistance;
+import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import org.junit.Test;
 
 import java.util.HashSet;
 
-import org.junit.Test;
-
-import com.aliasi.spell.TfIdfDistance;
-import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
+import static junit.framework.Assert.assertEquals;
 
 public class TfIdfDistanceTest  {
 

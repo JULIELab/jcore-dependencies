@@ -11,9 +11,13 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.Instance;
 
-import cc.mallet.types.*;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 /**
  * A pipe that does nothing to the instance fields but which has side effects on the dictionary.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

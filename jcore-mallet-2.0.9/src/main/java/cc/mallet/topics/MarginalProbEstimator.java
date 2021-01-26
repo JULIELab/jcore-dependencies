@@ -7,9 +7,12 @@
 
 package cc.mallet.topics;
 
-import java.io.*;
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.Randoms;
+
+import java.io.*;
 
 /**
  * An implementation of topic model marginal probability estimators

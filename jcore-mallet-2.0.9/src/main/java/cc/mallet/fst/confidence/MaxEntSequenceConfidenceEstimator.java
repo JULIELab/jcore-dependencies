@@ -11,12 +11,15 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.*;
-
-import cc.mallet.classify.*;
-import cc.mallet.fst.*;
-import cc.mallet.pipe.*;
+import cc.mallet.classify.Classification;
+import cc.mallet.classify.MaxEnt;
+import cc.mallet.classify.MaxEntTrainer;
+import cc.mallet.fst.Transducer;
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
+
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Estimates the confidence of a {@link Sequence} extracted by a {@link

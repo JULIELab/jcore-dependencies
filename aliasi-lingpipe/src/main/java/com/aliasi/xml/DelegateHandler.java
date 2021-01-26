@@ -16,13 +16,12 @@
 
 package com.aliasi.xml;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A <code>DelegateHandler</code> may be used with a delegating

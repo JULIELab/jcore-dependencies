@@ -1,7 +1,12 @@
 package cc.mallet.util.tests;
 
-import cc.mallet.util.search.*;
-import junit.framework.*;
+import cc.mallet.util.search.AStar;
+import cc.mallet.util.search.AStarState;
+import cc.mallet.util.search.SearchNode;
+import cc.mallet.util.search.SearchState;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Created by IntelliJ IDEA.

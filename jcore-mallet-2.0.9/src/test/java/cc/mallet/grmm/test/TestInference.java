@@ -7,66 +7,33 @@
 
 package cc.mallet.grmm.test;
 
-import static org.junit.Assert.*;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Date;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.logging.Logger;
-
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import cc.mallet.grmm.inference.AbstractBeliefPropagation;
-import cc.mallet.grmm.inference.BruteForceInferencer;
-import cc.mallet.grmm.inference.ExactSampler;
-import cc.mallet.grmm.inference.GibbsSampler;
-import cc.mallet.grmm.inference.Inferencer;
-import cc.mallet.grmm.inference.JunctionTree;
-import cc.mallet.grmm.inference.JunctionTreeInferencer;
-import cc.mallet.grmm.inference.LoopyBP;
-import cc.mallet.grmm.inference.RandomGraphs;
-import cc.mallet.grmm.inference.SamplingInferencer;
-import cc.mallet.grmm.inference.TRP;
-import cc.mallet.grmm.inference.TreeBP;
-import cc.mallet.grmm.inference.VariableElimination;
-import cc.mallet.grmm.types.AbstractTableFactor;
-import cc.mallet.grmm.types.Assignment;
-import cc.mallet.grmm.types.AssignmentIterator;
-import cc.mallet.grmm.types.CPT;
-import cc.mallet.grmm.types.DirectedModel;
-import cc.mallet.grmm.types.Factor;
-import cc.mallet.grmm.types.FactorGraph;
-import cc.mallet.grmm.types.HashVarSet;
-import cc.mallet.grmm.types.LogTableFactor;
-import cc.mallet.grmm.types.TableFactor;
-import cc.mallet.grmm.types.Tree;
-import cc.mallet.grmm.types.UndirectedModel;
-import cc.mallet.grmm.types.VarSet;
-import cc.mallet.grmm.types.Variable;
+import cc.mallet.grmm.inference.*;
+import cc.mallet.grmm.types.*;
 import cc.mallet.grmm.util.GeneralUtils;
 import cc.mallet.grmm.util.ModelReader;
 import cc.mallet.types.Dirichlet;
 import cc.mallet.types.Matrix;
 import cc.mallet.types.Matrixn;
 import cc.mallet.types.tests.TestSerializable;
-//import cc.mallet.util.Random;
 import cc.mallet.util.CollectionUtils;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
 import cc.mallet.util.Timing;
 import gnu.trove.TDoubleArrayList;
 import junit.framework.AssertionFailedError;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
+import java.util.*;
+import java.util.logging.Logger;
+
+import static org.junit.Assert.*;
+
+//import cc.mallet.util.Random;
 
 /**
  * Torture tests of inference in GRMM. Well, actually, they're not all that torturous, but hopefully they're at least

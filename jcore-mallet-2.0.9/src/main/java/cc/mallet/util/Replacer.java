@@ -1,12 +1,16 @@
 package cc.mallet.util;
 
-import cc.mallet.types.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
+import cc.mallet.pipe.NGramPreprocessor;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.iterator.CsvIterator;
+import cc.mallet.types.Instance;
 
-import java.util.*;
-import java.util.logging.*;
-import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 /**
  * This class replaces ngrams as specified in the configuration files.

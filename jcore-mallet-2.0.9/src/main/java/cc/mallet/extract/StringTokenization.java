@@ -12,12 +12,12 @@
 package cc.mallet.extract;
 
 
-import java.io.ObjectOutputStream;
-import java.io.ObjectInputStream;
-import java.io.IOException;
-
 import cc.mallet.types.TokenSequence;
 import cc.mallet.util.CharSequenceLexer;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class StringTokenization extends TokenSequence implements Tokenization
 {

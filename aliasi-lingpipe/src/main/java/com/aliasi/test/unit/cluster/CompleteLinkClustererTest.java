@@ -1,19 +1,17 @@
 package com.aliasi.test.unit.cluster;
 
+import com.aliasi.cluster.CompleteLinkClusterer;
 import com.aliasi.cluster.Dendrogram;
 import com.aliasi.cluster.LeafDendrogram;
 import com.aliasi.cluster.LinkDendrogram;
-import com.aliasi.cluster.CompleteLinkClusterer;
-
 import com.aliasi.util.Distance;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 public class CompleteLinkClustererTest  {
 

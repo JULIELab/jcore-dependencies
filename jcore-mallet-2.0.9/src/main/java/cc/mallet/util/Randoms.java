@@ -14,7 +14,7 @@
 
 package cc.mallet.util;
 
-import java.util.*;
+import java.util.BitSet;
 
 public class Randoms extends java.util.Random {
 

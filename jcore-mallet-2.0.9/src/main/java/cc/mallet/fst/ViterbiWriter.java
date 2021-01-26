@@ -1,14 +1,10 @@
 package cc.mallet.fst;
 
+import cc.mallet.types.*;
+
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
-
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Sequence;
-import cc.mallet.types.TokenSequence;
 
 /**
  * Prints the input instances along with the features and the true and 

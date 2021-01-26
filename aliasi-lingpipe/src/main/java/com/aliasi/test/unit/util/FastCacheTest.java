@@ -1,23 +1,18 @@
 package com.aliasi.test.unit.util;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FastCache;
+import org.junit.Test;
 
 import java.io.IOException;
-
 import java.util.Map;
 import java.util.Random;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 
 public class FastCacheTest  {

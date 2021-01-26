@@ -17,14 +17,11 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.Tuple;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNotNull;
 import static com.aliasi.test.unit.Asserts.assertFullEquals;
 import static com.aliasi.test.unit.Asserts.assertNotEquals;
+import static junit.framework.Assert.*;
 
 
 public class TupleTest  {

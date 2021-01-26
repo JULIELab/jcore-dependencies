@@ -13,22 +13,26 @@
 package cc.mallet.classify.evaluate;
 
 
-import java.awt.*;
-import java.awt.event.*;
-import javax.swing.*;
-
 import cc.mallet.classify.Classification;
 import cc.mallet.classify.Classifier;
 import cc.mallet.classify.Trial;
-import cc.mallet.classify.evaluate.GraphItem;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.LabelVector;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.PrintUtilities;
 
-import java.util.*;
-import java.util.logging.*;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Vector;
+import java.util.logging.Logger;
 
 /**
  * Methods for calculating and displaying the accuracy v.

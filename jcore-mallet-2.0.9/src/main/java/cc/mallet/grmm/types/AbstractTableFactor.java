@@ -7,17 +7,21 @@
 
 package cc.mallet.grmm.types;
 
+import cc.mallet.grmm.util.GeneralUtils;
+import cc.mallet.types.Matrix;
+import cc.mallet.types.Matrixn;
+import cc.mallet.types.SparseMatrixn;
+import cc.mallet.util.Maths;
+import cc.mallet.util.Randoms;
 import gnu.trove.TIntObjectHashMap;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.*;
-
-import cc.mallet.grmm.util.GeneralUtils;
-import cc.mallet.types.*;
-import cc.mallet.util.Maths;
-import cc.mallet.util.Randoms;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**

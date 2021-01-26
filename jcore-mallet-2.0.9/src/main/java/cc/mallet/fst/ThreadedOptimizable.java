@@ -1,22 +1,15 @@
 package cc.mallet.fst;
 
+import cc.mallet.optimize.Optimizable;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.MatrixOps;
+import cc.mallet.util.MalletLogger;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import java.util.concurrent.ThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.logging.Logger;
-
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.MatrixOps;
-
-import cc.mallet.optimize.Optimizable;
-
-import cc.mallet.util.MalletLogger;
 
 
 /**

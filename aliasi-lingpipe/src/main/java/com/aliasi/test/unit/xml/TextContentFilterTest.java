@@ -16,17 +16,14 @@
 
 package com.aliasi.test.unit.xml;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 import com.aliasi.test.unit.MockObjectHelper;
-
-import com.aliasi.xml.TextContentFilter;
 import com.aliasi.xml.SimpleElementHandler;
-
+import com.aliasi.xml.TextContentFilter;
+import org.junit.Test;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
+
+import static junit.framework.Assert.assertEquals;
 
 public class TextContentFilterTest  {
 

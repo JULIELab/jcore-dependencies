@@ -1,21 +1,16 @@
 package com.aliasi.test.unit.spell;
 
-import com.aliasi.lm.NGramProcessLM;
 import com.aliasi.lm.CompiledNGramProcessLM;
-
+import com.aliasi.lm.NGramProcessLM;
 import com.aliasi.spell.CompiledSpellChecker;
 import com.aliasi.spell.FixedWeightEditDistance;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
-import com.aliasi.util.AbstractExternalizable;
-
+import java.io.IOException;
 import java.util.HashSet;
 
-import java.io.IOException;
+import static junit.framework.Assert.assertEquals;
 
 public class CompiledSpellCheckerTest  {
 

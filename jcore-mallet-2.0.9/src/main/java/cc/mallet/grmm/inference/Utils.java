@@ -7,12 +7,11 @@
 package cc.mallet.grmm.inference;
 
 
-import java.util.Iterator;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.types.MatrixOps;
-
 import gnu.trove.THashSet;
+
+import java.util.Iterator;
 
 /**
  * A bunch of static utilities useful for dealing with Inferencers.

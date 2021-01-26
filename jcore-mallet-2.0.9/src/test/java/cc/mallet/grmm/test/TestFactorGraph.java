@@ -6,7 +6,15 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import static org.junit.Assert.*;
+import cc.mallet.grmm.inference.RandomGraphs;
+import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.util.ModelReader;
+import cc.mallet.types.MatrixOps;
+import cc.mallet.util.Randoms;
+import cc.mallet.util.Timing;
+import org.junit.BeforeClass;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,24 +23,8 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import org.junit.BeforeClass;
-import org.junit.Ignore;
-import org.junit.Test;
-
-import cc.mallet.grmm.inference.RandomGraphs;
-import cc.mallet.grmm.types.AbstractTableFactor;
-import cc.mallet.grmm.types.Assignment;
-import cc.mallet.grmm.types.ConstantFactor;
-import cc.mallet.grmm.types.Factor;
-import cc.mallet.grmm.types.FactorGraph;
-import cc.mallet.grmm.types.HashVarSet;
-import cc.mallet.grmm.types.LogTableFactor;
-import cc.mallet.grmm.types.TableFactor;
-import cc.mallet.grmm.types.Variable;
-import cc.mallet.grmm.util.ModelReader;
-import cc.mallet.types.MatrixOps;
-import cc.mallet.util.Randoms;
-import cc.mallet.util.Timing;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  * Created: Mar 17, 2005

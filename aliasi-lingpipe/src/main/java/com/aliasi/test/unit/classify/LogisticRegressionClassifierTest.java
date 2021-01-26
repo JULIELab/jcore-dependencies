@@ -3,25 +3,18 @@ package com.aliasi.test.unit.classify;
 import com.aliasi.classify.Classification;
 import com.aliasi.classify.Classified;
 import com.aliasi.classify.LogisticRegressionClassifier;
-
 import com.aliasi.corpus.XValidatingObjectCorpus;
-
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
-import com.aliasi.tokenizer.TokenFeatureExtractor;
 import com.aliasi.tokenizer.RegExTokenizerFactory;
-
+import com.aliasi.tokenizer.TokenFeatureExtractor;
 import com.aliasi.util.FeatureExtractor;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
 import java.io.IOException;
-
 import java.util.Random;
+
+import static junit.framework.Assert.assertEquals;
 
 public class LogisticRegressionClassifierTest  {
 

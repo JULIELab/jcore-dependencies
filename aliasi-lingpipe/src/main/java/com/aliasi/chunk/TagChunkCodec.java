@@ -17,8 +17,8 @@
 package com.aliasi.chunk;
 
 import com.aliasi.tag.StringTagging;
-import com.aliasi.tag.Tagging;
 import com.aliasi.tag.TagLattice;
+import com.aliasi.tag.Tagging;
 
 import java.util.Iterator;
 import java.util.Set;

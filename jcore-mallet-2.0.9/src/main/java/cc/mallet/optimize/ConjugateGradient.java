@@ -14,12 +14,10 @@
 
 package cc.mallet.optimize;
 
-import java.util.logging.*;
-
-import cc.mallet.optimize.LineOptimizer;
-import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 // Conjugate Gradient, Polak and Ribiere version
 // from "Numeric Recipes in C", Section 10.6.

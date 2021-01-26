@@ -8,13 +8,13 @@
 package cc.mallet.pipe;
 
 
-import javax.swing.text.html.*;
-
 import cc.mallet.pipe.iterator.FileIterator;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 
-import java.io.*;
+import javax.swing.text.html.HTMLEditorKit;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * This pipe removes HTML from a CharSequence. The HTML is actually parsed here,

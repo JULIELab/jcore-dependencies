@@ -3,8 +3,6 @@
  */
 package is2.data;
 
-import is2.util.DB;
-
 /**
  * @author Dr. Bernd Bohnet, 30.10.2010
  *  

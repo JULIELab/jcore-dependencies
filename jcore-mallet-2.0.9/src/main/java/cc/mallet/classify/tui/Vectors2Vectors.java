@@ -7,17 +7,17 @@
 
 package cc.mallet.classify.tui;
 
-import java.util.logging.*;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.BitSet;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.io.*;
-
-import cc.mallet.pipe.*;
+import cc.mallet.pipe.Noop;
 import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.FeatureCountTool;
+import cc.mallet.util.MalletLogger;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Logger;
 /**
    A command-line tool for manipulating InstanceLists.  For example,
    reducing the feature space by information gain.

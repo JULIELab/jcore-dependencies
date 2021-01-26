@@ -16,16 +16,15 @@
 
 package com.aliasi.test.unit.symbol;
 
-import com.aliasi.symbol.SymbolTableCompiler;
 import com.aliasi.symbol.SymbolTable;
-
+import com.aliasi.symbol.SymbolTableCompiler;
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
+import java.io.IOException;
+import java.io.Serializable;
 
-import java.io.*;
+import static junit.framework.Assert.assertEquals;
 
 public class SymbolTableCompilerTest extends AbstractSymbolTable {
 

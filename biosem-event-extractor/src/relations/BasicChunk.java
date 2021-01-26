@@ -1,8 +1,8 @@
 package relations;
 
-import java.util.*;
-
 import utils.BioSemException;
+
+import java.util.*;
 
 /**
  *

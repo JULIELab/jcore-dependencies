@@ -17,10 +17,8 @@
 package com.aliasi.xml;
 
 import com.aliasi.util.Strings;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
-
 import org.xml.sax.helpers.DefaultHandler;
 
 /**

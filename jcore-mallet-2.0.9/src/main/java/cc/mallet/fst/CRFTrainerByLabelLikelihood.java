@@ -1,29 +1,17 @@
 package cc.mallet.fst;
 
+import cc.mallet.optimize.LimitedMemoryBFGS;
+import cc.mallet.optimize.OptimizationException;
+import cc.mallet.optimize.Optimizer;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Logger;
-
-import cc.mallet.optimize.LimitedMemoryBFGS;
-import cc.mallet.optimize.Optimizer;
-import cc.mallet.types.ExpGain;
-import cc.mallet.types.FeatureInducer;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.GradientGain;
-import cc.mallet.types.InfoGain;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Label;
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.LabelSequence;
-import cc.mallet.types.LabelVector;
-import cc.mallet.types.RankedFeatureVector;
-import cc.mallet.types.Sequence;
-import cc.mallet.util.MalletLogger;
 
 /**
  * Unlike ClassifierTrainer, TransducerTrainer is not "stateless" between calls to train. A TransducerTrainer is
@@ -203,7 +191,7 @@ public class CRFTrainerByLabelLikelihood extends TransducerTrainer implements Tr
                 iterationCount++;
                 logger.info("CRF finished one iteration of maximizer, i=" + i);
                 runEvaluators();
-            } catch (IllegalArgumentException e) {
+            } catch (OptimizationException e) {
                 e.printStackTrace();
                 logger.info("Catching exception; saying converged.");
                 convergedByException = true;

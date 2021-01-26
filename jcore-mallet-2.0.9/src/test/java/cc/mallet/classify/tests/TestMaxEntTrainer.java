@@ -14,16 +14,16 @@
 
 package cc.mallet.classify.tests;
 
-import junit.framework.*;
-import java.net.URI;
-
-import cc.mallet.classify.*;
+import cc.mallet.classify.MaxEnt;
+import cc.mallet.classify.MaxEntTrainer;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.optimize.tests.TestOptimizable;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.ArrayIterator;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.Randoms;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 public class TestMaxEntTrainer extends TestCase
 {

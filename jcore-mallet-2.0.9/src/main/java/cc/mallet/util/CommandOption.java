@@ -14,12 +14,13 @@
 
 package cc.mallet.util;
 
-import java.util.*;
-import java.io.*;
+import java.io.FileInputStream;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-
-import cc.mallet.util.BshInterpreter;
+import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Properties;
 
 
 public abstract class CommandOption

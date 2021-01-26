@@ -1,23 +1,14 @@
 package com.aliasi.test.unit.lm;
 
+import com.aliasi.lm.CompiledNGramBoundaryLM;
+import com.aliasi.lm.LanguageModel;
+import com.aliasi.lm.NGramBoundaryLM;
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
-
-import com.aliasi.lm.CompiledNGramBoundaryLM;
-import com.aliasi.lm.NGramBoundaryLM;
-import com.aliasi.lm.LanguageModel;
-
-import com.aliasi.util.AbstractExternalizable;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+
+import static junit.framework.Assert.*;
 
 public class NGramBoundaryLMTest  {
 

@@ -1,16 +1,14 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.CommaSeparatedValues;
-
 import org.junit.Test;
 
+import java.io.CharArrayReader;
+import java.io.IOException;
+import java.io.Reader;
+
 import static junit.framework.Assert.assertEquals;
-
 import static org.junit.Assert.assertArrayEquals;
-
-
-
-import java.io.*;
 
 public class CommaSeparatedValuesTest  {
 

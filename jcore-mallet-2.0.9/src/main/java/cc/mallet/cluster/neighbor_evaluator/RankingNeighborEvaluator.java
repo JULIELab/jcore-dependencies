@@ -1,13 +1,13 @@
 package cc.mallet.cluster.neighbor_evaluator;
 
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import cc.mallet.classify.Classifier;
 import cc.mallet.types.Instance;
 import cc.mallet.types.LabelVector;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * Uses a {@link Classifier} that scores an array of {@link

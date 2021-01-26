@@ -1,22 +1,15 @@
 package cc.mallet.fst;
 
-import java.util.BitSet;
-import java.util.logging.Logger;
-
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-
 import cc.mallet.fst.MEMM.State;
 import cc.mallet.fst.MEMM.TransitionIterator;
-
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.optimize.Optimizer;
-
+import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
+
+import java.util.BitSet;
+import java.util.logging.Logger;
 
 /**
  * Trains and evaluates a {@link MEMM}.

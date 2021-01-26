@@ -14,7 +14,6 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.classify.Classifier;
 import cc.mallet.types.Instance;
 import cc.mallet.types.LabelVector;
 

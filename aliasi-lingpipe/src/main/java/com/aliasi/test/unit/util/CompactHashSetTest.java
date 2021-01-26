@@ -1,30 +1,13 @@
 package com.aliasi.test.unit.util;
 
-import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.CompactHashSet;
-
-import static com.aliasi.test.unit.Asserts.succeed;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
-import static com.aliasi.test.unit.Asserts.assertFullSerialization;
-
 import org.junit.Test;
 
+import java.util.*;
+
+import static com.aliasi.test.unit.Asserts.*;
+import static junit.framework.Assert.*;
 import static org.junit.Assert.assertArrayEquals;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
-import java.io.IOException;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Random;
-import java.util.Set;
 
 public class CompactHashSetTest  {
 

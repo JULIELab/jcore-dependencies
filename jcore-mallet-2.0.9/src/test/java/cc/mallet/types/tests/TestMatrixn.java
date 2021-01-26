@@ -6,15 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.types.tests;
 
+import cc.mallet.types.Matrixn;
 import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 
-import java.util.Arrays;
 import java.io.IOException;
-
-import cc.mallet.types.MatrixOps;
-import cc.mallet.types.Matrixn;
+import java.util.Arrays;
 
 /**
  * Created: Aug 30, 2004

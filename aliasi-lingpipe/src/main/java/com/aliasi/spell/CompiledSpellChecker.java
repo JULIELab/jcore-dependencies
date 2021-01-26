@@ -17,29 +17,15 @@
 package com.aliasi.spell;
 
 import com.aliasi.lm.CompiledNGramProcessLM;
-
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Compilable;
-import com.aliasi.util.Iterators;
-import com.aliasi.util.Scored;
-import com.aliasi.util.ScoredObject;
-import com.aliasi.util.SmallSet;
-import com.aliasi.util.Strings;
+import com.aliasi.util.*;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The <code>CompiledSpellChecker</code> class implements a first-best

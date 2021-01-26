@@ -1,18 +1,17 @@
 package cc.mallet.fst;
 
-import java.io.IOException;
-
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.logging.Logger;
-
 import cc.mallet.fst.Transducer.State;
 import cc.mallet.fst.Transducer.TransitionIterator;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.LabelVector;
 import cc.mallet.types.Sequence;
 import cc.mallet.util.MalletLogger;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.logging.Logger;
 
 public class SumLatticeScaling implements SumLattice {
 	private static Logger logger = MalletLogger

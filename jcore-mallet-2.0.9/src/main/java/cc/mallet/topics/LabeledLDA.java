@@ -1,14 +1,16 @@
 package cc.mallet.topics;
 
-import java.util.*;
-import java.util.logging.*;
-import java.util.zip.*;
+import cc.mallet.pipe.iterator.DBInstanceIterator;
+import cc.mallet.types.*;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Randoms;
 
 import java.io.*;
-
-import cc.mallet.types.*;
-import cc.mallet.util.*;
-import cc.mallet.pipe.iterator.DBInstanceIterator;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Logger;
+import java.util.zip.GZIPInputStream;
 
 
 /**

@@ -22,6 +22,7 @@ public class IOToken {
 	protected String text;
 	protected String iobMark;
 	protected String label;
+	protected String pos;
 	
 	/**
 	 * @param text 	The characters of the token.
@@ -42,6 +43,11 @@ public class IOToken {
 			this.iobMark = "I";
 		}	
 	}
+
+    public IOToken(String text, String label, String pos) {
+        this(text, label);
+        this.pos = pos;
+    }
 	
 	protected IOToken() {
 		
@@ -69,4 +75,8 @@ public class IOToken {
 	public String getLabel() {
 		return label;
 	}
+
+    public String getPos() {
+        return pos;
+    }
 }

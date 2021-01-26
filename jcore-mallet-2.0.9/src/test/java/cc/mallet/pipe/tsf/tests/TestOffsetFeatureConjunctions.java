@@ -7,12 +7,6 @@
 
 package cc.mallet.pipe.tsf.tests;
 
-import junit.framework.*;
-
-
-import java.util.regex.Pattern;
-import java.io.IOException;
-
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PrintInputAndTarget;
 import cc.mallet.pipe.SerialPipes;
@@ -23,9 +17,13 @@ import cc.mallet.pipe.tsf.RegexMatches;
 import cc.mallet.pipe.tsf.TokenText;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
-import cc.mallet.types.Token;
 import cc.mallet.types.TokenSequence;
 import cc.mallet.types.tests.TestSerializable;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.IOException;
+import java.util.regex.Pattern;
 
 /**
  * $Id: TestOffsetFeatureConjunctions.java,v 1.1 2007/10/22 21:37:57 mccallum Exp $

@@ -7,24 +7,18 @@
 
 package cc.mallet.topics;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.TreeSet;
-import java.util.Iterator;
-import java.util.Formatter;
-import java.util.Locale;
-
-import java.util.concurrent.*;
-import java.util.logging.*;
-import java.util.zip.*;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Randoms;
 
 import java.io.*;
 import java.text.NumberFormat;
-
-import cc.mallet.types.*;
-import cc.mallet.topics.TopicAssignment;
-import cc.mallet.util.Randoms;
-import cc.mallet.util.MalletLogger;
+import java.util.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.logging.Logger;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Simple parallel threaded implementation of LDA,

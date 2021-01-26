@@ -19,14 +19,13 @@ package com.aliasi.features;
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * A {@code KnownFeatureExtractor} restricts a base feature extractor

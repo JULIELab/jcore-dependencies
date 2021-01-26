@@ -23,6 +23,8 @@ import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.ObjectToDoubleMap;
 import com.aliasi.util.Pair;
 
+import static junit.framework.Assert.assertEquals;
+
 public class LogisticRegressionTest  {
 
     // WALLET example from:

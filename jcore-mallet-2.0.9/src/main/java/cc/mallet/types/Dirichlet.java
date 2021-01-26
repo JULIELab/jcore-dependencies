@@ -7,6 +7,7 @@
 
 package cc.mallet.types;
 
+import cc.mallet.util.Randoms;
 import gnu.trove.TIntHashSet;
 import gnu.trove.TIntIntHashMap;
 import gnu.trove.TIntIterator;
@@ -19,9 +20,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-
-import cc.mallet.types.Multinomial;
-import cc.mallet.util.Randoms;
 
 /** 
  *	Various useful functions related to Dirichlet distributions.

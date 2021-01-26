@@ -11,15 +11,14 @@
 package cc.mallet.pipe;
 
 
-import java.util.logging.*;
-import java.lang.reflect.Array;
-
-import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Instance;
 import cc.mallet.types.Labeling;
 import cc.mallet.util.MalletLogger;
+
+import java.lang.reflect.Array;
+import java.util.logging.Logger;
 
 /** Converts a Java array of numerical types to a FeatureVector, where the
     Alphabet is the data array index wrapped in an Integer object.

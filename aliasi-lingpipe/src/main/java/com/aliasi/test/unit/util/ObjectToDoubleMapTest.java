@@ -1,19 +1,14 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.ObjectToDoubleMap;
-
+import com.aliasi.util.ScoredObject;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-
-
-import com.aliasi.util.ScoredObject;
-
-import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+
+import static junit.framework.Assert.*;
 
 public class ObjectToDoubleMapTest  {
 

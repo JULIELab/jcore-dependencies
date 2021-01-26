@@ -1,10 +1,10 @@
 package cc.mallet.pipe;
 
-import java.util.ArrayList;
-
 import cc.mallet.types.Alphabet;
 import cc.mallet.types.FeatureSequence;
 import cc.mallet.types.Instance;
+
+import java.util.ArrayList;
 
 /**
  * Convert a list of strings into a feature sequence

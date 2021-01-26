@@ -4,18 +4,14 @@ import com.aliasi.matrix.DenseMatrix;
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.Matrix;
 import com.aliasi.matrix.Vector;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 
 import java.util.Arrays;
 import java.util.List;
+
+import static com.aliasi.test.unit.Asserts.assertFullEquals;
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 public class DenseMatrixTest  {
 

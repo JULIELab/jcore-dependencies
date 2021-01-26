@@ -1,19 +1,14 @@
 package com.aliasi.test.unit.lm;
 
 import com.aliasi.lm.TrieIntSeqCounter;
-
 import com.aliasi.util.ObjectToCounterMap;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
-
 
 import java.util.List;
 import java.util.Random;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class TrieIntSeqCounterTest  {
 

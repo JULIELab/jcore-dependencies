@@ -6,15 +6,16 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.extract.test;
 
-import junit.framework.*;
-
-import java.util.regex.Pattern;
-
 import cc.mallet.extract.*;
 import cc.mallet.types.Label;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.LabelSequence;
 import cc.mallet.util.CharSequenceLexer;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.regex.Pattern;
 
 /**
  * Created: Oct 12, 2004

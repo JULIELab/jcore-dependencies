@@ -1,17 +1,14 @@
 package com.aliasi.test.unit.matrix;
 
-import com.aliasi.matrix.GaussianRadialBasisKernel;
 import com.aliasi.matrix.DenseVector;
+import com.aliasi.matrix.GaussianRadialBasisKernel;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
 import java.io.IOException;
+
+import static junit.framework.Assert.assertEquals;
 
 public class GaussianRadialBasisKernelTest  {
 

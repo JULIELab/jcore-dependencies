@@ -7,16 +7,16 @@
 package cc.mallet.extract;
 
 
-import java.io.PrintStream;
-import java.io.OutputStream;
-import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
-import java.text.DecimalFormat;
-import java.util.Iterator;
-
 import cc.mallet.types.Label;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.MatrixOps;
+
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.text.DecimalFormat;
+import java.util.Iterator;
 
 /**
  * Created: Oct 8, 2004

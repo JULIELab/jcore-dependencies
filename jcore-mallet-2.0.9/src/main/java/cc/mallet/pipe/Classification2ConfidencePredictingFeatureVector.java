@@ -14,8 +14,7 @@
 
 package cc.mallet.pipe;
 
-import cc.mallet.classify.*;
-import cc.mallet.pipe.Pipe;
+import cc.mallet.classify.Classification;
 import cc.mallet.types.*;
 import cc.mallet.util.PropertyList;
 

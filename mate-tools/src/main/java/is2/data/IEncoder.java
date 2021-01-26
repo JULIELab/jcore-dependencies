@@ -3,8 +3,6 @@
  */
 package is2.data;
 
-import java.util.HashMap;
-
 /**
  * @author Bernd Bohnet, 20.09.2009
  * 

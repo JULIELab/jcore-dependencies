@@ -19,8 +19,6 @@
 package de.julielab.gnu.trove;
 
 import java.util.ConcurrentModificationException;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * Implements all iterator functions for the hashed object set.

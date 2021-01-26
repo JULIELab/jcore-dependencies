@@ -12,30 +12,17 @@
 
 package cc.mallet.fst;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Multinomial;
-import cc.mallet.types.Sequence;
-
-import cc.mallet.pipe.Pipe;
-
-import cc.mallet.util.MalletLogger;
 
 /** A Hidden Markov Model. */
 public class HMM extends Transducer implements Serializable {

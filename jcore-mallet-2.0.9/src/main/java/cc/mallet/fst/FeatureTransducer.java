@@ -14,16 +14,15 @@
 
 package cc.mallet.fst;
 
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.Multinomial;
+import cc.mallet.types.Sequence;
+import cc.mallet.util.MalletLogger;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.logging.Logger;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.Multinomial;
-import cc.mallet.types.Sequence;
-
-import cc.mallet.util.MalletLogger;
 
 public class FeatureTransducer extends Transducer
 {

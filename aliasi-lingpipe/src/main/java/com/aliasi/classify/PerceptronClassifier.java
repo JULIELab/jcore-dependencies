@@ -18,28 +18,21 @@ package com.aliasi.classify;
 
 import com.aliasi.corpus.Corpus;
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.features.Features;
-
 import com.aliasi.matrix.KernelFunction;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.symbol.MapSymbolTable;
-import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Arrays;
-import com.aliasi.util.Compilable;
 import com.aliasi.util.FeatureExtractor;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
-
 import java.util.ArrayList;
-import java.util.List;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**

@@ -14,10 +14,11 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.io.*;
-import java.util.regex.*;
-
 import cc.mallet.types.Instance;
+
+import java.io.File;
+import java.io.FileFilter;
+import java.util.regex.Pattern;
 
 public class FileUriIterator extends FileIterator
 {

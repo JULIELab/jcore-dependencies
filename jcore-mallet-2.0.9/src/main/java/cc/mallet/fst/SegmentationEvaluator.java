@@ -14,15 +14,14 @@
 
 package cc.mallet.fst;
 
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Sequence;
 import cc.mallet.types.TokenSequence;
-
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class SegmentationEvaluator extends TransducerEvaluator
 {

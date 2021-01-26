@@ -11,11 +11,13 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.logging.*;
-import cc.mallet.fst.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.Transducer;
+import cc.mallet.pipe.iterator.SegmentIterator;
+import cc.mallet.types.Instance;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 /**
 	 Estimates the confidence of an entire sequence by the least

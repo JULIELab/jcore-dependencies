@@ -20,16 +20,14 @@ import com.aliasi.coref.CachedMention;
 import com.aliasi.coref.Killer;
 import com.aliasi.coref.Mention;
 import com.aliasi.coref.MentionChainImpl;
-import com.aliasi.coref.matchers.*;
-
+import com.aliasi.coref.matchers.HonorificConflictKiller;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
 
 public class HonorificConflictKillerTest  {
 

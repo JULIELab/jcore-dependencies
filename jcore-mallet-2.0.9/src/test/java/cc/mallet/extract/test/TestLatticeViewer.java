@@ -6,30 +6,20 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.extract.test;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
 import cc.mallet.extract.CRFExtractor;
 import cc.mallet.extract.Extraction;
 import cc.mallet.extract.LatticeViewer;
-import cc.mallet.fst.CRF;
-import cc.mallet.fst.CRFTrainerByLabelLikelihood;
-import cc.mallet.fst.MEMM;
-import cc.mallet.fst.MEMMTrainer;
-import cc.mallet.fst.TokenAccuracyEvaluator;
-import cc.mallet.fst.TransducerEvaluator;
+import cc.mallet.fst.*;
 import cc.mallet.fst.tests.TestCRF;
 import cc.mallet.fst.tests.TestMEMM;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.SerialPipes;
 import cc.mallet.pipe.iterator.ArrayIterator;
 import cc.mallet.types.InstanceList;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.*;
 
 /**
  * Created: Oct 31, 2004

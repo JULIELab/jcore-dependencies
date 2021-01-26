@@ -1,17 +1,14 @@
 package com.aliasi.test.unit.crf;
 
-import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.crf.ForwardBackwardTagLattice;
+import com.aliasi.symbol.SymbolTable;
+import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
-import static org.junit.Assert.assertArrayEquals;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
 
 
 public class ForwardBackwardTagLatticeTest {

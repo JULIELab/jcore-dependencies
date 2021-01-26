@@ -18,9 +18,7 @@ package com.aliasi.test.unit.tokenizer;
 
 import com.aliasi.tokenizer.IndoEuropeanTokenCategorizer;
 import com.aliasi.tokenizer.TokenCategorizer;
-
 import com.aliasi.util.AbstractExternalizable;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

@@ -11,10 +11,8 @@
 
 package cc.mallet.types;
 
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.io.*;
-
-import cc.mallet.types.Alphabet;
 /**
 		A mapping from arbitrary objects (usually String's) to integers
 		(and corresponding Label objects) and back.

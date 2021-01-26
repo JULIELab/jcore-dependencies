@@ -7,12 +7,12 @@
 package cc.mallet.extract;
 
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Iterator;
-import java.util.ListIterator;
-
 import cc.mallet.types.Label;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created: Oct 12, 2004

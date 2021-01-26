@@ -6,12 +6,6 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.extract.test;
 
-import java.io.File;
-import java.io.IOException;
-
-import org.junit.Ignore;
-import org.junit.Test;
-
 import cc.mallet.extract.CRFExtractor;
 import cc.mallet.extract.DocumentViewer;
 import cc.mallet.extract.Extraction;
@@ -22,6 +16,11 @@ import cc.mallet.fst.tests.TestMEMM;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.iterator.ArrayIterator;
 import cc.mallet.types.InstanceList;
+import org.junit.Ignore;
+import org.junit.Test;
+
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Created: Mar 30, 2005

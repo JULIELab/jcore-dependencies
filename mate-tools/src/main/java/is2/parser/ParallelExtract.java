@@ -1,16 +1,8 @@
 package is2.parser;
 
-import is2.data.Cluster;
-import is2.data.DataFES;
-import is2.data.F2SF;
-import is2.data.FV;
-import is2.data.Instances;
-import is2.data.Long2IntInterface;
-import is2.util.DB;
+import is2.data.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.concurrent.Callable;
 
 

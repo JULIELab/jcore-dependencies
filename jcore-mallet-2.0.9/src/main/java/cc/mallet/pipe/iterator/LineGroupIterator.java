@@ -11,11 +11,13 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.io.*;
-import java.util.Iterator;
-import java.util.regex.*;
+import cc.mallet.types.Instance;
 
-import cc.mallet.types.*;
+import java.io.IOException;
+import java.io.LineNumberReader;
+import java.io.Reader;
+import java.util.Iterator;
+import java.util.regex.Pattern;
 
 /** Iterate over groups of lines of text, separated by lines that
 		match a regular expression.  For example, the WSJ BaseNP data

@@ -1,11 +1,12 @@
 package cc.mallet.topics.tui;
 
-import cc.mallet.types.*;
 import cc.mallet.pipe.*;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 
-import java.util.*;
-import java.util.zip.*;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.zip.GZIPInputStream;
 
 /**
  *  This class loads data into the format for the MALLET 

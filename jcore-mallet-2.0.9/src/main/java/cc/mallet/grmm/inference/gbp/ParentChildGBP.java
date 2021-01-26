@@ -7,14 +7,14 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.logging.Logger;
-import java.util.logging.Level;
-import java.util.*;
-
 import cc.mallet.grmm.inference.AbstractInferencer;
 import cc.mallet.grmm.types.*;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Timing;
+
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created: May 27, 2005

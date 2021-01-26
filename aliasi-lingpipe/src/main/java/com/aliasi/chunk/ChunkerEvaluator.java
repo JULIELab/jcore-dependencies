@@ -17,18 +17,12 @@
 package com.aliasi.chunk;
 
 import com.aliasi.classify.ScoredPrecisionRecallEvaluation;
-
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.ScoredObject;
 import com.aliasi.util.Strings;
 
-import java.util.Formatter;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Locale;
-import java.util.Set;
+import java.util.*;
 
 /**
  * The <code>ChunkerEvaulator</code> class provides an evaluation

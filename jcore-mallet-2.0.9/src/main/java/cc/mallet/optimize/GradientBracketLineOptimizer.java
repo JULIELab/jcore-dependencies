@@ -14,11 +14,10 @@
 
 package cc.mallet.optimize;
 
-import java.util.logging.*;
-
-import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 // Brents method using derivative information
 // p405, "Numeric Recipes in C"

@@ -1,26 +1,14 @@
 package com.aliasi.test.unit.features;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-
-import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
-
 import com.aliasi.features.LengthNormFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToDoubleMap;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.List;
+import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
 
 public class LengthNormFeatureExtractorTest {
 

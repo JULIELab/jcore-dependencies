@@ -16,9 +16,11 @@
 
 package cc.mallet.types;
 
-import java.io.*;
-
 import cc.mallet.classify.Classification;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 public class GradientGain extends RankedFeatureVector
 {

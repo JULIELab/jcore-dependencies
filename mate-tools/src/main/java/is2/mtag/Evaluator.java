@@ -1,13 +1,13 @@
 package is2.mtag;
 
+import is2.data.SentenceData09;
+import is2.io.CONLLReader09;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Hashtable;
 import java.util.Map.Entry;
-
-import is2.data.SentenceData09;
-import is2.io.CONLLReader09;
 
 
 public class Evaluator {

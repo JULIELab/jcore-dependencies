@@ -16,21 +16,17 @@
 
 package com.aliasi.test.unit.xml;
 
-import com.aliasi.xml.SAXFilterHandler;
-
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-
 import com.aliasi.test.unit.MockObjectHelper;
-
+import com.aliasi.xml.SAXFilterHandler;
+import org.junit.Test;
 import org.xml.sax.Attributes;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
-
 import org.xml.sax.helpers.LocatorImpl;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNotNull;
 
 public class SAXFilterHandlerTest  {
 

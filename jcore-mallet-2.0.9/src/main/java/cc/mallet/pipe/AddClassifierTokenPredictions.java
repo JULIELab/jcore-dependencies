@@ -8,29 +8,16 @@
 
 package cc.mallet.pipe;
 
+import cc.mallet.classify.*;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.logging.Logger;
-
-import cc.mallet.classify.BalancedWinnowTrainer;
-import cc.mallet.classify.Classification;
-import cc.mallet.classify.Classifier;
-import cc.mallet.classify.ClassifierTrainer;
-import cc.mallet.classify.Trial;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AugmentableFeatureVector;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Label;
-import cc.mallet.types.LabelSequence;
-import cc.mallet.types.LabelVector;
-import cc.mallet.types.Labeling;
-import cc.mallet.util.MalletLogger;
 
 
 /**

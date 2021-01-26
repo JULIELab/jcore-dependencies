@@ -14,11 +14,13 @@
 
 package cc.mallet.pipe.iterator;
 
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
+
 import java.io.*;
 import java.util.Iterator;
-import java.util.regex.*;
-import cc.mallet.pipe.Pipe;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *  This iterator, perhaps more properly called a Line Pattern Iterator, 

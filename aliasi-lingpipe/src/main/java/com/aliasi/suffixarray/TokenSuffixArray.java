@@ -17,7 +17,6 @@
 package com.aliasi.suffixarray;
 
 import com.aliasi.tokenizer.Tokenization;
-import com.aliasi.tokenizer.TokenizerFactory;
 
 import com.aliasi.util.Sort;
 

@@ -14,19 +14,6 @@ package cc.mallet.grmm.learning.extract;
  */
 
 import bsh.EvalError;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.logging.Logger;
-import java.util.regex.Pattern;
-
 import cc.mallet.extract.Extraction;
 import cc.mallet.extract.ExtractionEvaluator;
 import cc.mallet.grmm.inference.Inferencer;
@@ -37,6 +24,14 @@ import cc.mallet.pipe.iterator.LineGroupIterator;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.*;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 public class AcrfExtractorTui {
 

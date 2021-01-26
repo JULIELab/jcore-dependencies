@@ -16,14 +16,11 @@
 
 package com.aliasi.crf;
 
-import com.aliasi.tag.TagLattice;
-
 import com.aliasi.symbol.SymbolTable;
 import com.aliasi.symbol.SymbolTableCompiler;
-
+import com.aliasi.tag.TagLattice;
 import com.aliasi.util.Strings;
 
-import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

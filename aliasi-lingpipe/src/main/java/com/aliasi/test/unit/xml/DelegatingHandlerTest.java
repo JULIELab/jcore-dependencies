@@ -1,26 +1,21 @@
 package com.aliasi.test.unit.xml;
 
-import com.aliasi.xml.DelegatingHandler;
 import com.aliasi.xml.DelegateHandler;
+import com.aliasi.xml.DelegatingHandler;
 import com.aliasi.xml.TextAccumulatorHandler;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
-
-
-import java.io.CharArrayReader;
-import java.io.IOException;
-
-import java.util.ArrayList;
-
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
-
-import org.xml.sax.helpers.XMLReaderFactory;
 import org.xml.sax.helpers.DefaultHandler;
+import org.xml.sax.helpers.XMLReaderFactory;
+
+import java.io.CharArrayReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import static junit.framework.Assert.assertEquals;
+import static org.junit.Assert.assertArrayEquals;
 
 public class DelegatingHandlerTest  {
 

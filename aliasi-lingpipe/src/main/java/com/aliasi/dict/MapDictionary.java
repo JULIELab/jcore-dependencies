@@ -23,10 +23,8 @@ import com.aliasi.util.ObjectToSet;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
-import java.util.Iterator;
-
 import java.io.Serializable;
+import java.util.Iterator;
 
 /**
  * A <code>MapDictionary</code> uses an underlying map from phrases to

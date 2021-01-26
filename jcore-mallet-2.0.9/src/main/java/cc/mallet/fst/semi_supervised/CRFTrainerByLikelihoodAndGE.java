@@ -1,23 +1,12 @@
 package cc.mallet.fst.semi_supervised;
 
-import java.util.ArrayList;
-
-import cc.mallet.fst.CRF;
-import cc.mallet.fst.CRFCacheStaleIndicator;
-import cc.mallet.fst.CRFOptimizableByBatchLabelLikelihood;
-import cc.mallet.fst.CRFOptimizableByGradientValues;
-import cc.mallet.fst.CRFOptimizableByLabelLikelihood;
-import cc.mallet.fst.CRFTrainerByLabelLikelihood;
-import cc.mallet.fst.CRFTrainerByThreadedLabelLikelihood;
-import cc.mallet.fst.ThreadedOptimizable;
-import cc.mallet.fst.Transducer;
-import cc.mallet.fst.TransducerTrainer;
-import cc.mallet.fst.semi_supervised.CRFOptimizableByGE;
-import cc.mallet.fst.semi_supervised.StateLabelMap;
+import cc.mallet.fst.*;
 import cc.mallet.fst.semi_supervised.constraints.GEConstraint;
 import cc.mallet.optimize.LimitedMemoryBFGS;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.InstanceList;
+
+import java.util.ArrayList;
 
 public class CRFTrainerByLikelihoodAndGE extends TransducerTrainer {
 

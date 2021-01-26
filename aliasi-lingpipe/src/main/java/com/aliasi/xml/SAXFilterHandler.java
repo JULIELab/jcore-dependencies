@@ -16,14 +16,10 @@
 
 package com.aliasi.xml;
 
-import java.io.IOException;
-
-import org.xml.sax.Attributes;
-import org.xml.sax.InputSource;
-import org.xml.sax.Locator;
-import org.xml.sax.SAXException;
-import org.xml.sax.SAXParseException;
+import org.xml.sax.*;
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.io.IOException;
 
 /**
  * The <code>SAXFilterHandler</code> provides a base class for

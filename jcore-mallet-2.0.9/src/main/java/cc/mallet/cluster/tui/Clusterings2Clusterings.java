@@ -1,14 +1,5 @@
 package cc.mallet.cluster.tui;
 
-import gnu.trove.TIntHashSet;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.logging.Logger;
-
 import cc.mallet.cluster.Clustering;
 import cc.mallet.cluster.Clusterings;
 import cc.mallet.cluster.util.ClusterUtils;
@@ -21,6 +12,10 @@ import cc.mallet.types.LabelAlphabet;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Randoms;
+import gnu.trove.TIntHashSet;
+
+import java.io.*;
+import java.util.logging.Logger;
 
 // In progress
 public class Clusterings2Clusterings {

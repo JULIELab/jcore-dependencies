@@ -24,12 +24,12 @@
 package cc.mallet.share.casutton.ner; // Generated package name
 
 
-import java.util.regex.*;
-
 import cc.mallet.extract.StringSpan;
 import cc.mallet.extract.StringTokenization;
-import cc.mallet.pipe.*;
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
+
+import java.util.regex.Pattern;
 
 /**
  * Reads a data file in CoNLL 2003 format, and makes some simple

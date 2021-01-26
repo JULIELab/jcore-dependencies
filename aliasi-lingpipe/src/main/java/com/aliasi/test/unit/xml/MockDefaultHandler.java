@@ -17,17 +17,14 @@
 package com.aliasi.test.unit.xml;
 
 import com.aliasi.test.unit.MockObjectHelper;
-
 import com.aliasi.xml.SimpleElementHandler;
-
-import java.util.ArrayList;
-
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXParseException;
-
 import org.xml.sax.helpers.DefaultHandler;
+
+import java.util.ArrayList;
 
 /**
  * The mock handler logs all method calls to a single array of tuples,

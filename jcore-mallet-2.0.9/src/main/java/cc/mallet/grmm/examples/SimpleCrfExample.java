@@ -7,11 +7,6 @@
 package cc.mallet.grmm.examples;
 
 
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileNotFoundException;
-import java.util.regex.Pattern;
-
 import cc.mallet.grmm.learning.ACRF;
 import cc.mallet.grmm.learning.ACRFTrainer;
 import cc.mallet.grmm.learning.DefaultAcrfTrainer;
@@ -22,6 +17,11 @@ import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
 import cc.mallet.pipe.iterator.LineGroupIterator;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.FileUtils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.regex.Pattern;
 
 /**
  * $Id: SimpleCrfExample.java,v 1.1 2007/10/22 21:38:02 mccallum Exp $

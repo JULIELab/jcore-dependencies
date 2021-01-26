@@ -1,13 +1,11 @@
 package com.aliasi.test.unit.matrix;
 
+import com.aliasi.matrix.ProximityMatrix;
 import org.junit.Test;
 
+import static com.aliasi.test.unit.Asserts.succeed;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
-
-import com.aliasi.matrix.ProximityMatrix;
 
 public class ProximityMatrixTest  {
 

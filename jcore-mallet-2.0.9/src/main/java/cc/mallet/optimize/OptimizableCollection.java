@@ -1,8 +1,8 @@
 package cc.mallet.optimize;
 
-import java.util.ArrayList;
-
 import cc.mallet.types.MatrixOps;
+
+import java.util.ArrayList;
 
 public class OptimizableCollection {
 	

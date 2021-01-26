@@ -3,11 +3,6 @@
  */
 package is2.data;
 
-import is2.data.IEncoder;
-import is2.data.Instances;
-import is2.data.SentenceData09;
-
-
 /**
  * @author Dr. Bernd Bohnet, 06.11.2010
  * 

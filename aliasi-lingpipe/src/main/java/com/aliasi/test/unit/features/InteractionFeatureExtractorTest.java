@@ -1,26 +1,12 @@
 package com.aliasi.test.unit.features;
 
 import com.aliasi.features.InteractionFeatureExtractor;
-
-import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToDoubleMap;
-
-import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.List;
+
+import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
 
 public class InteractionFeatureExtractorTest {
 

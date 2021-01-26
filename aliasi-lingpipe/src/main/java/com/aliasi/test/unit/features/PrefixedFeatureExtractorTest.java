@@ -1,23 +1,15 @@
 package com.aliasi.test.unit.features;
 
 import com.aliasi.features.PrefixedFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToDoubleMap;
-
-import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.assertNull;
-
 import java.io.IOException;
-import java.io.NotSerializableException;
-
 import java.util.Map;
+
+import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
+import static junit.framework.Assert.assertNotNull;
 
 public class PrefixedFeatureExtractorTest {
 

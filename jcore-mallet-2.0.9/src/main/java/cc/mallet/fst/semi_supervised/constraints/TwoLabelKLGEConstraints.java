@@ -7,10 +7,10 @@
 
 package cc.mallet.fst.semi_supervised.constraints;
 
-import java.util.ArrayList;
-
-import gnu.trove.TIntIntHashMap;
 import cc.mallet.fst.semi_supervised.StateLabelMap;
+import gnu.trove.TIntIntHashMap;
+
+import java.util.ArrayList;
 
 /** 
  * A set of constraints on distributions over consecutive

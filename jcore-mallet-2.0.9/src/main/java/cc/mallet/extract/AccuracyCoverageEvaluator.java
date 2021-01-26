@@ -7,12 +7,12 @@
 package cc.mallet.extract;
 
 
-import java.io.PrintStream;
+import cc.mallet.fst.confidence.ConfidenceEvaluator;
+
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.Iterator;
 import java.util.Vector;
-
-import cc.mallet.fst.confidence.ConfidenceEvaluator;
 
 /**
  * Constructs Accuracy-coverage graph using confidence values to sort Fields.

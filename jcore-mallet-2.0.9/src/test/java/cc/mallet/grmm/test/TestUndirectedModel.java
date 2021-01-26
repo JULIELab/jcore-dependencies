@@ -6,34 +6,22 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import static org.junit.Assert.*;
-
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-
+import cc.mallet.grmm.inference.RandomGraphs;
+import cc.mallet.grmm.types.*;
+import cc.mallet.grmm.util.Graphs;
+import cc.mallet.util.ArrayUtils;
 import org._3pq.jgrapht.GraphHelper;
 import org._3pq.jgrapht.UndirectedGraph;
 import org.junit.Ignore;
 import org.junit.Test;
 
-import cc.mallet.grmm.inference.RandomGraphs;
-import cc.mallet.grmm.types.Factor;
-import cc.mallet.grmm.types.FactorGraph;
-import cc.mallet.grmm.types.HashVarSet;
-import cc.mallet.grmm.types.TableFactor;
-import cc.mallet.grmm.types.UndirectedModel;
-import cc.mallet.grmm.types.Variable;
-import cc.mallet.grmm.util.Graphs;
-import cc.mallet.util.ArrayUtils;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.*;
+
+import static org.junit.Assert.*;
 
 /**
  * Created: Mar 17, 2005

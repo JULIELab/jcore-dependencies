@@ -15,10 +15,8 @@
 package cc.mallet.util;
 
 import java.io.*;
-import java.lang.CharSequence;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-import cc.mallet.util.Lexer;
+import java.util.regex.Pattern;
 
 public class CharSequenceLexer implements Lexer, Serializable
 {

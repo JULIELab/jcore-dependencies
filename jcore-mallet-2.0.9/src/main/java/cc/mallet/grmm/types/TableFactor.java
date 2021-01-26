@@ -7,14 +7,14 @@
 package cc.mallet.grmm.types;
 
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Iterator;
-
 import cc.mallet.grmm.util.Flops;
 import cc.mallet.types.Matrix;
 import cc.mallet.types.Matrixn;
 import cc.mallet.util.Maths;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 
 /**
  * Created: Jan 4, 2006

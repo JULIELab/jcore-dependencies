@@ -2,7 +2,6 @@ package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.MultinomialDistribution;
 import com.aliasi.stats.MultivariateConstant;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

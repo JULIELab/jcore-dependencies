@@ -1,6 +1,5 @@
 package com.uea.stemmer;
 
-import java.lang.String;
 /**
  * <p>Title: UEA Lite Stemmer</p>
  *

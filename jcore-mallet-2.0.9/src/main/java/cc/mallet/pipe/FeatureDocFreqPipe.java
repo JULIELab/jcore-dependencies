@@ -1,7 +1,10 @@
 package cc.mallet.pipe;
 
-import cc.mallet.types.*;
-import gnu.trove.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureCounter;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import gnu.trove.TIntIntHashMap;
 
 /** 
  *  Pruning low-count features can be a good way to save memory and computation.

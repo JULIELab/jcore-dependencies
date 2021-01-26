@@ -3,7 +3,6 @@ package is2.parser;
 
 import is2.data.DataFES;
 
-
 import java.util.ArrayList;
 import java.util.concurrent.Callable;
 

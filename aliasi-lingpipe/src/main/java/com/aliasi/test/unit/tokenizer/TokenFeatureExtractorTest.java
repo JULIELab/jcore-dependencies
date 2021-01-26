@@ -2,19 +2,15 @@ package com.aliasi.test.unit.tokenizer;
 
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenFeatureExtractor;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
 import com.aliasi.util.ObjectToCounterMap;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
 import java.io.IOException;
-
 import java.util.Map;
+
+import static junit.framework.Assert.assertEquals;
 
 public class TokenFeatureExtractorTest  {
 

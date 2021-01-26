@@ -1,10 +1,12 @@
 package cc.mallet.share.upenn.ner;
 
 
-import java.util.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Token;
+import cc.mallet.types.TokenSequence;
 
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import java.util.Arrays;
 
 /**
  * A feature approximating string length.

@@ -7,19 +7,12 @@
 
 package cc.mallet.grmm.inference;
 
-import java.util.Set;
-
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Collection;
-import java.util.List;
-import java.util.Arrays;
-
 import cc.mallet.grmm.types.*;
-
-import gnu.trove.TIntObjectHashMap;
 import gnu.trove.THashSet;
+import gnu.trove.TIntObjectHashMap;
 import gnu.trove.TIntObjectIterator;
+
+import java.util.*;
 
 
 /**

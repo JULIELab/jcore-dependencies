@@ -1,14 +1,13 @@
 package cc.mallet.fst;
 
-import java.util.ArrayList;
-import java.util.Collections;
-
+import cc.mallet.fst.TransducerTrainer.ByInstanceIncrements;
 import cc.mallet.types.FeatureVectorSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Sequence;
 
-import cc.mallet.fst.TransducerTrainer.ByInstanceIncrements;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Trains CRF by stochastic gradient. Most effective on large training sets.

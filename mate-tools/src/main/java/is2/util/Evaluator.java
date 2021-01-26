@@ -1,19 +1,13 @@
 package is2.util;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Hashtable;
-import java.util.Map.Entry;
-
-//import org.apache.commons.math.stat.inference.TestUtils;
-
-
 import is2.data.Parse;
 import is2.data.SentenceData09;
 import is2.io.CONLLReader09;
+
+import java.util.*;
+import java.util.Map.Entry;
+
+//import org.apache.commons.math.stat.inference.TestUtils;
 
 
 public class Evaluator {

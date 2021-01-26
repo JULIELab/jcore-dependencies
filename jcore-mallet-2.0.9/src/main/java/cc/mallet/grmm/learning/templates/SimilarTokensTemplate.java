@@ -6,6 +6,14 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.learning.templates;
 
+import cc.mallet.grmm.learning.ACRF;
+import cc.mallet.grmm.types.Variable;
+import cc.mallet.grmm.util.LabelsAssignment;
+import cc.mallet.grmm.util.THashMultiMap;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.AugmentableFeatureVector;
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.FeatureVectorSequence;
 import gnu.trove.THashMap;
 
 import java.io.IOException;
@@ -14,14 +22,8 @@ import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
-
-import cc.mallet.grmm.learning.ACRF;
-import cc.mallet.grmm.types.Variable;
-import cc.mallet.grmm.util.LabelsAssignment;
-import cc.mallet.grmm.util.THashMultiMap;
-import cc.mallet.types.*;
+import java.util.regex.Pattern;
 
 
 /**

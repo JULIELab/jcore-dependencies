@@ -7,9 +7,12 @@
 package cc.mallet.grmm.inference.gbp;
 
 
-import java.util.Iterator;
+import cc.mallet.grmm.types.DiscreteFactor;
+import cc.mallet.grmm.types.Factor;
+import cc.mallet.grmm.types.Factors;
+import cc.mallet.grmm.types.TableFactor;
 
-import cc.mallet.grmm.types.*;
+import java.util.Iterator;
 
 /**
  * A first implementation of MessageStrategy that assumes that a BP region graph

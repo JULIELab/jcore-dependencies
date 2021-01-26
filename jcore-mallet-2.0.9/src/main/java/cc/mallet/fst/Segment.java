@@ -12,10 +12,10 @@
 package cc.mallet.fst;
 
 
-import java.util.ArrayList;
-
 import cc.mallet.types.ArraySequence;
 import cc.mallet.types.Sequence;
+
+import java.util.ArrayList;
 
 /**
  * Represents a labelled chunk of a {@link Sequence} segmented by a

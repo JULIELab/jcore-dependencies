@@ -18,40 +18,18 @@ package com.aliasi.classify;
 
 import com.aliasi.corpus.Corpus;
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
-// import com.aliasi.util.Math;
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Compilable;
-import com.aliasi.util.Counter;
-import com.aliasi.util.Exceptions;
-import com.aliasi.util.Factory;
-import com.aliasi.util.Iterators;
-import com.aliasi.util.ObjectToCounterMap;
-import com.aliasi.util.Strings;
-
-
 import com.aliasi.stats.Statistics;
-
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
+import com.aliasi.util.*;
 
-import java.io.IOException;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
+import java.io.*;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.Formatter;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+
+// import com.aliasi.util.Math;
 
 /**
  * A {@code TradNaiveBayesClassifier} implements a traditional

@@ -14,10 +14,10 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.util.Iterator;
-
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
+
+import java.util.Iterator;
 
 /**
  *  Interface for classes that generate instances.

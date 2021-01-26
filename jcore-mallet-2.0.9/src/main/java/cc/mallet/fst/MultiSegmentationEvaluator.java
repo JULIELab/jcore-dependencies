@@ -17,20 +17,13 @@
 
 package cc.mallet.fst;
 
-import java.io.PrintStream;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
 
+import java.io.PrintStream;
+import java.text.DecimalFormat;
 import java.util.List;
 import java.util.logging.Logger;
-
-import java.text.DecimalFormat;
-
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Sequence;
-import cc.mallet.types.TokenSequence;
-
-import cc.mallet.util.MalletLogger;
 
 /**
  * Evaluates a transducer model, computes the precision, recall and F1 scores;

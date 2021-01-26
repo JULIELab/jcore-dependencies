@@ -14,16 +14,19 @@
 
 package cc.mallet.share.mccallum.ner;
 
-import java.util.Random;
-import java.util.regex.*;
-import java.io.*;
-
 import cc.mallet.fst.*;
 import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
+import cc.mallet.pipe.iterator.LineGroupIterator;
 import cc.mallet.pipe.tsf.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CommandOption;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.util.Random;
+import java.util.regex.Pattern;
 
 public class TUI
 {

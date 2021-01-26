@@ -7,20 +7,19 @@
 
 package cc.mallet.grmm.types;
 
-import gnu.trove.THashMap;
-import gnu.trove.THashSet;
-import gnu.trove.TObjectObjectProcedure;
-import gnu.trove.TIntIntHashMap;
-
-import java.io.*;
-import java.util.*;
-
 import cc.mallet.grmm.inference.ExactSampler;
 import cc.mallet.grmm.inference.VariableElimination;
 import cc.mallet.grmm.util.CSIntInt2ObjectMultiMap;
 import cc.mallet.grmm.util.Models;
+import cc.mallet.util.CollectionUtils;
 import cc.mallet.util.Randoms;
-import cc.mallet.util.*;
+import gnu.trove.THashMap;
+import gnu.trove.THashSet;
+import gnu.trove.TIntIntHashMap;
+import gnu.trove.TObjectObjectProcedure;
+
+import java.io.*;
+import java.util.*;
 
 
 

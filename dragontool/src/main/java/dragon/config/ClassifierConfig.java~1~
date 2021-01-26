@@ -1,0 +1,150 @@
+package dragon.config;
+
+import dragon.ir.index.*;
+import dragon.ir.classification.*;
+import dragon.ir.classification.featureselection.*;
+import dragon.ir.kngbase.KnowledgeBase;
+import dragon.matrix.*;
+import java.util.*;
+/**
+ * <p>Classifier configuration </p>
+ * <p> </p>
+ * <p>Copyright: Copyright (c) 2005</p>
+ * <p>Company: IST, Drexel University</p>
+ * @author Davis Zhou
+ * @version 1.0
+ */
+
+public class ClassifierConfig extends ConfigUtil{
+    public ClassifierConfig() {
+       super();
+    }
+
+    public ClassifierConfig(ConfigureNode root){
+       super(root);
+    }
+
+    public ClassifierConfig(String configFile){
+        super(configFile);
+    }
+
+    public Classifier getClassifier(int classifierID){
+        return getClassifier(root,classifierID);
+    }
+
+    public Classifier getClassifier(ConfigureNode node, int classifierID){
+        return loadClassifier(node,classifierID);
+    }
+
+    private Classifier loadClassifier(ConfigureNode node, int classifierID){
+        ConfigureNode classifierNode;
+        String classifierName;
+
+        classifierNode=getConfigureNode(node,"classifier",classifierID);
+        if(classifierNode==null)
+            return null;
+        classifierName=classifierNode.getNodeName();
+        return loadClassifier(classifierName,classifierNode);
+    }
+
+    protected Classifier loadClassifier(String classifierName,ConfigureNode classifierNode){
+        if(classifierName.equalsIgnoreCase("NBClassifier"))
+            return loadNBClassifier(classifierNode);
+        else if(classifierName.equalsIgnoreCase("NigamActiveLearning"))
+            return loadSemanticNBClassifier(classifierNode);
+        else if(classifierName.equalsIgnoreCase("SemanticNBClassifier"))
+            return loadSemanticNBClassifier(classifierNode);
+        else
+            return (Classifier)loadResource(classifierNode);
+    }
+
+    private Classifier loadNBClassifier(ConfigureNode node){
+        NBClassifier classifier;
+        FeatureSelector featureSelector;
+        IndexReader indexReader;
+        int selectorID, indexReaderID;
+
+        selectorID=node.getInt("featureselector");
+        featureSelector=(new FeatureSelectorConfig()).getFeatureSelector(node, selectorID);
+        indexReaderID=node.getInt("indexreader");
+        indexReader=(new IndexReaderConfig()).getIndexReader(node,indexReaderID);
+        classifier=new NBClassifier(indexReader);
+        if(featureSelector!=null)
+            classifier.setFeatureSelector(featureSelector);
+        return classifier;
+    }
+
+    private Classifier loadNigamActiveLearning(ConfigureNode node){
+        NigamActiveLearning classifier;
+        FeatureSelector featureSelector;
+        IndexReader indexReader;
+        int selectorID, indexReaderID;
+        double unlabeledRate;
+
+        selectorID=node.getInt("featureselector");
+        featureSelector=(new FeatureSelectorConfig()).getFeatureSelector(node, selectorID);
+        indexReaderID=node.getInt("indexreader");
+        indexReader=(new IndexReaderConfig()).getIndexReader(node,indexReaderID);
+        unlabeledRate=node.getDouble("unlabeledrate",0);
+        classifier=new NigamActiveLearning(indexReader,unlabeledRate);
+        if(featureSelector!=null)
+            classifier.setFeatureSelector(featureSelector);
+        return classifier;
+    }
+
+    private DocClass prepareUnlabeledDocSet(IndexReader reader, int randomSeed, int num){
+        ArrayList list;
+        int i, docNum;
+
+        if(reader==null)
+            return null;
+
+        docNum=reader.getCollection().getDocNum();
+        list=new ArrayList(docNum);
+        for(i=0;i<docNum;i++)
+            list.add(new Integer(i));
+
+    }
+
+    private Classifier loadSemanticNBClassifier(ConfigureNode node){
+        SemanticNBClassifier classifier;
+        IndexReader indexReader, topicIndexReader;
+        KnowledgeBase kngBase;
+        DoubleSparseMatrix transMatrix;
+        double transCoefficient, bkgCoefficient;
+        int matrixID, kngID, indexReaderID, topicIndexReaderID, selectorID;
+
+        bkgCoefficient=node.getDouble("bkgcoefficient");
+        indexReaderID=node.getInt("indexreader");
+        indexReader=(new IndexReaderConfig()).getIndexReader(node,indexReaderID);
+
+        matrixID=node.getInt("transmatrix");
+        kngID=node.getInt("knowledgebase");
+        if(matrixID>0){
+            transCoefficient=node.getDouble("transcoefficient");
+            transMatrix = (new SparseMatrixConfig()).getDoubleSparseMatrix(node, matrixID);
+            topicIndexReaderID = node.getInt("topicindexreader", indexReaderID);
+            if(topicIndexReaderID==indexReaderID)
+                topicIndexReader=indexReader;
+            else
+                topicIndexReader=(new IndexReaderConfig()).getIndexReader(node,topicIndexReaderID);
+            classifier = new SemanticNBClassifier(indexReader, topicIndexReader, transMatrix, transCoefficient, bkgCoefficient);
+        }
+        else if(kngID>0){
+            transCoefficient=node.getDouble("transcoefficient");
+            kngBase= (new KnowledgeBaseConfig()).getKnowledgeBase(node,kngID);
+            topicIndexReaderID = node.getInt("topicindexreader", indexReaderID);
+            if(topicIndexReaderID==indexReaderID)
+                topicIndexReader=indexReader;
+            else
+                topicIndexReader=(new IndexReaderConfig()).getIndexReader(node,topicIndexReaderID);
+            classifier = new SemanticNBClassifier(indexReader, topicIndexReader, kngBase, transCoefficient, bkgCoefficient);
+        }
+        else
+            classifier=new SemanticNBClassifier(indexReader,bkgCoefficient);
+        selectorID=node.getInt("featureselector");
+        if(selectorID>0)
+            classifier.setFeatureSelector((new FeatureSelectorConfig()).getFeatureSelector(node,selectorID));
+        return classifier;
+    }
+}

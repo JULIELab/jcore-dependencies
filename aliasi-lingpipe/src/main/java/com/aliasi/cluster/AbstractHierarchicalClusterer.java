@@ -19,7 +19,6 @@ package com.aliasi.cluster;
 import com.aliasi.util.Distance;
 import com.aliasi.util.Scored;
 
-
 import java.util.HashSet;
 import java.util.Set;
 

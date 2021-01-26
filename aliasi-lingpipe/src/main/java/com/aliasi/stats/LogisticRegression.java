@@ -29,7 +29,6 @@ import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.Matrices;
-import com.aliasi.matrix.SparseFloatVector;
 import com.aliasi.matrix.Vector;
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.Compilable;

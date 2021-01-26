@@ -2,38 +2,21 @@ package com.aliasi.test.unit.dca;
 
 import com.aliasi.dca.DiscreteChooser;
 import com.aliasi.dca.DiscreteObjectChooser;
-
-import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
-import com.aliasi.io.Reporters;
-
-import com.aliasi.matrix.Vector;
 import com.aliasi.matrix.DenseVector;
-
+import com.aliasi.matrix.Vector;
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.FeatureExtractor;
-
-import static com.aliasi.test.unit.Asserts.assertEqualsArray;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.*;
 
-import java.util.Random;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import static junit.framework.Assert.assertEquals;
 
 public class DiscreteObjectChooserTest {
 

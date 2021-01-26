@@ -15,13 +15,13 @@
 package cc.mallet.extract;
 
 
+import cc.mallet.types.LabelAlphabet;
+import cc.mallet.types.Sequence;
+
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.io.PrintWriter;
-
-import cc.mallet.types.LabelAlphabet;
-import cc.mallet.types.Sequence;
 
 /**
  * The results of doing information extraction.  This is designed to handle

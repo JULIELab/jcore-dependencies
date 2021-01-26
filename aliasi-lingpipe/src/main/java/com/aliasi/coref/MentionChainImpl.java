@@ -16,12 +16,7 @@
 
 package com.aliasi.coref;
 
-import com.aliasi.coref.matchers.EntityTypeMatch;
-import com.aliasi.coref.matchers.ExactPhraseMatch;
-import com.aliasi.coref.matchers.GenderKiller;
-import com.aliasi.coref.matchers.HonorificConflictKiller;
-import com.aliasi.coref.matchers.SequenceSubstringMatch;
-import com.aliasi.coref.matchers.SynonymMatch;
+import com.aliasi.coref.matchers.*;
 
 /**
  * An implementation of mention chains.

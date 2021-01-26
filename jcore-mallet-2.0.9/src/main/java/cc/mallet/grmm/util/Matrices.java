@@ -7,12 +7,12 @@
 package cc.mallet.grmm.util;
 
 
-import java.util.Arrays;
-
 import cc.mallet.types.Matrix;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.types.Matrixn;
 import cc.mallet.types.SparseMatrixn;
+
+import java.util.Arrays;
 
 /**
  * Static Matrix constructors.

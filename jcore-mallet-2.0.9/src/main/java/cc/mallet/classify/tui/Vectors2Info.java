@@ -11,11 +11,15 @@
 
 package cc.mallet.classify.tui;
 
-import java.util.logging.*;
-import java.io.*;
-
 import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.FeatureCountTool;
+import cc.mallet.util.MalletLogger;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Logger;
 /**
  * Diagnostic facilities for a vector file.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

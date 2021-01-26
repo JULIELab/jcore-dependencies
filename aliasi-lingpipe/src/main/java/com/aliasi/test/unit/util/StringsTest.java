@@ -17,23 +17,13 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.Strings;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
-import static org.junit.Assert.assertArrayEquals;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-
 import java.nio.CharBuffer;
+
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class StringsTest  {
 

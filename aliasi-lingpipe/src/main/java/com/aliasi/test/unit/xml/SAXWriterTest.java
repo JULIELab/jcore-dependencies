@@ -16,22 +16,18 @@
 
 package com.aliasi.test.unit.xml;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
-
 import com.aliasi.xml.SAXWriter;
+import org.junit.Test;
+import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
+import org.xml.sax.XMLReader;
+import org.xml.sax.helpers.XMLReaderFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.CharArrayReader;
 import java.io.IOException;
 
-import org.xml.sax.SAXException;
-import org.xml.sax.XMLReader;
-
-import org.xml.sax.InputSource;
-import org.xml.sax.helpers.XMLReaderFactory;
+import static junit.framework.Assert.assertEquals;
 
 
 

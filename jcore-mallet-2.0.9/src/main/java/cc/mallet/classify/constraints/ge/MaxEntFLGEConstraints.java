@@ -7,15 +7,14 @@
 
 package cc.mallet.classify.constraints.ge;
 
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import gnu.trove.TDoubleArrayList;
 import gnu.trove.TIntArrayList;
 import gnu.trove.TIntObjectHashMap;
 
 import java.util.BitSet;
-
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
 
 /**
  * Abstract expectation constraint for use with Generalized Expectation (GE).

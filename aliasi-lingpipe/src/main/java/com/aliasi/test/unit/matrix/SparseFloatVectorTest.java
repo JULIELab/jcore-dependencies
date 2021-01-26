@@ -3,19 +3,13 @@ package com.aliasi.test.unit.matrix;
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.SparseFloatVector;
 import com.aliasi.matrix.Vector;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
-import static com.aliasi.test.unit.Asserts.assertFullSerialization;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.aliasi.test.unit.Asserts.*;
+import static junit.framework.Assert.*;
 
 public class SparseFloatVectorTest  {
 

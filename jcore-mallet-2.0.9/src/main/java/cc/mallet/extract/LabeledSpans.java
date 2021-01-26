@@ -7,12 +7,12 @@
 package cc.mallet.extract;
 
 
+import cc.mallet.types.ArrayListSequence;
+import cc.mallet.types.Label;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-
-import cc.mallet.types.ArrayListSequence;
-import cc.mallet.types.Label;
 
 /**
  * Created: Oct 31, 2004

@@ -11,7 +11,8 @@
 
 package cc.mallet.fst.confidence;
 
-import cc.mallet.types.*;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Sequence;
 
 /**
 	 Helper class to store confidence of an Instance.

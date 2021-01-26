@@ -7,10 +7,6 @@
 
 package cc.mallet.classify;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Logger;
-
 import cc.mallet.classify.constraints.pr.MaxEntPRConstraint;
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.FeatureVector;
@@ -19,6 +15,10 @@ import cc.mallet.types.InstanceList;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 
 /**

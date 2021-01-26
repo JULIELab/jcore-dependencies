@@ -3,14 +3,14 @@
  */
 package is2.parser;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-
 import is2.data.FV;
 import is2.data.IFV;
 import is2.data.Instances;
 import is2.data.Parse;
+
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
 
 /**
  * @author Bernd Bohnet, 31.08.2009

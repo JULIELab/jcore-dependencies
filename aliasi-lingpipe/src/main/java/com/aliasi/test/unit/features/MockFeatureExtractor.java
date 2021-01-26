@@ -1,15 +1,14 @@
 package com.aliasi.test.unit.features;
 
-import java.io.ObjectOutputStream;
+import com.aliasi.util.FeatureExtractor;
+
 import java.io.IOException;
 import java.io.NotSerializableException;
+import java.io.ObjectOutputStream;
+import java.util.Map;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertNotNull;
-
-import java.util.Map;
-
-import com.aliasi.util.FeatureExtractor;
 
 public class MockFeatureExtractor
     extends SerializableMockFeatureExtractor {

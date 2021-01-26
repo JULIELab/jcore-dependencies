@@ -6,12 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import junit.framework.*;
-
-import java.util.Arrays;
-
 import cc.mallet.grmm.types.HashVarSet;
 import cc.mallet.grmm.types.Variable;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.Arrays;
 
 /**
  * Created: Aug 22, 2005

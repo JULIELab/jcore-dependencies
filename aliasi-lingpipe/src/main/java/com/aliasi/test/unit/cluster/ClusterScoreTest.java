@@ -1,16 +1,13 @@
 package com.aliasi.test.unit.cluster;
 
 import com.aliasi.classify.PrecisionRecallEvaluation;
-
 import com.aliasi.cluster.ClusterScore;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static junit.framework.Assert.assertEquals;
 
 public class ClusterScoreTest  {
 

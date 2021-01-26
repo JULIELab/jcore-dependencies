@@ -17,27 +17,17 @@
 package com.aliasi.chunk;
 
 import com.aliasi.hmm.HmmDecoder;
-
 import com.aliasi.symbol.SymbolTable;
-
 import com.aliasi.tag.ScoredTagging;
 import com.aliasi.tag.TagLattice;
-
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
+import com.aliasi.util.*;
 
-import com.aliasi.util.BoundedPriorityQueue;
-import com.aliasi.util.Iterators;
-import com.aliasi.util.Scored;
-import com.aliasi.util.ScoredObject;
-import com.aliasi.util.Strings;
-import static com.aliasi.util.Math.naturalLogToBase2Log;
-
+import java.util.*;
 import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
+
+import static com.aliasi.util.Math.naturalLogToBase2Log;
 /**
  * An <code>HmmChunker</code> uses a hidden Markov model to perform
  * chunking over tokenized character sequences.  Instances contain a

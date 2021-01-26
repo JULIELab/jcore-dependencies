@@ -1,6 +1,9 @@
 package cc.mallet.pipe;
 
-import cc.mallet.types.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.FeatureVector;
+import cc.mallet.types.Instance;
+
 import java.io.Serializable;
 import java.util.Arrays;
 

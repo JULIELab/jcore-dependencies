@@ -6,13 +6,13 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.learning.extract;
 
-import java.util.Iterator;
-
 import cc.mallet.extract.*;
 import cc.mallet.grmm.learning.ACRF;
 import cc.mallet.grmm.util.SliceLabelsSequence;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
+
+import java.util.Iterator;
 
 /**
  * Created: Mar 1, 2005

@@ -7,15 +7,14 @@
 
 package cc.mallet.topics;
 
-import java.util.*;
-import java.util.zip.*;
-
-import java.io.*;
-import java.text.NumberFormat;
-
 import cc.mallet.types.*;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.Randoms;
+
+import java.io.*;
+import java.text.NumberFormat;
+import java.util.*;
+import java.util.zip.GZIPOutputStream;
 
 /**
  * Latent Dirichlet Allocation for loosely parallel corpora in arbitrary languages

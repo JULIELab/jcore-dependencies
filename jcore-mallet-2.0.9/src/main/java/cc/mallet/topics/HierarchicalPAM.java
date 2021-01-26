@@ -1,13 +1,14 @@
 package cc.mallet.topics;
 
 import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Randoms;
 
-import java.util.Arrays;
 import java.io.*;
 import java.text.NumberFormat;
-
-import java.util.logging.*;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
  * Hierarchical PAM, where each node in the DAG has a distribution over all topics on the 

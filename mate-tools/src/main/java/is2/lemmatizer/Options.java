@@ -1,9 +1,9 @@
 package is2.lemmatizer;
 
+import is2.util.OptionsSuper;
+
 import java.io.File;
 import java.io.IOException;
-
-import is2.util.OptionsSuper;
 
 
 public final class Options extends OptionsSuper {

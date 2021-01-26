@@ -3,8 +3,6 @@
  */
 package is2.tools;
 
-import is2.data.SentenceData09;
-
 /**
  * @author Bernd Bohnet, 27.10.2010
  * 

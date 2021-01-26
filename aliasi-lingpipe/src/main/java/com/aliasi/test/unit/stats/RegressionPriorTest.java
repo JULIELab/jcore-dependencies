@@ -1,18 +1,14 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.RegressionPrior;
-
 import com.aliasi.util.AbstractExternalizable;
-
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import org.junit.Test;
 
+import java.io.IOException;
+
+import static com.aliasi.test.unit.Asserts.succeed;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.fail;
-
-
-import java.io.IOException;
 
 public class RegressionPriorTest  {
 

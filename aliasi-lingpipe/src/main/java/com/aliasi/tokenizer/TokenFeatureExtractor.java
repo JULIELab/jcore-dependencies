@@ -16,19 +16,13 @@
 
 package com.aliasi.tokenizer;
 
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.Compilable;
-import com.aliasi.util.Counter;
-import com.aliasi.util.FeatureExtractor;
-import com.aliasi.util.ObjectToCounterMap;
-import com.aliasi.util.Strings;
-
-import java.util.Map;
+import com.aliasi.util.*;
 
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * A <code>TokenFeatureExtractor</code> produces feature vectors from

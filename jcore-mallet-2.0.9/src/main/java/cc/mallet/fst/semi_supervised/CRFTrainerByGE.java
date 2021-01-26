@@ -7,9 +7,6 @@
 
 package cc.mallet.fst.semi_supervised;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.Transducer;
 import cc.mallet.fst.TransducerTrainer;
@@ -19,6 +16,9 @@ import cc.mallet.optimize.Optimizable;
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 /**
  * Trains a CRF using Generalized Expectation constraints that

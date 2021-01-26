@@ -7,11 +7,11 @@
 package cc.mallet.extract;
 
 
-import java.io.Serializable;
-
 import cc.mallet.types.Label;
 import cc.mallet.types.LabelAlphabet;
 import cc.mallet.types.Sequence;
+
+import java.io.Serializable;
 /**
  * Created: Nov 12, 2004
  *

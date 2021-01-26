@@ -1,15 +1,11 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.MultivariateConstant;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
-
 import java.util.Arrays;
+
+import static junit.framework.Assert.*;
 
 public class MultivariateConstantTest  {
 

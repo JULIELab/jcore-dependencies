@@ -17,9 +17,9 @@
 
 package cc.mallet.types;
 
-import java.util.logging.*;
-
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 public class FeatureSelector
 {

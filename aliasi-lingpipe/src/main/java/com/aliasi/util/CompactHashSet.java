@@ -16,18 +16,15 @@
 
 package com.aliasi.util;
 
-import java.lang.reflect.Array;
-
-import java.util.Arrays;
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.NoSuchElementException;
-
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 import java.io.Serializable;
+import java.lang.reflect.Array;
+import java.util.AbstractSet;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * A {@code CompactHashSet} implements the set interface more tightly in

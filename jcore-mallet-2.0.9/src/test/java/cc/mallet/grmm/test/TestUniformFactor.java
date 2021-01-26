@@ -7,18 +7,17 @@
 
 package cc.mallet.grmm.test;
 
-import junit.framework.*;
-
-import gnu.trove.TDoubleArrayList;
-
-import java.io.BufferedReader;
-import java.io.StringReader;
-import java.io.IOException;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.grmm.util.ModelReader;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.Randoms;
+import gnu.trove.TDoubleArrayList;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.StringReader;
 
 /**
  * $Id: TestUniformFactor.java,v 1.1 2007/10/22 21:37:41 mccallum Exp $

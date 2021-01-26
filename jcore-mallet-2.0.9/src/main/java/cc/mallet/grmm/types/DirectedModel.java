@@ -7,16 +7,16 @@
 
 package cc.mallet.grmm.types; // Generated package name
 
+import gnu.trove.THashMap;
+import org._3pq.jgrapht.DirectedGraph;
+import org._3pq.jgrapht.alg.ConnectivityInspector;
+import org._3pq.jgrapht.graph.DefaultDirectedGraph;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
 import java.util.Map;
-
-import org._3pq.jgrapht.DirectedGraph;
-import org._3pq.jgrapht.graph.DefaultDirectedGraph;
-import org._3pq.jgrapht.alg.ConnectivityInspector;
-import gnu.trove.THashMap;
 
 
 /**

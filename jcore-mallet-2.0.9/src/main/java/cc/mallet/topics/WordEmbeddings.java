@@ -1,11 +1,15 @@
 package cc.mallet.topics;
 
-import cc.mallet.util.Randoms;
-import cc.mallet.util.CommandOption;
 import cc.mallet.types.*;
-import java.util.*;
-import java.io.*;
-import java.util.concurrent.*;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.Randoms;
+
+import java.io.File;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Formatter;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class WordEmbeddings {
 	

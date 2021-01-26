@@ -6,14 +6,12 @@
 
 package cc.mallet.classify;
 
-import java.util.HashMap;
-import java.util.TreeMap;
-
-import cc.mallet.classify.Classification;
-import cc.mallet.classify.Classifier;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
 import cc.mallet.types.Label;
+
+import java.util.HashMap;
+import java.util.TreeMap;
 
 
 /**

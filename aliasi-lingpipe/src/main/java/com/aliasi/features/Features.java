@@ -18,7 +18,6 @@ package com.aliasi.features;
 
 import com.aliasi.matrix.SparseFloatVector;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.symbol.SymbolTable;
 
 import java.util.HashMap;

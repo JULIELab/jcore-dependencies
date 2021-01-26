@@ -17,20 +17,14 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.ObjectToSet;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertNull;
-import static junit.framework.Assert.assertNotNull;
-
 
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
+
+import static junit.framework.Assert.*;
 
 public class ObjectToSetTest  {
 

@@ -11,17 +11,17 @@
 
 package cc.mallet.types.tests;
 
-import static org.junit.Assert.*;
+import cc.mallet.types.HashedSparseVector;
+import cc.mallet.types.SparseVector;
+import cc.mallet.util.FileUtils;
+import org.junit.Ignore;
+import org.junit.Test;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.junit.Ignore;
-import org.junit.Test;
-
-import cc.mallet.types.HashedSparseVector;
-import cc.mallet.types.SparseVector;
-import cc.mallet.util.FileUtils;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 public class TestHashedSparseVector {
     // public TestHashedSparseVector(String name) {

@@ -18,8 +18,6 @@ package com.aliasi.tag;
 import com.aliasi.corpus.ObjectHandler;
 import com.aliasi.corpus.StringParser;
 
-import com.aliasi.util.Strings;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;

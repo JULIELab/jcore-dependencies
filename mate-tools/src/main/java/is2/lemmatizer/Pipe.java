@@ -1,25 +1,15 @@
 package is2.lemmatizer;
 
-import is2.data.Cluster;
-import is2.data.D4;
-import is2.data.Instances;
-import is2.data.InstancesTagger;
-import is2.data.PipeGen;
-import is2.data.SentenceData09;
+import is2.data.*;
 import is2.io.CONLLReader09;
 import is2.tools.IPipe;
 import is2.util.DB;
 import is2.util.OptionsSuper;
-import is2.data.Long2Int;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 import java.util.Map.Entry;
 
 

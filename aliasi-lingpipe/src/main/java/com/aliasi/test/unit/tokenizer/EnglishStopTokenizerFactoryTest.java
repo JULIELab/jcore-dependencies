@@ -3,13 +3,8 @@ package com.aliasi.test.unit.tokenizer;
 import com.aliasi.tokenizer.EnglishStopTokenizerFactory;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
-
-import com.aliasi.util.AbstractExternalizable;
-
-import java.io.IOException;
-import java.io.NotSerializableException;
-
 import org.junit.Test;
+
 import static com.aliasi.test.unit.Asserts.assertNotSerializable;
 import static com.aliasi.test.unit.tokenizer.TokenizerTest.assertFactory;
 

@@ -7,9 +7,9 @@
 package cc.mallet.grmm.types;
 
 
-import java.util.Collection;
-
 import cc.mallet.util.Randoms;
+
+import java.util.Collection;
 
 /**
  * $Id: CPT.java,v 1.1 2007/10/22 21:37:44 mccallum Exp $

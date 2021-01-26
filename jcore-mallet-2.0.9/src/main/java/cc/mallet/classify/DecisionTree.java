@@ -11,19 +11,12 @@
 
 package cc.mallet.classify;
 
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+
 import java.io.Serializable;
 import java.util.logging.Logger;
-
-import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AugmentableFeatureVector;
-import cc.mallet.types.FeatureSelection;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.InfoGain;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Labeling;
-import cc.mallet.util.MalletLogger;
 
 /**
    Decision Tree classifier.

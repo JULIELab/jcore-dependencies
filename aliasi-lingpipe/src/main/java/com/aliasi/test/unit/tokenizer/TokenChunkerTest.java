@@ -19,28 +19,14 @@ package com.aliasi.test.unit.tokenizer;
 import com.aliasi.chunk.Chunk;
 import com.aliasi.chunk.Chunker;
 import com.aliasi.chunk.Chunking;
-
-import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
-import com.aliasi.tokenizer.TokenChunker;
-import com.aliasi.tokenizer.Tokenizer;
-import com.aliasi.tokenizer.TokenizerFactory;
-import com.aliasi.tokenizer.PorterStemmerTokenizerFactory;
-import com.aliasi.tokenizer.EnglishStopTokenizerFactory;
-import com.aliasi.tokenizer.LowerCaseTokenizerFactory;
-
+import com.aliasi.tokenizer.*;
 import com.aliasi.util.AbstractExternalizable;
-
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
-
-import static org.junit.Assert.assertArrayEquals;
-
 import java.io.IOException;
-
 import java.util.Arrays;
+
+import static junit.framework.Assert.assertEquals;
 
 public class TokenChunkerTest {
 

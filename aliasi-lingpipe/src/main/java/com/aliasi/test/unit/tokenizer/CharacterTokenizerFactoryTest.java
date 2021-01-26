@@ -16,19 +16,17 @@
 
 package com.aliasi.test.unit.tokenizer;
 
-import com.aliasi.util.AbstractExternalizable;
-
 import com.aliasi.tokenizer.CharacterTokenizerFactory;
 import com.aliasi.tokenizer.Tokenizer;
 import com.aliasi.tokenizer.TokenizerFactory;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNull;
 
 import java.io.IOException;
 import java.io.Serializable;
+
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertNull;
 
 public class CharacterTokenizerFactoryTest  {
 

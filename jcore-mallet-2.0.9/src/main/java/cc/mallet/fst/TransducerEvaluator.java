@@ -14,13 +14,11 @@
 
 package cc.mallet.fst;
 
-import java.util.logging.Logger;
-
-import cc.mallet.types.InstanceList;
-
 import cc.mallet.optimize.Optimizable;
-
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 /**
  * An abstract class to evaluate a transducer model.

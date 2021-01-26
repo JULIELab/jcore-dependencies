@@ -18,13 +18,15 @@
 
 package cc.mallet.pipe.tsf;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.util.logging.*;
-
-import cc.mallet.pipe.*;
-import cc.mallet.types.*;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Token;
+import cc.mallet.types.TokenSequence;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CountMatchesMatching extends Pipe
 {

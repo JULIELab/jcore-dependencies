@@ -1,20 +1,15 @@
 package com.aliasi.test.unit.lm;
 
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-
-
 import com.aliasi.lm.LanguageModel;
 import com.aliasi.lm.NGramProcessLM;
-
 import com.aliasi.util.AbstractExternalizable;
+import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+
+import static junit.framework.Assert.*;
 
 public class NGramProcessLMTest  {
 

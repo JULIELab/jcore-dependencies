@@ -1,6 +1,8 @@
 package cc.mallet.util;
 
-import java.util.logging.*;
+import java.util.logging.LogManager;
+import java.util.logging.LogRecord;
+import java.util.logging.Logger;
 
 /**
  * Created by IntelliJ IDEA.

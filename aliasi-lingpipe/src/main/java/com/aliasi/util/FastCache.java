@@ -1,18 +1,14 @@
 package com.aliasi.util;
 
-import com.aliasi.util.AbstractExternalizable;
-
-import java.lang.ref.SoftReference;
-
-import java.io.Serializable;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-
+import java.io.Serializable;
+import java.lang.ref.SoftReference;
 import java.util.AbstractMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.HashSet;
 
 
 /**

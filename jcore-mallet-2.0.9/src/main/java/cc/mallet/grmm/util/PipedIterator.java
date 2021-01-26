@@ -8,6 +8,7 @@ package cc.mallet.grmm.util;
 
 import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
+
 import java.util.Iterator;
 
 /**

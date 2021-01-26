@@ -5,31 +5,21 @@ import com.aliasi.lm.TokenizedLM;
 import com.aliasi.lm.UniformBoundaryLM;
 import com.aliasi.lm.NGramBoundaryLM;
 import com.aliasi.lm.TrieIntSeqCounter;
-
+import com.aliasi.lm.UniformBoundaryLM;
+import com.aliasi.symbol.SymbolTable;
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
+import com.aliasi.util.ScoredObject;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
-import static com.aliasi.test.unit.Asserts.succeed;
-
-
-import com.aliasi.symbol.SymbolTable;
-
-import com.aliasi.util.ScoredObject;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
+import java.io.*;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.SortedSet;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class TokenizedLMTest  {
 

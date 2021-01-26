@@ -6,16 +6,15 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.types;
 
+import cc.mallet.grmm.inference.Utils;
 import gnu.trove.TIntArrayList;
 
-import java.util.AbstractSet;
-import java.util.Collection;
-import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
-import cc.mallet.grmm.inference.Utils;
+import java.util.AbstractSet;
+import java.util.Collection;
 
 
 /**

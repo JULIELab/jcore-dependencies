@@ -1,11 +1,14 @@
 package cc.mallet.regression.tui;
 
-import java.io.*;
-import java.util.*;
 import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.pipe.iterator.CsvIterator;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CommandOption;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
 
 /** Load data suitable for linear and Poisson regression */
 

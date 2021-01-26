@@ -1,7 +1,5 @@
 package is2.util;
 
-import is2.util.OptionsSuper;
-
 import java.io.File;
 
 

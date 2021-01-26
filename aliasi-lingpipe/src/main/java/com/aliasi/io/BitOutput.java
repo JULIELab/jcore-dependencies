@@ -2,8 +2,8 @@ package com.aliasi.io;
 
 import com.aliasi.util.Math;
 
-import java.io.OutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /** 
  * A <code>BitOutput</code> wraps an underlying output stream to

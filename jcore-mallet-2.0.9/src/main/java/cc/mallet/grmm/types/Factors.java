@@ -7,14 +7,16 @@
 package cc.mallet.grmm.types;
 
 
-import java.util.*;
-
 import cc.mallet.grmm.inference.Inferencer;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
-
-import gnu.trove.TIntArrayList;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.Matrix;
+import cc.mallet.types.RankedFeatureVector;
+import cc.mallet.types.SparseMatrixn;
+import cc.mallet.util.Maths;
 import gnu.trove.TDoubleArrayList;
+import gnu.trove.TIntArrayList;
+
+import java.util.*;
 
 /**
  * A static utility class containing utility methods for dealing with factors,

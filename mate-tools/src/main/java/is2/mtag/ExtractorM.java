@@ -1,15 +1,7 @@
 package is2.mtag;
 
 
-import is2.data.Cluster;
-import is2.data.F2SF;
-import is2.data.Instances;
-import is2.data.InstancesTagger;
-import is2.data.Long2Int;
-import is2.data.Long2IntInterface;
-import is2.data.ParametersFloat;
-import is2.data.PipeGen;
-import is2.data.SentenceData09;
+import is2.data.*;
 import is2.io.CONLLReader09;
 import is2.tools.IPipe;
 import is2.util.OptionsSuper;

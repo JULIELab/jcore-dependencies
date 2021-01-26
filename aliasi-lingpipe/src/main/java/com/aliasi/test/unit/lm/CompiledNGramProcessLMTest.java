@@ -1,17 +1,14 @@
 package com.aliasi.test.unit.lm;
 
+import com.aliasi.lm.CompiledNGramProcessLM;
+import com.aliasi.lm.NGramProcessLM;
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
+
+import java.io.IOException;
 
 import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.assertArrayEquals;
-
-
-import com.aliasi.lm.CompiledNGramProcessLM;
-import com.aliasi.lm.NGramProcessLM;
-
-import com.aliasi.util.AbstractExternalizable;
-
-import java.io.IOException;
 
 public class CompiledNGramProcessLMTest  {
 

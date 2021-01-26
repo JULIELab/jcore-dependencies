@@ -1,13 +1,13 @@
 package cc.mallet.pipe;
 
+import cc.mallet.types.Instance;
+import cc.mallet.types.LabelSequence;
+import cc.mallet.types.TokenSequence;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Iterator;
-
-import cc.mallet.types.Instance;
-import cc.mallet.types.LabelSequence;
-import cc.mallet.types.TokenSequence;
 
 
 public class TokenSequence2TokenInstances extends Pipe {

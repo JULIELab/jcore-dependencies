@@ -3,12 +3,6 @@
  */
 package is2.data;
 
-import is2.util.DB;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Stack;
-
 /**
  * @author Dr. Bernd Bohnet, 17.01.2011
  * 

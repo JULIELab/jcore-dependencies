@@ -18,11 +18,11 @@
 
 package de.julielab.segmentationEvaluator;
 
-import java.util.HashMap;
-import java.util.Iterator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.HashMap;
+import java.util.Iterator;
 
 
 public class Evaluator {

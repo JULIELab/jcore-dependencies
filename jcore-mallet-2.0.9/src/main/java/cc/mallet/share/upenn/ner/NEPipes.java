@@ -1,13 +1,13 @@
 package cc.mallet.share.upenn.ner;
 
 
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.tsf.RegexMatches;
+import cc.mallet.pipe.tsf.TokenText;
 
-import java.io.*;
-
-import java.util.regex.*;
-
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.tsf.*;
+import java.io.File;
+import java.util.regex.Pattern;
 
 public class NEPipes extends SerialPipes {
 

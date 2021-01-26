@@ -8,35 +8,14 @@
 
 package cc.mallet.types;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
-import java.io.Serializable;
-
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.logging.Logger;
-
-import cc.mallet.pipe.FeatureSequence2FeatureVector;
-import cc.mallet.pipe.Noop;
-import cc.mallet.pipe.Pipe;
-import cc.mallet.pipe.SerialPipes;
-import cc.mallet.pipe.Target2Label;
-import cc.mallet.pipe.TokenSequence2FeatureSequence;
+import cc.mallet.pipe.*;
 import cc.mallet.pipe.iterator.RandomTokenSequenceIterator;
-
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Randoms;
+
+import java.io.*;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
 	 A list of machine learning instances, typically used for training

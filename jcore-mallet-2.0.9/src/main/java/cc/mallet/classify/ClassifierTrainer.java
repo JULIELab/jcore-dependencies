@@ -11,7 +11,6 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.classify.Classifier;
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;

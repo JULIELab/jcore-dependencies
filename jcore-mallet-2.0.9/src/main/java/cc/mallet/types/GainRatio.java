@@ -8,17 +8,12 @@
 
 package cc.mallet.types;
 
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.Hashtable;
-import java.util.Iterator;
-import java.util.logging.Logger;
-
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Maths;
+
+import java.awt.geom.Point2D;
+import java.util.*;
+import java.util.logging.Logger;
 
 
 

@@ -1,15 +1,13 @@
 package com.aliasi.test.unit.stats;
 
+import com.aliasi.stats.MultivariateConstant;
 import com.aliasi.stats.MultivariateDistribution;
 import com.aliasi.stats.MultivariateEstimator;
-import com.aliasi.stats.MultivariateConstant;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-
-
 import java.io.*;
+
+import static junit.framework.Assert.assertEquals;
 
 public class MultivariateEstimatorTest  {
 

@@ -10,6 +10,7 @@ import com.aliasi.chunk.ConfidenceChunker;
 
 import com.aliasi.tokenizer.IndoEuropeanTokenizerFactory;
 import com.aliasi.tokenizer.TokenizerFactory;
+import org.junit.Test;
 
 import com.aliasi.util.AbstractExternalizable;
 import com.aliasi.util.ScoredObject;

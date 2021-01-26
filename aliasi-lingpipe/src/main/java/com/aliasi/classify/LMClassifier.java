@@ -16,10 +16,8 @@
 
 package com.aliasi.classify;
 
-import com.aliasi.stats.MultivariateDistribution;
-
 import com.aliasi.lm.LanguageModel;
-
+import com.aliasi.stats.MultivariateDistribution;
 import com.aliasi.util.ScoredObject;
 import com.aliasi.util.Strings;
 

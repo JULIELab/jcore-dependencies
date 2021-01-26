@@ -6,15 +6,6 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.test;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-
-import java.io.IOException;
-import java.util.Set;
-import java.util.List;
-import java.util.ArrayList;
-
 import cc.mallet.grmm.types.*;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.types.SparseMatrixn;
@@ -22,6 +13,12 @@ import cc.mallet.types.tests.TestSerializable;
 import cc.mallet.util.ArrayUtils;
 import cc.mallet.util.Maths;
 import cc.mallet.util.Randoms;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.IOException;
+import java.util.Set;
 
 /**
  * Created: Aug 17, 2004

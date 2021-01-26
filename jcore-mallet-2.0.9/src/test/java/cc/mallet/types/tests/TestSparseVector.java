@@ -14,11 +14,14 @@
 
 package cc.mallet.types.tests;
 
-import java.io.*;
-
 import cc.mallet.types.DenseVector;
 import cc.mallet.types.SparseVector;
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
 
 public class TestSparseVector extends TestCase
 {

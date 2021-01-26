@@ -17,16 +17,14 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.SmallSet;
-import org.junit.Test;
 import org.junit.Before;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertFalse;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
+import org.junit.Test;
 
 import java.util.HashSet;
 import java.util.Set;
+
+import static com.aliasi.test.unit.Asserts.assertFullEquals;
+import static junit.framework.Assert.*;
 
 
 public class SmallSetTest  {

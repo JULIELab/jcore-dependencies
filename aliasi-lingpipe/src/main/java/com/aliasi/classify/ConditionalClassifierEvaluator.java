@@ -15,8 +15,6 @@
  */
 package com.aliasi.classify;
 
-import com.aliasi.util.Scored;
-
 import java.util.ArrayList;
 import java.util.List;
 

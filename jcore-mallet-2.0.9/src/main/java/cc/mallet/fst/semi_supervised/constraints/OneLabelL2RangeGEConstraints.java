@@ -7,19 +7,18 @@
 
 package cc.mallet.fst.semi_supervised.constraints;
 
-import gnu.trove.TIntArrayList;
-import gnu.trove.TIntObjectHashMap;
-
-import java.util.ArrayList;
-import java.util.BitSet;
-import java.util.HashMap;
-
 import cc.mallet.fst.SumLattice;
 import cc.mallet.fst.semi_supervised.StateLabelMap;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.FeatureVectorSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
+import gnu.trove.TIntArrayList;
+import gnu.trove.TIntObjectHashMap;
+
+import java.util.ArrayList;
+import java.util.BitSet;
+import java.util.HashMap;
 
 /**
  * A set of constraints on individual input feature label pairs.   

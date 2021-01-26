@@ -1,12 +1,12 @@
 package cc.mallet.fst;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-
 import cc.mallet.optimize.Optimizer;
 import cc.mallet.optimize.OrthantWiseLimitedMemoryBFGS;
 import cc.mallet.types.InstanceList;
+
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 
 /**
  * CRF trainer that implements L1-regularization.

@@ -16,20 +16,10 @@
 
 package com.aliasi.util;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.CharArrayWriter;
-import java.io.Closeable;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.io.Reader;
-import java.io.Writer;
-
-import java.net.URL;
-
 import org.xml.sax.InputSource;
+
+import java.io.*;
+import java.net.URL;
 
 /**
  * Static utility methods for processing input and output streams,

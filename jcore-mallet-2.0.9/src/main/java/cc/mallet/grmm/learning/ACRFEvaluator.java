@@ -8,13 +8,12 @@
 package cc.mallet.grmm.learning;
 
 
-
-import java.io.File;
-import java.util.List;
-
 import cc.mallet.grmm.util.GeneralUtils;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.FileUtils;
+
+import java.io.File;
+import java.util.List;
 
 /**
  *  

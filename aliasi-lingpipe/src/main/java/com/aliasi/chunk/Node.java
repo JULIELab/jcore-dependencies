@@ -17,10 +17,11 @@
 package com.aliasi.chunk;
 
 import com.aliasi.symbol.SymbolTableCompiler;
+
 import java.util.Iterator;
 import java.util.Map;
-import java.util.TreeMap;
 import java.util.Set;
+import java.util.TreeMap;
 
 /**
  * A <code>Node</code> represents a context event for evaluation of a

@@ -16,16 +16,12 @@
 
 package com.aliasi.matrix;
 
-import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
 import com.aliasi.io.Reporters;
-
-import java.io.PrintWriter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import java.util.Random;
 
 /**

@@ -23,10 +23,10 @@
 
 package cc.mallet.share.mccallum.ner;
 
-import java.util.regex.*;
-
-import cc.mallet.pipe.*;
+import cc.mallet.pipe.Pipe;
 import cc.mallet.types.*;
+
+import java.util.regex.Pattern;
 
 public class ConllNer2003Sentence2TokenSequence extends Pipe
 {

@@ -12,13 +12,15 @@
 package cc.mallet.pipe;
 
 
-import java.util.regex.*;
-import java.util.ArrayList;
-import java.io.*;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.Token;
 import cc.mallet.types.TokenSequence;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 /**
  * Remove tokens from the token sequence in the data field whose text matches any of a set of regular expressions.
  @author David Mimno

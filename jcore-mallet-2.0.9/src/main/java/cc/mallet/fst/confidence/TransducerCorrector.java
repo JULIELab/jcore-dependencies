@@ -11,10 +11,12 @@
 
 package cc.mallet.fst.confidence;
 
-import java.util.ArrayList;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.Transducer;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.Labeling;
 
-import cc.mallet.fst.*;
-import cc.mallet.types.*;
+import java.util.ArrayList;
 
 /**
  *

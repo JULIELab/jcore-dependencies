@@ -11,9 +11,12 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
+import cc.mallet.types.Alphabet;
+import cc.mallet.types.AugmentableFeatureVector;
+import cc.mallet.types.FeatureConjunction;
+import cc.mallet.types.Instance;
 
-import cc.mallet.types.*;
+import java.io.Serializable;
 /**
  * Add specified conjunctions to each instance.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

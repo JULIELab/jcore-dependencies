@@ -1,10 +1,10 @@
 package cc.mallet.fst;
 
-import java.util.logging.Logger;
-
 import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 /**
  * A CRF objective function that is the sum of multiple

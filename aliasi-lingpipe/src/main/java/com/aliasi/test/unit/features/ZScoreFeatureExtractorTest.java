@@ -1,24 +1,19 @@
 package com.aliasi.test.unit.features;
 
-import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
+import com.aliasi.classify.Classification;
+import com.aliasi.classify.Classified;
+import com.aliasi.corpus.Corpus;
+import com.aliasi.corpus.ObjectHandler;
+import com.aliasi.features.ZScoreFeatureExtractor;
+import com.aliasi.stats.Statistics;
+import com.aliasi.util.AbstractExternalizable;
+import com.aliasi.util.FeatureExtractor;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.NotSerializableException;
 
-import org.junit.Test;
-
-import com.aliasi.classify.Classified;
-import com.aliasi.classify.Classification;
-
-import com.aliasi.corpus.Corpus;
-import com.aliasi.corpus.ObjectHandler;
-
-import com.aliasi.features.ZScoreFeatureExtractor;
-
-import com.aliasi.stats.Statistics;
-
-import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.FeatureExtractor;
+import static com.aliasi.test.unit.features.MockFeatureExtractor.assertFeats;
 
 public class ZScoreFeatureExtractorTest {
     

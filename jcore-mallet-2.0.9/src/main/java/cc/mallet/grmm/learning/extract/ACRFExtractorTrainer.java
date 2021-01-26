@@ -7,28 +7,24 @@
 package cc.mallet.grmm.learning.extract;
 
 
-import java.util.Iterator;
-import java.util.Random;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Logger;
-import java.io.File;
-
 import cc.mallet.extract.Extraction;
 import cc.mallet.extract.TokenizationFilter;
 import cc.mallet.grmm.inference.Inferencer;
 import cc.mallet.grmm.learning.*;
-import cc.mallet.grmm.util.RememberTokenizationPipe;
 import cc.mallet.grmm.util.PipedIterator;
+import cc.mallet.grmm.util.RememberTokenizationPipe;
 import cc.mallet.pipe.Pipe;
 import cc.mallet.pipe.PipeUtils;
-import cc.mallet.types.InstanceList;
 import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
 import cc.mallet.util.CollectionUtils;
 import cc.mallet.util.FileUtils;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Timing;
+
+import java.io.File;
+import java.util.*;
+import java.util.logging.Logger;
 
 /**
  * Created: Mar 31, 2005

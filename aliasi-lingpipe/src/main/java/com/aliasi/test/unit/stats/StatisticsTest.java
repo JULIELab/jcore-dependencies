@@ -1,18 +1,14 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.Statistics;
-
 import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 
 import java.util.HashSet;
 import java.util.Random;
 import java.util.Set;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 public class StatisticsTest  {
 

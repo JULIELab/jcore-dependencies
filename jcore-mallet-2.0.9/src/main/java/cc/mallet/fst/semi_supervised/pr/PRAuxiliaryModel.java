@@ -7,14 +7,14 @@
 
 package cc.mallet.fst.semi_supervised.pr;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-
 import cc.mallet.fst.CRF;
 import cc.mallet.fst.Transducer;
 import cc.mallet.fst.semi_supervised.pr.constraints.PRConstraint;
 import cc.mallet.types.FeatureVector;
 import cc.mallet.types.Sequence;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Auxiliar model (q) for E-step/I-projection in Posterior Regularization (PR).

@@ -14,17 +14,13 @@
 
 package cc.mallet.pipe.iterator;
 
-import java.net.URI;
-import java.util.Iterator;
-import java.util.logging.*;
-
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.Dirichlet;
-import cc.mallet.types.FeatureVector;
-import cc.mallet.types.Instance;
-import cc.mallet.types.LabelAlphabet;
+import cc.mallet.types.*;
 import cc.mallet.util.MalletLogger;
 import cc.mallet.util.Randoms;
+
+import java.net.URI;
+import java.util.Iterator;
+import java.util.logging.Logger;
 
 public class RandomFeatureVectorIterator implements Iterator<Instance>
 {

@@ -6,13 +6,8 @@
 
 package cc.mallet.classify;
 
-import cc.mallet.classify.ClassifierTrainer;
 import cc.mallet.pipe.Pipe;
-import cc.mallet.types.Alphabet;
-import cc.mallet.types.AlphabetCarrying;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.Label;
+import cc.mallet.types.*;
 
 /**
  * A Classifier Trainer to be used with MostFrequentClassifier.

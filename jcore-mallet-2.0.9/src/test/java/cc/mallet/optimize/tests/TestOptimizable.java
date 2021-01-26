@@ -14,18 +14,16 @@
 
 package cc.mallet.optimize.tests;
 
-import junit.framework.*;
-import java.util.logging.*;
-import java.io.*;
-import java.util.Random;
-
-import cc.mallet.classify.*;
-import cc.mallet.optimize.LineOptimizer;
 import cc.mallet.optimize.Optimizable;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.types.MatrixOps;
+import cc.mallet.util.MalletLogger;
+import cc.mallet.util.Maths;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
+
+import java.util.Random;
+import java.util.logging.Logger;
 
 /**
  *  Contains static methods for testing subclasses of

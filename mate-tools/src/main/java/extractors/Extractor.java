@@ -3,11 +3,7 @@
  */
 package extractors;
 
-import is2.data.Cluster;
-import is2.data.DataF;
-import is2.data.FV;
-import is2.data.IFV;
-import is2.data.Instances;
+import is2.data.*;
 
 /**
  * @author Dr. Bernd Bohnet, 29.04.2011

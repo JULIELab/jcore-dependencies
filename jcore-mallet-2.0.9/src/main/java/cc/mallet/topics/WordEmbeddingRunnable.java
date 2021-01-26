@@ -1,7 +1,10 @@
 package cc.mallet.topics;
 
-import java.util.*;
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+
+import java.util.Random;
 
 public class WordEmbeddingRunnable implements Runnable {
 	public WordEmbeddings model;

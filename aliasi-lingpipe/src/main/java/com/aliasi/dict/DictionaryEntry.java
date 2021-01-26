@@ -24,7 +24,6 @@ import com.aliasi.util.Scored;
 import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
-import java.io.Serializable;
 
 /**
  * A <code>DictionaryEntry</code> provides a phrase as a string, an

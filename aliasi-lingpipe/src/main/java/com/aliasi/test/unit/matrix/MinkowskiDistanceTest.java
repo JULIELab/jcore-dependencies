@@ -1,29 +1,18 @@
 package com.aliasi.test.unit.matrix;
 
+import com.aliasi.matrix.*;
 import com.aliasi.util.AbstractExternalizable;
-
-import com.aliasi.matrix.DenseVector;
-import com.aliasi.matrix.SparseFloatVector;
-import com.aliasi.matrix.Vector;
-
-import com.aliasi.matrix.EuclideanDistance;
-import com.aliasi.matrix.MinkowskiDistance;
-import com.aliasi.matrix.TaxicabDistance;
-
 import com.aliasi.util.Distance;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.fail;
-import static com.aliasi.test.unit.Asserts.succeed;
-
-
 import java.io.IOException;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.fail;
 
 public class MinkowskiDistanceTest  {
 

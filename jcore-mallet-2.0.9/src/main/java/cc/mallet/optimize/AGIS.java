@@ -15,10 +15,9 @@
 
 package cc.mallet.optimize;
 
-import java.util.logging.*;
-
-import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.MatrixOps;
+
+import java.util.logging.Logger;
 
 public class AGIS implements Optimizer
 {

@@ -1,22 +1,15 @@
 package cc.mallet.fst;
 
+import cc.mallet.optimize.Optimizable;
+import cc.mallet.types.*;
+import cc.mallet.util.MalletLogger;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
-
 import java.util.BitSet;
 import java.util.logging.Logger;
-
-import cc.mallet.types.FeatureSequence;
-import cc.mallet.types.FeatureVectorSequence;
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
-import cc.mallet.types.MatrixOps;
-
-import cc.mallet.optimize.Optimizable;
-
-import cc.mallet.util.MalletLogger;
 
 /** An objective function for CRFs that is the label likelihood plus a Gaussian or hyperbolic prior on parameters. */
 public class CRFOptimizableByLabelLikelihood implements Optimizable.ByGradientValue, Serializable

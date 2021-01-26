@@ -14,11 +14,16 @@
 
 package cc.mallet.pipe.iterator;
 
+import cc.mallet.fst.MaxLatticeDefault;
+import cc.mallet.fst.Segment;
+import cc.mallet.fst.Transducer;
+import cc.mallet.pipe.Noop;
+import cc.mallet.types.Instance;
+import cc.mallet.types.InstanceList;
+import cc.mallet.types.Sequence;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-import cc.mallet.fst.*;
-import cc.mallet.pipe.Noop;
-import cc.mallet.types.*;
 
 /**
 	 Iterates over {@link Segment}s extracted by a {@link Transducer}

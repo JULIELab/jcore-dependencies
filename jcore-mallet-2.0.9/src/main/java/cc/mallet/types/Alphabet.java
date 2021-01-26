@@ -14,14 +14,7 @@
 
 package cc.mallet.types;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.ObjectStreamException;
-import java.io.OutputStreamWriter;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.Serializable;
+import java.io.*;
 import java.rmi.dgc.VMID;
 import java.util.ArrayList;
 import java.util.Iterator;

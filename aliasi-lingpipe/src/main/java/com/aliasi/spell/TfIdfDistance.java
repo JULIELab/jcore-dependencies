@@ -17,9 +17,7 @@
 package com.aliasi.spell;
 
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.tokenizer.TokenizerFactory;
-
 import com.aliasi.util.Counter;
 import com.aliasi.util.ObjectToCounterMap;
 import com.aliasi.util.Strings;

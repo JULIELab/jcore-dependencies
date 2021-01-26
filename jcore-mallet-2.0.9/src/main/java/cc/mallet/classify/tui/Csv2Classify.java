@@ -7,16 +7,18 @@
 
 package cc.mallet.classify.tui;
 
-import java.util.Iterator;
-import java.util.logging.*;
-import java.util.regex.*;
+import cc.mallet.classify.Classifier;
+import cc.mallet.pipe.iterator.CsvIterator;
+import cc.mallet.types.Instance;
+import cc.mallet.types.Labeling;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+
 import java.io.*;
 import java.nio.charset.Charset;
-
-import cc.mallet.classify.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.util.Iterator;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 /**
  * Command line tool for classifying a sequence of  

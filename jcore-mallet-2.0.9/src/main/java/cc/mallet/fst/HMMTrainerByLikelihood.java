@@ -1,11 +1,11 @@
 package cc.mallet.fst;
 
-import java.util.logging.Logger;
-
 import cc.mallet.types.FeatureSequence;
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.MalletLogger;
+
+import java.util.logging.Logger;
 
 public class HMMTrainerByLikelihood extends TransducerTrainer {
 	private static Logger logger = MalletLogger

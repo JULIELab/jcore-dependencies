@@ -7,16 +7,19 @@
 
 package cc.mallet.classify.tui;
 
-import java.util.ArrayList;
-import java.util.logging.*;
-import java.util.regex.*;
+import cc.mallet.pipe.*;
+import cc.mallet.pipe.iterator.CsvIterator;
+import cc.mallet.types.InstanceList;
+import cc.mallet.util.CharSequenceLexer;
+import cc.mallet.util.CommandOption;
+import cc.mallet.util.MalletLogger;
+
 import java.io.*;
 import java.nio.charset.Charset;
-
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.types.*;
-import cc.mallet.util.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 /**
  * Command line import tool for loading a sequence of 

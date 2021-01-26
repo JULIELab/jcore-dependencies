@@ -1,15 +1,27 @@
 package cc.mallet.examples;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
-import java.util.zip.*;
+import cc.mallet.fst.CRF;
+import cc.mallet.fst.CRFTrainerByLabelLikelihood;
+import cc.mallet.fst.PerClassAccuracyEvaluator;
+import cc.mallet.fst.TokenAccuracyEvaluator;
+import cc.mallet.pipe.Pipe;
+import cc.mallet.pipe.SerialPipes;
+import cc.mallet.pipe.SimpleTaggerSentence2TokenSequence;
+import cc.mallet.pipe.TokenSequence2FeatureVectorSequence;
+import cc.mallet.pipe.iterator.LineGroupIterator;
+import cc.mallet.pipe.tsf.OffsetConjunctions;
+import cc.mallet.pipe.tsf.RegexMatches;
+import cc.mallet.pipe.tsf.TokenFirstPosition;
+import cc.mallet.pipe.tsf.TokenTextCharSuffix;
+import cc.mallet.types.InstanceList;
 
-import cc.mallet.fst.*;
-import cc.mallet.pipe.*;
-import cc.mallet.pipe.iterator.*;
-import cc.mallet.pipe.tsf.*;
-import cc.mallet.types.*;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
+import java.util.zip.GZIPInputStream;
 
 public class TrainCRF {
 	

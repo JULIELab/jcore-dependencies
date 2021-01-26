@@ -2,12 +2,9 @@ package com.aliasi.test.unit.hmm;
 
 // import com.aliasi.hmm.TagWordLattice;
 
-import com.aliasi.symbol.MapSymbolTable;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;
-import static org.junit.Assert.assertArrayEquals;
 
 
 

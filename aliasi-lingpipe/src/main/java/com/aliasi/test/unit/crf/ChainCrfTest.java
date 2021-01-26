@@ -2,52 +2,30 @@ package com.aliasi.test.unit.crf;
 
 import com.aliasi.corpus.Corpus;
 import com.aliasi.corpus.ObjectHandler;
-
 import com.aliasi.crf.ChainCrf;
 import com.aliasi.crf.ChainCrfFeatureExtractor;
 import com.aliasi.crf.ChainCrfFeatures;
-
-import com.aliasi.io.LogLevel;
 import com.aliasi.io.Reporter;
-import com.aliasi.io.Reporters;
-
 import com.aliasi.matrix.DenseVector;
 import com.aliasi.matrix.Vector;
-
 import com.aliasi.stats.AnnealingSchedule;
 import com.aliasi.stats.RegressionPrior;
-
 import com.aliasi.symbol.SymbolTable;
 import com.aliasi.symbol.SymbolTableCompiler;
-
 import com.aliasi.tag.ScoredTagging;
-import com.aliasi.tag.Tagging;
 import com.aliasi.tag.TagLattice;
-
+import com.aliasi.tag.Tagging;
 import com.aliasi.util.AbstractExternalizable;
-import com.aliasi.util.FeatureExtractor;
 import com.aliasi.util.ObjectToDoubleMap;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeSet;
+import org.junit.Test;
 
 import java.io.IOException;
 import java.io.Serializable;
-
-import org.junit.Test;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertNotNull;
-import static junit.framework.Assert.fail;
-import static org.junit.Assert.assertArrayEquals;
+import java.util.*;
 
 import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
 
 public class ChainCrfTest {
 

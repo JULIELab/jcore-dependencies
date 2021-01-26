@@ -11,10 +11,9 @@
 
 package cc.mallet.pipe;
 
-import java.io.*;
-
-import cc.mallet.pipe.Pipe;
 import cc.mallet.types.Instance;
+
+import java.io.*;
 /**
  * Print the data field of each instance.
    @author Andrew McCallum <a href="mailto:mccallum@cs.umass.edu">mccallum@cs.umass.edu</a>

@@ -7,11 +7,12 @@
 
 package cc.mallet.topics;
 
-import java.util.Arrays;
-import java.util.ArrayList;
-
-import cc.mallet.types.*;
+import cc.mallet.types.FeatureSequence;
+import cc.mallet.types.LabelSequence;
 import cc.mallet.util.Randoms;
+
+import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * A parallel topic model runnable task.

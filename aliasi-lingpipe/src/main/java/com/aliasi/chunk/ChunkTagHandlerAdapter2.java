@@ -18,10 +18,6 @@ package com.aliasi.chunk;
 
 import com.aliasi.corpus.ObjectHandler;
 
-import com.aliasi.chunk.ChunkFactory;
-import com.aliasi.chunk.Chunking;
-import com.aliasi.chunk.ChunkingImpl;
-
 import java.util.Arrays;
 
 /**

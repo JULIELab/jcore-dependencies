@@ -1,16 +1,5 @@
 package cc.mallet.cluster.tui;
 
-import gnu.trove.TIntArrayList;
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import cc.mallet.cluster.Clustering;
 import cc.mallet.cluster.Clusterings;
 import cc.mallet.cluster.Record;
@@ -21,6 +10,11 @@ import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.CommandOption;
 import cc.mallet.util.MalletLogger;
+import gnu.trove.TIntArrayList;
+
+import java.io.*;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 //In progress
 public class Text2Clusterings {

@@ -19,8 +19,8 @@ package com.aliasi.tokenizer;
 import com.aliasi.util.AbstractExternalizable;
 
 import java.io.IOException;
-import java.io.ObjectOutput;
 import java.io.ObjectInput;
+import java.io.ObjectOutput;
 import java.io.Serializable;
 
 /**

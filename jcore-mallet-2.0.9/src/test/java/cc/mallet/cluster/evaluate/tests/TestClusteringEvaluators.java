@@ -8,11 +8,15 @@
 package cc.mallet.cluster.evaluate.tests;
 
 import cc.mallet.cluster.Clustering;
-import cc.mallet.cluster.evaluate.*;
+import cc.mallet.cluster.evaluate.BCubedEvaluator;
+import cc.mallet.cluster.evaluate.ClusteringEvaluator;
+import cc.mallet.cluster.evaluate.MUCEvaluator;
+import cc.mallet.cluster.evaluate.PairF1Evaluator;
 import cc.mallet.types.InstanceList;
 import cc.mallet.util.Randoms;
-
-import junit.framework.*;
+import junit.framework.Test;
+import junit.framework.TestCase;
+import junit.framework.TestSuite;
 
 /**
  * Examples drawn from Luo, "On Coreference Resolution Performance

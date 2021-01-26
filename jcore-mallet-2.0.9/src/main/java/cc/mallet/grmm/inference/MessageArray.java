@@ -6,16 +6,15 @@
    information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.grmm.inference;
 
-import gnu.trove.TIntObjectIterator;
-
-import java.io.PrintWriter;
-import java.io.OutputStreamWriter;
-
 import cc.mallet.grmm.types.Factor;
 import cc.mallet.grmm.types.FactorGraph;
 import cc.mallet.grmm.types.LogTableFactor;
 import cc.mallet.grmm.types.Variable;
 import cc.mallet.grmm.util.MIntInt2ObjectMap;
+import gnu.trove.TIntObjectIterator;
+
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 
 /**
  * Efficiently manages a array of messages in a factor graph from

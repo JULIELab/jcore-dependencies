@@ -15,19 +15,19 @@
 
 package de.julielab.xml;
 
-import static org.junit.Assert.*;
-
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-
+import com.ximpleware.*;
+import org.assertj.core.api.Condition;
 import org.junit.Test;
 
-import com.ximpleware.AutoPilot;
-import com.ximpleware.VTDException;
-import com.ximpleware.VTDGen;
-import com.ximpleware.VTDNav;
-import com.ximpleware.XMLModifier;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.*;
 
+import static de.julielab.xml.JulieXMLConstants.*;
+import static de.julielab.xml.JulieXMLTools.createField;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.*;
 /**
  * Tests for the Utils class.
  * 
@@ -106,5 +106,96 @@ public class JulieXmlToolsTest {
 		
 		String elementText = JulieXMLTools.getElementText(vn);
 		assertEquals("this is mixed text content", elementText);
+	}
+	
+	@Test
+	public void parseUnicodeBeyondBMP() throws NavException, FileNotFoundException, IOException, EncodingException, EOFException, EntityException, ParseException {
+		// character codpoint 0x10400
+		String unicode = "<supplementary>\uD801\uDC00</supplementary>";
+		byte[] unicodeBytes = unicode.getBytes();
+		assertEquals(unicode, new String(unicodeBytes, "UTF-8"));
+		
+		VTDGen vg = new VTDGen();
+		vg.setDoc(unicodeBytes);
+		vg.parse(false);
+		VTDNav vn = vg.getNav();
+		long fragment = vn.getContentFragment();
+		int offset = (int) fragment;
+		int length = (int) (fragment >> 32);
+		String originalBytePortion = new String(Arrays.copyOfRange(unicodeBytes, offset, offset+length));
+		String vtdString = vn.toRawString(offset, length);
+		// this actually succeeds
+		assertEquals("\uD801\uDC00", originalBytePortion);
+		// this fails ;-( the returned character is Ѐ, codepoint 0x400, thus the high surrogate is missing
+		assertEquals("\uD801\uDC00", vtdString);
+	}
+
+    /**
+     * Tests whether the reading of a ZIP archive works as intended. The test archive includes three files, each with
+     * a value for the XPath <code>/root/testcontent</code>. We should the the values in a single iterator.
+     */
+	@Test
+	public void testArchiveReading() {
+        List<Map<String, String>> fields = new ArrayList<>();
+        fields.add(createField(NAME, "contents", XPATH, "testcontent"));
+        Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/zipArchiveReading/archive.zip", 1024, "/root", fields, false);
+        Set<String> values = new HashSet<>();
+        while (rowIt.hasNext()) {
+            Map<String, Object> row =  rowIt.next();
+            values.add((String) row.get("contents"));
+        }
+        assertThat(values).contains("first", "second", "third");
+    }
+
+	@Test
+	public void testArchiveReading2() {
+	    // This test exists due to a bug where non-XML files within ZIP archives were omitted which would
+        // lead to a null row returned if the last archive entry was a non-XML file. This shouldn't happen any more.
+		List<Map<String, String>> fields = new ArrayList<>();
+		fields.add(createField(NAME, "pmid", XPATH, "PMID"));
+		Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/zipArchiveReading/test.zip", 1024, "/PubmedArticleSet/PubmedArticle/MedlineCitation", fields, false);
+		Set<String> values = new HashSet<>();
+		while (rowIt.hasNext()) {
+			Map<String, Object> row =  rowIt.next();
+			assertNotNull(row.get("pmid"));
+            values.add((String) row.get("pmid"));
+		}
+        assertThat(values).contains("1", "2");
+	}
+
+    @Test
+    public void testConstantFieldValue() {
+        List<Map<String, String>> fields = new ArrayList<>();
+        fields.add(createField(NAME, "contents", XPATH, "."));
+        fields.add(createField(NAME, "constValueField", CONSTANT_VALUE, "THIS IS A CONSTANT"));
+        Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/simple-test.xml", 1024, "/testdoc/level1/level2", fields, false);
+        while (rowIt.hasNext()) {
+            Map<String, Object> row = rowIt.next();
+            assertThat(row).hasValueSatisfying(new Condition<>(val -> val.equals("THIS IS A CONSTANT"), "Constant field value"));
+        }
+    }
+
+	/**
+	 * This is not really a test but more of a playground to check detailed behaviour of VTD "interactively" (i.e.
+	 * by editing the test's code, letting it run and checking the outcome).
+	 * @throws Exception
+	 */
+	@Test
+	public void testNavAPInteraction() throws Exception {
+		// At first test whether existing text is replaced correctly.
+		String testXMLWithText = "<test><content>one</content><content>two</content><content>three</content></test>";
+		VTDGen vg = new VTDGen();
+		vg.setDoc(testXMLWithText.getBytes());
+		vg.parse(true);
+		VTDNav vn = vg.getNav();
+		AutoPilot ap = new AutoPilot(vn);
+		ap.selectXPath("/test/content");
+		int index;
+		while((index = ap.evalXPath()) != -1) {
+
+			System.out.println(index);
+			System.out.println(vn.getCurrentIndex());
+
+		}
 	}
 }

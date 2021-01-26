@@ -17,12 +17,10 @@
 package com.aliasi.lm;
 
 import com.aliasi.stats.Model;
-
 import com.aliasi.util.Strings;
 
-import java.io.ObjectInput;
 import java.io.IOException;
-
+import java.io.ObjectInput;
 import java.util.Arrays;
 
 /**

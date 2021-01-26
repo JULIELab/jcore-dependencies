@@ -1,9 +1,7 @@
 package is2.data;
 
 
-
 import gnu.trove.TIntDoubleHashMap;
-
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;

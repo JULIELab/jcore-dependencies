@@ -1,10 +1,10 @@
 package cc.mallet.topics;
 
 import cc.mallet.types.*;
-import cc.mallet.util.*;
+import cc.mallet.util.Randoms;
 
-import java.util.Arrays;
 import java.io.*;
+import java.util.Arrays;
 
 public class TopicInferencer implements Serializable {
 

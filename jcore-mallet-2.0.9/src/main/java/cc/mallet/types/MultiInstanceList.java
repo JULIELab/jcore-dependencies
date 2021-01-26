@@ -11,16 +11,7 @@ information, see the file `LICENSE' included with this distribution. */
 package cc.mallet.types;
 
 import java.io.Serializable;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.NoSuchElementException;
-import java.util.Random;
-
-import cc.mallet.types.Instance;
-import cc.mallet.types.InstanceList;
+import java.util.*;
 
 /**
  * An implementation of InstanceList that logically combines multiple instance

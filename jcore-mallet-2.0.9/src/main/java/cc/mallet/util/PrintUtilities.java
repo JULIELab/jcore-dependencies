@@ -1,8 +1,11 @@
 package cc.mallet.util;
 
-import java.awt.*;
 import javax.swing.*;
-import java.awt.print.*;
+import java.awt.*;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 
 /** A simple utility class that lets you very simply print
  *  an arbitrary component. Just pass the component to the

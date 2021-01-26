@@ -1,7 +1,6 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.AbstractDiscreteDistribution;
-
 import org.junit.Test;
 
 import static junit.framework.Assert.assertEquals;

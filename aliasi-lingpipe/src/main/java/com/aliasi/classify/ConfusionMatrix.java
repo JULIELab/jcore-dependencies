@@ -17,12 +17,11 @@
 package com.aliasi.classify;
 
 import com.aliasi.stats.Statistics;
-
 import com.aliasi.util.Math;
 
 import java.util.Arrays;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * An instance of <code>ConfusionMatrix</code> represents a

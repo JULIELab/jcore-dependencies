@@ -1,22 +1,16 @@
 package com.aliasi.test.unit.hmm;
 
-import com.aliasi.util.AbstractExternalizable;
-
 import com.aliasi.hmm.HiddenMarkovModel;
 import com.aliasi.hmm.HmmCharLmEstimator;
-
 import com.aliasi.tag.Tagging;
-
+import com.aliasi.util.AbstractExternalizable;
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.assertNotNull;
-import static com.aliasi.test.unit.Asserts.succeed;
-
 import java.io.IOException;
-
 import java.util.Arrays;
+
+import static com.aliasi.test.unit.Asserts.succeed;
+import static junit.framework.Assert.*;
 
 
 public class HmmCharLmEstimatorTest  {

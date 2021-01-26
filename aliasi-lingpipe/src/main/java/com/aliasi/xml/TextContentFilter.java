@@ -16,12 +16,11 @@
 
 package com.aliasi.xml;
 
+import org.xml.sax.SAXException;
+import org.xml.sax.helpers.DefaultHandler;
+
 import java.util.HashSet;
 import java.util.Set;
-
-import org.xml.sax.SAXException;
-
-import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * A filter that applies an operation to text content in specified

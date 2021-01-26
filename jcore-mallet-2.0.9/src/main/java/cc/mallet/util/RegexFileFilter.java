@@ -14,7 +14,8 @@
 
 package cc.mallet.util;
 
-import java.io.*;
+import java.io.File;
+import java.io.FileFilter;
 import java.util.regex.Pattern;
 
 public class RegexFileFilter implements FileFilter

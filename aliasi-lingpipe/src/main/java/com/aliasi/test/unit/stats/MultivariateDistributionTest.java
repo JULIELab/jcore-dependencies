@@ -1,12 +1,9 @@
 package com.aliasi.test.unit.stats;
 
 import com.aliasi.stats.MultivariateDistribution;
-
 import org.junit.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
-import static junit.framework.Assert.fail;
+import static junit.framework.Assert.*;
 
 
 public class MultivariateDistributionTest  {

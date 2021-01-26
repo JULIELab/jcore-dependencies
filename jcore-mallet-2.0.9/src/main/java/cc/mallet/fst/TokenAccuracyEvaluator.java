@@ -15,14 +15,13 @@
 package cc.mallet.fst;
 
 
-import java.util.HashMap;
-import java.util.logging.Logger;
-
 import cc.mallet.types.Instance;
 import cc.mallet.types.InstanceList;
 import cc.mallet.types.Sequence;
-
 import cc.mallet.util.MalletLogger;
+
+import java.util.HashMap;
+import java.util.logging.Logger;
 
 /**
  * Evaluates a transducer model based on predictions of individual tokens.

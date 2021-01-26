@@ -17,12 +17,11 @@
 package com.aliasi.test.unit.util;
 
 import com.aliasi.util.Pair;
-
 import org.junit.Test;
 
+import static com.aliasi.test.unit.Asserts.assertFullEquals;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
-import static com.aliasi.test.unit.Asserts.assertFullEquals;
 
 
 public class PairTest  {

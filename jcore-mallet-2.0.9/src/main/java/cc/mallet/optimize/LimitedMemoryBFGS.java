@@ -16,14 +16,11 @@
  */
 package cc.mallet.optimize;
 
-import java.util.logging.*;
-import java.util.LinkedList;
-
-import cc.mallet.optimize.BackTrackLineSearch;
-import cc.mallet.optimize.LineOptimizer;
-import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.MatrixOps;
 import cc.mallet.util.MalletLogger;
+
+import java.util.LinkedList;
+import java.util.logging.Logger;
 
 public class LimitedMemoryBFGS implements Optimizer {
 	

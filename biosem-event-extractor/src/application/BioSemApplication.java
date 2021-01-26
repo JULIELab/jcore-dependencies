@@ -16,19 +16,14 @@
 
 package application;
 
-import java.util.ArrayList;
-
-import org.apache.commons.cli.BasicParser;
-import org.apache.commons.cli.CommandLine;
-import org.apache.commons.cli.CommandLineParser;
-import org.apache.commons.cli.Options;
-import org.apache.commons.cli.ParseException;
-
 import corpora.DataLoader;
+import org.apache.commons.cli.*;
 import relations.EventExtraction;
 import relations.RuleLearner;
 import relations.TriggerLearner;
 import utils.DBUtils;
+
+import java.util.ArrayList;
 //import jargs.gnu.CmdLineParser;
 //import jargs.gnu.CmdLineParser.IllegalOptionValueException;
 //import jargs.gnu.CmdLineParser.UnknownOptionException;

@@ -14,8 +14,6 @@
 
 package cc.mallet.types;
 
-import cc.mallet.types.SparseVector;
-
 public class Minkowski implements Metric {
 
     double q;

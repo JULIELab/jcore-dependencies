@@ -18,10 +18,10 @@
  */
 package cc.mallet.optimize;
 
-import java.util.logging.*;
-import cc.mallet.optimize.LineOptimizer;
-import cc.mallet.optimize.Optimizable;
 import cc.mallet.types.MatrixOps;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 //"Line Searches and Backtracking", p385, "Numeric Recipes in C"
 
