@@ -1,8 +1,10 @@
 package de.julielab.evaluation.entities;
 
+import java.util.Collections;
 import java.util.Set;
 
 public class EvaluationDataEntrySets {
+	public static final EvaluationDataEntrySets EMPTY = new EvaluationDataEntrySets(Collections.emptySet(), Collections.emptySet(), Collections.emptySet());
 	public EvaluationDataEntrySets(Set<EvaluationDataEntry> tpSet, Set<EvaluationDataEntry> fpSet,
 			Set<EvaluationDataEntry> fnSet) {
 		this.tpSet = tpSet;
@@ -24,5 +26,17 @@ public class EvaluationDataEntrySets {
 			return fnSet;
 		}
 		return null;
+	}
+
+	public double getFMeasure() {
+		return FMeasure.getFMeasure(tpSet.size(), fpSet.size(), fnSet.size());
+	}
+
+	public double getRecall() {
+		return FMeasure.getRecall(tpSet.size(), fpSet.size(), fnSet.size());
+	}
+
+	public double getPrecision() {
+		return FMeasure.getPrecision(tpSet.size(), fpSet.size(), fnSet.size());
 	}
 }

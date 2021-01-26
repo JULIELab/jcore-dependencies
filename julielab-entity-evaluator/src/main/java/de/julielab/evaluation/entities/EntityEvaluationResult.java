@@ -1,5 +1,6 @@
 package de.julielab.evaluation.entities;
 
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -10,10 +11,10 @@ import java.util.stream.Stream;
  * Evaluation result of one evaluation group (e.g. entity class).
  */
 public class EntityEvaluationResult {
-    private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentMentionWise;
-    private LinkedHashMap<String, EvaluationStatistics> statisticsByDocumentDocWise;
-    private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentMentionWise;
-    private LinkedHashMap<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise;
+    private Map<String, EvaluationStatistics> statisticsByDocumentMentionWise = Collections.emptyMap();
+    private Map<String, EvaluationStatistics> statisticsByDocumentDocWise = Collections.emptyMap();
+    private Map<String, EvaluationDataEntrySets> entrySetsByDocumentMentionWise = Collections.emptyMap();
+    private Map<String, EvaluationDataEntrySets> entrySetsByDocumentDocWise = Collections.emptyMap();
     private String entityType;
     private EvaluationMode evaluationMode;
 
@@ -28,24 +29,48 @@ public class EntityEvaluationResult {
                 // Do not override mention mode if already set
                 if (evaluationMode == null)
                     evaluationMode = statsMode;
-                if (null == statisticsByDocumentDocWise)
+                if (statisticsByDocumentDocWise.isEmpty())
                     statisticsByDocumentDocWise = new LinkedHashMap<>();
                 statisticsByDocumentDocWise.put(docId, new EvaluationStatistics(tpSet.size(), fpSet.size(), fnSet.size()));
-                if (null == entrySetsByDocumentDocWise)
+                if (entrySetsByDocumentDocWise.isEmpty())
                     entrySetsByDocumentDocWise = new LinkedHashMap<>();
                 entrySetsByDocumentDocWise.put(docId, new EvaluationDataEntrySets(tpSet, fpSet, fnSet));
                 break;
             case MENTION:
                 evaluationMode = statsMode;
-                if (null == statisticsByDocumentMentionWise)
+                if (statisticsByDocumentMentionWise.isEmpty())
                     statisticsByDocumentMentionWise = new LinkedHashMap<>();
                 statisticsByDocumentMentionWise.put(docId,
                         new EvaluationStatistics(tpSet.size(), fpSet.size(), fnSet.size()));
-                if (null == entrySetsByDocumentMentionWise)
+                if (entrySetsByDocumentMentionWise.isEmpty())
                     entrySetsByDocumentMentionWise = new LinkedHashMap<>();
                 entrySetsByDocumentMentionWise.put(docId, new EvaluationDataEntrySets(tpSet, fpSet, fnSet));
                 break;
         }
+    }
+
+    public double getFMeasure(String documentId, EvaluationMode evaluationMode) {
+        return evaluationMode == EvaluationMode.MENTION ? entrySetsByDocumentMentionWise.getOrDefault(documentId, EvaluationDataEntrySets.EMPTY).getFMeasure() : entrySetsByDocumentDocWise.getOrDefault(documentId, EvaluationDataEntrySets.EMPTY).getFMeasure();
+    }
+
+    public double getRecall(String documentId, EvaluationMode evaluationMode) {
+        return evaluationMode == EvaluationMode.MENTION ? entrySetsByDocumentMentionWise.getOrDefault(documentId, EvaluationDataEntrySets.EMPTY).getRecall() : entrySetsByDocumentDocWise.getOrDefault(documentId, EvaluationDataEntrySets.EMPTY).getRecall();
+    }
+
+    public double getPrecision(String documentId, EvaluationMode evaluationMode) {
+        return evaluationMode == EvaluationMode.MENTION ? entrySetsByDocumentMentionWise.getOrDefault(documentId, EvaluationDataEntrySets.EMPTY).getPrecision() : entrySetsByDocumentDocWise.getOrDefault(documentId, EvaluationDataEntrySets.EMPTY).getPrecision();
+    }
+
+    public double getFMeasure(String documentId) {
+        return getFMeasure(documentId, evaluationMode);
+    }
+
+    public double getRecall(String documentId) {
+        return getRecall(documentId, evaluationMode);
+    }
+
+    public double getPrecision(String documentId) {
+        return getPrecision(documentId, evaluationMode);
     }
 
     public Map<String, EvaluationDataEntrySets> getEntrySetsByDocumentMentionWise() {
