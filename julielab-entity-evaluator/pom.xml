@@ -8,7 +8,7 @@
         <relativePath>../pom.xml</relativePath>
     </parent>
     <artifactId>julielab-entity-evaluator</artifactId>
-    <version>2.4.2</version>
+    <version>1.2.2</version>
     <name>JULIE Entity Evaluator</name>
     <description>A small library aiming at a standardized way to do entity recognition evaluations.</description>
     <build>
