@@ -18,7 +18,13 @@ import java.util.stream.Collectors;
 
 public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 
-	public enum GroupingType {ENTITYTYPE, LABEL}
+    public EvaluationData(EvaluationDataEntry... entries) {
+		this();
+		for (EvaluationDataEntry e : entries)
+			add(e);
+    }
+
+    public enum GroupingType {ENTITYTYPE, LABEL}
 
 	private static final Logger log = LoggerFactory.getLogger(EvaluationData.class);
 	public static final String PROP_INPUT_FORMAT_CLASS = "input-format-class";

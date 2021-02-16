@@ -1,6 +1,7 @@
 package de.julielab.evaluation.entities;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import org.assertj.core.data.Offset;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -8,11 +9,12 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
+
 public class EntityEvaluatorTest {
 
     public static Logger log = LoggerFactory.getLogger(EntityEvaluatorTest.class);
@@ -183,7 +185,7 @@ public class EntityEvaluatorTest {
     }
 
     @Test
-    public void testBANNEROutput() throws  IOException {
+    public void testBANNEROutput() throws IOException {
         // We test the performance of the BANNER tagger trained on BC2GM train on BC2GM test, both with alternatives (e.g. alternatives were also added to the training data).
         // The target performance values were calculated using the alt_eval.pl script of the BC2GM corpus.
         // The EntityEvaluator finds one TP less and one FN more which I didn't pursue further because that is already
@@ -201,6 +203,40 @@ public class EntityEvaluatorTest {
         assertThat(recall).isCloseTo(0.8445, Offset.offset(0.001));
         assertThat(precision).isCloseTo(0.8817, Offset.offset(0.001));
         assertThat(fscore).isCloseTo(0.8627, Offset.offset(0.001));
+    }
+
+    @Test
+    public void overlapTest() {
+        Properties properties = new Properties();
+        properties.setProperty(EntityEvaluator.PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.OVERLAP.name());
+        properties.setProperty(EntityEvaluator.PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.CHARS.name());
+        properties.setProperty(EntityEvaluator.PROP_OVERLAP_SIZE, "1");
+        EntityEvaluator entityEvaluator = new EntityEvaluator(properties);
+
+        EvaluationDataEntry g1 = new EvaluationDataEntry("doc1", "1", 1, 2, "gold");
+        EvaluationDataEntry g2 = new EvaluationDataEntry("doc1", "2", 2, 3, "gold");
+        EvaluationDataEntry g3 = new EvaluationDataEntry("doc1", "3", 3, 4, "gold");
+        EvaluationData gold = new EvaluationData(g1, g2, g3);
+
+        EvaluationDataEntry p1 = new EvaluationDataEntry("doc1", "1", 1, 4, "pred");
+        EvaluationDataEntry p2 = new EvaluationDataEntry("doc1", "2", 1, 4, "pred");
+        EvaluationDataEntry p3 = new EvaluationDataEntry("doc1", "3", 1, 4, "pred");
+        EvaluationData pred = new EvaluationData(p1, p2, p3);
+
+        gold.forEach(e -> {
+            e.setComparisonType(EvaluationDataEntry.ComparisonType.OVERLAP);
+            e.setOverlapType(EvaluationDataEntry.OverlapType.CHARS);
+            e.setOverlapSize(1);
+        });
+        pred.forEach(e -> {
+            e.setComparisonType(EvaluationDataEntry.ComparisonType.OVERLAP);
+            e.setOverlapType(EvaluationDataEntry.OverlapType.CHARS);
+            e.setOverlapSize(1);
+        });
+
+        EntityEvaluationResults evaluate = entityEvaluator.evaluate(gold, pred);
+
+        assertEquals(1.0, evaluate.getSingle().getMacroFMeasureMentionWise(), 0.0000001);
 
     }
 }

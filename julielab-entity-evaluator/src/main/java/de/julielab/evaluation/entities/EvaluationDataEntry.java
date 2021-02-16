@@ -118,7 +118,23 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 		boolean equal = this.equals(o);
 		if (equal)
 			return 0;
-		return this.makeComparisonString().compareTo(o.makeComparisonString());
+		int ret = docId.compareTo(o.getDocId());
+		if (ret != 0)
+			return ret;
+		ret = entityId.compareTo(o.entityId);
+		if (ret != 0)
+				return ret;
+		if (!hasComparableOffset(o)) {
+			if (getBegin() < o.getBegin())
+				return -1;
+			if (getBegin() > o.getBegin())
+				return 1;
+			if (getEnd() < o.getEnd())
+				return -1;
+			if (getEnd() > o.getEnd())
+				return 1;
+		}
+		throw new IllegalArgumentException("Comparison value should already be determined by now.");
 	}
 
 	@Override
@@ -258,14 +274,6 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	public boolean isMention() {
 		return offsetRange.getMinimum() >= 0 && offsetRange.getMaximum() >= 0
 				&& offsetRange.getMinimum() <= offsetRange.getMaximum();
-	}
-
-	private String makeComparisonString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append(docId);
-		sb.append(offsetRange);
-		sb.append(entityId);
-		return sb.toString();
 	}
 
 	public boolean overlaps(EvaluationDataEntry other) {

@@ -18,6 +18,7 @@ import java.io.*;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -284,21 +285,20 @@ public class EntityEvaluator {
         TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
         final OffsetMap<EvaluationDataEntry> goldOffsetMap = goldSet.stream().collect(Collectors.toMap(EvaluationDataEntry::getOffsetRange, Function.identity(), (e1, e2) -> e1, OffsetMap::new));
 
-        SetView<EvaluationDataEntry> tpGoldSet = Sets.intersection(predSet, goldSet);
+        Set<EvaluationDataEntry> tpGoldSet = predSet.stream().filter(goldSet::contains).collect(Collectors.toCollection(TreeSet::new));
         Set<EvaluationDataEntry> tpAltSet = new HashSet<>();
         // Find those gold entries that have been hit through an alternative. Note that in the end, the gold entries
         // and not the alternative entries will be collected. This is because one alternative might actually indicate
         // multiple gold hits (if the alternative spans multiple gold entities) and if we would only add the alternative
         // we would not calculate enough TPs.
-        for (EvaluationDataEntry e : Sets.intersection(predSet, goldAltSet)) {
+        for (EvaluationDataEntry e : (Iterable<EvaluationDataEntry>) () -> predSet.stream().filter(goldAltEntries::contains).iterator()) {
             final Range<Integer> range = Range.between(e.getBegin(), e.getEnd());
-            final Set<EvaluationDataEntry> overlappingGold = goldOffsetMap.getOverlapping(range).values().stream().filter(gold -> gold.getEntityId().equals(e.getEntityId())).collect(Collectors.toSet());
+            final Set<EvaluationDataEntry> overlappingGold = goldOffsetMap.getOverlapping(range).values().stream().filter(gold -> gold.getEntityId().equals(e.getEntityId())).collect(Collectors.toCollection(TreeSet::new));
             tpAltSet.addAll(overlappingGold);
         }
-        final SetView<EvaluationDataEntry> tpSet = Sets.union(tpGoldSet, tpAltSet);
+        final Set<EvaluationDataEntry> tpSet = Stream.concat(tpGoldSet.stream(), tpAltSet.stream()).collect(Collectors.toCollection(TreeSet::new));
 
-        SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
-        fpSet = Sets.difference(fpSet, goldAltSet);
+        Set<EvaluationDataEntry> fpSet = predSet.stream().filter(Predicate.not(goldSet::contains)).filter(Predicate.not(goldAltSet::contains)).collect(Collectors.toCollection(TreeSet::new));
 
         // Now compute the false negatives. We will start with the complete gold set and remove found gold items. The leftovers are the fns.
         TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>(goldEntries);
