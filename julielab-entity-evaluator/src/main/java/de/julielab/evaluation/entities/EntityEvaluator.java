@@ -1,8 +1,10 @@
 package de.julielab.evaluation.entities;
 
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
 import com.google.common.collect.Sets.SetView;
+import com.google.common.collect.TreeMultiset;
 import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
 import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
 import de.julielab.evaluation.entities.format.EvaluationDataFormat;
@@ -280,12 +282,17 @@ public class EntityEvaluator {
                                                   Collection<EvaluationDataEntry> predEntries, String docId, EntityEvaluationResult evalResult) {
         // We must use TreeSets for overlap-comparisons because then the hash
         // values won't work for HashMap.
-        TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>(goldEntries);
-        TreeSet<EvaluationDataEntry> goldAltSet = new TreeSet<>(goldAltEntries);
-        TreeSet<EvaluationDataEntry> predSet = new TreeSet<>(predEntries);
+        Multiset<EvaluationDataEntry> goldSet = TreeMultiset.create(goldEntries);
+        Multiset<EvaluationDataEntry> goldAltSet = TreeMultiset.create(goldAltEntries);
+        Multiset<EvaluationDataEntry> predSet = TreeMultiset.create(predEntries);
+        Runnable resetGoldSet = () -> {
+            goldSet.clear();
+            goldSet.addAll(goldEntries);
+        };
         final OffsetMap<EvaluationDataEntry> goldOffsetMap = goldSet.stream().collect(Collectors.toMap(EvaluationDataEntry::getOffsetRange, Function.identity(), (e1, e2) -> e1, OffsetMap::new));
 
-        Set<EvaluationDataEntry> tpGoldSet = predSet.stream().filter(goldSet::contains).collect(Collectors.toCollection(TreeSet::new));
+        Multiset<EvaluationDataEntry> tpGoldSet = predSet.stream().filter(goldSet::remove).collect(Collectors.toCollection(TreeMultiset::create));
+        resetGoldSet.run();
         Set<EvaluationDataEntry> tpAltSet = new HashSet<>();
         // Find those gold entries that have been hit through an alternative. Note that in the end, the gold entries
         // and not the alternative entries will be collected. This is because one alternative might actually indicate
@@ -293,15 +300,15 @@ public class EntityEvaluator {
         // we would not calculate enough TPs.
         for (EvaluationDataEntry e : (Iterable<EvaluationDataEntry>) () -> predSet.stream().filter(goldAltEntries::contains).iterator()) {
             final Range<Integer> range = Range.between(e.getBegin(), e.getEnd());
-            final Set<EvaluationDataEntry> overlappingGold = goldOffsetMap.getOverlapping(range).values().stream().filter(gold -> gold.getEntityId().equals(e.getEntityId())).collect(Collectors.toCollection(TreeSet::new));
+            final Multiset<EvaluationDataEntry> overlappingGold = goldOffsetMap.getOverlapping(range).values().stream().filter(gold -> gold.getEntityId().equals(e.getEntityId())).collect(Collectors.toCollection(TreeMultiset::create));
             tpAltSet.addAll(overlappingGold);
         }
-        final Set<EvaluationDataEntry> tpSet = Stream.concat(tpGoldSet.stream(), tpAltSet.stream()).collect(Collectors.toCollection(TreeSet::new));
+        final Multiset<EvaluationDataEntry> tpSet = Stream.concat(tpGoldSet.stream(), tpAltSet.stream()).collect(Collectors.toCollection(TreeMultiset::create));
 
-        Set<EvaluationDataEntry> fpSet = predSet.stream().filter(Predicate.not(goldSet::contains)).filter(Predicate.not(goldAltSet::contains)).collect(Collectors.toCollection(TreeSet::new));
+        Multiset<EvaluationDataEntry> fpSet = predSet.stream().filter(Predicate.not(goldSet::remove)).filter(Predicate.not(goldAltSet::remove)).collect(Collectors.toCollection(TreeMultiset::create));
 
         // Now compute the false negatives. We will start with the complete gold set and remove found gold items. The leftovers are the fns.
-        TreeSet<EvaluationDataEntry> fnSet = new TreeSet<>(goldEntries);
+        Multiset<EvaluationDataEntry> fnSet = TreeMultiset.create(goldEntries);
         // Remove the found elements from the gold set
         tpGoldSet.forEach(fnSet::remove);
         // Remove the gold elements whose correspondence in the alternative set has been found. Since we collected
@@ -317,15 +324,19 @@ public class EntityEvaluator {
         // We must use TreeSets for overlap-comparisons because then the hash
         // values won't work for HashMap.
         TreeSet<EvaluationDataEntry> goldSet = new TreeSet<>();
-        for (EvaluationDataEntry entry : goldEntries)
-            goldSet.add(entry.toDocWiseEntry());
+        Runnable resetGoldSet = () -> {
+            for (EvaluationDataEntry entry : goldEntries)
+                goldSet.add(entry.toDocWiseEntry());
+        };
+        resetGoldSet.run();
         TreeSet<EvaluationDataEntry> predSet = new TreeSet<>();
         for (EvaluationDataEntry entry : predEntries)
             predSet.add(entry.toDocWiseEntry());
 
-        SetView<EvaluationDataEntry> tpSet = Sets.intersection(predSet, goldSet);
-        SetView<EvaluationDataEntry> fpSet = Sets.difference(predSet, goldSet);
-        SetView<EvaluationDataEntry> fnSet = Sets.difference(goldSet, predSet);
+        Multiset<EvaluationDataEntry> tpSet = predSet.stream().filter(goldSet::contains).collect(Collectors.toCollection(TreeMultiset::create));
+        Multiset<EvaluationDataEntry> fpSet = predSet.stream().filter(Predicate.not(goldSet::remove)).collect(Collectors.toCollection(TreeMultiset::create));
+        resetGoldSet.run();
+        Multiset<EvaluationDataEntry> fnSet = goldSet.stream().filter(Predicate.not(predSet::remove)).collect(Collectors.toCollection(TreeMultiset::create));
 
         evalResult.addStatisticsByDocument(docId, tpSet, fpSet, fnSet, EvaluationMode.DOCUMENT);
 

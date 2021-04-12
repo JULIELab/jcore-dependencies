@@ -122,6 +122,12 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 		return super.add(entry);
 	}
 
+	@Override
+	public boolean addAll(Collection<? extends EvaluationDataEntry> c) {
+		c.stream().findAny().ifPresent(this::checkMentionMode);
+		return super.addAll(c);
+	}
+
 	protected void checkMentionMode(EvaluationDataEntry entry) {
 		if (isEmpty()) {
 			isMentionData = entry.isMention();

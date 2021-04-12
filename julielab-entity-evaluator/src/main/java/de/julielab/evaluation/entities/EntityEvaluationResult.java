@@ -1,5 +1,7 @@
 package de.julielab.evaluation.entities;
 
+import com.google.common.collect.Multiset;
+
 import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -22,8 +24,8 @@ public class EntityEvaluationResult {
         return evaluationMode;
     }
 
-    public void addStatisticsByDocument(String docId, Set<EvaluationDataEntry> tpSet,
-                                        Set<EvaluationDataEntry> fpSet, Set<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
+    public void addStatisticsByDocument(String docId, Multiset<EvaluationDataEntry> tpSet,
+                                        Multiset<EvaluationDataEntry> fpSet, Multiset<EvaluationDataEntry> fnSet, EvaluationMode statsMode) {
         switch (statsMode) {
             case DOCUMENT:
                 // Do not override mention mode if already set

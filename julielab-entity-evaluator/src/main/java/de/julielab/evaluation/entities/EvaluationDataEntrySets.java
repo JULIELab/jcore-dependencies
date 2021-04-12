@@ -1,22 +1,25 @@
 package de.julielab.evaluation.entities;
 
+import com.google.common.collect.ImmutableMultiset;
+import com.google.common.collect.Multiset;
+
 import java.util.Collections;
 import java.util.Set;
 
 public class EvaluationDataEntrySets {
-	public static final EvaluationDataEntrySets EMPTY = new EvaluationDataEntrySets(Collections.emptySet(), Collections.emptySet(), Collections.emptySet());
-	public EvaluationDataEntrySets(Set<EvaluationDataEntry> tpSet, Set<EvaluationDataEntry> fpSet,
-			Set<EvaluationDataEntry> fnSet) {
+	public static final EvaluationDataEntrySets EMPTY = new EvaluationDataEntrySets(ImmutableMultiset.of(), ImmutableMultiset.of(), ImmutableMultiset.of());
+	public EvaluationDataEntrySets(Multiset<EvaluationDataEntry> tpSet, Multiset<EvaluationDataEntry> fpSet,
+								   Multiset<EvaluationDataEntry> fnSet) {
 		this.tpSet = tpSet;
 		this.fpSet = fpSet;
 		this.fnSet = fnSet;
 	}
 
-	public Set<EvaluationDataEntry> tpSet;
-	public Set<EvaluationDataEntry> fpSet;
-	public Set<EvaluationDataEntry> fnSet;
+	public Multiset<EvaluationDataEntry> tpSet;
+	public Multiset<EvaluationDataEntry> fpSet;
+	public Multiset<EvaluationDataEntry> fnSet;
 
-	public Set<EvaluationDataEntry> get(Statistics type) {
+	public Multiset<EvaluationDataEntry> get(Statistics type) {
 		switch (type) {
 		case TP:
 			return tpSet;

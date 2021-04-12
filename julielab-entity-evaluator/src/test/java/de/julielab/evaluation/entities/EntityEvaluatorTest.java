@@ -207,6 +207,8 @@ public class EntityEvaluatorTest {
 
     @Test
     public void overlapTest() {
+        // Scenario: An enumeration was recognized as one single entity and split in post-processing. All the entities
+        // have the same offsets but different IDs.
         Properties properties = new Properties();
         properties.setProperty(EntityEvaluator.PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.OVERLAP.name());
         properties.setProperty(EntityEvaluator.PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.CHARS.name());
@@ -237,6 +239,64 @@ public class EntityEvaluatorTest {
         EntityEvaluationResults evaluate = entityEvaluator.evaluate(gold, pred);
 
         assertEquals(1.0, evaluate.getSingle().getMacroFMeasureMentionWise(), 0.0000001);
+    }
 
+    @Test
+    public void overlapTest2() {
+        // Scenario: a long and abbreviation form were tagged as one entity and split in a post-processing step.
+        // Both new entities have the same offset AND the same ID.
+        Properties properties = new Properties();
+        properties.setProperty(EntityEvaluator.PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.OVERLAP.name());
+        properties.setProperty(EntityEvaluator.PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.CHARS.name());
+        properties.setProperty(EntityEvaluator.PROP_OVERLAP_SIZE, "1");
+        EntityEvaluator entityEvaluator = new EntityEvaluator(properties);
+
+        EvaluationDataEntry g1 = new EvaluationDataEntry("doc1", "1", 1, 2, "gold");
+        EvaluationDataEntry g2 = new EvaluationDataEntry("doc1", "1", 2, 3, "gold");
+        EvaluationData gold = new EvaluationData(g1, g2);
+
+        EvaluationDataEntry p1 = new EvaluationDataEntry("doc1", "1", 1, 4, "pred");
+        EvaluationDataEntry p2 = new EvaluationDataEntry("doc1", "1", 1, 4, "pred");
+        // The third and fourth should be FPs
+        EvaluationDataEntry p3 = new EvaluationDataEntry("doc1", "1", 1, 4, "pred");
+        EvaluationDataEntry p4 = new EvaluationDataEntry("doc1", "1", 1, 4, "pred");
+        EvaluationData pred = new EvaluationData(p1, p2, p3, p4);
+
+//        gold.forEach(e -> {
+//            e.setComparisonType(EvaluationDataEntry.ComparisonType.OVERLAP);
+//            e.setOverlapType(EvaluationDataEntry.OverlapType.CHARS);
+//            e.setOverlapSize(1);
+//        });
+//        pred.forEach(e -> {
+//            e.setComparisonType(EvaluationDataEntry.ComparisonType.OVERLAP);
+//            e.setOverlapType(EvaluationDataEntry.OverlapType.CHARS);
+//            e.setOverlapSize(1);
+//        });
+
+        EntityEvaluationResults evaluate = entityEvaluator.evaluate(gold, pred);
+
+        assertEquals(2, evaluate.getSingle().getSumTpMentionWise());
+        assertEquals(2, evaluate.getSingle().getSumFpMentionWise());
+    }
+
+    @Test
+    public void overlapTest3() {
+        // Scenario: An enumeration was recognized as one single entity and split in post-processing. All the entities
+        // have the same offsets but different IDs.
+        Properties properties = new Properties();
+        properties.setProperty(EntityEvaluator.PROP_COMPARISON_TYPE, EvaluationDataEntry.ComparisonType.OVERLAP.name());
+        properties.setProperty(EntityEvaluator.PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.CHARS.name());
+        properties.setProperty(EntityEvaluator.PROP_OVERLAP_SIZE, "1");
+        EntityEvaluator entityEvaluator = new EntityEvaluator(properties);
+
+        EvaluationDataEntry g1 = new EvaluationDataEntry("doc1", "1", 280, 305, "gold");
+        EvaluationData gold = new EvaluationData(g1);
+
+        EvaluationDataEntry p1 = new EvaluationDataEntry("doc1", "1", 269, 305, "pred");
+        EvaluationData pred = new EvaluationData(p1);
+
+        EntityEvaluationResults evaluate = entityEvaluator.evaluate(gold, pred);
+
+        assertEquals(1.0, evaluate.getSingle().getMacroFMeasureMentionWise(), 0.0000001);
     }
 }
