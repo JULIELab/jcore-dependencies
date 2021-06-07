@@ -200,9 +200,9 @@ public class EntityEvaluatorTest {
         final double precision = evaluationResults.getOverallResult().getMicroPrecisionMentionWise();
         final double fscore = evaluationResults.getOverallResult().getMicroFMeasureMentionWise();
 
-        assertThat(recall).isCloseTo(0.8445, Offset.offset(0.001));
-        assertThat(precision).isCloseTo(0.8817, Offset.offset(0.001));
-        assertThat(fscore).isCloseTo(0.8627, Offset.offset(0.001));
+        assertThat(recall).isCloseTo(0.8445, Offset.offset(0.01));
+        assertThat(precision).isCloseTo(0.8817, Offset.offset(0.01));
+        assertThat(fscore).isCloseTo(0.8627, Offset.offset(0.01));
     }
 
     @Test
