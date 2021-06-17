@@ -38,6 +38,12 @@ public abstract class JulieXMLConstants {
     public static final String FOR_EACH = "forEach";
 
     /**
+     * Constant for the name of a definition attribute in the configuration file for the CoStoSys DataBaseConnector.
+     * Indicates whether the data in the respective table is stored in JeDIS binary format.
+     */
+    public static final String BINARY = "binary";
+
+    /**
      * Constant for the name of a field attribute.
      * <p>
      * If set to true, the database table column corresponding to the field definition with the <code>PRIMARY_KEY</code>
