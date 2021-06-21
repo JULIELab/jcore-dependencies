@@ -12,7 +12,7 @@
         <testcontainers-version>1.15.3</testcontainers-version>
     </properties>
     <artifactId>jcore-db-test-utilities</artifactId>
-    <version>2.5.1</version>
+    <version>2.5.2</version>
     <dependencies>
         <dependency>
             <groupId>org.apache.commons</groupId>
