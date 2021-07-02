@@ -2,6 +2,7 @@ package de.julielab.xml;
 
 import de.julielab.jcore.types.AutoDescriptor;
 import de.julielab.jcore.types.DocumentClass;
+import de.julielab.xml.util.XMIBuilderException;
 import de.julielab.xml.util.XMISplitterException;
 import org.apache.uima.UIMAException;
 import org.apache.uima.cas.impl.XmiCasDeserializer;
@@ -10,13 +11,12 @@ import org.apache.uima.fit.factory.JCasFactory;
 import org.apache.uima.fit.util.JCasUtil;
 import org.apache.uima.jcas.JCas;
 import org.apache.uima.jcas.cas.FSArray;
+import org.apache.uima.util.XmlCasDeserializer;
 import org.testng.annotations.Test;
 import org.xml.sax.SAXException;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 public class XmiBuilderTest {
 
     @Test
-    public void testArrayShareNotAllowed() throws UIMAException, SAXException, XMISplitterException, IOException {
+    public void testArrayShareNotAllowed() throws UIMAException, SAXException, XMISplitterException, IOException, XMIBuilderException {
         // In this test we check that we handle correctly arrays that may not be shared. Those arrays are represented
         // in memory as FSArray but in XMI the FSArray is left out: the array-valued feature just lists all the
         // xmi:id references itself, without creating an FSArray element.

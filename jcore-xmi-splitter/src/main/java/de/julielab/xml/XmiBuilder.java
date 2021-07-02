@@ -1,5 +1,6 @@
 package de.julielab.xml;
 
+import de.julielab.xml.util.XMIBuilderException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.Feature;
 import org.apache.uima.cas.Type;
@@ -103,7 +104,7 @@ public class XmiBuilder {
      * @param ts
      * @return The combined xmi representation as output stream.
      */
-    public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, TypeSystem ts) {
+    public ByteArrayOutputStream buildXmi(LinkedHashMap<String, InputStream> xmiData, TypeSystem ts) throws XMIBuilderException {
         this.xmiData = xmiData;
         this.docTableName = XmiSplitter.DOCUMENT_MODULE_LABEL;
         this.ts = ts;
@@ -113,10 +114,10 @@ public class XmiBuilder {
         if (null == potentiallyMissingFeatures)
             createFeatureExcludeMap();
         makeValidXML();
-        readers = new LinkedHashMap<String, XMLEventReader>();
-        viewXmiIds = new LinkedHashSet<String>();
+        readers = new LinkedHashMap<>();
+        viewXmiIds = new LinkedHashSet<>();
         ByteArrayOutputStream baos = new ByteArrayOutputStream(dataSize);
-        Attribute xmiIdAtt = null;
+        Attribute xmiIdAtt;
         try {
             XMLEventWriter writer = outputFactory.createXMLEventWriter(baos);
             initializeReaders();
@@ -141,7 +142,7 @@ public class XmiBuilder {
             while (docReader.hasNext()) {
                 XMLEvent docEvent = docReader.nextEvent();
 
-                // This is base document element, just save its XMI ID and
+                // This is a base document element, just save its XMI ID and
                 // continue.
                 if (docEvent.isStartElement()) {
                     StartElement docStart = docEvent.asStartElement();
@@ -158,7 +159,7 @@ public class XmiBuilder {
                         }
 
                     }
-                } // Here comes and element, could be closing XMI element
+                } // Here comes an end element, could be the closing XMI element
                 else if (docEvent.isEndElement()) {
                     EndElement element = docEvent.asEndElement();
                     QName elementQName = element.getName();
@@ -175,6 +176,7 @@ public class XmiBuilder {
                     // add them to the base document before we
                     // close it by adding the XMI end element.
                     if (tag.equals(xmiTag)) {
+                        System.out.println("FOUND XMI END TAG");
                         List<XMLEvent> annotationElements = new ArrayList<>();
                         Map<String, StartElement> seenXmiElements = new HashMap<>();
                         // add the other annotations before the xmi end element
@@ -320,23 +322,24 @@ public class XmiBuilder {
                         // create the cas:View-element
                         String members = StringUtils.join(viewXmiIds, " ");
                         Attribute membersAttribute = eventFactory.createAttribute("members", members);
-                        // Attribute sofaAttribute =
-                        // eventFactory.createAttribute(
-                        // "sofa", "1");
                         StartElement viewStart = eventFactory.createStartElement("cas", "http:///uima/cas.ecore",
                                 "View");
                         EndElement viewEnd = eventFactory.createEndElement("cas", "http:///uima/cas.ecore", "View");
                         writer.add(viewStart);
-                        // writer.add(sofaAttribute);
                         writer.add(membersAttribute);
                         writer.add(viewEnd);
                     }
                 }
+                System.out.println("Is start element: " + docEvent.isStartElement() + ", is end element: " + docEvent.isEndElement() + ", is characters: " + docEvent.isCharacters() + ", is attribute: " + docEvent.isAttribute());
+                if (docEvent.isStartElement()) {
+                    System.out.println("    Element name: " + docEvent.asStartElement().getName().getPrefix() + ":" + docEvent.asStartElement().getName().getLocalPart());
+                }
+
                 writer.add(docEvent);
             }
             writer.close();
         } catch (XMLStreamException e) {
-            e.printStackTrace();
+            throw new XMIBuilderException(e);
         }
         return baos;
     }

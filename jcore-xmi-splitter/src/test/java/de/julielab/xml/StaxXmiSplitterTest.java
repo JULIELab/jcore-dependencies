@@ -232,7 +232,7 @@ public class StaxXmiSplitterTest {
     @Test
     public void testSpecialXMLCharacter() throws Exception {
         JCas jCas = JCasFactory.createJCas("de.julielab.jcore.types.jcore-all-types");
-        jCas.setDocumentText("This is p < 0.5.");
+        jCas.setDocumentText("This is p < 0.5. \u2009 \u03a8");
 
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         XmiCasSerializer.serialize(jCas.getCas(), baos);
