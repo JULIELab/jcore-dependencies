@@ -176,7 +176,6 @@ public class XmiBuilder {
                     // add them to the base document before we
                     // close it by adding the XMI end element.
                     if (tag.equals(xmiTag)) {
-                        System.out.println("FOUND XMI END TAG");
                         List<XMLEvent> annotationElements = new ArrayList<>();
                         Map<String, StartElement> seenXmiElements = new HashMap<>();
                         // add the other annotations before the xmi end element
@@ -330,11 +329,6 @@ public class XmiBuilder {
                         writer.add(viewEnd);
                     }
                 }
-                System.out.println("Is start element: " + docEvent.isStartElement() + ", is end element: " + docEvent.isEndElement() + ", is characters: " + docEvent.isCharacters() + ", is attribute: " + docEvent.isAttribute());
-                if (docEvent.isStartElement()) {
-                    System.out.println("    Element name: " + docEvent.asStartElement().getName().getPrefix() + ":" + docEvent.asStartElement().getName().getLocalPart());
-                }
-
                 writer.add(docEvent);
             }
             writer.close();
