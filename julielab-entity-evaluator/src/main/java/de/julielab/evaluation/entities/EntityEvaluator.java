@@ -3,7 +3,6 @@ package de.julielab.evaluation.entities;
 import com.google.common.collect.Multimap;
 import com.google.common.collect.Multiset;
 import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
 import com.google.common.collect.TreeMultiset;
 import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
 import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
@@ -24,6 +23,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static de.julielab.evaluation.entities.EvaluationData.PROP_INPUT_FORMAT_CLASS;
 
 public class EntityEvaluator {
 
@@ -55,7 +56,7 @@ public class EntityEvaluator {
         log.debug("WithIds: {}", withIds);
     }
 
-    public EntityEvaluator(File propertiesFile) throws FileNotFoundException, IOException {
+    public EntityEvaluator(File propertiesFile) {
         // this is just a very complicated way to say "load the properties and set them
         // to the constructor"
         this(((Supplier<Properties>) () -> {
@@ -63,11 +64,10 @@ public class EntityEvaluator {
             try {
                 p.load(new FileInputStream(propertiesFile));
             } catch (IOException e) {
-                e.printStackTrace();
+                throw new RuntimeException(e);
             }
             return p;
         }).get());
-
     }
 
     public EntityEvaluator(Properties properties) {
@@ -79,6 +79,8 @@ public class EntityEvaluator {
                 .getProperty(PROP_OVERLAP_TYPE, EvaluationDataEntry.OverlapType.PERCENT.toString()).toUpperCase());
         overlapSize = Integer.parseInt(properties.getProperty(PROP_OVERLAP_SIZE, "100"));
         withIds = Boolean.parseBoolean(properties.getProperty(PROP_WITH_IDS, "true"));
+        if (properties.containsKey(PROP_INPUT_FORMAT_CLASS))
+            this.dataFormat = getDataFormatFromConfiguration(properties);
 
         String errorAnalyzerClass = properties.getProperty(PROP_ERROR_ANALYZER);
         String errorStatisticsClass = properties.getProperty(PROP_ERROR_STATS);
@@ -146,7 +148,7 @@ public class EntityEvaluator {
         EvaluationData goldAltData = null;
         EvaluationData predData = null;
         if (configFile == null
-                || evaluator.getProperties().getProperty(EvaluationData.PROP_INPUT_FORMAT_CLASS) == null) {
+                || evaluator.getProperties().getProperty(PROP_INPUT_FORMAT_CLASS) == null) {
             System.out.println("No configuration file given, trying to guess data format.");
 
             List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
@@ -174,6 +176,7 @@ public class EntityEvaluator {
             evaluator.setDataFormat(foundFormat);
         } else {
             goldData = EvaluationData.readDataFile(goldFile, evaluator.dataFormat);
+            goldAltData = goldAltFile != null ? EvaluationData.readDataFile(goldAltFile, evaluator.dataFormat) : new EvaluationData();
             predData = EvaluationData.readDataFile(predFile, evaluator.dataFormat);
         }
 
@@ -185,6 +188,20 @@ public class EntityEvaluator {
             }
         }
 
+    }
+
+    public static EvaluationDataFormat getDataFormatFromConfiguration(Properties properties) {
+        String dataFormatClassName = properties != null
+                ? properties.getProperty(PROP_INPUT_FORMAT_CLASS, GeneNormalizationFormat.class.getCanonicalName())
+                : GeneNormalizationFormat.class.getCanonicalName();
+        EvaluationDataFormat dataFormat;
+        try {
+            dataFormat = (EvaluationDataFormat) Class.forName(dataFormatClassName).newInstance();
+        } catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+            throw new IllegalArgumentException(
+                    "Evaluation data format class " + dataFormatClassName + " could not be loaded.", e);
+        }
+        return dataFormat;
     }
 
     public Properties getProperties() {
@@ -268,7 +285,7 @@ public class EntityEvaluator {
     }
 
     public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted) {
-        return evaluate(gold, predicted, EvaluationData.getDataFormatFromConfiguration(properties));
+        return evaluate(gold, predicted, dataFormat);
     }
 
     public EntityEvaluationResults evaluate(List<String[]> gold, List<String[]> predicted,

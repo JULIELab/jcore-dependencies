@@ -66,7 +66,7 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	}
 
 	public EvaluationData(Properties properties) {
-		this(getDataFormatFromConfiguration(properties));
+		this(EntityEvaluator.getDataFormatFromConfiguration(properties));
 	}
 
 	public EvaluationData(EvaluationDataFormat dataFormat) {
@@ -222,22 +222,8 @@ public class EvaluationData extends ArrayList<EvaluationDataEntry> {
 	 * @return
 	 */
 	public static EvaluationData readDataFile(File dataFile, Properties properties) {
-		EvaluationDataFormat dataFormat = getDataFormatFromConfiguration(properties);
+		EvaluationDataFormat dataFormat = EntityEvaluator.getDataFormatFromConfiguration(properties);
 		return readDataFile(dataFile, dataFormat);
-	}
-
-	public static EvaluationDataFormat getDataFormatFromConfiguration(Properties properties) {
-		String dataFormatClassName = properties != null
-				? properties.getProperty(PROP_INPUT_FORMAT_CLASS, GeneNormalizationFormat.class.getCanonicalName())
-				: GeneNormalizationFormat.class.getCanonicalName();
-		EvaluationDataFormat dataFormat;
-		try {
-			dataFormat = (EvaluationDataFormat) Class.forName(dataFormatClassName).newInstance();
-		} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-			throw new IllegalArgumentException(
-					"Evaluation data format class " + dataFormatClassName + " could not be loaded.", e);
-		}
-		return dataFormat;
 	}
 
 	/**

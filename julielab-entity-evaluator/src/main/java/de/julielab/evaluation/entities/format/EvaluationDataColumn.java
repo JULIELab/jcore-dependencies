@@ -55,6 +55,12 @@ public enum EvaluationDataColumn {
 		public void set(EvaluationDataEntry e, EvaluationDataFormat f, String[] dataRecord) {
 			set(e, f, dataRecord, (String x) -> e.setConfidence(x));
 		}
+	},
+	TYPE {
+		@Override
+		public void set(EvaluationDataEntry e, EvaluationDataFormat f, String[] dataRecord) {
+			set(e, f, dataRecord, (String x) -> e.setEntityType(x));
+		}
 	};
 	public abstract void set(EvaluationDataEntry e, EvaluationDataFormat f, String[] dataRecord);
 
