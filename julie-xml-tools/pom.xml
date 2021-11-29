@@ -75,7 +75,7 @@
 		<name>JULIE Lab Jena, Germany</name>
 		<url>http://www.julielab.de</url>
 	</organization>
-	<version>0.6.3</version>
+	<version>0.6.4-SNAPSHOT</version>
 	<licenses>
 		<license>
 			<name>BSD 2-Clause License</name>

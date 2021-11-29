@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class JulieXMLToolsCLIRecords {
 
@@ -25,7 +27,6 @@ public class JulieXMLToolsCLIRecords {
         String[] fieldPaths = new String[args.length - 2];
         System.arraycopy(args, 2, fieldPaths, 0, fieldPaths.length);
         String delimiter = System.getProperty("de.julielab.xmltools.delim");
-        System.out.println("Delimiter: " + delimiter);
 
         List<Map<String, String>> fields = new ArrayList<>();
         for (int i = 0; i < fieldPaths.length; i++) {
@@ -60,7 +61,7 @@ public class JulieXMLToolsCLIRecords {
                     // added to the current list of output rows instead of extending already existing values
                     // because there are none yet.
                     if (i == 0) {
-                        outputRowList.add(List.of((String) value));
+                        outputRowList.add(Stream.of((String) value).collect(Collectors.toList()));
                     } else {
                         // If there are already values from previous columns, just append the current value
                         // to all of them (may well just be a single row when there are no XPaths with
@@ -77,7 +78,7 @@ public class JulieXMLToolsCLIRecords {
                     // added to the current list of output rows instead of extending already existing values
                     // because there are none yet.
                     if (i == 0) {
-                        extendedOutputRowList.add(Arrays.asList(array));
+                        extendedOutputRowList.add(Arrays.stream(array).collect(Collectors.toList()));
                     } else {
                         // Append each array value to each existing row.
                         for (String columnValue : array) {
