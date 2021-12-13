@@ -42,6 +42,20 @@ public class EvaluationDataEntry implements Comparable<EvaluationDataEntry> {
 	private Object referenceObject;
 
 	/**
+	 * Creates a shallow copy of this entry. Most importantly, the referenceObject will be passed without being copied itself.
+	 * @return
+	 */
+	public EvaluationDataEntry copy() {
+		EvaluationDataEntry copy = new EvaluationDataEntry(docId, entityId, getBegin(), getEnd(), recognitionSystem, entityString, entityType);
+		copy.setComparisonType(comparisonType);
+		copy.setOverlapType(overlapType);
+		copy.setOverlapSize(overlapSize);
+		copy.setConfidence(confidence);
+		copy.setReferenceObject(referenceObject);
+		return copy;
+	}
+
+	/**
 	 * Constructs a document-wise evaluation data entry. It is just known that
 	 * the entity with ID <tt>entityId</tt> occurs in the document with ID
 	 * <tt>docId</tt>. The exact location of the entity within the document text
