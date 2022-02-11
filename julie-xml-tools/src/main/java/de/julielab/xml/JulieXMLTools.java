@@ -18,7 +18,10 @@ package de.julielab.xml;
 import com.ximpleware.*;
 import com.ximpleware.EOFException;
 import com.ximpleware.extended.*;
+import de.julielab.java.utilities.CompressionUtilities;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.tuple.Pair;
+import org.rauschig.jarchivelib.ArchiveEntry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,12 +80,71 @@ public class JulieXMLTools {
                 InputStream is;
                 if (fileName.endsWith(".gz") || fileName.endsWith(".gzip")) {
                     is = new GZIPInputStream(new FileInputStream(fileName));
-                } else if (fileName.endsWith(".zip")) {
+                } else if (fileName.endsWith(".tgz") || fileName.endsWith(".tar.gz") || fileName.endsWith(".tar")){
+                    LOG.info("Got a TAR archive at {}. It will be scanned for XML entry files.", fileName);
+                    Iterator<Pair<ArchiveEntry, InputStream>> archiveEntryInputStreams = CompressionUtilities.getArchiveEntryInputStreams(new File(fileName));
+                    return new Iterator<>() {
+                        private Iterator<Map<String, Object>> internalIterator;
+                        private Map<String, Object> nextRow;
+                        private Pair<ArchiveEntry, InputStream> entry = nextArchiveEntry();
+
+                        @Override
+                        public boolean hasNext() {
+                            if (nextRow == null) {
+                                if (internalIterator != null && internalIterator.hasNext()) {
+                                    nextRow = internalIterator.next();
+                                } else if (entry != null) {
+                                    while ((internalIterator == null || !internalIterator.hasNext()) && entry != null) {
+                                        if (entry.getLeft().isDirectory() || !hasValidEnding(entry.getLeft().getName())) {
+                                            LOG.info("Skipping TAR entry {}", entry.getLeft().getName());
+                                            entry = nextArchiveEntry();
+                                            continue;
+                                        }
+                                        VTDNav vn = null;
+                                        try {
+                                            LOG.info("Processing TAR entry {}", entry.getLeft().getName());
+                                            InputStream entryIs = entry.getRight();
+                                            if (entry.getLeft().getName().toLowerCase().endsWith(".gz") || entry.getLeft().getName().toLowerCase().endsWith("gzip"))
+                                                entryIs = new GZIPInputStream(entryIs);
+                                            vn = getVTDNav(entryIs, bufferSize);
+                                        } catch (ParseException e) {
+                                            e.printStackTrace();
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                        internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
+                                        entry = nextArchiveEntry();
+                                    }
+                                    nextRow = internalIterator.next();
+                                }
+                            }
+                            return nextRow != null;
+                        }
+
+                        @Override
+                        public Map<String, Object> next() {
+                            hasNext();
+                            Map<String, Object> ret = nextRow;
+                            nextRow = null;
+                            return ret;
+                        }
+
+                        private boolean hasValidEnding(String filename) {
+                            String lc = filename;
+                            return lc.endsWith("xml") || lc.endsWith("xml.gz") || lc.endsWith("xml.gzip");
+                        }
+
+                        private Pair<ArchiveEntry, InputStream> nextArchiveEntry() {
+                            return archiveEntryInputStreams.hasNext() ? archiveEntryInputStreams.next() : null;
+                        }
+                    };
+                }
+                else if (fileName.endsWith(".zip")) {
                     LOG.info("Got a ZIP archive at {}. It will be scanned for XML entry files.", fileName);
                     ZipFile zipFile = new ZipFile(fileName, StandardCharsets.UTF_8);
                     final List<ZipEntry> sortedEntries = zipFile.stream().sorted(Comparator.comparing(ZipEntry::getName)).collect(Collectors.toList());
 
-                    return new Iterator<Map<String, Object>>() {
+                    return new Iterator<>() {
 
                         private Iterator<ZipEntry> zipEntryIt = sortedEntries.iterator();
                         private ZipEntry entry = nextZipEntry();

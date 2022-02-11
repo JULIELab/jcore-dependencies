@@ -16,12 +16,13 @@
 package de.julielab.xml;
 
 import com.ximpleware.*;
+import com.ximpleware.EOFException;
+import de.julielab.java.utilities.CompressionUtilities;
+import de.julielab.java.utilities.IOStreamUtilities;
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.util.*;
 
 import static de.julielab.xml.JulieXMLConstants.*;
@@ -163,6 +164,22 @@ public class JulieXmlToolsTest {
         assertThat(values).contains("1", "2");
 	}
 
+	@Test
+	public void testTarArchiveReading() {
+		// This test exists due to a bug where non-XML files within ZIP archives were omitted which would
+		// lead to a null row returned if the last archive entry was a non-XML file. This shouldn't happen any more.
+		List<Map<String, String>> fields = new ArrayList<>();
+		fields.add(createField(NAME, "pmid", XPATH, "PMID"));
+		Iterator<Map<String, Object>> rowIt = JulieXMLTools.constructRowIterator("src/test/resources/tarArchiveReading/test.tgz", 1024, "/PubmedArticleSet/PubmedArticle/MedlineCitation", fields, false);
+		Set<String> values = new HashSet<>();
+		while (rowIt.hasNext()) {
+			Map<String, Object> row =  rowIt.next();
+			assertNotNull(row.get("pmid"));
+			values.add((String) row.get("pmid"));
+		}
+		assertThat(values).contains("1", "2");
+	}
+
     @Test
     public void testConstantFieldValue() {
         List<Map<String, String>> fields = new ArrayList<>();
@@ -198,4 +215,6 @@ public class JulieXmlToolsTest {
 
 		}
 	}
+
+
 }

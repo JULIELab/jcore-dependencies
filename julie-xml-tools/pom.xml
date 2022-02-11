@@ -50,6 +50,16 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>de.julielab</groupId>
+			<artifactId>julielab-java-utilities</artifactId>
+			<version>1.4.5-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.rauschig</groupId>
+			<artifactId>jarchivelib</artifactId>
+			<version>1.2.0</version>
+		</dependency>
+		<dependency>
 			<groupId>org.assertj</groupId>
 			<artifactId>assertj-core</artifactId>
 		</dependency>
@@ -75,7 +85,7 @@
 		<name>JULIE Lab Jena, Germany</name>
 		<url>http://www.julielab.de</url>
 	</organization>
-	<version>0.6.4</version>
+	<version>0.6.5-SNAPSHOT</version>
 	<licenses>
 		<license>
 			<name>BSD 2-Clause License</name>
