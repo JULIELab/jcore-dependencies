@@ -78,9 +78,7 @@ public class JulieXMLTools {
                 return constructRowIteratorHuge(fileName, forEachXpath, fields);
             } else {
                 InputStream is;
-                if (fileName.endsWith(".gz") || fileName.endsWith(".gzip")) {
-                    is = new GZIPInputStream(new FileInputStream(fileName));
-                } else if (fileName.endsWith(".tgz") || fileName.endsWith(".tar.gz") || fileName.endsWith(".tar")){
+                if (fileName.endsWith(".tgz") || fileName.endsWith(".tar.gz") || fileName.endsWith(".tar")) {
                     LOG.info("Got a TAR archive at {}. It will be scanned for XML entry files.", fileName);
                     Iterator<Pair<ArchiveEntry, InputStream>> archiveEntryInputStreams = CompressionUtilities.getArchiveEntryInputStreams(new File(fileName));
                     return new Iterator<>() {
@@ -112,7 +110,7 @@ public class JulieXMLTools {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
+                                        internalIterator = constructRowIterator(vn, forEachXpath, fields, entry.getLeft().getName());
                                         entry = nextArchiveEntry();
                                     }
                                     nextRow = internalIterator.next();
@@ -138,8 +136,7 @@ public class JulieXMLTools {
                             return archiveEntryInputStreams.hasNext() ? archiveEntryInputStreams.next() : null;
                         }
                     };
-                }
-                else if (fileName.endsWith(".zip")) {
+                } else if (fileName.endsWith(".zip")) {
                     LOG.info("Got a ZIP archive at {}. It will be scanned for XML entry files.", fileName);
                     ZipFile zipFile = new ZipFile(fileName, StandardCharsets.UTF_8);
                     final List<ZipEntry> sortedEntries = zipFile.stream().sorted(Comparator.comparing(ZipEntry::getName)).collect(Collectors.toList());
@@ -175,7 +172,7 @@ public class JulieXMLTools {
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
-                                        internalIterator = constructRowIterator(vn, forEachXpath, fields, fileName);
+                                        internalIterator = constructRowIterator(vn, forEachXpath, fields, entry.getName());
                                         entry = nextZipEntry();
                                     }
                                     nextRow = internalIterator.next();
@@ -202,6 +199,8 @@ public class JulieXMLTools {
                         }
                     };
 
+                } else if (fileName.endsWith(".gz") || fileName.endsWith(".gzip")) {
+                    is = new GZIPInputStream(new FileInputStream(fileName));
                 } else {
                     is = new FileInputStream(fileName);
                 }
@@ -515,8 +514,10 @@ public class JulieXMLTools {
                         options.concatString = ",";
                     options.performGzip = Boolean.parseBoolean(field.get(JulieXMLConstants.GZIP));
                     navigators.put(fieldName, new XPathNavigator(vn, pilotForEach, pilot, options));
+                } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.COMPLETE_XML))) {
+                    navigators.put(fieldName, new ConstantFieldValueSource(new String(vn.getXML().getBytes(), StandardCharsets.UTF_8)));
                 } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.EXTRACT_FROM_FILENAME))) {
-                    String[] path = identifier.split("/");
+                    String[] path = identifier.split(File.separator);
                     navigators.put(fieldName, new FileNameValueSource(path[path.length - 1], field));
                 } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.TIMESTAMP))) {
                     navigators.put(fieldName, new TimestampValueSource());
@@ -528,7 +529,7 @@ public class JulieXMLTools {
                             + "\" does not define a source to get a value from (e.g. XML XPath or file name) and will not have imported any values.");
                 }
             }
-            return new Iterator<Map<String, Object>>() {
+            return new Iterator<>() {
 
                 int index = startIndex;
 

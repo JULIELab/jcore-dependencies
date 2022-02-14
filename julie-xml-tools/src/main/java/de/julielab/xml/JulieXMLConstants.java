@@ -128,6 +128,13 @@ public abstract class JulieXMLConstants {
      */
     public static final String EXTRACT_FROM_FILENAME = "extractFromFileName";
 
+    /**
+     * Constant for the name of a field attribute.
+     * <p>
+     *     If set to true, the value of this field will be the complete contents of the XML document, including doc type declaration.
+     * </p>
+     */
+    public static final String COMPLETE_XML = "completeXml";
 
     /**
      * Constant for the name of a field attribute.

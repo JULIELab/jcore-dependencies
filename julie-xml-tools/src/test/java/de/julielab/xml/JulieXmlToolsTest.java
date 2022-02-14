@@ -23,6 +23,7 @@ import org.assertj.core.api.Condition;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Path;
 import java.util.*;
 
 import static de.julielab.xml.JulieXMLConstants.*;
@@ -191,6 +192,17 @@ public class JulieXmlToolsTest {
             assertThat(row).hasValueSatisfying(new Condition<>(val -> val.equals("THIS IS A CONSTANT"), "Constant field value"));
         }
     }
+
+    @Test
+	public void testObtainPmcId() {
+		List<Map<String, String>> fields = new ArrayList<>();
+		fields.add(createField(NAME, "pmcid", XPATH, "/article/front/article-meta/article-id[@pub-id-type='pmc']"));
+		Iterator<Map<String, Object>> it = JulieXMLTools.constructRowIterator(Path.of("src", "test", "resources", "pmc-id-parse-test.xml").toString(), 512, "/article", fields, false);
+		while (it.hasNext()) {
+			Map<String, Object> next = it.next();
+			System.out.println(next);
+		}
+	}
 
 	/**
 	 * This is not really a test but more of a playground to check detailed behaviour of VTD "interactively" (i.e.
