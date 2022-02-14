@@ -515,7 +515,8 @@ public class JulieXMLTools {
                     options.performGzip = Boolean.parseBoolean(field.get(JulieXMLConstants.GZIP));
                     navigators.put(fieldName, new XPathNavigator(vn, pilotForEach, pilot, options));
                 } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.COMPLETE_XML))) {
-                    navigators.put(fieldName, new ConstantFieldValueSource(new String(vn.getXML().getBytes(), StandardCharsets.UTF_8)));
+                    boolean performGzip = Boolean.parseBoolean(field.get(JulieXMLConstants.GZIP));
+                    navigators.put(fieldName, new ConstantFieldValueSource(new String(vn.getXML().getBytes(), StandardCharsets.UTF_8), performGzip));
                 } else if (Boolean.parseBoolean(field.get(JulieXMLConstants.EXTRACT_FROM_FILENAME))) {
                     String[] path = identifier.split(File.separator);
                     navigators.put(fieldName, new FileNameValueSource(path[path.length - 1], field));
@@ -892,19 +893,25 @@ abstract class AbstractFieldValueSource implements FieldValueSource {
     }
 }
 
-class ConstantFieldValueSource implements FieldValueSource {
+class ConstantFieldValueSource extends AbstractFieldValueSource {
 
     protected Object value;
+    private boolean performGzip;
 
     protected ConstantFieldValueSource() {
     }
 
     public ConstantFieldValueSource(String value) {
+        this(value, false);
+    }
+
+    public ConstantFieldValueSource(String value, boolean performGzip) {
         this.value = value;
+        this.performGzip = performGzip;
     }
 
     public Object getFieldValue() {
-        return value;
+        return performGzip ?  gzipContent(value) : value;
     }
 
 }
