@@ -52,8 +52,8 @@ public class JulieXMLToolsCLI {
 		String outputDir = args.length > 3 ? args[3] : null;
 		String recordIdXPath = args.length > 4 ? args[4] : null;
 
-		List<Map<String, String>> fields = new ArrayList<Map<String, String>>();
-		Map<String, String> field = new HashMap<String, String>();
+		List<Map<String, String>> fields = new ArrayList<>();
+		Map<String, String> field = new HashMap<>();
 		field.put(JulieXMLConstants.NAME, "value");
 		field.put(JulieXMLConstants.XPATH, ".");
 		if (option != null && option.equals("xml")) {
@@ -61,13 +61,13 @@ public class JulieXMLToolsCLI {
 		}
 		fields.add(field);
 		if (recordIdXPath != null) {
-			field = new HashMap<String, String>();
+			field = new HashMap<>();
 			field.put(JulieXMLConstants.NAME, "id");
 			field.put(JulieXMLConstants.XPATH, recordIdXPath);
 			fields.add(field);
 		}
 
-		Iterator<Map<String, Object>> rowIterator = JulieXMLTools.constructRowIterator(fileName, 1024, xpath, fields, false);
+		Iterator<Map<String, Object>> rowIterator = JulieXMLTools.constructRowIterator(fileName, 1024, xpath, fields, false, true);
 
 		PrintStream out = null;
 		if (outputDir == null) {

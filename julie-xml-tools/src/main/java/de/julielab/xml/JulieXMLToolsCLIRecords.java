@@ -41,7 +41,7 @@ public class JulieXMLToolsCLIRecords {
             fields.add(field);
         }
 
-        Iterator<Map<String, Object>> rowIterator = JulieXMLTools.constructRowIterator(fileName, 4096, forEach, fields, false);
+        Iterator<Map<String, Object>> rowIterator = JulieXMLTools.constructRowIterator(fileName, 4096, forEach, fields, false, true);
 
 
         PrintStream out = null;

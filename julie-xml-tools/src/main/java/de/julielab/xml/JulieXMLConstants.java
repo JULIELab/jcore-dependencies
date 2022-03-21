@@ -38,6 +38,11 @@ public abstract class JulieXMLConstants {
     public static final String FOR_EACH = "forEach";
 
     /**
+     * Constant for a <tt>tableSchema</tt> attribute. Specifies whether the XML parser should enable namespace awareness.
+     */
+    public static final String NS_AWARE = "nsAware";
+
+    /**
      * Constant for the name of a definition attribute in the configuration file for the CoStoSys DataBaseConnector.
      * Indicates whether the data in the respective table is stored in JeDIS binary format.
      */

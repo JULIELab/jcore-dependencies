@@ -17,8 +17,6 @@ package de.julielab.xml;
 
 import com.ximpleware.*;
 import com.ximpleware.EOFException;
-import de.julielab.java.utilities.CompressionUtilities;
-import de.julielab.java.utilities.IOStreamUtilities;
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 
@@ -227,6 +225,4 @@ public class JulieXmlToolsTest {
 
 		}
 	}
-
-
 }

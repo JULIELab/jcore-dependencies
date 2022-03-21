@@ -52,6 +52,11 @@ public class JulieXMLTools {
     public static final int CONTENT_FRAGMENT = 1;
     static final Logger LOG = LoggerFactory.getLogger(JulieXMLTools.class);
 
+    public static Iterator<Map<String, Object>> constructRowIterator(String fileName, int bufferSize,
+                                                                     String forEachXpath, final List<Map<String, String>> fields, boolean largeFileSize) {
+        return constructRowIterator(fileName, bufferSize, forEachXpath, fields, largeFileSize, true);
+    }
+
     /**
      * Convenience method for quick construction of a row iterator over an XML
      * document.
@@ -61,21 +66,22 @@ public class JulieXMLTools {
      * return data records from. For more detailed information see
      * {@link #constructRowIterator(VTDNav, String, List, String)}.
      *
-     * @param fileName     XML file to return data rows from.
-     * @param bufferSize   Size of buffers while reading the file at
-     *                     <code>fileName</code>.
-     * @param forEachXpath An XPath expression determining the XML elements to retrieve
-     *                     data records from.
-     * @param fields       List of attribute-value pairs determining the record fields
-     *                     returned by the iterator.
+     * @param fileName           XML file to return data rows from.
+     * @param bufferSize         Size of buffers while reading the file at
+     *                           <code>fileName</code>.
+     * @param forEachXpath       An XPath expression determining the XML elements to retrieve
+     *                           data records from.
+     * @param fields             List of attribute-value pairs determining the record fields
+     *                           returned by the iterator.
+     * @param namespaceAwareness
      * @return An iterator over all rows extracted from the XMl document pointed
      * to by <code>fileName</code>.
      */
     public static Iterator<Map<String, Object>> constructRowIterator(String fileName, int bufferSize,
-                                                                     String forEachXpath, final List<Map<String, String>> fields, boolean largeFileSize) {
+                                                                     String forEachXpath, final List<Map<String, String>> fields, boolean largeFileSize, boolean namespaceAwareness) {
         try {
             if (largeFileSize) {
-                return constructRowIteratorHuge(fileName, forEachXpath, fields);
+                return constructRowIteratorHuge(fileName, forEachXpath, fields, namespaceAwareness);
             } else {
                 InputStream is;
                 if (fileName.endsWith(".tgz") || fileName.endsWith(".tar.gz") || fileName.endsWith(".tar")) {
@@ -104,7 +110,7 @@ public class JulieXMLTools {
                                             InputStream entryIs = entry.getRight();
                                             if (entry.getLeft().getName().toLowerCase().endsWith(".gz") || entry.getLeft().getName().toLowerCase().endsWith("gzip"))
                                                 entryIs = new GZIPInputStream(entryIs);
-                                            vn = getVTDNav(entryIs, bufferSize);
+                                            vn = getVTDNav(entryIs, bufferSize, namespaceAwareness);
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         } catch (IOException e) {
@@ -166,7 +172,7 @@ public class JulieXMLTools {
                                             InputStream entryIs = zipFile.getInputStream(entry);
                                             if (entry.getName().toLowerCase().endsWith(".gz") || entry.getName().toLowerCase().endsWith("gzip"))
                                                 entryIs = new GZIPInputStream(entryIs);
-                                            vn = getVTDNav(entryIs, bufferSize);
+                                            vn = getVTDNav(entryIs, bufferSize, namespaceAwareness);
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         } catch (IOException e) {
@@ -204,7 +210,7 @@ public class JulieXMLTools {
                 } else {
                     is = new FileInputStream(fileName);
                 }
-                VTDNav vn = getVTDNav(is, bufferSize);
+                VTDNav vn = getVTDNav(is, bufferSize, namespaceAwareness);
                 return constructRowIterator(vn, forEachXpath, fields, fileName);
             }
         } catch (FileNotFoundException e) {
@@ -213,7 +219,7 @@ public class JulieXMLTools {
         } catch (FileTooBigException e) {
             try {
                 LOG.info("Falling back on VTD XML 'Huge' parser for large XML files...");
-                return constructRowIteratorHuge(fileName, forEachXpath, fields);
+                return constructRowIteratorHuge(fileName, forEachXpath, fields, namespaceAwareness);
             } catch (ParseExceptionHuge e1) {
                 LOG.error("Error while parsing file " + fileName + ": ", e1.getMessage());
                 e1.printStackTrace();
@@ -223,11 +229,7 @@ public class JulieXMLTools {
             }
         } catch (IOException e) {
             e.printStackTrace();
-        } catch (ParseException e) {
-            LOG.error("Error while parsing file " + fileName + ": ", e.getMessage());
-            e.printStackTrace();
-            System.exit(1);
-        } catch (ParseExceptionHuge e) {
+        } catch (ParseException | ParseExceptionHuge e) {
             LOG.error("Error while parsing file " + fileName + ": ", e.getMessage());
             e.printStackTrace();
             System.exit(1);
@@ -247,12 +249,12 @@ public class JulieXMLTools {
      * @throws EntityExceptionHuge
      */
     private static Iterator<Map<String, Object>> constructRowIteratorHuge(String fileName, String forEachXpath,
-                                                                          final List<Map<String, String>> fields) throws IOException, ParseExceptionHuge {
+                                                                          final List<Map<String, String>> fields, boolean nsAwareness) throws IOException, ParseExceptionHuge {
         JulieXMLBuffer buffer = new JulieXMLBuffer();
         buffer.readFile(fileName);
         VTDGenHuge vg = new VTDGenHuge();
         vg.setDoc(buffer);
-        vg.parse(true);
+        vg.parse(nsAwareness);
         VTDNavHuge vn = vg.getNav();
         return constructRowIterator(vn, forEachXpath, fields, fileName);
     }
@@ -279,11 +281,11 @@ public class JulieXMLTools {
      * to by <code>fileName</code>.
      */
     public static Iterator<Map<String, Object>> constructRowIterator(byte[] data, int bufferSize, String forEachXpath,
-                                                                     List<Map<String, String>> fields, String identifier) {
+                                                                     List<Map<String, String>> fields, String identifier, boolean nsAwareness) {
         try {
             VTDGen vg = new VTDGen();
             vg.setDoc(data);
-            vg.parse(true);
+            vg.parse(nsAwareness);
             VTDNav vn = vg.getNav();
             return constructRowIterator(vn, forEachXpath, fields, identifier);
         } catch (ParseException e) {
@@ -631,13 +633,17 @@ public class JulieXMLTools {
     }
 
     public static VTDNav getVTDNav(InputStream is, int bufferSize) throws ParseException, FileTooBigException {
+        return getVTDNav(is, bufferSize, true);
+    }
+
+    public static VTDNav getVTDNav(InputStream is, int bufferSize, boolean namespaceAwareness) throws ParseException, FileTooBigException {
 
         VTDGen vg = null;
         try {
             byte[] data = readStream(is, bufferSize);
             vg = new VTDGen();
             vg.setDoc(data);
-            vg.parse(true);
+            vg.parse(namespaceAwareness);
         } catch (EncodingException e) {
             e.printStackTrace();
         } catch (EOFException e) {
@@ -911,7 +917,7 @@ class ConstantFieldValueSource extends AbstractFieldValueSource {
     }
 
     public Object getFieldValue() {
-        return performGzip ?  gzipContent(value) : value;
+        return performGzip ? gzipContent(value) : value;
     }
 
 }
