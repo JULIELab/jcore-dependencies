@@ -1,5 +1,6 @@
 package relations;
 
+import corpora.DataLoader;
 import utils.DBUtils;
 
 import java.sql.Connection;
@@ -216,12 +217,23 @@ public class TriggerLearner {
 	}
 
 	public static void main(String[] args) {
-		String dbsr = "D:/DataNLP/Mix2011/Data";
+		String dbsr = null;
+		String dbdst = null;
+		if (args.length == 2) {
+			dbsr = args[0];
+			dbdst = args[1];
+		}
+		else {
+			System.out.println("No input and output folder declared.");
+			System.exit(1);
+		}
+
+//		dbsr = "D:/DataNLP/Mix2011/Data";
+//		dbdst = "D:/DataNLP/Dev2011/Data";
 		DBUtils dbsrc = new DBUtils();
 		dbsrc.openDB(dbsr); // source database
-		String dbname = "D:/DataNLP/Dev2011/Data";
 		DBUtils dbdest = new DBUtils();
-		dbdest.openDB(dbname); // destination database
+		dbdest.openDB(dbdst); // destination database
 		TriggerLearner learner = new TriggerLearner(dbsrc, dbdest); // store all triggers (both train and dev) into
 																	// train DB
 		learner.createTriggers();

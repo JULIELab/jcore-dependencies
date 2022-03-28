@@ -2507,9 +2507,24 @@ public class EventExtraction {
 	}
 
 	public static void main(String[] args) {
-		String sr_path = "D:/DataNLP/Mix2011/Data";
-		String dest_path = "D:/DataNLP/Test2011/Data";
-		String outPath = "d:/Output/test";
+		String sr_path = null;
+		String dest_path = null;
+		String outPath = null;
+		if (args.length == 3) {
+			sr_path = args[0];
+			dest_path = args[1];
+			outPath = args[2];
+		}
+		else {
+			System.out.println("Declare the trained database, the test database and the output path.");
+			System.exit(1);
+		}
+//		String sr_path = "D:/DataNLP/Mix2011/Data";
+//		String dest_path = "D:/DataNLP/Test2011/Data";
+//		String outPath = "d:/Output/test";
+//		String sr_path = "data_deleteme/db-2011/mix";
+//		String dest_path = "D:/DataNLP/Data2011TestPrepared/Data";
+//		String outPath = "data_deleteme/annotation_output_test";
 		DBUtils sr = new DBUtils();
 		sr.openDB(sr_path);
 		DBUtils dest = new DBUtils();

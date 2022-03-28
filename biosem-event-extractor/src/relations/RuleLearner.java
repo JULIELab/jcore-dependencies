@@ -4,6 +4,7 @@
  */
 package relations;
 
+import corpora.DataLoader;
 import utils.DBUtils;
 
 import java.sql.Connection;
@@ -31,7 +32,16 @@ public class RuleLearner {
 
     public static void main(String[] args) {
         DBUtils db1 = new DBUtils();
-        db1.openDB("D:/DataNLP/Dev2011/Data");
+        String dbsrc = null;
+       if (args.length == 1) {
+           dbsrc = args[0];
+        }
+        else {
+            System.out.println("No annotated database declared.");
+            System.exit(1);
+        }
+//        dbsrc = "D:/DataNLP/Dev2011/Data";
+        db1.openDB(dbsrc);
         RuleLearner learner = new RuleLearner(db1, db1);
         learner.LearnData();
         db1.shutdownDB();

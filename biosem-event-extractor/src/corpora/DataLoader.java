@@ -216,7 +216,7 @@ public class DataLoader {
 			}
 
 		} catch (Exception e) {
-			e.printStackTrace();
+			throw new RuntimeException("Could not load data at " + path, e);
 		}
 		System.out.println("Number of abstracts: " + count);
 	}
@@ -281,21 +281,21 @@ public class DataLoader {
 	}
 
 	public static void main(String[] args) {
-		DataLoader data = new DataLoader();
-		data.Txt2Db("D:/DataNLP/Data2011Text", "D:/DataNLP/Mix2011/Data", true);
+//		DataLoader data = new DataLoader();
+//		data.Txt2Db("D:/DataNLP/Data2011TestText", "D:/DataNLP/Data2011TestPrepared/Data", false);
 
-		// DataLoader data = new DataLoader();
-		// if (args.length == 3) {
-		// Boolean a2 = Boolean.valueOf(args[2]);
-		// data.Txt2Db(args[0], args[1], a2);
-		// }
-		// else if (args.length == 2) {
-		// data.Txt2Db(args[0], args[1], true);
-		// }
-		// else {
-		// System.out.println("No input and output folder declared.");
-		// System.exit(-1);
-		// }
+		 DataLoader data = new DataLoader();
+		 if (args.length == 3) {
+		 Boolean a2 = Boolean.valueOf(args[2]);
+		 data.Txt2Db(args[0], args[1], a2);
+		 }
+		 else if (args.length == 2) {
+		 data.Txt2Db(args[0], args[1], true);
+		 }
+		 else {
+		 System.out.println("No input and output folder declared.");
+		 System.exit(1);
+		 }
 	}
 
 	static final String new_line = System.getProperty("line.separator");
