@@ -5,6 +5,8 @@ import de.julielab.xml.util.XMISplitterException;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.apache.commons.lang3.tuple.Pair;
 import org.apache.uima.cas.TypeSystem;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -18,7 +20,7 @@ import static de.julielab.xml.XmiSplitUtilities.CAS_SOFA;
 import static java.util.stream.Collectors.toSet;
 
 public abstract class AbstractXmiSplitter implements XmiSplitter {
-
+private final static Logger log = LoggerFactory.getLogger(AbstractXmiSplitter.class);
     private static final int NO_SOFA_KEY = -1;
     private static final int SECOND_SOFA_MAP_KEY_START = -2;
     private static final int SOFA_UNKNOWN = Integer.MIN_VALUE;
@@ -137,30 +139,37 @@ public abstract class AbstractXmiSplitter implements XmiSplitter {
         if (null == moduleAnnotationNames)
             return;
         for (JeDISVTDGraphNode node : nodesByXmiId.values()) {
-            Stream<String> allLabels = determineLabelsForNode(node, moduleAnnotationNames, recursively);
+            Stream<String> allLabels = determineLabelsForNode(node, moduleAnnotationNames, recursively, new HashSet<>());
             node.setAnnotationModuleLabels(allLabels.collect(toSet()));
         }
     }
 
-    protected Stream<String> determineLabelsForNode(JeDISVTDGraphNode node, Set<String> moduleAnnotationNames, boolean recursively) {
-        if (node == JeDISVTDGraphNode.CAS_NULL)
-            return Stream.empty();
-        if (!node.getAnnotationModuleLabels().isEmpty())
-            return node.getAnnotationModuleLabels().stream();
-        Function<JeDISVTDGraphNode, Stream<String>> fetchLabelsRecursively = n -> n.getPredecessors().stream().flatMap(p -> determineLabelsForNode(p, moduleAnnotationNames, recursively));
-        // All labels are "emitted" from annotations on the "to create a module for" list.
-        if (XmiSplitUtilities.isAnnotationType(node.getTypeName())) {
-            if (moduleAnnotationNames.contains(node.getTypeName()))
-                return Stream.of(node.getTypeName());
-            else if (storeBaseDocument && baseDocumentAnnotations.contains(node.getTypeName()))
+    protected Stream<String> determineLabelsForNode(JeDISVTDGraphNode node, Set<String> moduleAnnotationNames, boolean recursively, HashSet<JeDISVTDGraphNode> alreadyVisited) {
+        try {
+            if (!alreadyVisited.add(node))
+                return Stream.empty();
+            if (node == JeDISVTDGraphNode.CAS_NULL)
+                return Stream.empty();
+            if (!node.getAnnotationModuleLabels().isEmpty())
+                return node.getAnnotationModuleLabels().stream();
+            Function<JeDISVTDGraphNode, Stream<String>> fetchLabelsRecursively = n -> n.getPredecessors().stream().flatMap(p -> determineLabelsForNode(p, moduleAnnotationNames, recursively, alreadyVisited));
+            // All labels are "emitted" from annotations on the "to create a module for" list.
+            if (XmiSplitUtilities.isAnnotationType(node.getTypeName())) {
+                if (moduleAnnotationNames.contains(node.getTypeName()))
+                    return Stream.of(node.getTypeName());
+                else if (storeBaseDocument && baseDocumentAnnotations.contains(node.getTypeName()))
+                    return Stream.of(DOCUMENT_MODULE_LABEL);
+                else if (recursively)
+                    return fetchLabelsRecursively.apply(node);
+                return Stream.empty();
+            } else if (storeBaseDocument && node.getTypeName().equals(CAS_SOFA)) {
                 return Stream.of(DOCUMENT_MODULE_LABEL);
-            else if (recursively)
-                return fetchLabelsRecursively.apply(node);
-            return Stream.empty();
-        } else if (storeBaseDocument && node.getTypeName().equals(CAS_SOFA)) {
-            return Stream.of(DOCUMENT_MODULE_LABEL);
+            }
+            return fetchLabelsRecursively.apply(node);
+        } catch (Throwable e) {
+            log.error("Error when trying to determine the labels for node {}. Module annotation names are: {}", node, moduleAnnotationNames);
+            throw e;
         }
-        return fetchLabelsRecursively.apply(node);
     }
 
     Map<Integer, JeDISVTDGraphNode> getNodesByXmiId() {
