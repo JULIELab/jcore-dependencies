@@ -2309,8 +2309,7 @@ public class EventExtraction {
 		} catch (Exception ex) {
 //			ex.printStackTrace();
 //			System.out.println(ex.getLocalizedMessage());
-			log.warn("Caught exception, recognition of events is skipped for current document(s). Error occurred in document " + curr_pmid + ":", ex);
-			log.debug("Exception while event extraction: ", ex);
+			log.debug("Caught exception, recognition of events is skipped for current document(s). Error occurred in document " + curr_pmid + ":", ex);
 		}
 		// RuleLearner learner = new RuleLearner();
 		// learner.storeRuleSet(rules, db_sr);

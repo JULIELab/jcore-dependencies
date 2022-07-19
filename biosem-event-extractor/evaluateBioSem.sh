@@ -6,6 +6,11 @@
 
 set -euo pipefail
 
+if [[ $# -eq 0 ]]; then
+  echo "Parameters: <BioNLP ST Edition: '2009', '2011', '2013'> <training data: 'train' or 'mixed' (mixed=train+devel)> <test data: 'devel' or 'test'>"
+  exit 1
+fi
+
 DATA=evaldata
 DOWNLOAD=$DATA/download
 
@@ -115,7 +120,7 @@ java relations.EventExtraction "$TRAIN_DB" "$TEST_DB" "$TEST_OUTPUT"
 
 if [[ "$EVAL_TARGET" == "devel" ]]; then
 
-    if [[ "$EDITION" = "2009" || "$EDITION" = "2011" ]]; then
+    if [[ "$EDITION" == "2009" || "$EDITION" == "2011" ]]; then
 
       EVALTOOLS_URL=http://bionlp-st.dbcls.jp/GE/2011/downloads/BioNLP-ST_2011_genia_tools_rev1.tar.gz
       EVALTOOLS_FILE=BioNLP-ST_2011_genia_tools_rev1.tar.gz
@@ -138,5 +143,10 @@ if [[ "$EVAL_TARGET" == "devel" ]]; then
 
   echo "perl $EVALTOOLS/a2-evaluate.pl -g $TEST_DATA -t1 $TEST_OUTPUT/*.a2"
   perl "$EVALTOOLS"/a2-evaluate.pl -g $TEST_DATA -t1 $TEST_OUTPUT/*.a2
+
+elif [[ "$EVAL_TARGET" == "test" && "$EDITION" == "2013" ]]; then
+  # the 2013 edition has encoding issues in some file names about NFκB; the test evaluation will not work
+  # unless this is fixed
+  for i in $TEST_OUTPUT/*; do mv $i `echo $i | sed 's/+%A6/κ/'`; done
 
 fi

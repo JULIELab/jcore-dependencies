@@ -1,5 +1,6 @@
 package de.julielab.xml;
 
+import com.ctc.wstx.api.WstxInputProperties;
 import de.julielab.xml.util.XMIBuilderException;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.uima.cas.Feature;
@@ -79,8 +80,8 @@ public class XmiBuilder {
     public XmiBuilder(Map<String, String> nsAndXmiVersionMap, String[] annotationsToRetrieve, long attribute_size) {
         this.annotationNames = XmiSplitUtilities.completeTypeNames(annotationsToRetrieve);
         setXMIStartElementData(nsAndXmiVersionMap);
-        //if (attribute_size > 0)
-        //  inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
+        if (attribute_size > 0)
+          inputFactory.setProperty(WstxInputProperties.P_MAX_ATTRIBUTE_SIZE, attribute_size);
     }
 
     public XmiBuilder(Map<String, String> nsAndXmiVersionMap, String[] annotationsToRetrieve) {

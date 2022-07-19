@@ -21,6 +21,7 @@ import org.assertj.core.api.Condition;
 import org.junit.Test;
 
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
 
@@ -196,6 +197,20 @@ public class JulieXmlToolsTest {
 		List<Map<String, String>> fields = new ArrayList<>();
 		fields.add(createField(NAME, "pmcid", XPATH, "/article/front/article-meta/article-id[@pub-id-type='pmc']"));
 		Iterator<Map<String, Object>> it = JulieXMLTools.constructRowIterator(Path.of("src", "test", "resources", "pmc-id-parse-test.xml").toString(), 512, "/article", fields, false);
+		while (it.hasNext()) {
+			Map<String, Object> next = it.next();
+			System.out.println(next);
+		}
+	}
+
+	@Test
+	public void testParseXmi() throws Exception{
+		List<Map<String, String>> fields = new ArrayList<>();
+		fields.add(createField(NAME, "begin", XPATH, "."));
+		final Path p = Path.of("src", "test", "resources", "xmidata.xmi");
+		final byte[] bytes = Files.readAllBytes(p);
+		Iterator<Map<String, Object>> it = JulieXMLTools.constructRowIterator(bytes, 1024, ".", fields, "your result", false);
+//		Iterator<Map<String, Object>> it = JulieXMLTools.constructRowIterator(bytes, 512, "/xmi:XMI/types:Gene/@begin", fields);
 		while (it.hasNext()) {
 			Map<String, Object> next = it.next();
 			System.out.println(next);

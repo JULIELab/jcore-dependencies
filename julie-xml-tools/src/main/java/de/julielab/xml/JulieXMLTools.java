@@ -493,7 +493,11 @@ public class JulieXMLTools {
                     // the desired value. The ForEachAP is the main navigator,
                     // so it must select the XPath if no specific ForEachXPath
                     // is given.
-                    pilotForEach.selectXPath(xPath);
+                    try {
+                        pilotForEach.selectXPath(xPath);
+                    } catch (XPathParseException e) {
+                        throw new IllegalArgumentException("Could not parse XPath '" + xPath + "'.", e);
+                    }
                     pilot.selectXPath(xPath);
                     if (fieldForEach != null) {
                         pilotForEach = new AutoPilot(vn);
