@@ -268,27 +268,27 @@ public class SenAnalyzer {
 					w1.locs = w2.locs;
 				}
 			} else {
-				System.out.println("Number of triggers doesn't match, sentence " + i + ": " + id);
-				System.out.println("Detected: " + detectedTrg[i].size() + ", given: " + longTrg[i].size());
-				System.out.println("Long: " + longsen[i]);
-				for (Word tg : longTrg[i]) {
-					System.out.print(tg.word + " " + tg.pos + " | ");
-				}
-				System.out.println("");
-				System.out.println("Short: " + shortsen[i]);
-				for (Word tg : detectedTrg[i]) {
-					System.out.print(tg.word + " " + tg.pos + " | ");
-				}
+//				System.out.println("Number of triggers doesn't match, sentence " + i + ": " + id);
+//				System.out.println("Detected: " + detectedTrg[i].size() + ", given: " + longTrg[i].size());
+//				System.out.println("Long: " + longsen[i]);
+//				for (Word tg : longTrg[i]) {
+//					System.out.print(tg.word + " " + tg.pos + " | ");
+//				}
+//				System.out.println("");
+//				System.out.println("Short: " + shortsen[i]);
+//				for (Word tg : detectedTrg[i]) {
+//					System.out.print(tg.word + " " + tg.pos + " | ");
+//				}
 				// System.exit(1);
 				throw new IllegalStateException();
 			}
 			// Asign ID for PRO
 			if (detectedPro[i].size() != longPro[i].size()) {
-				System.err.println("Sentence " + i + ": Miss protein, given: " + longPro[i].size() + " detectted "
-						+ detectedPro[i].size());
-				System.err.println("Long: " + longsen[i]);
-				System.err.println("");
-				System.err.println("Short: " + shortsen[i]);
+//				System.err.println("Sentence " + i + ": Miss protein, given: " + longPro[i].size() + " detectted "
+//						+ detectedPro[i].size());
+//				System.err.println("Long: " + longsen[i]);
+//				System.err.println("");
+//				System.err.println("Short: " + shortsen[i]);
 				// System.exit(1);
 				throw new IllegalStateException();
 			}
