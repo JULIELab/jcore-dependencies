@@ -8,6 +8,7 @@ import de.julielab.evaluation.entities.EvaluationDataEntry.ComparisonType;
 import de.julielab.evaluation.entities.EvaluationDataEntry.OverlapType;
 import de.julielab.evaluation.entities.format.EvaluationDataFormat;
 import de.julielab.evaluation.entities.format.GeneNormalizationFormat;
+import de.julielab.evaluation.entities.format.GeneNormalizationFormatWithEntityType;
 import de.julielab.evaluation.entities.format.GeneNormalizationNoOffsetsFormat;
 import de.julielab.java.utilities.spanutils.OffsetMap;
 import org.apache.commons.io.IOUtils;
@@ -151,7 +152,7 @@ public class EntityEvaluator {
                 || evaluator.getProperties().getProperty(PROP_INPUT_FORMAT_CLASS) == null) {
             System.out.println("No configuration file given, trying to guess data format.");
 
-            List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(),
+            List<EvaluationDataFormat> formats = Arrays.asList(new GeneNormalizationFormat(), new GeneNormalizationFormatWithEntityType(),
                     new GeneNormalizationNoOffsetsFormat());
             EvaluationDataFormat foundFormat = null;
             int i = 0;
