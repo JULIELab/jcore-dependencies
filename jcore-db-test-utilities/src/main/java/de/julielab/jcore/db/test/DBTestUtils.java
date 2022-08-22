@@ -60,7 +60,6 @@ public class DBTestUtils {
     public static String setupDatabase(String datapath, String dataTableSchema, int subsetTableSize, PostgreSQLContainer postgres) throws SQLException {
         DataBaseConnector dbc = getDataBaseConnector(postgres);
         String testsubset = setupDatabase(dbc, datapath, dataTableSchema, subsetTableSize, postgres);
-        dbc.close();
         return testsubset;
     }
 
@@ -83,6 +82,8 @@ public class DBTestUtils {
         dbc.createSubsetTable(testsubset, Constants.DEFAULT_DATA_TABLE_NAME, "Test subset");
         dbc.initRandomSubset(subsetTableSize, testsubset, Constants.DEFAULT_DATA_TABLE_NAME);
         createAndSetHiddenConfig("src/test/resources/hiddenConfig.txt", postgres);
+        dbc.obtainConnection().commit();
+        dbc.close();
         return testsubset;
     }
 
