@@ -756,9 +756,9 @@ public class JulieXMLTools {
         int i = vn.getCurrentIndex();
         while (vn.getTokenType(i) == VTDNav.TOKEN_STARTING_TAG)
             i++;
-        while (vn.getTokenDepth(i) >= depth
-                && !(vn.getTokenType(i) == VTDNav.TOKEN_STARTING_TAG && vn.getTokenDepth(i) == depth)
-                && i < vn.getTokenCount()) {
+        while (i < vn.getTokenCount()
+                && vn.getTokenDepth(i) >= depth
+                && !(vn.getTokenType(i) == VTDNav.TOKEN_STARTING_TAG && vn.getTokenDepth(i) == depth)) {
             if (vn.getTokenType(i) == VTDNav.TOKEN_CHARACTER_DATA || vn.getTokenType(i) == VTDNav.TOKEN_CDATA_VAL)
                 sb.append(vn.toString(i));
 
