@@ -1,6 +1,6 @@
 #!/bin/bash
 # This script can train and test BioSem on the BioNLP Shared Task data of 2009, 2011 and 2013.
-# The program must have been built before via 'mvn clean package'.
+# The BioSem code must have been built before via 'mvn clean package'.
 # Parameters: BioNLP Edition (2009, 2011, 2013) ; Training data (train or mixed (train+devel)) ; Test data (devel or test)
 
 
@@ -86,17 +86,22 @@ elif [[ $TRAIN_SOURCE == "train" ]]; then
 
 fi
 
+echo "Looking for existing training database to clear."
 if [[ ! -z `ls $TRAIN_DB.*` ]]; then
 
   rm -r $TRAIN_DB.*
 
 fi
 
+echo "Looking for existing test database to clear."
 if [[ ! -z `ls $TEST_DB.*` ]]; then
 
   rm -r $TEST_DB.*
 
 fi
+
+echo "Train data $TRAIN_DATA"
+echo "Test data: $TEST_DATA"
 
 echo "Creating database for train texts"
 java corpora.DataLoader "$TRAIN_DATA" "$TRAIN_DB" true
