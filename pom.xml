@@ -4,10 +4,10 @@
     <parent>
         <groupId>de.julielab</groupId>
         <artifactId>jcore-parent</artifactId>
-        <version>2.5.2-SNAPSHOT</version>
+        <version>2.5.2</version>
     </parent>
     <artifactId>jcore-dependencies</artifactId>
-    <version>2.4.2-SNAPSHOT</version>
+    <version>2.4.2</version>
     <packaging>pom</packaging>
     <name>JCoRe Dependencies</name>
     <description>The POM for the JCoRe Dependencies projects.</description>
