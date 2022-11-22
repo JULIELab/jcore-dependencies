@@ -34,9 +34,6 @@
                         <configuration>
                             <tasks>
                                 <delete dir="maven-lib"/>
-                                <!-- <delete quiet="true" failOnError="false"> -->
-                                <!-- <fileset dir="lib" includes="**/*.jar" /> -->
-                                <!-- </delete> -->
                             </tasks>
                         </configuration>
                         <goals>
@@ -59,6 +56,31 @@
                         <configuration>
                             <outputDirectory>${basedir}/maven-lib</outputDirectory>
                         </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <version>3.3.0</version>
+                <configuration>
+                    <descriptors>
+                        <descriptor>biosem-assembly.xml</descriptor>
+                    </descriptors>
+                    <archive>
+                        <manifest>
+                            <mainClass>de.julielab.xml.JulieXMLToolsCLI</mainClass>
+                        </manifest>
+                    </archive>
+                    <appendAssemblyId>true</appendAssemblyId>
+                    <finalName>${project.artifactId}-${project.version}</finalName>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
                     </execution>
                 </executions>
             </plugin>

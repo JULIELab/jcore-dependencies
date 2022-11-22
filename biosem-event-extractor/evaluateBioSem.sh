@@ -38,7 +38,13 @@ STDBS=$DATA/dbs/st$EDITION
 export CLASSPATH=`echo maven-lib/*.jar | tr ' ' ':'`:target/classes
 mkdir -p $DOWNLOAD
 
-if [[ "$EDITION" == "2011" ]]; then
+if [[ "$EDITION" == "2009" ]]; then
+
+  if [[ ! -d "$STBASE" ]]; then
+    git -C $DOWNLOAD clone https://github.com/openbiocorpora/bionlp-st-2009.git
+  fi
+
+elif [[ "$EDITION" == "2011" ]]; then
 
   if [[ ! -d "$STBASE" ]]; then
     git -C $DOWNLOAD clone https://github.com/openbiocorpora/bionlp-st-2011-ge.git
