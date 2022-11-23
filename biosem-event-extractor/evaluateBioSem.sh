@@ -115,7 +115,7 @@ echo "Learning triggers"
 java relations.TriggerLearner "$TRAIN_DB" "$TRAIN_DB"
 echo "Learning event patterns"
 java relations.RuleLearner "$TRAIN_DB"
-echo "Creating database for test data"
+echo "Creating database for test data: java corpora.DataLoader "$TEST_DATA" "$TEST_DB" false"
 java corpora.DataLoader "$TEST_DATA" "$TEST_DB" false
 echo "Extracting events from test data to $TEST_OUTPUT"
 if [[ ! -d "$TEST_OUTPUT" ]]; then
