@@ -16,11 +16,12 @@
 package de.julielab.xml;
 
 import com.ximpleware.*;
-import com.ximpleware.EOFException;
 import org.assertj.core.api.Condition;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -210,10 +211,8 @@ public class JulieXmlToolsTest {
 		final Path p = Path.of("src", "test", "resources", "xmidata.xmi");
 		final byte[] bytes = Files.readAllBytes(p);
 		Iterator<Map<String, Object>> it = JulieXMLTools.constructRowIterator(bytes, 1024, ".", fields, "your result", false);
-//		Iterator<Map<String, Object>> it = JulieXMLTools.constructRowIterator(bytes, 512, "/xmi:XMI/types:Gene/@begin", fields);
 		while (it.hasNext()) {
-			Map<String, Object> next = it.next();
-			System.out.println(next);
+			Map<String, Object> ignored = it.next();
 		}
 	}
 
