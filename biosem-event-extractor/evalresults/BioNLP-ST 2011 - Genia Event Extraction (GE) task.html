@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=windows-1252">
+    <link rel="stylesheet" href="BioNLP-ST%202011%20-%20Genia%20Event%20Extraction%20(GE)%20task-Dateien/bionlp-st.css" type="text/css">    
+    <title>BioNLP-ST 2011 - Genia Event Extraction (GE) task</title>
+  </head>
+<body>
+
+<div id="header">
+<div id="stitle"><a href="http://2011.bionlp-st.org/">BioNLP Shared Task 2011</a></div>
+<div id="title"><a href="http://bionlp-st.dbcls.jp/GE/">Genia Event Extraction (GE) Task</a></div>
+<div id="slogan">"A shared task of literature mining for knowledge of NF&#954;B pathway."</div>
+
+<table class="menu">
+<tbody><tr>
+<td><a href="http://2011.bionlp-st.org/home/genia-event-extraction-genia">Home</a></td>
+<td><a href="http://bionlp-st.dbcls.jp/GE/2011/downloads/">Downloads</a></td>
+<td><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-development/">Dev. Evaluation</a></td>
+<td><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/">Test Evaluation</a></td>
+</tr>
+</tbody></table>
+</div>
+
+<div id="main">
+
+<h1>Test set evaluation</h1>
+
+<p></p>
+
+<h2>Task 1 (whole test set)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression       1002 (  656)      778 (  656)    65.47    84.32    73.71
+     Transcription         174 (   82)      113 (   82)    47.13    72.57    57.14
+  Protein_catabolism        15 (    7)       11 (    7)    46.67    63.64    53.85
+    Phosphorylation        185 (  137)      146 (  137)    74.05    93.84    82.78
+     Localization          191 (   93)      105 (   93)    48.69    88.57    62.84
+     =[SVT-TOTAL]=        1567 (  975)     1153 (  975)    62.22    84.56    71.69
+        Binding            491 (  208)      335 (  208)    42.36    62.09    50.36
+    ==[EVT-TOTAL]==       2058 ( 1183)     1488 ( 1183)    57.48    79.50    66.72
+------------------------------------------------------------------------------------
+      Regulation           385 (   69)      152 (   69)    17.92    45.39    25.70
+  Positive_regulation     1443 (  427)      834 (  427)    29.59    51.20    37.51
+  Negative_regulation      571 (  138)      290 (  138)    24.17    47.59    32.06
+    ==[REG-TOTAL]==       2399 (  634)     1276 (  634)    26.43    49.69    34.50
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       4457 ( 1817)     2764 ( 1817)    40.77    65.74    50.33
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression       1002 (  672)      778 (  672)    67.07    86.38    75.51
+     Transcription         174 (   95)      113 (   95)    54.60    84.07    66.20
+  Protein_catabolism        15 (    7)       11 (    7)    46.67    63.64    53.85
+    Phosphorylation        185 (  140)      146 (  140)    75.68    95.89    84.59
+     Localization          191 (   94)      105 (   94)    49.21    89.52    63.51
+     =[SVT-TOTAL]=        1567 ( 1008)     1153 ( 1008)    64.33    87.42    74.12
+        Binding            491 (  218)      335 (  218)    44.40    65.07    52.78
+    ==[EVT-TOTAL]==       2058 ( 1226)     1488 ( 1226)    59.57    82.39    69.15
+------------------------------------------------------------------------------------
+      Regulation           385 (   76)      152 (   76)    19.74    50.00    28.31
+  Positive_regulation     1443 (  456)      834 (  456)    31.60    54.68    40.05
+  Negative_regulation      571 (  142)      290 (  142)    24.87    48.97    32.98
+    ==[REG-TOTAL]==       2399 (  674)     1276 (  674)    28.10    52.82    36.68
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       4457 ( 1900)     2764 ( 1900)    42.63    68.74    52.62
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression       1002 (  700)      773 (  679)    69.86    87.84    77.83
+     Transcription         174 (   99)      113 (   96)    56.90    84.96    68.15
+  Protein_catabolism        15 (    7)       11 (    7)    46.67    63.64    53.85
+    Phosphorylation        185 (  143)      146 (  141)    77.30    96.58    85.87
+     Localization          191 (  103)      105 (   94)    53.93    89.52    67.31
+     =[SVT-TOTAL]=        1567 ( 1052)     1148 ( 1017)    67.13    88.59    76.38
+        Binding            491 (  226)      335 (  220)    46.03    65.67    54.12
+    ==[EVT-TOTAL]==       2058 ( 1278)     1483 ( 1237)    62.10    83.41    71.19
+------------------------------------------------------------------------------------
+      Regulation           385 (   82)      152 (   80)    21.30    52.63    30.33
+  Positive_regulation     1443 (  483)      831 (  464)    33.47    55.84    41.85
+  Negative_regulation      571 (  147)      290 (  147)    25.74    50.69    34.15
+    ==[REG-TOTAL]==       2399 (  712)     1273 (  691)    29.68    54.28    38.38
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       4457 ( 1990)     2756 ( 1928)    44.65    69.96    54.51
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre>--------------------------------------------------------------------------------------
+    Event-Arg Type            gold (match)   answer (match)   recall    prec.   fscore
+--------------------------------------------------------------------------------------
+Theme-Gene_expression         1002 (  672)      778 (  672)    67.07    86.38    75.51
+Theme-Transcription            174 (   95)      113 (   95)    54.60    84.07    66.20
+Theme-Protein_catabolism        15 (    7)       11 (    7)    46.67    63.64    53.85
+Theme-Phosphorylation          185 (  140)      146 (  140)    75.68    95.89    84.59
+Theme-Binding                  576 (  298)      391 (  298)    51.74    76.21    61.63
+Theme-Localization             191 (   94)      105 (   94)    49.21    89.52    63.51
+Theme-Regulation               353 (   86)      146 (   86)    24.36    58.90    34.47
+Theme-Positive_regulation     1382 (  560)      818 (  560)    40.52    68.46    50.91
+Theme-Negative_regulation      551 (  176)      287 (  176)    31.94    61.32    42.00
+--------------------------------------------------------------------------------------
+=[Theme-TOTAL]=               4429 ( 2128)     2795 ( 2128)    48.05    76.14    58.91
+--------------------------------------------------------------------------------------
+Cause-Regulation                94 (   18)       29 (   18)    19.15    62.07    29.27
+Cause-Positive_regulation      398 (   93)      155 (   93)    23.37    60.00    33.63
+Cause-Negative_regulation      113 (   15)       30 (   15)    13.27    50.00    20.98
+--------------------------------------------------------------------------------------
+=[Cause-TOTAL]=                605 (  126)      214 (  126)    20.83    58.88    30.77
+--------------------------------------------------------------------------------------
+==[ALL-TOTAL]==               5034 ( 2254)     3009 ( 2254)    44.78    74.91    56.05
+--------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre>--------------------------------------------------------------------------------------
+    Event-Arg Type            gold (match)   answer (match)   recall    prec.   fscore
+--------------------------------------------------------------------------------------
+Theme-Gene_expression         1002 (  700)      773 (  679)    69.86    87.84    77.83
+Theme-Transcription            174 (   99)      113 (   96)    56.90    84.96    68.15
+Theme-Protein_catabolism        15 (    7)       11 (    7)    46.67    63.64    53.85
+Theme-Phosphorylation          185 (  143)      146 (  141)    77.30    96.58    85.87
+Theme-Binding                  576 (  320)      391 (  301)    55.56    76.98    64.54
+Theme-Localization             191 (  103)      105 (   94)    53.93    89.52    67.31
+Theme-Regulation               353 (   94)      146 (   91)    26.63    62.33    37.32
+Theme-Positive_regulation     1382 (  595)      814 (  570)    43.05    70.02    53.32
+Theme-Negative_regulation      551 (  183)      287 (  180)    33.21    62.72    43.43
+--------------------------------------------------------------------------------------
+=[Theme-TOTAL]=               4429 ( 2244)     2786 ( 2159)    50.67    77.49    61.27
+--------------------------------------------------------------------------------------
+Cause-Regulation                94 (   18)       29 (   18)    19.15    62.07    29.27
+Cause-Positive_regulation      398 (  108)      155 (  108)    27.14    69.68    39.06
+Cause-Negative_regulation      113 (   19)       30 (   17)    16.81    56.67    25.93
+--------------------------------------------------------------------------------------
+=[Cause-TOTAL]=                605 (  145)      214 (  143)    23.97    66.82    35.28
+--------------------------------------------------------------------------------------
+==[ALL-TOTAL]==               5034 ( 2389)     3000 ( 2302)    47.46    76.73    58.64
+--------------------------------------------------------------------------------------
+</pre>
+
+
+<h2>Task 2 (whole test set)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+
+<h2>Task 3 (whole test set)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+
+			<!-- ##################################################################### -->
+<hr style="color:#f00; background-color:#f00; height: 5px">
+
+<h2>Task 1 (abstracts only)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression        722 (  442)      536 (  442)    61.22    82.46    70.27
+     Transcription         137 (   71)       98 (   71)    51.82    72.45    60.43
+  Protein_catabolism        14 (    6)       10 (    6)    42.86    60.00    50.00
+    Phosphorylation        135 (   93)      100 (   93)    68.89    93.00    79.15
+     Localization          174 (   82)       85 (   82)    47.13    96.47    63.32
+     =[SVT-TOTAL]=        1182 (  694)      829 (  694)    58.71    83.72    69.02
+        Binding            347 (  127)      211 (  127)    36.60    60.19    45.52
+    ==[EVT-TOTAL]==       1529 (  821)     1040 (  821)    53.70    78.94    63.92
+------------------------------------------------------------------------------------
+      Regulation           291 (   53)      115 (   53)    18.21    46.09    26.11
+  Positive_regulation      983 (  291)      568 (  291)    29.60    51.23    37.52
+  Negative_regulation      379 (   89)      191 (   89)    23.48    46.60    31.23
+    ==[REG-TOTAL]==       1653 (  433)      874 (  433)    26.19    49.54    34.27
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       3182 ( 1254)     1914 ( 1254)    39.41    65.52    49.22
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression        722 (  458)      536 (  458)    63.43    85.45    72.81
+     Transcription         137 (   80)       98 (   80)    58.39    81.63    68.09
+  Protein_catabolism        14 (    6)       10 (    6)    42.86    60.00    50.00
+    Phosphorylation        135 (   96)      100 (   96)    71.11    96.00    81.70
+     Localization          174 (   83)       85 (   83)    47.70    97.65    64.09
+     =[SVT-TOTAL]=        1182 (  723)      829 (  723)    61.17    87.21    71.90
+        Binding            347 (  137)      211 (  137)    39.48    64.93    49.10
+    ==[EVT-TOTAL]==       1529 (  860)     1040 (  860)    56.25    82.69    66.95
+------------------------------------------------------------------------------------
+      Regulation           291 (   60)      115 (   60)    20.62    52.17    29.56
+  Positive_regulation      983 (  320)      568 (  320)    32.55    56.34    41.26
+  Negative_regulation      379 (   93)      191 (   93)    24.54    48.69    32.63
+    ==[REG-TOTAL]==       1653 (  473)      874 (  473)    28.61    54.12    37.44
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       3182 ( 1333)     1914 ( 1333)    41.89    69.64    52.32
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression        722 (  483)      531 (  464)    66.90    87.38    75.78
+     Transcription         137 (   84)       98 (   81)    61.31    82.65    70.40
+  Protein_catabolism        14 (    6)       10 (    6)    42.86    60.00    50.00
+    Phosphorylation        135 (   99)      100 (   97)    73.33    97.00    83.52
+     Localization          174 (   92)       85 (   83)    52.87    97.65    68.60
+     =[SVT-TOTAL]=        1182 (  764)      824 (  731)    64.64    88.71    74.78
+        Binding            347 (  143)      211 (  137)    41.21    64.93    50.42
+    ==[EVT-TOTAL]==       1529 (  907)     1035 (  868)    59.32    83.86    69.49
+------------------------------------------------------------------------------------
+      Regulation           291 (   65)      115 (   64)    22.34    55.65    31.88
+  Positive_regulation      983 (  346)      567 (  328)    35.20    57.85    43.77
+  Negative_regulation      379 (   98)      191 (   98)    25.86    51.31    34.39
+    ==[REG-TOTAL]==       1653 (  509)      873 (  490)    30.79    56.13    39.77
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       3182 ( 1416)     1908 ( 1358)    44.50    71.17    54.76
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre>--------------------------------------------------------------------------------------
+    Event-Arg Type            gold (match)   answer (match)   recall    prec.   fscore
+--------------------------------------------------------------------------------------
+Theme-Gene_expression          722 (  458)      536 (  458)    63.43    85.45    72.81
+Theme-Transcription            137 (   80)       98 (   80)    58.39    81.63    68.09
+Theme-Protein_catabolism        14 (    6)       10 (    6)    42.86    60.00    50.00
+Theme-Phosphorylation          135 (   96)      100 (   96)    71.11    96.00    81.70
+Theme-Binding                  398 (  179)      243 (  179)    44.97    73.66    55.85
+Theme-Localization             174 (   83)       85 (   83)    47.70    97.65    64.09
+Theme-Regulation               279 (   66)      112 (   66)    23.66    58.93    33.76
+Theme-Positive_regulation      951 (  382)      566 (  382)    40.17    67.49    50.36
+Theme-Negative_regulation      368 (  111)      185 (  111)    30.16    60.00    40.14
+--------------------------------------------------------------------------------------
+=[Theme-TOTAL]=               3178 ( 1461)     1935 ( 1461)    45.97    75.50    57.15
+--------------------------------------------------------------------------------------
+Cause-Regulation                59 (   13)       18 (   13)    22.03    72.22    33.77
+Cause-Positive_regulation      235 (   58)       86 (   58)    24.68    67.44    36.14
+Cause-Negative_regulation       48 (    8)       19 (    8)    16.67    42.11    23.88
+--------------------------------------------------------------------------------------
+=[Cause-TOTAL]=                342 (   79)      123 (   79)    23.10    64.23    33.98
+--------------------------------------------------------------------------------------
+==[ALL-TOTAL]==               3520 ( 1540)     2058 ( 1540)    43.75    74.83    55.22
+--------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre>--------------------------------------------------------------------------------------
+    Event-Arg Type            gold (match)   answer (match)   recall    prec.   fscore
+--------------------------------------------------------------------------------------
+Theme-Gene_expression          722 (  483)      531 (  464)    66.90    87.38    75.78
+Theme-Transcription            137 (   84)       98 (   81)    61.31    82.65    70.40
+Theme-Protein_catabolism        14 (    6)       10 (    6)    42.86    60.00    50.00
+Theme-Phosphorylation          135 (   99)      100 (   97)    73.33    97.00    83.52
+Theme-Binding                  398 (  191)      243 (  180)    47.99    74.07    58.25
+Theme-Localization             174 (   92)       85 (   83)    52.87    97.65    68.60
+Theme-Regulation               279 (   73)      112 (   71)    26.16    63.39    37.04
+Theme-Positive_regulation      951 (  414)      565 (  390)    43.53    69.03    53.39
+Theme-Negative_regulation      368 (  118)      185 (  115)    32.07    62.16    42.31
+--------------------------------------------------------------------------------------
+=[Theme-TOTAL]=               3178 ( 1560)     1929 ( 1487)    49.09    77.09    59.98
+--------------------------------------------------------------------------------------
+Cause-Regulation                59 (   13)       18 (   13)    22.03    72.22    33.77
+Cause-Positive_regulation      235 (   60)       86 (   60)    25.53    69.77    37.38
+Cause-Negative_regulation       48 (   12)       19 (   10)    25.00    52.63    33.90
+--------------------------------------------------------------------------------------
+=[Cause-TOTAL]=                342 (   85)      123 (   83)    24.85    67.48    36.33
+--------------------------------------------------------------------------------------
+==[ALL-TOTAL]==               3520 ( 1645)     2052 ( 1570)    46.73    76.51    58.02
+--------------------------------------------------------------------------------------
+</pre>
+
+
+<h2>Task 2 (abstracts only)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+
+<h2>Task 3 (abstracts only)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+			<!-- ##################################################################### -->
+<hr style="color:#f00; background-color:#f00; height: 5px">
+
+<h2>Task 1 (full papers only)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression        280 (  214)      242 (  214)    76.43    88.43    81.99
+     Transcription          37 (   11)       15 (   11)    29.73    73.33    42.31
+  Protein_catabolism         1 (    1)        1 (    1)   100.00   100.00   100.00
+    Phosphorylation         50 (   44)       46 (   44)    88.00    95.65    91.67
+     Localization           17 (   11)       20 (   11)    64.71    55.00    59.46
+     =[SVT-TOTAL]=         385 (  281)      324 (  281)    72.99    86.73    79.27
+        Binding            144 (   81)      124 (   81)    56.25    65.32    60.45
+    ==[EVT-TOTAL]==        529 (  362)      448 (  362)    68.43    80.80    74.10
+------------------------------------------------------------------------------------
+      Regulation            94 (   16)       37 (   16)    17.02    43.24    24.43
+  Positive_regulation      460 (  136)      266 (  136)    29.57    51.13    37.47
+  Negative_regulation      192 (   49)       99 (   49)    25.52    49.49    33.68
+    ==[REG-TOTAL]==        746 (  201)      402 (  201)    26.94    50.00    35.02
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       1275 (  563)      850 (  563)    44.16    66.24    52.99
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression        280 (  214)      242 (  214)    76.43    88.43    81.99
+     Transcription          37 (   15)       15 (   15)    40.54   100.00    57.69
+  Protein_catabolism         1 (    1)        1 (    1)   100.00   100.00   100.00
+    Phosphorylation         50 (   44)       46 (   44)    88.00    95.65    91.67
+     Localization           17 (   11)       20 (   11)    64.71    55.00    59.46
+     =[SVT-TOTAL]=         385 (  285)      324 (  285)    74.03    87.96    80.39
+        Binding            144 (   81)      124 (   81)    56.25    65.32    60.45
+    ==[EVT-TOTAL]==        529 (  366)      448 (  366)    69.19    81.70    74.92
+------------------------------------------------------------------------------------
+      Regulation            94 (   16)       37 (   16)    17.02    43.24    24.43
+  Positive_regulation      460 (  136)      266 (  136)    29.57    51.13    37.47
+  Negative_regulation      192 (   49)       99 (   49)    25.52    49.49    33.68
+    ==[REG-TOTAL]==        746 (  201)      402 (  201)    26.94    50.00    35.02
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       1275 (  567)      850 (  567)    44.47    66.71    53.36
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>------------------------------------------------------------------------------------
+     Event Class          gold (match)   answer (match)   recall    prec.   fscore
+------------------------------------------------------------------------------------
+    Gene_expression        280 (  217)      242 (  215)    77.50    88.84    82.78
+     Transcription          37 (   15)       15 (   15)    40.54   100.00    57.69
+  Protein_catabolism         1 (    1)        1 (    1)   100.00   100.00   100.00
+    Phosphorylation         50 (   44)       46 (   44)    88.00    95.65    91.67
+     Localization           17 (   11)       20 (   11)    64.71    55.00    59.46
+     =[SVT-TOTAL]=         385 (  288)      324 (  286)    74.81    88.27    80.98
+        Binding            144 (   83)      124 (   83)    57.64    66.94    61.94
+    ==[EVT-TOTAL]==        529 (  371)      448 (  369)    70.13    82.37    75.76
+------------------------------------------------------------------------------------
+      Regulation            94 (   17)       37 (   16)    18.09    43.24    25.50
+  Positive_regulation      460 (  137)      264 (  136)    29.78    51.52    37.74
+  Negative_regulation      192 (   49)       99 (   49)    25.52    49.49    33.68
+    ==[REG-TOTAL]==        746 (  203)      400 (  201)    27.21    50.25    35.30
+------------------------------------------------------------------------------------
+    ==[ALL-TOTAL]==       1275 (  574)      848 (  570)    45.02    67.22    53.92
+------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre>--------------------------------------------------------------------------------------
+    Event-Arg Type            gold (match)   answer (match)   recall    prec.   fscore
+--------------------------------------------------------------------------------------
+Theme-Gene_expression          280 (  214)      242 (  214)    76.43    88.43    81.99
+Theme-Transcription             37 (   15)       15 (   15)    40.54   100.00    57.69
+Theme-Protein_catabolism         1 (    1)        1 (    1)   100.00   100.00   100.00
+Theme-Phosphorylation           50 (   44)       46 (   44)    88.00    95.65    91.67
+Theme-Binding                  178 (  119)      148 (  119)    66.85    80.41    73.01
+Theme-Localization              17 (   11)       20 (   11)    64.71    55.00    59.46
+Theme-Regulation                74 (   20)       34 (   20)    27.03    58.82    37.04
+Theme-Positive_regulation      431 (  178)      252 (  178)    41.30    70.63    52.12
+Theme-Negative_regulation      183 (   65)      102 (   65)    35.52    63.73    45.61
+--------------------------------------------------------------------------------------
+=[Theme-TOTAL]=               1251 (  667)      860 (  667)    53.32    77.56    63.19
+--------------------------------------------------------------------------------------
+Cause-Regulation                35 (    5)       11 (    5)    14.29    45.45    21.74
+Cause-Positive_regulation      163 (   35)       69 (   35)    21.47    50.72    30.17
+Cause-Negative_regulation       65 (    7)       11 (    7)    10.77    63.64    18.42
+--------------------------------------------------------------------------------------
+=[Cause-TOTAL]=                263 (   47)       91 (   47)    17.87    51.65    26.55
+--------------------------------------------------------------------------------------
+==[ALL-TOTAL]==               1514 (  714)      951 (  714)    47.16    75.08    57.93
+--------------------------------------------------------------------------------------
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre>--------------------------------------------------------------------------------------
+    Event-Arg Type            gold (match)   answer (match)   recall    prec.   fscore
+--------------------------------------------------------------------------------------
+Theme-Gene_expression          280 (  217)      242 (  215)    77.50    88.84    82.78
+Theme-Transcription             37 (   15)       15 (   15)    40.54   100.00    57.69
+Theme-Protein_catabolism         1 (    1)        1 (    1)   100.00   100.00   100.00
+Theme-Phosphorylation           50 (   44)       46 (   44)    88.00    95.65    91.67
+Theme-Binding                  178 (  129)      148 (  121)    72.47    81.76    76.83
+Theme-Localization              17 (   11)       20 (   11)    64.71    55.00    59.46
+Theme-Regulation                74 (   21)       34 (   20)    28.38    58.82    38.29
+Theme-Positive_regulation      431 (  181)      249 (  180)    42.00    72.29    53.13
+Theme-Negative_regulation      183 (   65)      102 (   65)    35.52    63.73    45.61
+--------------------------------------------------------------------------------------
+=[Theme-TOTAL]=               1251 (  684)      857 (  672)    54.68    78.41    64.43
+--------------------------------------------------------------------------------------
+Cause-Regulation                35 (    5)       11 (    5)    14.29    45.45    21.74
+Cause-Positive_regulation      163 (   48)       69 (   48)    29.45    69.57    41.38
+Cause-Negative_regulation       65 (    7)       11 (    7)    10.77    63.64    18.42
+--------------------------------------------------------------------------------------
+=[Cause-TOTAL]=                263 (   60)       91 (   60)    22.81    65.93    33.90
+--------------------------------------------------------------------------------------
+==[ALL-TOTAL]==               1514 (  744)      948 (  732)    49.14    77.22    60.06
+--------------------------------------------------------------------------------------
+</pre>
+
+
+<h2>Task 2 (full papers only)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#decomposition">Decomposition</a></h3>
+<pre></pre>
+
+
+<h2>Task 3 (full papers only)</h2>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#strict">Strict Matching</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span">Approximate Span</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<h3><a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_span_without_trigger_matching">Approximate Span without Event Trigger Matching</a>/<a href="http://bionlp-st.dbcls.jp/GE/2011/eval-test/evaluation.html#approximate_recursive">Approximate Recursive</a></h3>
+<pre>no statement that belongs to task 3 found.
+</pre>
+
+<hr style="color:#f00; background-color:#f00; height: 5px">
+
+<h2>Thank you for your participation!!</h2>
+
+</div>
+
+
+</body></html>
