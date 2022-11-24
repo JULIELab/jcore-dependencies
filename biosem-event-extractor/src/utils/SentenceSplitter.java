@@ -35,7 +35,7 @@ public class SentenceSplitter {
 		Chunking chunks = SENTENCE_CHUNKER.chunk(cc, 0, cc.length);
 		Set<Chunk> ls = chunks.chunkSet();
 		if (ls.size() < 1) {
-			System.out.println("No sentence found.");
+			System.out.println("No sentence found in input '" + str + "'.");
 			return list;
 		}
 		String sub_sen = chunks.charSequence().toString();

@@ -2156,6 +2156,11 @@ public class EventExtraction {
 		out = analyzer.analyze(id);
 		trg_ID = analyzer.proList.size(); // trg ID follows number of protein +1
 											// ;
+		// In case of predicted proteins that have been merged with gold genes, the 1:1 relation between the number
+		// of proteins and their IDs gets lost. Obtain the highest protein ID to avoid ID clashes.
+		OptionalInt maxGeneIdNumber = analyzer.proList.stream().map(prot -> prot.tid).mapToInt(tid -> Integer.parseInt(tid.substring(1))).max();
+		if (maxGeneIdNumber.isPresent())
+			trg_ID = maxGeneIdNumber.getAsInt() + 1;
 		evt_ID = 0;// reset new Event list
 	}
 
