@@ -155,9 +155,42 @@ if [[ "$EVAL_TARGET" == "devel" ]]; then
   echo "perl $EVALTOOLS/a2-evaluate.pl -g $TEST_DATA -t1 $TEST_OUTPUT/*.a2"
   perl "$EVALTOOLS"/a2-evaluate.pl -g $TEST_DATA -t1 $TEST_OUTPUT/*.a2
 
+  if [[ "$EDITION" == "2011" ]]; then
+
+    echo "Overall evaluation result on $EVAL_TARGET for $EDITION"
+    perl "$EVALTOOLS"/a2-evaluate.pl -g $TEST_DATA -t1 $TEST_OUTPUT/PMID-*.a2
+    echo "Abstracts-only result on $EVAL_TARGET for $EDITION"
+    perl "$EVALTOOLS"/a2-evaluate.pl -g $TEST_DATA -t1 $TEST_OUTPUT/PMC-*.a2
+    echo "Fulltexts-only result on $EVAL_TARGET for $EDITION"
+
+  fi
+
 elif [[ "$EVAL_TARGET" == "test" && "$EDITION" == "2013" ]]; then
   # the 2013 edition has encoding issues in some file names about NFκB; the test evaluation will not work
   # unless this is fixed
   for i in $TEST_OUTPUT/*; do mv $i `echo $i | sed 's/+%A6/κ/'`; done
+
+fi
+
+if [[ "$EVAL_TARGET" == "test" ]]; then
+
+  echo "Making tar ball of test data output named 'test-output-$EDITION.tar.gz' that can be sent to the online evaluation at http://bionlp-st.dbcls.jp/GE/$EDITION/eval-test/"
+
+  if [[ "$EDITION" == "2009" ]]; then
+    # The data we download for the 2009 edition does not specify the "PMID-" prefix that is expected by the evaluation service
+    rm -rf evaltmp;
+    mkdir evaltmp;
+    cp $TEST_OUTPUT/*.a2 evaltmp;
+    cd evaltmp;
+    for i in *; do
+      mv $i "PMID-$i";
+    done
+    cd ..
+    TEST_OUTPUT=evaltmp
+  fi
+  # from https://stackoverflow.com/a/39530409/1314955
+  echo "find $TEST_OUTPUT -name '*.a2' -printf "%P\n" | tar -czf test-output-$EDITION.tar.gz --no-recursion -C $TEST_OUTPUT -T -"
+  find $TEST_OUTPUT -name '*.a2' -printf "%P\n" | tar -czf test-output-$EDITION.tar.gz --no-recursion -C $TEST_OUTPUT -T -
+  if [[ -d evaltmp ]]; then rm -rf evaltmp; fi
 
 fi
