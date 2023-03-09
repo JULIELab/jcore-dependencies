@@ -15,8 +15,8 @@
 
 package de.julielab.xml;
 
-import com.ximpleware.*;
 import com.ximpleware.EOFException;
+import com.ximpleware.*;
 import com.ximpleware.extended.*;
 import de.julielab.java.utilities.CompressionUtilities;
 import org.apache.commons.lang3.StringUtils;
@@ -114,7 +114,8 @@ public class JulieXMLTools {
                                         } catch (ParseException e) {
                                             e.printStackTrace();
                                         } catch (IOException e) {
-                                            e.printStackTrace();
+                                            LOG.error("IOException while reading TAR file {}, entry {}. Assuming corrupt file and skipping the rest of it.", fileName, entry.getLeft(), e);
+                                            return false;
                                         }
                                         internalIterator = constructRowIterator(vn, forEachXpath, fields, entry.getLeft().getName());
                                         entry = nextArchiveEntry();
@@ -636,11 +637,11 @@ public class JulieXMLTools {
         return namespaceMap;
     }
 
-    public static VTDNav getVTDNav(InputStream is, int bufferSize) throws ParseException, FileTooBigException {
+    public static VTDNav getVTDNav(InputStream is, int bufferSize) throws ParseException, IOException {
         return getVTDNav(is, bufferSize, true);
     }
 
-    public static VTDNav getVTDNav(InputStream is, int bufferSize, boolean namespaceAwareness) throws ParseException, FileTooBigException {
+    public static VTDNav getVTDNav(InputStream is, int bufferSize, boolean namespaceAwareness) throws ParseException, IOException {
 
         VTDGen vg = null;
         try {
@@ -648,6 +649,7 @@ public class JulieXMLTools {
             vg = new VTDGen();
             vg.setDoc(data);
             vg.parse(namespaceAwareness);
+            return vg.getNav();
         } catch (EncodingException e) {
             e.printStackTrace();
         } catch (EOFException e) {
@@ -656,14 +658,12 @@ public class JulieXMLTools {
             e.printStackTrace();
         } catch (FileTooBigException e) {
             throw e;
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        }  catch (ParseException e) {
             String message = e.getMessage();
             if (message.contains("file size too big"))
                 throw new FileTooBigException(message);
         }
-        return vg.getNav();
+       return null;
     }
 
     /**
@@ -754,6 +754,9 @@ public class JulieXMLTools {
         StringBuilder sb = new StringBuilder();
         int depth = vn.getCurrentDepth();
         int i = vn.getCurrentIndex();
+        // is this an empty element?
+        if(vn.getContentFragment() == -1)
+            return "";
         while (vn.getTokenType(i) == VTDNav.TOKEN_STARTING_TAG)
             i++;
         while (i < vn.getTokenCount()

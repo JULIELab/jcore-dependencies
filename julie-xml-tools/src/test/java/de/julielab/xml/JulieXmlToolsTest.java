@@ -109,6 +109,24 @@ public class JulieXmlToolsTest {
 		String elementText = JulieXMLTools.getElementText(vn);
 		assertEquals("this is mixed text content", elementText);
 	}
+
+	@Test
+	public void testGetElementText2() throws Exception {
+		// We point at an empty element and make sure that nothing comes back. There was a bug where the
+		// contents of the next element was returned.
+		String testXMLWithText = "<test><one/><two>this is the second element</two></test>";
+		VTDGen vg = new VTDGen();
+		vg.setDoc(testXMLWithText.getBytes());
+		vg.parse(true);
+		VTDNav vn = vg.getNav();
+		AutoPilot ap = new AutoPilot(vn);
+		ap.selectXPath("/test/one");
+		int index = ap.evalXPath();
+		assertTrue(index > -1);
+
+		String elementText = JulieXMLTools.getElementText(vn);
+		assertEquals("", elementText);
+	}
 	
 	@Test
 	public void parseUnicodeBeyondBMP() throws NavException, FileNotFoundException, IOException, EncodingException, EOFException, EntityException, ParseException {
