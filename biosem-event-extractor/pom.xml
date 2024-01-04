@@ -163,7 +163,7 @@
     <parent>
         <groupId>de.julielab</groupId>
         <artifactId>jcore-dependencies</artifactId>
-        <version>2.4.2-SNAPSHOT</version>
+        <version>2.4.2</version>
     </parent>
     <licenses>
         <license>
@@ -172,5 +172,5 @@
         </license>
     </licenses>
     <url>http://www.ncbi.nlm.nih.gov/pubmed/22859502</url>
-    <version>1.1.9</version>
+    <version>1.2.0</version>
 </project>
